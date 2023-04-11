@@ -1,22 +1,21 @@
 <script setup lang="ts">
+import {onBeforeMount} from "vue";
 import {socket, state} from "../client";
-import {ref} from "vue";
+import {DatabaseManagerInstance} from "../common/DatabaseManager";
 
-const roomId = ref('');
-const joinRoom = async () => {
+const pb = DatabaseManagerInstance.pb;
+console.log('pb.authStore.model',pb.authStore.model)
+const roomId = 2023 //pb.authStore.model?.id
+
+//const classId  = await pb.collection('classroom').getOne()
+
+
+onBeforeMount(async() => {
   await socket.connect();
-  await socket.emit('join', roomId.value);
-}
+  await socket.emit('join', roomId);
+})
 </script>
+
 <template>
-  <div>State : {{ state.connected }}</div>
-  <form @submit.prevent="joinRoom">
-    <label for="roomId">Room id :</label>
-    <input type="text" name="roomId" v-model="roomId">
-    <button type="submit">Joindre la room</button>
-  </form>
+  <div>State : {{ state.connected }}, RoomID : {{ roomId }}</div>
 </template>
-
-<style scoped>
-
-</style>

@@ -1,30 +1,21 @@
 <script setup lang="ts">
-import {onBeforeMount, ref} from "vue";
-import {useRouter} from "vue-router";
-import {socket, state} from "../client";
+import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import {useStore} from "../stores/main";
 
-const router = useRouter();
-const roomId = ref('');
+/*
+* TODO : Ecran d'accueil enfant
+* -
+*
+* */
 
-const goToDashboard = () => {
-  if (state.connected) {
-    router.push('/dashboard')
-  } else {
-    router.push('/login')
-  }
-}
-
-onBeforeMount(() => {
-  goToDashboard();
-});
-
+const pb = DatabaseManagerInstance.pb;
+console.log('pb', pb.authStore.model?.role);
+const store = useStore();
 </script>
+
 <template>
   <div>
-    <h1>Home</h1>
-    <div>State : {{ state.connected }}</div>
+    <h1>Ecran d'accueil enfant {{ pb.authStore.model?.firstname }}</h1>
+    {{ store.role }}
   </div>
 </template>
-<style scoped>
-
-</style>

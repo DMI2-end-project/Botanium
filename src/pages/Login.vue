@@ -1,33 +1,40 @@
 <script setup lang="ts">
-import {inject, ref} from "vue";
+import {ref} from "vue";
 import {useRouter} from "vue-router";
-import PocketBase from "pocketbase";
+import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import {useStore} from "../stores/main";
 
 const email = ref();
 const password = ref();
 
-const pb: PocketBase | undefined = inject('pb');
 const router = useRouter();
+const pb = DatabaseManagerInstance.pb;
+
+const store = useStore();
 
 const login = async () => {
   console.log('login', email.value, password.value);
 
-  if (pb) {
+
+  try {
     const authData = await pb.collection('person').authWithPassword(
         email.value,
         password.value,
     );
-
+    console.log('pb.authStore', pb.authStore, authData)
     if (pb.authStore.isValid) {
-      console.log(pb.authStore.token);
-      // console.log(pb.authStore.model.id);
-      /*
-      * TODO :
-      *  - Stocker la connexion
-      *  - Push to '/'
-       */
-      await router.push('/dashboard')
+      console.log('role', store.role)
+      switch (store.role) {
+        case 'teacher':
+          await router.push('/dashboard');
+        case 'student':
+          await router.push('/');
+        case 'parent':
+          await router.push('/carnet');
+      }
     }
+  } catch (e) {
+    console.log('error', e)
   }
 }
 
