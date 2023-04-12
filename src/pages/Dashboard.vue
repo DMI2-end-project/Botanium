@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Dashboard</h1>
-    <router-link to="/game">Let's play !</router-link>
+    <router-link to="/gamemaster">Let's play !</router-link>
     <button v-show="pb.authStore.isValid" @click="disconnect">Se déconnecter</button>
   </div>
 </template>

@@ -1,15 +1,16 @@
 import {defineStore} from "pinia";
 import {Record} from "pocketbase";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import ROLE from "../constants/ROLE";
 
 export type StoreState = {
-  role: string,
+  role: typeof ROLE | undefined,
   roles: Record[];
 };
 
 export const useStore = defineStore('main', {
   state: (): StoreState => ({
-    role: '',
+    role: undefined,
     roles: []
   }),
   getters: {

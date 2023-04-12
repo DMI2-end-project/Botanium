@@ -23,5 +23,19 @@ socket.on("disconnect", () => {
 });
 
 socket.on("join", (arg)=>{
-  console.log(arg)
+  console.log("join", arg);
 })
+
+
+// TODO : broadcast Start game
+
+/*
+* LaunchStory = histoire
+* SendInstruction = énoncé global
+* StartGame = énoncé/résolution spécifique
+* TeamValidation = résolution true
+* GameValidation = all true
+* Congratulation
+* Next
+* EndStory
+* */

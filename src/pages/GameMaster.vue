@@ -5,12 +5,18 @@ import {DatabaseManagerInstance} from "../common/DatabaseManager";
 
 const pb = DatabaseManagerInstance.pb;
 console.log('pb.authStore.model',pb.authStore.model)
- //pb.authStore.model?.id
+const roomId = 2023 //pb.authStore.model?.id
 
 //const classId  = await pb.collection('classroom').getOne()
 
 
-
+onBeforeMount(async() => {
+  await socket.connect();
+  await socket.emit('join', {
+    roomId,
+    role : "master"
+  });
+})
 </script>
 
 <template>
