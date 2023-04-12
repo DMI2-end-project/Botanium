@@ -1,0 +1,62 @@
+{
+  "00101": {
+    "gameType": "qcm",
+    "instructionTitle": "Énigme n°1 - Les bienfaits des carottes",
+    "instructionText": "Chaque groupe doit retrouver un bienfait, afin que tous ensemble vous puissiez communiquer tous les bienfaits à Capucine !",
+    "congratulation": "Bravo ! Grâce à vous Capucine connait les bienfaits des carottes !",
+    "gameContent": {
+      "1": {
+        "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
+        "answers": {
+          "1": {
+            "isValid": true,
+            "feedback": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
+            "icon": "./game-data/icons/00101/eyes.svg",
+            "text": "Elle améliore la vision nocturne"
+          },
+          "2": {
+            "isValid": false,
+            "icon": "./game-data/icons/00101/muscle.svg",
+            "text": "Elle donne des muscles"
+          },
+          "3": {
+            "isValid": false,
+            "icon": "./game-data/icons/00101/tooth.svg",
+            "text": "Elle blanchit les dents"
+          },
+          "4": {
+            "isValid": false,
+            "icon": "./game-data/icons/00101/bone.svg",
+            "text": "Elle renforce les os"
+          }
+        }
+      },
+      "2": {
+        "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
+        "answers": {
+          "1": {
+            "isValid": true,
+            "feedback": "La carotte possède ... qui ralenti le vieillissement",
+            "icon": "./game-data/icons/00101/disease.svg",
+            "text": "Elle ralentit le vieillissement"
+          },
+          "2": {
+            "isValid": false,
+            "icon": "./game-data/icons/00101/muscle.svg",
+            "text": "Elle donne des muscles"
+          },
+          "3": {
+            "isValid": false,
+            "icon": "./game-data/icons/00101/tooth.svg",
+            "text": "Elle blanchit les dents"
+          },
+          "4": {
+            "isValid": false,
+            "icon": "./game-data/icons/00101/bone.svg",
+            "text": "Elle renforce les os"
+          }
+        }
+      }
+    }
+  }
+}
