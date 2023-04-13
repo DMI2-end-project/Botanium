@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {onBeforeMount, onMounted} from "vue";
+import {onBeforeMount} from "vue";
 import { getSocket } from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import StudentGame from "./../components/game/student/StudentGame.vue";
 import TeacherGame from "./../components/game/teacher/TeacherGame.vue";
 import { useStore } from "../stores/main";
-import ROLE from "../constants/ROLE"
+import {ROLE} from "../constants"
 
 const store = useStore();
 

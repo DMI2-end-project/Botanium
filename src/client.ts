@@ -2,7 +2,7 @@ import {io, Socket} from "socket.io-client";
 import {pinia} from "./main";
 import router from "./router";
 import {useStore} from "./stores/main";
-import EVENT from "./constants/EVENT";
+import {EVENT} from "./constants";
 
 
 // TODO : for production
@@ -59,4 +59,15 @@ export const initClient = () => {
   socket.on(EVENT.SEND_INSTRUCTION, async (arg) => {
     // TODO :
   })
+}
+
+export const connectClient = async (role: string, roomId: string) => {
+  const store = useStore(pinia);
+  
+  store.roomId = roomId;
+  await socket.connect();
+  await socket.emit('join', {
+    roomId,
+    role
+  });
 }
