@@ -29,9 +29,8 @@ onBeforeMount(async () => {
   <div class="w-full h-full">
     <!-- <div>State : {{ state.connected }}, RoomID : {{ roomId }}</div>
     <div>Game ID {{ $route.params.id }}</div> -->
-    <h1>Jeu</h1>
-    <div>Socket state : {{ store.connected }}, RoomID : {{ store.roomId }}, Role : {{ store.role }}</div>
-    <StudentGame v-if="!isTeacher" :teamId="teamId" />
-    <TeacherGame v-if="isTeacher" />
+    <!-- <h1>Jeu</h1> -->
+    <StudentGame v-if="store.role === ROLE.STUDENT" :teamId="teamId" />
+    <TeacherGame v-if="store.role === ROLE.TEACHER" />
   </div>
 </template>

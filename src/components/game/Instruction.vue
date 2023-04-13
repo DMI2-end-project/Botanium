@@ -11,6 +11,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import gameData from "./../../assets/game-data/game-data.json";
+import { getSocket } from "../../client";
+import EVENT from "../../constants/EVENT";
 
 export default defineComponent({
   name: 'InstructionComponent',
@@ -20,17 +22,16 @@ export default defineComponent({
       default: false,
     }
   },
-  computed: {
-    title(): String {
-      return gameData[this.$route.params.id].instructionTitle
-    },
-    text(): String {
-      return gameData[this.$route.params.id].instructionText
+  data() {
+    return {
+      socket: getSocket(),
+      title: gameData[this.$route.params.id].instructionTitle,
+      text: gameData[this.$route.params.id].instructionText
     }
   },
   methods: {
     next() {
-      // TODO send next step to node server
+      this.socket.emit(EVENT.START_GAME)
     }
   }
 });
