@@ -8,6 +8,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { getSocket } from "../../../client";
+import EVENT from "../../../constants/EVENT";
 import Instruction from "./../Instruction.vue";
 import InGame from "./InGame.vue";
 import Waiting from "./Waiting.vue";
@@ -27,11 +29,15 @@ export default defineComponent({
   },
   data () {
     return {
+      socket: getSocket(),
       step: 0
     }
   },
   mounted() {
-    this.step += 1;
+    // this.step += 1;
+    this.socket.on(EVENT.START_GAME, () => {
+      this.step = 1
+    })
   },
   methods: {
     validated() {
