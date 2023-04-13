@@ -1,26 +1,29 @@
 <script setup lang="ts">
-import {onBeforeMount} from "vue";
+import {onBeforeMount, onMounted} from "vue";
 import {socket, state} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import Instruction from "./../components/game/Instruction.vue";
+import StudentGame from "./../components/game/student/StudentGame.vue";
+import TeacherGame from "./../components/game/teacher/TeacherGame.vue";
 
 const pb = DatabaseManagerInstance.pb;
 console.log('pb.authStore.model',pb.authStore.model)
 const roomId = 2023 //pb.authStore.model?.id
 const teamId = "2"
+const isTeacher = false;
 
 //const classId  = await pb.collection('classroom').getOne()
 
-onBeforeMount(async() => {
+onBeforeMount(async () => {
   await socket.connect();
   await socket.emit('join', roomId);
 })
 </script>
 
 <template>
-  <div>
-    <div>State : {{ state.connected }}, RoomID : {{ roomId }}</div>
-    <div>Game ID {{ $route.params.id }}</div>
-    <Instruction :teamId="teamId" />
+  <div class="w-full h-full">
+    <!-- <div>State : {{ state.connected }}, RoomID : {{ roomId }}</div>
+    <div>Game ID {{ $route.params.id }}</div> -->
+    <StudentGame v-if="!isTeacher" :teamId="teamId" />
+    <TeacherGame v-if="isTeacher" />
   </div>
 </template>

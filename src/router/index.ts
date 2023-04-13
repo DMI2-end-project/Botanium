@@ -4,7 +4,7 @@ import Login from "../pages/Login.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import Game from "../pages/Game.vue";
 import {useStore} from "../stores/main";
-import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import { DatabaseManagerInstance } from "../common/DatabaseManager";
 
 const config: RouterOptions = {
   history: createWebHistory(),
@@ -12,22 +12,34 @@ const config: RouterOptions = {
     {
       name: 'Home',
       path: '/',
-      component: Home
+      component: Home,
+      meta: {
+        layout: 'Dev',
+      },
     },
     {
       name: 'Login',
       path: '/login',
-      component: Login
+      component: Login,
+      meta: {
+        layout: 'Dev',
+      },
     },
     {
       name: 'Dashboard',
       path: '/dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: {
+        layout: 'Dev',
+      },
     },
     {
       name: 'Game',
       path: '/game/:id',
-      component: Game
+      component: Game,
+      meta: {
+        layout: 'Dev',
+      },
     }
   ]
 }
