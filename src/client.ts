@@ -61,13 +61,12 @@ export const initClient = () => {
   })
 }
 
-export const connectClient = async (role: string, roomId: string) => {
+export const connectClient = async () => {
   const store = useStore(pinia);
   
-  store.roomId = roomId;
   await socket.connect();
   await socket.emit('join', {
-    roomId,
-    role
+    role: store.role,
+    roomId: store.roomId
   });
 }

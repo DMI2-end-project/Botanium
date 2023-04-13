@@ -1,8 +1,3 @@
-export enum GAMEROLE {
-  GAME_MASTER = 'game master',
-  GAMER = 'gamer'
-}
-
 export enum ROLE {
   TEACHER = 'teacher',
   STUDENT = 'student',

@@ -6,7 +6,7 @@ import Game from "../pages/Game.vue";
 import {useStore} from "../stores/main";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import GameMaster from "../pages/GameMaster.vue";
-import ROLE from "../constants/ROLE";
+import {ROLE} from "../constants";
 
 const config: RouterOptions = {
   history: createWebHistory(),

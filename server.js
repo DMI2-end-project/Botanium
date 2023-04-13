@@ -2,10 +2,11 @@ import express from "express";
 import {createServer} from "http";
 import {Server} from "socket.io";
 
-const GAMEROLE = {
-  GAME_MASTER: 'game master',
-  GAMER: 'gamer'
-}
+const ROLE = {
+  TEACHER: 'teacher',
+  STUDENT: 'student',
+  PARENT: 'parent'
+};
 
 const EVENT = {
   LAUNCH_STORY: 'LaunchStory',
@@ -16,7 +17,7 @@ const EVENT = {
   END_GAME: 'EndGame',
   BACK_STORY: 'BackStory',
   END_STORY: 'EndStory',
-}
+};
 
 const port = 8080;
 const app = express();
@@ -41,17 +42,22 @@ io.on('connection', (socket) => {
 
   socket.on('join', (arg) => {
     // Join room
-    socket.join(arg.roomId);
-    io.to(arg).emit("join", `a user joined the room: ${arg}`);
+    const joinRoom = () => {
+      socket.join(arg.roomId);
+      io.to(arg.roomId).emit("join");
+    }
 
     // Set roles
-    if (arg.role === GAMEROLE.GAME_MASTER) {
+    if (arg.role === ROLE.TEACHER) {
       gamemaster = socket.id;
-    } else {
+      joinRoom()
+    } else if (arg.role === ROLE.STUDENT) {
       if (!gamers.find(id => id === socket.id)) {
         gamers.push(socket.id)
       }
+      joinRoom()
     }
+
     console.log("users status", gamemaster, gamers);
   })
 
@@ -78,8 +84,6 @@ io.on('connection', (socket) => {
   socket.on(EVENT.START_GAME, (arg) => {
     io.to(arg).emit(EVENT.START_GAME)
   });
-
-  socket.on()
 
   // TODO : chaque client gère sa propre validation -> listen to validation, checker la validation de chaque client
   // TODO : endGame dispatchEvent

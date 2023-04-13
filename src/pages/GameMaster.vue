@@ -2,7 +2,7 @@
 import {onBeforeMount} from "vue";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import EVENT from "../constants/EVENT";
+import {EVENT} from "../constants";
 import {useStore} from "../stores/main";
 
 const pb = DatabaseManagerInstance.pb;
