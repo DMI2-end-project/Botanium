@@ -5,7 +5,9 @@ import {DatabaseManagerInstance} from "./common/DatabaseManager";
 import router from "./router";
 import App from './App.vue';
 import {useStore} from "./stores/main";
-import {initClient} from "./client";
+import { initClient } from "./client";
+import { registerLayouts } from './layouts/register';
+
 
 const app = createApp(App);
 
@@ -18,5 +20,7 @@ const store = useStore();
 store.fetchRoles();
 
 app.use(router);
+
+registerLayouts(app);
 
 app.mount('#app');

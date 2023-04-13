@@ -14,27 +14,42 @@ const config: RouterOptions = {
     {
       name: 'Home',
       path: '/',
-      component: Home
+      component: Home,
+      meta: {
+        layout: 'Dev',
+      },
     },
     {
       name: 'Login',
       path: '/login',
-      component: Login
+      component: Login,
+      meta: {
+        layout: 'Dev',
+      },
     },
     {
       name: 'Dashboard',
       path: '/dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: {
+        layout: 'Dev',
+      },
     },
     {
       name: 'Game',
-      path: '/game',
-      component: Game
+      path: '/game/:id',
+      component: Game,
+      meta: {
+        layout: 'Dev',
+      },
     },
     {
       name: 'GameMaster',
       path: '/gamemaster',
-      component: GameMaster
+      component: GameMaster,
+      meta: {
+        layout: 'Dev',
+      },
     }
   ]
 }
@@ -43,12 +58,12 @@ const router = createRouter(config);
 
 router.beforeEach((to, from) => {
   const store = useStore();
-  
+
   // Need auth to acces pages, redirect the user to the login page
   if (!DatabaseManagerInstance.pb.authStore.isValid && to.name !== 'Login') {
     return {name: 'Login'}
   }
-  
+
   // TODO : not working, example : https://pinia.vuejs.org/core-concepts/outside-component-usage.html
   if (DatabaseManagerInstance.pb.authStore.isValid && to.name === 'Login') {
     let roles = DatabaseManagerInstance.roles;
@@ -61,9 +76,9 @@ router.beforeEach((to, from) => {
         return {name: 'Home'}
     }
   }
-  
+
   if(DatabaseManagerInstance.pb.authStore.isValid) {
-  
+
   }
 });
 

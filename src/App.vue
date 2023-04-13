@@ -7,5 +7,6 @@ export default defineComponent({
 </script>
 
 <template>
-  <router-view/>
+  <!-- <router-view/> -->
+  <TheAppLayout />
 </template>
