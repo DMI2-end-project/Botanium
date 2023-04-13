@@ -5,6 +5,8 @@ import Dashboard from "../pages/Dashboard.vue";
 import Game from "../pages/Game.vue";
 import {useStore} from "../stores/main";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import GameMaster from "../pages/GameMaster.vue";
+import ROLE from "../constants/ROLE";
 
 const config: RouterOptions = {
   history: createWebHistory(),
@@ -28,6 +30,11 @@ const config: RouterOptions = {
       name: 'Game',
       path: '/game',
       component: Game
+    },
+    {
+      name: 'GameMaster',
+      path: '/gamemaster',
+      component: GameMaster
     }
   ]
 }
@@ -48,9 +55,9 @@ router.beforeEach((to, from) => {
     let role = roles.find(item => item.id === DatabaseManagerInstance.pb.authStore.model?.role);
     console.log('role', store.role, role)
     switch (store.role) {
-      case 'teacher':
+      case ROLE.TEACHER:
         return {name: 'Dashboard'}
-      case 'student':
+      case ROLE.STUDENT:
         return {name: 'Home'}
     }
   }

@@ -1,21 +1,11 @@
 <script setup lang="ts">
-import {onBeforeMount} from "vue";
-import {socket, state} from "../client";
-import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import {useStore} from "../stores/main";
 
-const pb = DatabaseManagerInstance.pb;
-console.log('pb.authStore.model',pb.authStore.model)
-const roomId = 2023 //pb.authStore.model?.id
+const store = useStore();
 
-//const classId  = await pb.collection('classroom').getOne()
-
-
-onBeforeMount(async() => {
-  await socket.connect();
-  await socket.emit('join', roomId);
-})
 </script>
 
 <template>
-  <div>State : {{ state.connected }}, RoomID : {{ roomId }}</div>
+  <h1>Jeu</h1>
+  <div>Socket state : {{ store.connected }}, RoomID : {{ store.roomId }}, Role : {{ store.role }}</div>
 </template>

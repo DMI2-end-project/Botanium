@@ -3,6 +3,9 @@ import {ref} from "vue";
 import {useRouter} from "vue-router";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {useStore} from "../stores/main";
+import {getSocket} from "../client";
+import GAMEROLE from "../constants/GAMEROLE";
+import ROLE from "../constants/ROLE";
 
 const email = ref();
 const password = ref();
@@ -12,9 +15,12 @@ const pb = DatabaseManagerInstance.pb;
 
 const store = useStore();
 
+const roomId = '2023';
+store.roomId = roomId;
+
+const socket = getSocket();
 const login = async () => {
   console.log('login', email.value, password.value);
-
 
   try {
     const authData = await pb.collection('person').authWithPassword(
@@ -22,15 +28,32 @@ const login = async () => {
         password.value,
     );
     console.log('pb.authStore', pb.authStore, authData)
+
     if (pb.authStore.isValid) {
-      console.log('role', store.role)
+      console.log('role', store.role);
+
       switch (store.role) {
-        case 'teacher':
+        case ROLE.TEACHER:
+          store.roomId = roomId;
+          await socket.connect();
+          await socket.emit('join', {
+            roomId,
+            role: GAMEROLE.GAME_MASTER
+          });
           await router.push('/dashboard');
-        case 'student':
+          break;
+        case ROLE.STUDENT:
+          store.roomId = roomId;
+          await socket.connect();
+          await socket.emit('join', {
+            roomId,
+            role: GAMEROLE.GAMER
+          });
           await router.push('/');
-        case 'parent':
+          break;
+        case ROLE.PARENT:
           await router.push('/carnet');
+          break;
       }
     }
   } catch (e) {
