@@ -18,15 +18,15 @@ const EVENT = {
   END_STORY: 'EndStory',
 }
 
+const port = 8080;
 const app = express();
 const http = createServer(app);
 const io = new Server(http, {
   cors: {
-    origins: ['http://localhost:8080']
+    origins: [`http://localhost:${port}`]
   }
 });
 
-const port = 8080;
 http.listen(port, () => {
   console.log(`Server listening on *:${port}`);
 });
@@ -71,13 +71,16 @@ io.on('connection', (socket) => {
     console.log("users status", gamemaster, gamers)
   });
 
-  socket.on(EVENT.LAUNCH_STORY, () => {
+  socket.on(EVENT.LAUNCH_STORY, (arg) => {
+    io.to(arg).emit(EVENT.LAUNCH_STORY)
+  });
 
-  })
+  socket.on(EVENT.START_GAME, (arg) => {
+    io.to(arg).emit(EVENT.START_GAME)
+  });
 
-  // TODO : dispatch event launch game
-  // TODO : know how much gamer
-  // TODO : startGame dispatchEvent
+  socket.on()
+
   // TODO : chaque client gère sa propre validation -> listen to validation, checker la validation de chaque client
   // TODO : endGame dispatchEvent
 });

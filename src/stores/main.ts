@@ -1,22 +1,23 @@
 import {defineStore} from "pinia";
 import {Record} from "pocketbase";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import ROLE from "../constants/ROLE";
 
 export type StoreState = {
-  role: typeof ROLE | undefined,
+  connected: boolean,
+  roomId: string | undefined,
   roles: Record[];
 };
 
 export const useStore = defineStore('main', {
   state: (): StoreState => ({
-    role: undefined,
+    connected: false,
+    roomId: undefined,
     roles: []
   }),
   getters: {
     role(): string {
       let role = this.roles.find(item => item.id === DatabaseManagerInstance.pb.authStore.model?.role)
-      return role ? role.name : ''
+      return role ? role.name : undefined
     }
   },
   actions: {

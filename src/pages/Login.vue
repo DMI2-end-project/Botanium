@@ -3,7 +3,7 @@ import {ref} from "vue";
 import {useRouter} from "vue-router";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {useStore} from "../stores/main";
-import {socket} from "../client";
+import {getSocket} from "../client";
 import GAMEROLE from "../constants/GAMEROLE";
 import ROLE from "../constants/ROLE";
 
@@ -15,8 +15,10 @@ const pb = DatabaseManagerInstance.pb;
 
 const store = useStore();
 
-const roomId = 2023
+const roomId = '2023';
+store.roomId = roomId;
 
+const socket = getSocket();
 const login = async () => {
   console.log('login', email.value, password.value);
 
@@ -26,11 +28,13 @@ const login = async () => {
         password.value,
     );
     console.log('pb.authStore', pb.authStore, authData)
+
     if (pb.authStore.isValid) {
       console.log('role', store.role);
 
       switch (store.role) {
         case ROLE.TEACHER:
+          store.roomId = roomId;
           await socket.connect();
           await socket.emit('join', {
             roomId,
@@ -39,6 +43,7 @@ const login = async () => {
           await router.push('/dashboard');
           break;
         case ROLE.STUDENT:
+          store.roomId = roomId;
           await socket.connect();
           await socket.emit('join', {
             roomId,
