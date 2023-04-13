@@ -13,15 +13,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import {getSocket} from "../client";
 
 export default defineComponent({
   name: 'TheDevLayout',
-  mounted() {
-
-  },
   methods: {
     disconnect() {
-      console.log("disconnect")
+      const socket = getSocket();
+      socket.disconnect();
     }
   }
 });

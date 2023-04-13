@@ -14,6 +14,7 @@ console.log('pb.authStore.model',pb.authStore.model)
 const roomId = 2023 //pb.authStore.model?.id
 const teamId = "2"
 const isTeacher = store.role === ROLE.TEACHER;
+// console.log(isTeacher, store.role, ROLE.TEACHER)
 const socket = getSocket()
 
 //const classId  = await pb.collection('classroom').getOne()
