@@ -9,7 +9,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { getSocket } from "../../../client";
-import EVENT from "../../../constants/EVENT";
+import {EVENT} from "../../../common/constants";
 import Instruction from "./../Instruction.vue";
 import InGame from "./InGame.vue";
 import Waiting from "./Waiting.vue";

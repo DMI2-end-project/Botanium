@@ -6,7 +6,7 @@ import Game from "../pages/Game.vue";
 import {useStore} from "../stores/main";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import GameMaster from "../pages/GameMaster.vue";
-import {ROLE} from "../constants";
+import {ROLE} from "../common/constants";
 
 const config: RouterOptions = {
   history: createWebHistory(),
@@ -42,14 +42,6 @@ const config: RouterOptions = {
       meta: {
         layout: 'Dev',
       },
-    },
-    {
-      name: 'GameMaster',
-      path: '/gamemaster',
-      component: GameMaster,
-      meta: {
-        layout: 'Dev',
-      },
     }
   ]
 }
@@ -58,12 +50,12 @@ const router = createRouter(config);
 
 router.beforeEach((to, from) => {
   const store = useStore();
-
+  
   // Need auth to acces pages, redirect the user to the login page
   if (!DatabaseManagerInstance.pb.authStore.isValid && to.name !== 'Login') {
     return {name: 'Login'}
   }
-
+  
   // TODO : not working, example : https://pinia.vuejs.org/core-concepts/outside-component-usage.html
   if (DatabaseManagerInstance.pb.authStore.isValid && to.name === 'Login') {
     let roles = DatabaseManagerInstance.roles;
@@ -73,12 +65,13 @@ router.beforeEach((to, from) => {
       case ROLE.TEACHER:
         return {name: 'Dashboard'}
       case ROLE.STUDENT:
+      case ROLE.PARENT:
         return {name: 'Home'}
     }
   }
-
-  if(DatabaseManagerInstance.pb.authStore.isValid) {
-
+  
+  if (DatabaseManagerInstance.pb.authStore.isValid) {
+  
   }
 });
 

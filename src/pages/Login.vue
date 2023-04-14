@@ -4,7 +4,7 @@ import {useRouter} from "vue-router";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {useStore} from "../stores/main";
 import {getSocket, connectClient} from "../client";
-import {ROLE} from "../constants";
+import {ROLE} from "../common/constants";
 
 const email = ref();
 const password = ref();
@@ -19,17 +19,16 @@ const store = useStore();
 
 const socket = getSocket();
 const login = async () => {
-  console.log('login', email.value, password.value);
-
   try {
+    await store.fetchRoles();
+
     const authData = await pb.collection('person').authWithPassword(
         email.value,
         password.value,
     );
-    console.log('pb.authStore', pb.authStore, authData)
 
     if (pb.authStore.isValid) {
-      console.log('role', store.role);
+      store.roleId = pb.authStore.model?.role;
 
       switch (store.role) {
         case ROLE.TEACHER:
@@ -38,10 +37,8 @@ const login = async () => {
           break;
         case ROLE.STUDENT:
           await connectClient();
-          await router.push('/');
-          break;
         case ROLE.PARENT:
-          await router.push('/carnet');
+          await router.push('/');
           break;
       }
     }

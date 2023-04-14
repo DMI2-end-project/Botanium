@@ -5,7 +5,7 @@ import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import StudentGame from "./../components/game/student/StudentGame.vue";
 import TeacherGame from "./../components/game/teacher/TeacherGame.vue";
 import { useStore } from "../stores/main";
-import {ROLE} from "../constants"
+import {ROLE} from "../common/constants"
 
 const store = useStore();
 

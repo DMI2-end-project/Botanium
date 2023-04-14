@@ -2,11 +2,14 @@
 import {defineComponent} from "vue";
 import {useStore} from "./stores/main";
 import {DatabaseManagerInstance} from "./common/DatabaseManager";
-import {ROLE} from "./constants";
+import {ROLE} from "./common/constants";
 import {connectClient} from "./client";
+import TheDevLayout from "./layouts/TheDevLayout.vue";
+import TheAppLayout from "./layouts/TheAppLayout.vue";
 
 export default defineComponent({
   name: 'App',
+  components: {TheAppLayout, TheDevLayout},
   data() {
     return {
       roomId: '2023'
@@ -25,5 +28,7 @@ export default defineComponent({
 
 <template>
   <!-- <router-view/> -->
-  <TheAppLayout/>
+  <TheAppLayout>
+    <router-view/>
+  </TheAppLayout>
 </template>

@@ -12,7 +12,7 @@
 import { defineComponent } from 'vue'
 import gameData from "./../../assets/game-data/game-data.json";
 import { getSocket } from "../../client";
-import EVENT from "../../constants/EVENT";
+import {EVENT} from "../../common/constants";
 
 export default defineComponent({
   name: 'InstructionComponent',

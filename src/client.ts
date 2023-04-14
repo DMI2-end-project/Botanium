@@ -2,7 +2,7 @@ import {io, Socket} from "socket.io-client";
 import {pinia} from "./main";
 import router from "./router";
 import {useStore} from "./stores/main";
-import {EVENT} from "./constants";
+import {EVENT} from "./common/constants";
 
 
 // TODO : for production
