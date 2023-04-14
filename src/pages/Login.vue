@@ -4,7 +4,7 @@ import {useRouter} from "vue-router";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {useStore} from "../stores/main";
 import {getSocket, connectClient} from "../client";
-import {ROLE} from "../common/constants";
+import {ROLE} from "../common/Constants";
 
 const email = ref();
 const password = ref();
