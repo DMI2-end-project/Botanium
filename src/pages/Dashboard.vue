@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {useStore} from "../stores/main";
+import {leading} from "../common/Lib";
 
 const store = useStore();
 
@@ -7,8 +8,8 @@ const store = useStore();
 <template>
   <div>
     <h1>Dashboard</h1>
-    <router-link :to="{ path: 'game/'+ store.fullGameId}">Let's play !</router-link>
-    <!-- query: { id: store.fullGameId }} -->
+    <router-link :to="{ path: '/histoire/'+ store.getChapterId }">Lancer le chapitre {{ store.chapterId }}</router-link>
+    <!-- query: { id: store.getFullGameId }} -->
   </div>
 </template>
 <style scoped>

@@ -78,11 +78,15 @@ io.on('connection', (socket) => {
   });
 
   socket.on(EVENT.LAUNCH_STORY, (arg) => {
-    io.to(arg).emit(EVENT.LAUNCH_STORY)
+    io.to(arg.roomId).emit(EVENT.LAUNCH_STORY, {
+      chapterId: arg.chapterId
+    })
   });
 
   socket.on(EVENT.START_GAME, (arg) => {
-    io.to(arg).emit(EVENT.START_GAME)
+    io.to(arg.roomId).emit(EVENT.START_GAME, {
+      gameId: arg.gameId
+    })
   });
 
   // TODO : chaque client gère sa propre validation -> listen to validation, checker la validation de chaque client

@@ -2,20 +2,20 @@
 import {onBeforeMount} from "vue";
 import { getSocket } from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import StudentGame from "./../components/game/student/StudentGame.vue";
-import TeacherGame from "./../components/game/teacher/TeacherGame.vue";
+import StudentStory from "./../components/story/student/StudentStory.vue";
+import TeacherStory from "./../components/story/teacher/TeacherStory.vue";
 import { useStore } from "../stores/main";
 import {ROLE} from "../common/Constants"
 
 const store = useStore();
 
 const pb = DatabaseManagerInstance.pb;
-console.log('pb.authStore.model',pb.authStore.model)
-const roomId = 2023 //pb.authStore.model?.id
-const teamId = "2"
+
+const roomId = 2023 //pb.authStore.model?.id;
+const teamId = "2";
 const isTeacher = store.role === ROLE.TEACHER;
 // console.log(isTeacher, store.role, ROLE.TEACHER)
-const socket = getSocket()
+const socket = getSocket();
 
 //const classId  = await pb.collection('classroom').getOne()
 
@@ -29,8 +29,8 @@ onBeforeMount(async () => {
   <div class="w-full h-full">
     <!-- <div>State : {{ state.connected }}, RoomID : {{ roomId }}</div>
     <div>Game ID {{ $route.params.id }}</div> -->
-    <h1>Exercice</h1>
-    <StudentGame v-if="store.role === ROLE.STUDENT" :teamId="teamId" />
-    <TeacherGame v-if="store.role === ROLE.TEACHER" />
+    <!-- <h1>Jeu</h1> -->
+    <TeacherStory v-if="store.role === ROLE.TEACHER" />
+    <StudentStory v-if="store.role === ROLE.STUDENT" />
   </div>
 </template>

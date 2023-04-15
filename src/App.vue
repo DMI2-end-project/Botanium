@@ -18,6 +18,7 @@ export default defineComponent({
   mounted() {
     const store = useStore();
     store.roomId = this.roomId;
+    store.roleId = DatabaseManagerInstance.pb.authStore.model?.role;
 
     if (DatabaseManagerInstance.pb.authStore.isValid && store.role !== ROLE.PARENT) {
       connectClient()

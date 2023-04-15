@@ -3,7 +3,8 @@
     <v-main>
       <div class="mb-8 flex">
         <div>Auth state : {{ pb.authStore.isValid }}, Socket state : {{ store.connected }},
-          RoomID : {{ store.roomId }}, Role : {{ store.role }}</div>
+          RoomID : {{ store.roomId }}, Role : {{ store.role }}
+        </div>
         <button @click="disconnect" class="ml-auto block">Déconnexion</button>
       </div>
       <!--The <slot> element is a slot outlet that indicates where the "VIEW" content should be rendered.-->
@@ -13,10 +14,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {defineComponent} from 'vue'
 import {useRouter} from "vue-router";
-import { getSocket } from "../client";
-import { useStore } from "../stores/main";
+import {getSocket} from "../client";
+import {useStore} from "../stores/main";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 
 
@@ -38,7 +39,10 @@ export default defineComponent({
       this.socket.disconnect();
       this.pb.authStore.clear();
       this.store.roomId = undefined;
-      this.router.push('/');
+      this.store.roleId = undefined;
+      this.router.push({
+        name: 'Login'
+      });
     }
   }
 });

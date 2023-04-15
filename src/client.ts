@@ -14,48 +14,48 @@ export const getSocket = () => socket;
 
 export const initClient = () => {
   const store = useStore(pinia);
-
+  
   socket = io(URL, {
     autoConnect: false,
     rejectUnauthorized: false // WARN: please do not do this in production
   });
-
+  
   socket.on("connect", () => {
     store.connected = true;
   });
-
+  
   socket.on("disconnect", () => {
     store.connected = false;
   });
-
-  socket.on("join", (arg) => {
-    console.log("join", arg);
+  
+  socket.on("join", () => {
+    console.log("join", store.roomId);
   });
-
+  
   socket.on(EVENT.LAUNCH_STORY, async (arg) => {
-    // TODO :
+    await router.push('/histoire/' + arg.chapterId)
   });
-
+  
   socket.on(EVENT.START_GAME, async (arg) => {
-    await router.push('/game');
+    await router.push('/exercice/' + arg.gameId);
   });
-
+  
   socket.on(EVENT.GAME_VALIDATION, async (arg) => {
     // TODO :
   })
-
+  
   socket.on(EVENT.END_GAME, async (arg) => {
     // TODO :
   })
-
+  
   socket.on(EVENT.BACK_STORY, async (arg) => {
     // TODO :
   })
-
+  
   socket.on(EVENT.END_STORY, async (arg) => {
     // TODO :
   })
-
+  
   socket.on(EVENT.SEND_INSTRUCTION, async (arg) => {
     // TODO :
   })
@@ -63,10 +63,10 @@ export const initClient = () => {
 
 export const connectClient = async () => {
   const store = useStore(pinia);
-
+  
   await socket.connect();
   await socket.emit('join', {
     role: store.role,
-    roomId: store.roomId
+    roomId: '2023'//store.roomId
   });
 }

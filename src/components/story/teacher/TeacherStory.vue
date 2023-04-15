@@ -1,21 +1,22 @@
 <template>
   <div class="bg-gray-100">
-    <Instruction v-if="step === 0" :isTeacher="true"/>
+    <button>Lecture</button>
+    <button>Projection</button>
+    <router-link :to="{ path: '/exercice/'+store.getFullGameId}">
+      Lancer l'exercice {{ store.gameId }}
+    </router-link>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent} from 'vue';
 import {getSocket} from "../../../client";
 import {EVENT} from "../../../common/Constants";
-import Instruction from "../Instruction.vue";
 import {useStore} from "../../../stores/main";
 
 export default defineComponent({
-  name: 'InGameComponent',
-  components: {
-    Instruction
-  },
+  name: 'TeacherStoryComponent',
+  components: {},
   data() {
     return {
       socket: getSocket(),
@@ -24,9 +25,9 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.socket.emit(EVENT.START_GAME, {
+    this.socket.emit(EVENT.LAUNCH_STORY, {
       roomId: this.store.roomId,
-      chapterId: this.store.getFullGameId
+      gameId: this.store.getChapterId
     });
   }
 });
