@@ -1,6 +1,6 @@
 <template>
-  <button class="edit-element w-full h-full bg-gray-100" @click="onModify = true">
-    <p>edit</p>
+  <button class="edit-element w-full h-full bg-gray-100" :class="classProperty" @click="onModify = true">
+    <p v-if="!text">edit</p>
     <p>{{ text }}</p>
   </button>
   <div v-if="onModify" class="fixed z-40 w-screen h-screen bg-black/25 flex justify-center items-center top-0 left-0">
@@ -28,7 +28,11 @@ export default {
     slotNumber: {
       type: Number,
       default: null
-    }
+    },
+    classProperty: {
+      type: String,
+      default: null
+    },
   },
   data: () => {
     return {

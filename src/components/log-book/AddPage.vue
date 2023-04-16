@@ -2,8 +2,8 @@
   <div class="fixed z-30 w-screen h-screen bg-black/25 flex justify-center items-center">
     <div class="bg-white p-8">
       <div>
-        <button v-for="template in templates" :v-bind="template" @click="templateId = template" class="m-5 h-48" :class="templateId === template ? 'bg-gray-200' : ''">
-          <p>template {{ template }}</p>
+        <button v-for="template in templates" :v-bind="template" @click="templateId = template" class="m-5 p-0 overflow-hidden drop-shadow-lg" :class="templateId === template ? 'bg-gray-200' : ''">
+          <img :src="'./templates/' + template + '.svg'">
         </button>
       </div>
       <button @click="validate">Valider</button>

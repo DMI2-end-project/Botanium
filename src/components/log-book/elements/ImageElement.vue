@@ -1,6 +1,9 @@
 <template>
-  <button class="image-element w-full h-full bg-gray-100 p-0" @click="modify">
-    <img v-if="image" :src="image" class="h-full w-full object-contain">
+  <button class="image-element w-full h-full bg-gray-100 p-0" :class="classProperty + ' ' + (image ? 'bg-transparent' : '')" @click="modify">
+    <div v-if="image" class="relative flex justify-center" :style="'transform: rotate(' + (Math.random() - 0.5) * 10 + 'deg)'">
+      <div class="max-w-full w-16 h-4 bg-purple-600/75 absolute -top-2 z-10"></div>
+      <img :src="image" class="image max-h-full max-w-full object-contain border-4 border-white drop-shadow-lg">
+    </div>
     <p v-if="!image">image</p>
   </button>
   <div v-if="onModify" class="fixed z-40 w-screen h-screen bg-black/25 flex justify-center items-center top-0 left-0">
@@ -30,7 +33,11 @@ export default {
     slotNumber: {
       type: Number,
       default: null
-    }
+    },
+    classProperty: {
+      type: String,
+      default: null
+    },
   },
   data: () => {
     return {
