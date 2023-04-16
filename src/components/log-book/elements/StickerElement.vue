@@ -25,7 +25,15 @@
 </template>
 
 <script lang="ts">
+import Client from "pocketbase";
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
+
+interface StickerData {
+  id: string;
+  page: number;
+  slot: string;
+  idSticker: number;
+}
 
 export default {
   name: "StickerElementComponent",
@@ -46,22 +54,22 @@ export default {
   emits: ['onModify'],
   data: () => {
     return {
-      pb: DatabaseManagerInstance.pb,
-      sticker: '',
-      idRecord: null,
-      onModify: false,
-      stickerList: [],
-      stickerSelected: null,
-      numberStickers: 3 * 10
+      pb: DatabaseManagerInstance.pb as Client,
+      sticker: '' as string,
+      idRecord: undefined as string | undefined,
+      onModify: false as boolean,
+      stickerList: [] as Array<StickerData>,
+      stickerSelected: undefined as StickerData | undefined,
+      numberStickers: 3 * 10 as number
     }
   },
   watch: {
-    onModify(value) {
+    onModify(value:boolean) {
       this.$emit('onModify', value)
     }
   },
   mounted() {
-    this.pb.collection('sticker').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then(result => {
+    this.pb.collection('sticker').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then((result:StickerData) => {
       this.idRecord = result.id
       this.sticker = this.getStickerUrl(result);
     }).catch(error => {
@@ -69,16 +77,21 @@ export default {
     })
   },
   methods: {
-    getStickerUrl(data) {
+    getStickerUrl(data:StickerData):string {
       return './stickers/' + data.idSticker + '.svg'
     },
-    changeSticker(index) {
-      this.stickerSelected = { idSticker: index }
+    changeSticker(index:number) {
+      this.stickerSelected = {
+        idSticker: index,
+        id: '',
+        page: 0,
+        slot: '0'
+      } as StickerData;
       this.sticker = this.getStickerUrl(this.stickerSelected)
     },
     async saveData() {
       const data = {
-        "idSticker": this.stickerSelected.idSticker,
+        "idSticker": this.stickerSelected?.idSticker,
         "page": this.pageId,
         "slot": this.slotNumber
       };
@@ -91,7 +104,7 @@ export default {
 
       this.idRecord = newStickers.id
       this.sticker = this.getStickerUrl(this.stickerSelected)
-      this.stickerSelected = null;
+      this.stickerSelected = undefined;
       this.onModify = false;
     }
   }

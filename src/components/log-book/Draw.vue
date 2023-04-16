@@ -11,27 +11,29 @@ export default {
   emits: ['save'],
   data() {
     return {
-      drawing: false,
-      lastX: 0,
-      lastY: 0,
-      ctx: null,
-      canvasWidth: 400,
-      canvasHeight: 400,
-      color: '#000',
-      lineWidth: 5,
+      canvas: undefined as HTMLCanvasElement | undefined,
+      drawing: false as Boolean,
+      lastX: 0 as Number,
+      lastY: 0 as Number,
+      ctx: undefined as CanvasRenderingContext2D | undefined,
+      canvasWidth: 400 as Number,
+      canvasHeight: 400  as Number,
+      color: '#000' as String,
+      lineWidth: 5 as Number,
     }
   },
-  mounted() {
-    this.canvasWidth = this.$refs.canvas?.clientWidth;
-    this.canvasHeight = this.$refs.canvas?.clientHeight;
-    this.ctx = this.$refs.canvas.getContext('2d');
+mounted() {
+    this.canvas = this.$refs.canvas
+    this.canvasWidth = this.canvas.clientWidth;
+    this.canvasHeight = this.canvas.clientHeight;
+    this.ctx = this.canvas.getContext('2d');
     this.ctx.lineJoin = 'round';
     this.ctx.lineCap = 'round';
     this.ctx.lineWidth = this.lineWidth;
 
-    this.rect = this.$refs.canvas.getBoundingClientRect();
-    this.scaleX = this.$refs.canvas.width / this.rect.width;
-    this.scaleY = this.$refs.canvas.height / this.rect.height;
+    this.rect = this.canvas.getBoundingClientRect();
+    this.scaleX = this.canvas.width / this.rect.width;
+    this.scaleY = this.canvas.height / this.rect.height;
 
     this.onResize = this.onResize.bind(this)
     window.addEventListener('resize', this.onResize)
@@ -67,7 +69,7 @@ export default {
       this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     },
     validate() {
-      const dataUrl = this.$refs.canvas.toDataURL();
+      const dataUrl = this.canvas.toDataURL();
       this.$emit('save', dataUrl)
     }
   }

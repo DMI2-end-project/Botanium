@@ -1,23 +1,23 @@
 <template>
   <div>
-    <video ref="next" width="100" muted autoplay="autoplay">
+    <video ref="next" width="100" muted autoplay>
         <source src="./../../assets/log-book/next.mp4" type="video/mp4">
     </video>
-    <video ref="previous" width="100" muted autoplay="autoplay">
+    <video ref="previous" width="100" muted autoplay>
         <source src="./../../assets/log-book/previous.mp4" type="video/mp4">
     </video>
-    <video ref="open" width="100" muted autoplay="autoplay">
+    <video ref="open" width="100" muted autoplay>
         <source src="./../../assets/log-book/open.mp4" type="video/mp4">
     </video>
     <div class="content">
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
         <div ref="pageLeft" class="page page-left flex">
-          <p class="fixed -bottom-6">page {{ (page % 2) + page - 1 }}</p>
+          <p class="absolute -bottom-6">page {{ (page % 2) + page - 1 }}</p>
           <button v-if="lastPage === (page % 2) + page - 1" class="m-auto" @click="addPage">+</button>
           <PageContent v-else-if="pagesContent[(page % 2) + page - 2]" :content="pagesContent[(page % 2) + page - 2]" @onModify="onModify = $event" />
         </div>
         <div ref="pageRight" class="page page-right flex">
-          <p class="fixed -bottom-6">page {{ (page % 2) + page }}</p>
+          <p class="absolute -bottom-6">page {{ (page % 2) + page }}</p>
           <button v-if="lastPage === (page % 2) + page" class="m-auto" @click="addPage">+</button>
           <PageContent v-else-if="pagesContent[(page % 2) + page - 1]" :content="pagesContent[(page % 2) + page - 1]" @onModify="onModify = $event" />
         </div>
@@ -34,6 +34,15 @@
 import PageContent from './PageContent.vue';
 import AddPage from './AddPage.vue';
 import {DatabaseManagerInstance} from "./../../common/DatabaseManager";
+import Client from 'pocketbase';
+
+interface PageData {
+  id: string;
+  collectionId: string;
+  file: File;
+  pageNumber: number;
+  template: number;
+}
 
 export default {
   name: "BookComponent",
@@ -43,63 +52,69 @@ export default {
   },
   data: () => {
     return {
-      pb: DatabaseManagerInstance.pb,
-      lastPage: 1,
-      page: 1,
-      isBookOpen: false,
-      onPageAdd: false,
-      onModify: false,
-      pagesContent: {
-      }
+      pb: DatabaseManagerInstance.pb as Client,
+      lastPage: 1 as Number,
+      page: 1 as Number,
+      isBookOpen: false as Boolean,
+      onPageAdd: false as Boolean,
+      onModify: false as Boolean,
+      pagesContent: [] as Array<PageData> | undefined,
+      openVideo:  undefined as HTMLVideoElement | undefined,
+      nextVideo:  undefined as HTMLVideoElement | undefined,
+      previousVideo:  undefined as HTMLVideoElement | undefined,
+      buttonOpen:  undefined as HTMLButtonElement | undefined,
+      pageLeft:  undefined as HTMLElement | undefined,
+      pageRight:  undefined as HTMLElement | undefined,
     }
   },
-  async mounted () {
-    this.$refs.open.pause();
+  async mounted() {
+    this.openVideo = this.$refs.open as HTMLVideoElement;
+    this.nextVideo = this.$refs.next as HTMLVideoElement;
+    this.previousVideo = this.$refs.previous as HTMLVideoElement;
+    this.buttonOpen = this.$refs.buttonOpen as HTMLButtonElement;
+    this.pageLeft = this.$refs.pageLeft as HTMLElement;
+    this.pageRight = this.$refs.pageRight as HTMLElement;
+    this.openVideo?.pause();
     this.pagesContent = await this.pb.collection('page').getFullList()
-    this.pagesContent.sort((a, b) => (a.pageNumber > b.pageNumber) ? 1 : ((b.pageNumber > a.pageNumber) ? -1 : 0))
+    this.pagesContent.sort((a:PageData, b:PageData) => (a.pageNumber > b.pageNumber) ? 1 : ((b.pageNumber > a.pageNumber) ? -1 : 0))
     this.lastPage = this.page = this.pagesContent.length + 1
   },
   methods: {
     openTheBook () {
-      this.$refs.open.play();
-      this.$refs.buttonOpen.classList.add("disable");
+      this.openVideo?.play();
+      this.buttonOpen?.classList.add("disable");
       this.isBookOpen = true;
       this.updateContentPage(2400, 0);
     },
     nextPage () {
-      this.$refs.next.play();
-      this.$refs.next.classList.add("first");
-      this.$refs.previous.classList.remove("first");
-      this.$refs.open.classList.remove("first");
+      this.nextVideo?.play();
+      this.nextVideo?.classList.add("first");
+      this.previousVideo?.classList.remove("first");
+      this.openVideo?.classList.remove("first");
       this.updateContentPage(1200, +2);
 
     },
     previousPage () {
-      this.$refs.previous.play();
-      this.$refs.previous.classList.add("first");
-      this.$refs.next.classList.remove("first");
-      this.$refs.open.classList.remove("first");
+      this.previousVideo?.play();
+      this.previousVideo?.classList.add("first");
+      this.nextVideo?.classList.remove("first");
+      this.openVideo?.classList.remove("first");
       this.updateContentPage(1200, -2);
     },
-    updateContentPage (timeout, delta) {
-      this.$refs.pageLeft.classList.remove("page-active");
-      this.$refs.pageRight.classList.remove("page-active");
+    updateContentPage (timeout:number, delta:number) {
+      this.pageLeft?.classList.remove("page-active");
+      this.pageRight?.classList.remove("page-active");
       setTimeout(() => {
-        this.$refs.pageLeft.classList.add("page-active");
-        this.$refs.pageRight.classList.add("page-active");
-        this.page += delta
+        this.pageLeft?.classList.add("page-active");
+        this.pageRight?.classList.add("page-active");
+        this.page = this.page + delta
       }, timeout)
     },
     addPage() {
       this.onPageAdd = true
     },
-    async onCloseAddPage(n) {
+    async onCloseAddPage(n:number) {
       this.onPageAdd = false
-      this.pagesContent[this.lastPage] = {
-        idTemplate: n,
-        content: {
-        }
-      };
       await this.pb.collection('page').create({
         "pageNumber": this.lastPage,
         "template": n,
@@ -107,7 +122,7 @@ export default {
         "stickers": null
       });
       this.pagesContent = await this.pb.collection('page').getFullList()
-      this.pagesContent.sort((a, b) => (a.pageNumber > b.pageNumber) ? 1 : ((b.pageNumber > a.pageNumber) ? -1 : 0))
+      this.pagesContent.sort((a:PageData, b:PageData) => (a.pageNumber > b.pageNumber) ? 1 : ((b.pageNumber > a.pageNumber) ? -1 : 0))
       this.lastPage = this.pagesContent.length + 1
     }
   },

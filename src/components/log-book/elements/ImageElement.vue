@@ -1,5 +1,5 @@
 <template>
-  <button class="image-element w-full h-full bg-gray-100 p-0" :class="classProperty + ' ' + (image ? 'bg-transparent' : '')" @click="modify">
+  <button class="image-element h-full bg-gray-100 p-0" :class="classProperty + ' ' + (image ? 'bg-transparent' : '')" @click="modify">
     <div v-if="image" class="relative flex justify-center max-w-full max-h-full" :style="'transform: rotate(' + rotate + 'deg)'">
       <div class="w-16 h-4 bg-purple-600/75 absolute -top-2 z-10"></div>
       <img :src="image" class="image max-h-full max-w-full object-contain bg-white border-4 border-white drop-shadow-lg">
@@ -26,7 +26,17 @@
 </template>
 
 <script lang="ts">
+import { classProperty } from "@babel/types";
+import Client from "pocketbase";
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
+
+interface PhotoData {
+  id: string;
+  collectionId: string;
+  file: File;
+  slot: number;
+  page: string;
+}
 
 export default {
   name: "ImageElementComponent",
@@ -51,22 +61,23 @@ export default {
   emits: ['onModify'],
   data: () => {
     return {
-      pb: DatabaseManagerInstance.pb,
-      image: '',
-      idRecord: null,
-      onModify: false,
-      imageList: [],
-      imageSelected: null,
-      rotate: 0,
+      pb: DatabaseManagerInstance.pb as Client,
+      image: '' as string,
+      idRecord: undefined as string | undefined,
+      onModify: false as Boolean,
+      imageList: [] as Array<PhotoData>,
+      imageSelected: undefined as PhotoData | undefined,
+      rotate: 0 as number,
     }
   },
   mounted() {
+    console.log('page="' + this.pageId + '" && slot=' + this.slotNumber + '')
     this.pb.collection('photo').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then(result => {
       this.idRecord = result.id
       this.updateRotate()
       this.image = this.getImageUrl(result);
     }).catch(error => {
-      console.error(error.message)
+      // console.error(error.message)
     })
   },
   watch: {
@@ -80,13 +91,13 @@ export default {
       this.pb.collection('photo').getFullList(200 /* batch size */, {
         sort: '-created',
         filter: 'page = ""',
-      }).then(result => {
-        this.imageList = result
+      }).then((result:Array<PhotoData>) => {
+        this.imageList = result as Array<PhotoData>
       }).catch(error => {
         // console.error(error.message)
       })
     },
-    changeImage(image) {
+    changeImage(image:PhotoData) {
       this.imageSelected = image
       this.image = this.getImageUrl(this.imageSelected)
       this.updateRotate()
@@ -94,7 +105,7 @@ export default {
     updateRotate() {
       this.rotate = (Math.random() - 0.5) * 10;
     },
-    getImageUrl(data) {
+    getImageUrl(data:PhotoData):string {
       return this.$pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file
     },
     async saveData() {
@@ -108,16 +119,16 @@ export default {
         "slot": 0
       };
 
-      await this.pb.collection('photo').update(this.imageSelected.id, data);
+      await this.pb.collection('photo').update((this.imageSelected as PhotoData).id, data);
 
       if (this.idRecord) {
         await this.pb.collection('photo').update(this.idRecord, dataDelete);
       }
 
-      this.idRecord = this.imageSelected.id
-      this.image = this.getImageUrl(this.imageSelected)
-      this.imageSelected = null
-      this.onModify = false;
+      this.idRecord = this.imageSelected?.id
+      this.image = this.getImageUrl(this.imageSelected as PhotoData)
+      this.imageSelected = undefined
+      this.onModify = false
     }
   }
 };

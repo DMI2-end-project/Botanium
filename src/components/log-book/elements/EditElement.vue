@@ -1,5 +1,5 @@
 <template>
-  <button class="edit-element w-full h-full p-0" :class="classProperty + ' ' + (text || drawUrl ? 'bg-transparent' : 'bg-gray-100')" @click="onModify = true">
+  <button class="edit-element w-full p-0" :class="classProperty + ' ' + (text || drawUrl ? 'bg-transparent' : 'bg-gray-100')" @click="onModify = true">
     <p v-if="!text && !drawUrl">edit</p>
     <div v-if="text" class="flex flex-col justify-between h-full bg-gray-200 p-4 drop-shadow-lg">
       <p class="text-xs text-left">{{ text }}</p>
@@ -34,8 +34,26 @@
 </template>
 
 <script lang="ts">
+import Client from "pocketbase";
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import Draw from "./../Draw.vue"
+
+interface TextData {
+  id: string;
+  content: string;
+  slot: number;
+  page: string;
+  signature: string;
+}
+
+interface DrawData {
+  id: string;
+  collectionId: string;
+  file: File;
+  slot: number;
+  page: string;
+  signature: string;
+}
 
 export default {
   name: "EditElementComponent",
@@ -59,33 +77,33 @@ export default {
   emits: ['onModify'],
   data: () => {
     return {
-      pb: DatabaseManagerInstance.pb,
-      onModify: false,
-      onWrite: false,
-      onDraw: false,
-      onSignature: false,
-      text: '',
-      signature: '',
-      draw: '',
-      drawUrl: '',
-      idRecordText: null,
-      idRecordDraw: null,
+      pb: DatabaseManagerInstance.pb as Client,
+      onModify: false as Boolean,
+      onWrite: false as Boolean,
+      onDraw: false as Boolean,
+      onSignature: false as Boolean,
+      text: '' as string,
+      signature: '' as string,
+      draw: undefined as File | undefined,
+      drawUrl: '' as string,
+      idRecordText: undefined as string | undefined,
+      idRecordDraw: undefined as string | undefined,
     }
   },
   watch: {
-    onModify(value) {
+    onModify(value:Boolean) {
       this.$emit('onModify', value)
     }
   },
   mounted() {
-    this.pb.collection('text').getFirstListItem('page="'+ this.pageId +'" && slot=' + this.slotNumber + '').then(result => {
+    this.pb.collection('text').getFirstListItem('page="'+ this.pageId +'" && slot=' + this.slotNumber + '').then((result:TextData) => {
       this.text = result.content
       this.signature = result.signature
       this.idRecordText = result.id
     }).catch(error => {
       // console.error(error.message)
     })
-    this.pb.collection('drawing').getFirstListItem('page="'+ this.pageId +'" && slot=' + this.slotNumber + '').then(result => {
+    this.pb.collection('drawing').getFirstListItem('page="'+ this.pageId +'" && slot=' + this.slotNumber + '').then((result:DrawData) => {
       this.drawUrl = this.getImageUrl(result)
       this.signature = result.signature
       this.idRecordDraw = result.id
@@ -111,27 +129,28 @@ export default {
         }
         if (this.idRecordDraw) {
           await this.pb.collection('drawing').delete(this.idRecordDraw);
-          this.idRecordDraw = null
+          this.idRecordDraw = undefined
           this.drawUrl = ''
         }
       } else if (this.onDraw) {
-        const formData = new FormData();
-        formData.append('file', this.draw);
-        formData.append('slot', this.slotNumber);
-        formData.append('page', this.pageId);
-        formData.append('signature', this.signature);
+        const formData:FormData = new FormData();
+        formData.append('file', this.draw as File);
+        formData.append('slot', this.slotNumber.toString());
+        formData.append('page', this.pageId as string);
+        formData.append('signature', this.signature as string);
 
         if (!this.idRecordDraw) {
-          const newDraw = await this.pb.collection('drawing').create(formData)
+          const newDraw:DrawData = await this.pb.collection('drawing').create(formData)
           this.idRecordDraw = newDraw.id
           this.drawUrl = this.getImageUrl(newDraw)
         } else {
-          const newDraw = await this.pb.collection('drawing').update(this.idRecordDraw, formData)
+          const newDraw:DrawData = await this.pb.collection('drawing').update(this.idRecordDraw as string, formData)
           this.drawUrl = this.getImageUrl(newDraw)
         }
+
         if (this.idRecordText) {
-          await this.pb.collection('text').delete(this.idRecordText);
-          this.idRecordText = null
+          await this.pb.collection('text').delete(this.idRecordText as string);
+          this.idRecordText = undefined
           this.text = ''
         }
       }
@@ -141,23 +160,19 @@ export default {
       this.onModify = false;
       this.onSignature = false;
     },
-    saveDraw(e) {
+    saveDraw(data:string) {
       this.onSignature = true
 
-      const byteCharacters = atob(e.split(',')[1]);
-      const byteNumbers = new Array(byteCharacters.length);
+      const byteCharacters:string = atob(data.split(',')[1]);
+      const byteNumbers:Array<any> = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
-      const byteArray = new Uint8Array(byteNumbers);
-
-      // Créer un objet Blob à partir du tableau d'octets
-      const blob = new Blob([byteArray], { type: 'image/png' });
-
-      // Créer un objet File à partir du Blob
+      const byteArray:Uint8Array = new Uint8Array(byteNumbers);
+      const blob:Blob = new Blob([byteArray], { type: 'image/png' });
       this.draw = new File([blob], 'image.png', { type: 'image/png' });
     },
-    getImageUrl(data) {
+    getImageUrl(data:DrawData):string {
       return this.$pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file
     },
   }

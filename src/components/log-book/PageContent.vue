@@ -1,5 +1,5 @@
 <template>
-  <div class="page-content">
+  <div v-if="!unMounted" class="page-content">
     <Template1 v-if="content?.template === 1" :page-content="content" @onModify="$emit('onModify', $event)" />
     <Template2 v-if="content?.template === 2" :page-content="content" @onModify="$emit('onModify', $event)" />
     <Template3 v-if="content?.template === 3" :page-content="content" @onModify="$emit('onModify', $event)" />
@@ -24,9 +24,19 @@ export default {
       default: null
     }
   },
+  watch: {
+    content: {
+      handler() {
+        this.unMounted = true
+        setTimeout(() => {this.unMounted = false}, 0)
+      },
+      deep: true
+    }
+  },
   emits: ['onModify'],
   data: () => {
     return {
+      unMounted: false
     }
   },
   mounted() {
