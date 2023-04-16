@@ -72,7 +72,7 @@ export default {
   },
   mounted() {
     console.log('page="' + this.pageId + '" && slot=' + this.slotNumber + '')
-    this.pb.collection('photo').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then(result => {
+    this.pb.collection('photo').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then((result:PhotoData) => {
       this.idRecord = result.id
       this.updateRotate()
       this.image = this.getImageUrl(result);

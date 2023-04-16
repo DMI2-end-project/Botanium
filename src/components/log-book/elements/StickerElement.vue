@@ -13,7 +13,7 @@
             <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
               <div v-for="index in numberStickers" :v-bind="index" class="w-32 h-32 flex justify-center items-center">
                 <button @click="changeSticker(index % 3 + 1)" class="p-0 overflow-hidden rounded-full">
-                  <img :src="getStickerUrl({idSticker: index % 3 + 1})" class="object-contain w-full h-full pointer-events-none">
+                  <img :src="getStickerUrl(index % 3 + 1)" class="object-contain w-full h-full pointer-events-none">
                 </button>
               </div>
             </div>
@@ -71,14 +71,14 @@ export default {
   mounted() {
     this.pb.collection('sticker').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then((result:StickerData) => {
       this.idRecord = result.id
-      this.sticker = this.getStickerUrl(result);
+      this.sticker = this.getStickerUrl(result.idSticker);
     }).catch(error => {
       // console.error(error.message)
     })
   },
   methods: {
-    getStickerUrl(data:StickerData):string {
-      return './stickers/' + data.idSticker + '.svg'
+    getStickerUrl(idSticker:number):string {
+      return './stickers/' + idSticker + '.svg'
     },
     changeSticker(index:number) {
       this.stickerSelected = {
@@ -87,7 +87,7 @@ export default {
         page: 0,
         slot: '0'
       } as StickerData;
-      this.sticker = this.getStickerUrl(this.stickerSelected)
+      this.sticker = this.getStickerUrl(this.stickerSelected.idSticker)
     },
     async saveData() {
       const data = {
@@ -103,7 +103,7 @@ export default {
       }
 
       this.idRecord = newStickers.id
-      this.sticker = this.getStickerUrl(this.stickerSelected)
+      this.sticker = this.getStickerUrl(this.stickerSelected.idSticker)
       this.stickerSelected = undefined;
       this.onModify = false;
     }
