@@ -1,15 +1,13 @@
 <template>
-  <v-layout>
-    <v-main>
-      <div class="flex fixed z-20 w-full left-0 p-4">
-        <div>Auth state : {{ pb.authStore.isValid }}, Socket state : {{ store.connected }},
-          RoomID : {{ store.roomId }}, Role : {{ store.role }}</div>
-        <button @click="disconnect" class="ml-auto block">Déconnexion</button>
-      </div>
-      <!--The <slot> element is a slot outlet that indicates where the "VIEW" content should be rendered.-->
-      <slot></slot>
-    </v-main>
-  </v-layout>
+  <main>
+    <div class="flex fixed z-20 w-full left-0 p-4">
+      <div>Auth state : {{ pb.authStore.isValid }}, Socket state : {{ store.connected }},
+        RoomID : {{ store.roomId }}, Role : {{ store.role }}</div>
+      <button @click="disconnect" class="ml-auto block">Déconnexion</button>
+    </div>
+    <!--The <slot> element is a slot outlet that indicates where the "VIEW" content should be rendered.-->
+    <slot></slot>
+  </main>
 </template>
 
 <script lang="ts">

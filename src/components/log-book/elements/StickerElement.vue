@@ -43,6 +43,7 @@ export default {
       default: false
     }
   },
+  emits: ['onModify'],
   data: () => {
     return {
       pb: DatabaseManagerInstance.pb,
@@ -64,7 +65,7 @@ export default {
       this.idRecord = result.id
       this.sticker = this.getStickerUrl(result);
     }).catch(error => {
-      console.error(error.message)
+      // console.error(error.message)
     })
   },
   methods: {
@@ -84,11 +85,8 @@ export default {
 
       const newStickers = await this.pb.collection('sticker').create(data);
 
-      console.log(this.idRecord)
-
       if (this.idRecord) {
-        const toto = await this.pb.collection('sticker').delete(this.idRecord);
-        console.log('delete', toto)
+        await this.pb.collection('sticker').delete(this.idRecord);
       }
 
       this.idRecord = newStickers.id

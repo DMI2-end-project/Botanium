@@ -32,6 +32,7 @@ export default {
       default: null
     }
   },
+  emits: ['onModify'],
   data: () => {
     return {
     }

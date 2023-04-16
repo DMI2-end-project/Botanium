@@ -48,6 +48,7 @@ export default {
       default: false
     }
   },
+  emits: ['onModify'],
   data: () => {
     return {
       pb: DatabaseManagerInstance.pb,
@@ -82,7 +83,7 @@ export default {
       }).then(result => {
         this.imageList = result
       }).catch(error => {
-        console.error(error.message)
+        // console.error(error.message)
       })
     },
     changeImage(image) {

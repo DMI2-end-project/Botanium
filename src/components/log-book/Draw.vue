@@ -6,8 +6,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
+  emits: ['save'],
   data() {
     return {
       drawing: false,
@@ -68,11 +69,6 @@ export default {
     validate() {
       const dataUrl = this.$refs.canvas.toDataURL();
       this.$emit('save', dataUrl)
-      // console.log(dataUrl)
-      // const link = document.createElement('a');
-      // link.href = dataUrl;
-      // link.download = 'my_drawing.png';
-      // link.click();
     }
   }
 }

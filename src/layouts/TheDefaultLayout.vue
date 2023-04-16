@@ -7,9 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <v-layout>
-        <v-main>
-            <slot></slot>
-        </v-main>
-    </v-layout>
+    <main>
+        <slot></slot>
+    </main>
 </template>

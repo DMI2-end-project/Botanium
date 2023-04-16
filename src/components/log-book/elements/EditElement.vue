@@ -56,6 +56,7 @@ export default {
       default: null
     },
   },
+  emits: ['onModify'],
   data: () => {
     return {
       pb: DatabaseManagerInstance.pb,
@@ -82,14 +83,14 @@ export default {
       this.signature = result.signature
       this.idRecordText = result.id
     }).catch(error => {
-      console.error(error.message)
+      // console.error(error.message)
     })
     this.pb.collection('drawing').getFirstListItem('page="'+ this.pageId +'" && slot=' + this.slotNumber + '').then(result => {
       this.drawUrl = this.getImageUrl(result)
       this.signature = result.signature
       this.idRecordDraw = result.id
     }).catch(error => {
-      console.error(error.message)
+      // console.error(error.message)
     })
   },
   methods: {
@@ -134,7 +135,6 @@ export default {
           this.text = ''
         }
       }
-
 
       this.onWrite = false;
       this.onDraw = false;

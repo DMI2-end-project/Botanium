@@ -11,7 +11,6 @@
     </video>
     <div class="content">
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
-        {{  onModify }}
         <div ref="pageLeft" class="page page-left flex">
           <p class="fixed -bottom-6">page {{ (page % 2) + page - 1 }}</p>
           <button v-if="lastPage === (page % 2) + page - 1" class="m-auto" @click="addPage">+</button>
