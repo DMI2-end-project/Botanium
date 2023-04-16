@@ -10,16 +10,17 @@
         <source src="./../../assets/log-book/open.mp4" type="video/mp4">
     </video>
     <div class="content">
-      <div class="book-content">
+      <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
+        {{  onModify }}
         <div ref="pageLeft" class="page page-left flex">
           <p class="fixed -bottom-6">page {{ (page % 2) + page - 1 }}</p>
           <button v-if="lastPage === (page % 2) + page - 1" class="m-auto" @click="addPage">+</button>
-          <PageContent v-else-if="pagesContent[(page % 2) + page - 2]" :content="pagesContent[(page % 2) + page - 2]"/>
+          <PageContent v-else-if="pagesContent[(page % 2) + page - 2]" :content="pagesContent[(page % 2) + page - 2]" @onModify="onModify = $event" />
         </div>
         <div ref="pageRight" class="page page-right flex">
           <p class="fixed -bottom-6">page {{ (page % 2) + page }}</p>
           <button v-if="lastPage === (page % 2) + page" class="m-auto" @click="addPage">+</button>
-          <PageContent v-else-if="pagesContent[(page % 2) + page - 1]" :content="pagesContent[(page % 2) + page - 1]"/>
+          <PageContent v-else-if="pagesContent[(page % 2) + page - 1]" :content="pagesContent[(page % 2) + page - 1]" @onModify="onModify = $event" />
         </div>
       </div>
       <button class="open" ref="buttonOpen" @click="openTheBook">Ouvrir le livre</button>
@@ -48,23 +49,7 @@ export default {
       page: 1,
       isBookOpen: false,
       onPageAdd: false,
-      // pagesContent: {
-      //   1: {
-      //     idTemplate: 1,
-      //     content: {
-      //     }
-      //   },
-      //   2: {
-      //     idTemplate: 2,
-      //     content: {
-      //     }
-      //   },
-      //   3: {
-      //     idTemplate: 3,
-      //     content: {
-      //     }
-      //   }
-      // }
+      onModify: false,
       pagesContent: {
       }
     }
@@ -126,7 +111,7 @@ export default {
       this.pagesContent.sort((a, b) => (a.pageNumber > b.pageNumber) ? 1 : ((b.pageNumber > a.pageNumber) ? -1 : 0))
       this.lastPage = this.pagesContent.length + 1
     }
-  }
+  },
 };
 </script>
 
@@ -143,10 +128,9 @@ video {
 video.first {
   z-index: 2;
 }
-
 .content {
   position: fixed;
-  z-index: 10;
+  z-index: 20;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -182,7 +166,6 @@ button.previous {
 
 .book-content {
   position: absolute;
-  z-index: 5;
   width: 100vw;
   height: 0;
   padding-bottom: 56.5%;

@@ -1,8 +1,8 @@
 <template>
   <div class="page-content">
-    <Template1 v-if="content?.template === 1" :page-content="content" />
-    <Template2 v-if="content?.template === 2" :page-content="content" />
-    <Template3 v-if="content?.template === 3" :page-content="content" />
+    <Template1 v-if="content?.template === 1" :page-content="content" @onModify="$emit('onModify', $event)" />
+    <Template2 v-if="content?.template === 2" :page-content="content" @onModify="$emit('onModify', $event)" />
+    <Template3 v-if="content?.template === 3" :page-content="content" @onModify="$emit('onModify', $event)" />
   </div>
 </template>
 
