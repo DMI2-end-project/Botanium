@@ -7,9 +7,9 @@ const store = useStore();
 <template>
   <div>
     <h1>Dashboard</h1>
-    <router-link :to="{ path: 'game/'+ store.fullGameId}">Let's play !</router-link>
+    <router-link :to="{ path: 'game/'+ store.fullGameId}" class="mt-8 block">Let's play !</router-link>
     <br>
-    <router-link :to="{ name: 'LogBook'}">Carnet de bord</router-link>
+    <router-link :to="{ name: 'LogBook'}"  class="block">Carnet de bord</router-link>
     <!-- query: { id: store.fullGameId }} -->
   </div>
 </template>
