@@ -92,7 +92,6 @@ export default {
       this.previousVideo?.classList.remove("first");
       this.openVideo?.classList.remove("first");
       this.updateContentPage(1200, +2);
-
     },
     previousPage () {
       this.previousVideo?.play();
@@ -105,9 +104,11 @@ export default {
       this.pageLeft?.classList.remove("page-active");
       this.pageRight?.classList.remove("page-active");
       setTimeout(() => {
+        this.page = this.page + delta
+      }, timeout/2)
+      setTimeout(() => {
         this.pageLeft?.classList.add("page-active");
         this.pageRight?.classList.add("page-active");
-        this.page = this.page + delta
       }, timeout)
     },
     addPage() {
