@@ -10,6 +10,7 @@ import {registerLayouts} from './layouts/register';
 
 
 const app = createApp(App);
+app.config.globalProperties.$pocketBaseUrl = "https://pocketbase-dmi2.fly.dev/"
 
 export const pinia = createPinia();
 app.use(pinia);

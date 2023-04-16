@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-main>
-      <div class="mb-8 flex">
+      <div class="flex fixed z-20 w-full left-0 p-4">
         <div>Auth state : {{ pb.authStore.isValid }}, Socket state : {{ store.connected }},
           RoomID : {{ store.roomId }}, Role : {{ store.role }}</div>
         <button @click="disconnect" class="ml-auto block">Déconnexion</button>

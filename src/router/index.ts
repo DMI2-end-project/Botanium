@@ -3,6 +3,7 @@ import Home from "../pages/Home.vue";
 import Login from "../pages/Login.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import Game from "../pages/Game.vue";
+import LogBook from "../pages/LogBook.vue";
 import {useStore} from "../stores/main";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import GameMaster from "../pages/GameMaster.vue";
@@ -39,6 +40,14 @@ const config: RouterOptions = {
       name: 'Game',
       path: '/game/:id',
       component: Game,
+      meta: {
+        layout: 'Dev',
+      },
+    },
+    {
+      name: 'LogBook',
+      path: '/carnet-de-bord',
+      component: LogBook,
       meta: {
         layout: 'Dev',
       },
