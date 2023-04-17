@@ -11,7 +11,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import gameData from "../../../assets/game-data/game-data.json";
 
 export default defineComponent({
   name: 'BarComponent',
@@ -19,12 +18,16 @@ export default defineComponent({
     teamId: {
       type: String,
       default: "1",
+    },
+    gameData: {
+      type: Object,
+      default: {},
     }
   },
   data () {
     return {
       publicPath: window.location.origin,
-      text: gameData[this.$route.params.id].gameContent[this.$props.teamId].instruction,
+      text: this.gameData[this.$route.params.id as string].gameContent[this.$props.teamId].instruction,
     }
   },
 });

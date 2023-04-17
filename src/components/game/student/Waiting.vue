@@ -14,7 +14,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import gameData from "../../../assets/game-data/game-data.json";
 
 export default defineComponent({
   name: 'WaitingComponent',
@@ -22,19 +21,22 @@ export default defineComponent({
     teamId: {
       type: String,
       default: "1",
+    },
+    gameData: {
+      type: Object,
+      default: {},
     }
   },
   data () {
     return {
-      gameData: gameData as GameData,
       publicPath: window.location.origin as string,
-      text: gameData[this.$route.params.id].gameContent[this.$props.teamId].congratulation,
-      icon: gameData[this.$route.params.id].gameContent[this.$props.teamId].congratulationIcon,
-      waitingMessage: gameData[this.$route.params.id].waitingMessage
+      text: this.gameData[this.$route.params.id as string].gameContent[this.$props.teamId].congratulation,
+      icon: this.gameData[this.$route.params.id as string].gameContent[this.$props.teamId].congratulationIcon,
+      waitingMessage: this.gameData[this.$route.params.id as string].waitingMessage
     }
   },
   mounted() {
-    console.log(gameData[this.$route.params.id].gameContent[this.$props.teamId])
+    console.log(this.gameData[this.$route.params.id as string].gameContent[this.$props.teamId])
   }
 });
 </script>

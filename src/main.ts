@@ -17,9 +17,12 @@ export const pinia = createPinia();
 app.use(pinia);
 initClient();
 DatabaseManagerInstance.pb;
-
 const store = useStore();
-await store.fetchRoles();
+
+async function fetch() {
+  await store.fetchRoles();
+}
+fetch();
 
 app.use(router);
 

@@ -1,8 +1,8 @@
 <template>
   <div class="bg-gray-100">
-    <Instruction v-if="step === 0" />
-    <InGame v-if="step === 1" :teamId="teamId" @validated="validated" />
-    <Waiting v-if="step === 2" :teamId="teamId" />
+    <Instruction v-if="step === 0" :gameData="gameData" />
+    <InGame v-if="step === 1" :teamId="teamId" @validated="validated" :gameData="gameData" />
+    <Waiting v-if="step === 2" :teamId="teamId" :gameData="gameData" />
   </div>
 </template>
 
@@ -13,6 +13,8 @@ import {EVENT} from "../../../common/Constants";
 import Instruction from "./../Instruction.vue";
 import InGame from "./InGame.vue";
 import Waiting from "./Waiting.vue";
+import type { GameData } from '../../../common/Interfaces';
+import gameData from "./../../../assets/game-data/game-data.json";
 
 export default defineComponent({
   name: 'InGameComponent',
@@ -21,6 +23,7 @@ export default defineComponent({
     InGame,
     Waiting
   },
+  emits: ['validated'],
   props: {
     teamId: {
       type: String,
@@ -30,7 +33,8 @@ export default defineComponent({
   data () {
     return {
       socket: getSocket(),
-      step: 0
+      gameData: gameData as GameData,
+      step: 0 as number
     }
   },
   mounted() {

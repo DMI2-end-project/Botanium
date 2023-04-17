@@ -40,4 +40,45 @@ interface PhotoData {
   page: string;
 }
 
-export type { PageData, TextData, DrawData, StickerData, PhotoData };
+// Game Data
+
+interface GameData {
+  '00101': _00101;
+  '00102': _00102;
+}
+
+interface _00102 {
+}
+
+interface _00101 {
+  gameType: string;
+  instructionTitle: string;
+  instructionText: string;
+  congratulation: string;
+  waitingMessage: string;
+  gameContent: GameContent;
+}
+
+interface GameContent {
+  '1': _1;
+  '2': _1;
+}
+
+interface _1 {
+  instruction: string;
+  congratulation: string;
+  congratulationIcon: string;
+  answers: Answer[];
+}
+
+interface Answer {
+  isValid: boolean;
+  feedback?: string;
+  icon: string;
+  text: string;
+  isClicked: boolean;
+  status: string;
+}
+
+
+export type { PageData, TextData, DrawData, StickerData, PhotoData, GameData, Answer };

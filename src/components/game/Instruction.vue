@@ -10,9 +10,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import gameData from "./../../assets/game-data/game-data.json";
 import { getSocket } from "../../client";
-import {EVENT} from "../../common/Constants";
+import { EVENT } from "../../common/Constants";
 
 export default defineComponent({
   name: 'InstructionComponent',
@@ -20,13 +19,17 @@ export default defineComponent({
     isTeacher: {
       type: Boolean,
       default: false,
+    },
+    gameData: {
+      type: Object,
+      default: {},
     }
   },
   data() {
     return {
       socket: getSocket(),
-      title: gameData[this.$route.params.id].instructionTitle,
-      text: gameData[this.$route.params.id].instructionText
+      title: this.gameData[this.$route.params.id as string].instructionTitle as string,
+      text: this.gameData[this.$route.params.id as string].instructionText as string
     }
   },
   methods: {

@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import gameData from "../../../../assets/game-data/game-data.json";
+import type { Answer } from '../../../../common/Interfaces'
 
 export default defineComponent({
   name: 'GameViewComponent',
@@ -22,23 +22,30 @@ export default defineComponent({
     teamId: {
       type: String,
       default: "1",
+    },
+    gameData: {
+      type: Object,
+      default: {},
     }
   },
   data () {
     return {
       publicPath: window.location.origin,
-      answers: gameData[this.$route.params.id].gameContent[this.$props.teamId].answers,
-      currentAnswer: null,
+      answers: this.gameData[this.$route.params.id as string].gameContent[this.$props.teamId].answers,
+      currentAnswer: {} as Answer,
     }
   },
   methods: {
-    itemSelected(e) {
-      this.answers.forEach((answer: Object) => {
+    itemSelected(e:Event) {
+      this.answers.forEach((answer: Answer) => {
         answer.isClicked = false
         answer.status = ""
       });
-      this.answers[e.target.dataset.id].isClicked = true
-      this.currentAnswer = this.answers[e.target.dataset.id]
+      const target = e.target as HTMLElement;
+      if (target.dataset?.id != null) {
+        this.answers[target.dataset.id].isClicked = true
+        this.currentAnswer = this.answers[target.dataset.id]
+      }
     },
     itemValidated() {
       this.currentAnswer.status = this.currentAnswer.isValid ? 'valid' : 'error'

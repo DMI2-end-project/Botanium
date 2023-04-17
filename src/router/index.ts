@@ -6,7 +6,6 @@ import Game from "../pages/Game.vue";
 import LogBook from "../pages/LogBook.vue";
 import {useStore} from "../stores/main";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import GameMaster from "../pages/GameMaster.vue";
 import {ROLE} from "../common/Constants";
 
 const config: RouterOptions = {
