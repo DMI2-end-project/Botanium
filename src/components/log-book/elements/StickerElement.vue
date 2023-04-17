@@ -59,7 +59,7 @@ export default {
       idRecord: undefined as string | undefined,
       onModify: false as boolean,
       stickerList: [] as Array<StickerData>,
-      stickerSelected: undefined as StickerData | undefined,
+      stickerSelected: {} as StickerData,
       numberStickers: 3 * 10 as number
     }
   },
