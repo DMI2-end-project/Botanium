@@ -27,16 +27,9 @@
 
 <script lang="ts">
 import { classProperty } from "@babel/types";
-import Client from "pocketbase";
+import Client, { Record } from "pocketbase";
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
-
-interface PhotoData {
-  id: string;
-  collectionId: string;
-  file: File;
-  slot: number;
-  page: string;
-}
+import type { PhotoData } from './../../../common/Interfaces'
 
 export default {
   name: "ImageElementComponent",
@@ -59,6 +52,7 @@ export default {
     }
   },
   emits: ['onModify'],
+  inject: ['pocketBaseUrl'],
   data: () => {
     return {
       pb: DatabaseManagerInstance.pb as Client,
@@ -71,8 +65,7 @@ export default {
     }
   },
   mounted() {
-    console.log('page="' + this.pageId + '" && slot=' + this.slotNumber + '')
-    this.pb.collection('photo').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then((result:PhotoData) => {
+    this.pb.collection('photo').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then((result:Record) => {
       this.idRecord = result.id
       this.updateRotate()
       this.image = this.getImageUrl(result);
@@ -91,8 +84,17 @@ export default {
       this.pb.collection('photo').getFullList(200 /* batch size */, {
         sort: '-created',
         filter: 'page = ""',
-      }).then((result:Array<PhotoData>) => {
-        this.imageList = result as Array<PhotoData>
+      }).then((result: Array<Record>) => {
+        result.forEach((r: Record) => {
+          const data: PhotoData = {
+            id: r.id,
+            collectionId: r.collectionId,
+            file: r.file,
+            slot: r.slot,
+            page: r.page,
+          }
+          this.imageList.push(data)
+        })
       }).catch(error => {
         // console.error(error.message)
       })
@@ -105,8 +107,8 @@ export default {
     updateRotate() {
       this.rotate = (Math.random() - 0.5) * 10;
     },
-    getImageUrl(data:PhotoData):string {
-      return this.$pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file
+    getImageUrl(data:PhotoData | Record):string {
+      return this.pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file
     },
     async saveData() {
       const data = {

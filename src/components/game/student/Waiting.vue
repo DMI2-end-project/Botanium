@@ -26,7 +26,8 @@ export default defineComponent({
   },
   data () {
     return {
-      publicPath: window.location.origin,
+      gameData: gameData as GameData,
+      publicPath: window.location.origin as string,
       text: gameData[this.$route.params.id].gameContent[this.$props.teamId].congratulation,
       icon: gameData[this.$route.params.id].gameContent[this.$props.teamId].congratulationIcon,
       waitingMessage: gameData[this.$route.params.id].waitingMessage

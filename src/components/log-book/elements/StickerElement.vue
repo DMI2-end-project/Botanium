@@ -6,7 +6,7 @@
     </button>
     <div v-if="onModify" class="fixed z-40 w-screen h-screen top-0 left-0 flex items-end">
       <div class="relative h-5/6 mt-auto w-fit flex items-center" :class="isPageLeft ? 'ml-auto' : 'mr-auto'">
-        <button v-if="stickerSelected" @click="saveData" class="absolute z-10 h-24 w-24 rounded-full top-0 bottom-0 my-auto h-fit" :class="isPageLeft ? '-left-12' : '-right-12'">Valider</button>
+        <button v-if="stickerSelected.idSticker >= 0" @click="saveData" class="absolute z-10 h-24 w-24 rounded-full top-0 bottom-0 my-auto h-fit" :class="isPageLeft ? '-left-12' : '-right-12'">Valider</button>
         <div class="bg-white p-8 h-full" :class="isPageLeft ? '' : 'scroll-left'">
           <div class="overflow-y-scroll h-full">
             <p>Les autocollants du jardin</p>
@@ -25,15 +25,9 @@
 </template>
 
 <script lang="ts">
-import Client from "pocketbase";
+import Client, { Record } from "pocketbase";
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
-
-interface StickerData {
-  id: string;
-  page: number;
-  slot: string;
-  idSticker: number;
-}
+import type { StickerData } from './../../../common/Interfaces'
 
 export default {
   name: "StickerElementComponent",
@@ -69,7 +63,7 @@ export default {
     }
   },
   mounted() {
-    this.pb.collection('sticker').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then((result:StickerData) => {
+    this.pb.collection('sticker').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then((result:Record) => {
       this.idRecord = result.id
       this.sticker = this.getStickerUrl(result.idSticker);
     }).catch(error => {
@@ -80,13 +74,9 @@ export default {
     getStickerUrl(idSticker:number):string {
       return './stickers/' + idSticker + '.svg'
     },
-    changeSticker(index:number) {
-      this.stickerSelected = {
-        idSticker: index,
-        id: '',
-        page: 0,
-        slot: '0'
-      } as StickerData;
+    changeSticker(index: number) {
+      this.stickerSelected = this.getEmptyStickerData();
+      this.stickerSelected.idSticker = index;
       this.sticker = this.getStickerUrl(this.stickerSelected.idSticker)
     },
     async saveData() {
@@ -104,8 +94,16 @@ export default {
 
       this.idRecord = newStickers.id
       this.sticker = this.getStickerUrl(this.stickerSelected.idSticker)
-      this.stickerSelected = undefined;
+      this.stickerSelected = this.getEmptyStickerData();
       this.onModify = false;
+    },
+    getEmptyStickerData():StickerData {
+      return{
+        idSticker: -1,
+        id: '',
+        page: 0,
+        slot: '0'
+      } as StickerData;
     }
   }
 };

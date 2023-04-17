@@ -35,14 +35,7 @@ import PageContent from './PageContent.vue';
 import AddPage from './AddPage.vue';
 import {DatabaseManagerInstance} from "./../../common/DatabaseManager";
 import Client from 'pocketbase';
-
-interface PageData {
-  id: string;
-  collectionId: string;
-  file: File;
-  pageNumber: number;
-  template: number;
-}
+import type { PageData } from './../../common/Interfaces'
 
 export default {
   name: "BookComponent",

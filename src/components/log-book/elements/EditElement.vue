@@ -34,26 +34,10 @@
 </template>
 
 <script lang="ts">
-import Client from "pocketbase";
+import Client, { Record } from "pocketbase";
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import Draw from "./../Draw.vue"
-
-interface TextData {
-  id: string;
-  content: string;
-  slot: number;
-  page: string;
-  signature: string;
-}
-
-interface DrawData {
-  id: string;
-  collectionId: string;
-  file: File;
-  slot: number;
-  page: string;
-  signature: string;
-}
+import type { TextData, DrawData } from './../../../common/Interfaces'
 
 export default {
   name: "EditElementComponent",
@@ -75,6 +59,7 @@ export default {
     },
   },
   emits: ['onModify'],
+  inject: ['pocketBaseUrl'],
   data: () => {
     return {
       pb: DatabaseManagerInstance.pb as Client,
@@ -96,15 +81,23 @@ export default {
     }
   },
   mounted() {
-    this.pb.collection('text').getFirstListItem('page="'+ this.pageId +'" && slot=' + this.slotNumber + '').then((result:TextData) => {
+    this.pb.collection('text').getFirstListItem('page="'+ this.pageId +'" && slot=' + this.slotNumber + '').then((result:Record) => {
       this.text = result.content
       this.signature = result.signature
       this.idRecordText = result.id
     }).catch(error => {
       // console.error(error.message)
     })
-    this.pb.collection('drawing').getFirstListItem('page="'+ this.pageId +'" && slot=' + this.slotNumber + '').then((result:DrawData) => {
-      this.drawUrl = this.getImageUrl(result)
+    this.pb.collection('drawing').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then((result: Record) => {
+      const data: DrawData = {
+        id: result.id,
+        collectionId: result.collectionId,
+        file: result.file,
+        slot: result.slot,
+        page: result.page,
+        signature: result.signature
+      }
+      this.drawUrl = this.getImageUrl(data)
       this.signature = result.signature
       this.idRecordDraw = result.id
     }).catch(error => {
@@ -173,7 +166,7 @@ export default {
       this.draw = new File([blob], 'image.png', { type: 'image/png' });
     },
     getImageUrl(data:DrawData):string {
-      return this.$pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file
+      return this.pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file
     },
   }
 };
