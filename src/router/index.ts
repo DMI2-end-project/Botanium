@@ -4,7 +4,7 @@ import Home from "../pages/Home.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import Story from "../pages/Story.vue";
 import Game from "../pages/Game.vue";
-import {useStore} from "../stores/main";
+import {useMainStore} from "../stores/mainStore";
 import {ROLE} from "../common/Constants";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 
@@ -57,7 +57,7 @@ const config: RouterOptions = {
 const router = createRouter(config);
 
 router.beforeEach((to, from) => {
-  const store = useStore();
+  const store = useMainStore();
   
   // Need auth to acces pages, redirect the user to the login page
   if (!DatabaseManagerInstance.pb.authStore.isValid && to.name !== 'Login') {

@@ -2,7 +2,7 @@
 import {ref} from "vue";
 import {useRouter} from "vue-router";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {useStore} from "../stores/main";
+import {useMainStore} from "../stores/mainStore";
 import {getSocket, connectClient} from "../client";
 import {ROLE} from "../common/Constants";
 
@@ -12,7 +12,7 @@ const password = ref();
 const router = useRouter();
 const pb = DatabaseManagerInstance.pb;
 
-const store = useStore();
+const store = useMainStore();
 
 // TODO : roomId from classroom
 

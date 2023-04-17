@@ -1,13 +1,20 @@
 <script setup lang="ts">
+
+/*
+  TODO :
+     - Loaders Student
+     - Loader Teacher
+*/
+
 import {onBeforeMount} from "vue";
 import { getSocket } from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import StudentStory from "./../components/story/student/StudentStory.vue";
 import TeacherStory from "./../components/story/teacher/TeacherStory.vue";
-import { useStore } from "../stores/main";
+import { useMainStore } from "../stores/mainStore";
 import {ROLE} from "../common/Constants"
 
-const store = useStore();
+const store = useMainStore();
 
 const pb = DatabaseManagerInstance.pb;
 
@@ -27,9 +34,6 @@ onBeforeMount(async () => {
 
 <template>
   <div class="w-full h-full">
-    <!-- <div>State : {{ state.connected }}, RoomID : {{ roomId }}</div>
-    <div>Game ID {{ $route.params.id }}</div> -->
-    <!-- <h1>Jeu</h1> -->
     <TeacherStory v-if="store.role === ROLE.TEACHER" />
     <StudentStory v-if="store.role === ROLE.STUDENT" />
   </div>

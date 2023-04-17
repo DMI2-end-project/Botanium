@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-gray-100">
+  <div>
+    <h1>Student Story</h1>
   </div>
 </template>
 
@@ -25,6 +26,9 @@ export default defineComponent({
     this.socket.on(EVENT.START_GAME, () => {
       this.step = 1
     })
+
+    this.socket.on(EVENT.SEND_INSTRUCTION, async (arg) => {
+    });
   },
   methods: {
     validated() {

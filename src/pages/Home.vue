@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {useStore} from "../stores/main";
+import {useMainStore} from "../stores/mainStore";
+import {onBeforeMount} from "vue";
 
 /*
 * TODO : Ecran d'accueil enfant
@@ -10,7 +11,11 @@ import {useStore} from "../stores/main";
 
 const pb = DatabaseManagerInstance.pb;
 console.log('pb', pb.authStore.model?.role);
-const store = useStore();
+const store = useMainStore();
+
+onBeforeMount(() => {
+
+})
 </script>
 
 <template>

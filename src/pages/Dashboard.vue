@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {useStore} from "../stores/main";
+import {useMainStore} from "../stores/mainStore";
 import {leading} from "../common/Lib";
 
-const store = useStore();
+const store = useMainStore();
 
 </script>
 <template>

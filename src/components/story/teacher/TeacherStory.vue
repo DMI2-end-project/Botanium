@@ -12,22 +12,27 @@
 import {defineComponent} from 'vue';
 import {getSocket} from "../../../client";
 import {EVENT} from "../../../common/Constants";
-import {useStore} from "../../../stores/main";
+import {useMainStore} from "../../../stores/mainStore";
 
 export default defineComponent({
   name: 'TeacherStoryComponent',
   components: {},
   data() {
     return {
-      socket: getSocket(),
       step: 0,
-      store: useStore()
+      socket: getSocket(),
+      store: useMainStore()
     }
   },
   mounted() {
+    console.log('store', this.store.getChapterId)
     this.socket.emit(EVENT.LAUNCH_STORY, {
       roomId: this.store.roomId,
-      gameId: this.store.getChapterId
+      chapterId: this.store.getChapterId
+    });
+
+    this.socket.on(EVENT.SEND_INSTRUCTION, async (arg) => {
+
     });
   }
 });

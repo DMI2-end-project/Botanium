@@ -12,7 +12,7 @@ export type StoreState = {
   gameId: number
 };
 
-export const useStore = defineStore('main', {
+export const useMainStore = defineStore('main', {
   state: (): StoreState => ({
     connected: false,
     roomId: undefined,

@@ -3,7 +3,7 @@
     <v-main>
       <div class="mb-8 flex">
         <div>Auth state : {{ pb.authStore.isValid }}, Socket state : {{ store.connected }},
-          RoomID : {{ store.roomId }}, Role : {{ store.role }}
+          RoomID : {{ store.roomId }}, Role : {{ store.role }}, Path : {{ router.currentRoute.path }}
         </div>
         <button @click="disconnect" class="ml-auto block">Déconnexion</button>
       </div>
@@ -17,7 +17,7 @@
 import {defineComponent} from 'vue'
 import {useRouter} from "vue-router";
 import {getSocket} from "../client";
-import {useStore} from "../stores/main";
+import {useMainStore} from "../stores/mainStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 
 
@@ -25,11 +25,14 @@ export default defineComponent({
   name: 'TheDevLayout',
   data() {
     return {
-      store: useStore(),
+      store: useMainStore(),
       router: useRouter(),
       socket: getSocket(),
       pb: DatabaseManagerInstance.pb
     }
+  },
+  mounted() {
+    console.log('router', this.router)
   },
   methods: {
     DatabaseManagerInstance() {

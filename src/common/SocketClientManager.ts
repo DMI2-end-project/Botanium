@@ -1,6 +1,6 @@
 import {io, Socket} from "socket.io-client";
 import {Store} from "pinia";
-import {StoreState, useStore} from "../stores/main";
+import {StoreState, useMainStore} from "../stores/mainStore";
 import {pinia} from "../main";
 import router from "../router";
 import {EVENT} from "./constants";
@@ -17,7 +17,7 @@ class SocketClientManager {
   });
   
   private constructor() {
-    this._store = useStore(pinia);
+    this._store = useMainStore(pinia);
     this.listen();
   }
   
@@ -64,10 +64,6 @@ class SocketClientManager {
     })
     
     this._socket.on(EVENT.END_STORY, async (arg) => {
-      // TODO :
-    })
-    
-    this._socket.on(EVENT.SEND_INSTRUCTION, async (arg) => {
       // TODO :
     })
   }
