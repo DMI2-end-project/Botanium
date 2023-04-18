@@ -56,8 +56,15 @@ const login = async () => {
       <input type="email" name="email" v-model="email" autocomplete="email">
       <label for="password">Mot de passe :</label>
       <input type="password" name="password" v-model="password" autocomplete="password">
-      <button type="submit">Se connecter</button>
+      <button type="submit" class="bg-secondary">Se connecter</button>
     </form>
+    <h1>h1 title</h1>
+    <h2>h2 title</h2>
+    <h3>h3 title</h3>
+    <h4>h4 title</h4>
+    <p class="bold">p.bold text</p>
+    <p>p text</p>
+    <a href="#">a link</a>
   </div>
 </template>
 <style scoped>
