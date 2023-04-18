@@ -9,17 +9,36 @@ const ROLE = {
 };
 
 const EVENT = {
-  LAUNCH_STORY: 'LaunchStory',
-  LAUNCH_GAME: 'LaunchGame',
-  SEND_INSTRUCTION: 'SendInstruction',
-  START_GAME: 'StartGame',
-  TEAM_VALIDATION: 'TeamValidation',
-  GAME_VALIDATION: 'GameValidation',
-  END_GAME: 'EndGame',
-  BACK_STORY: 'BackStory',
-  END_STORY: 'EndStory',
+  TOTAL_TEAMS: 'TotalTeams',
+  LAUNCH_STORY : 'LaunchStory',
+  LAUNCH_GAME : 'LaunchGame',
+  START_GAME : 'StartGame',
+  TEAM_VALIDATION : 'TeamValidation',
+  GAME_VALIDATION : 'GameValidation',
+  END_GAME : 'EndGame',
+  BACK_STORY : 'BackStory',
+  END_STORY : 'EndStory',
 };
 
+let users = 0;
+let gamemaster = undefined;
+let gamers = [];
+
+const port = 8080;
+const app = express();
+const http = createServer(app);
+const io = new Server(http, {
+  cors: {
+    origins: [`http://localhost:${port}`]
+  }
+});
+
+http.listen(port, () => {
+  console.log(`Server listening on *:${port}`);
+});
+
+
+/*  METHODS  */
 const shuffle = (array) => {
   console.log('before shuffle', array)
   let currentIndex = array.length, randomIndex;
@@ -40,28 +59,14 @@ const shuffle = (array) => {
   return array;
 }
 
-const port = 8080;
-const app = express();
-const http = createServer(app);
-const io = new Server(http, {
-  cors: {
-    origins: [`http://localhost:${port}`]
-  }
-});
 
-http.listen(port, () => {
-  console.log(`Server listening on *:${port}`);
-});
-
-let users = 0;
-let gamemaster = undefined;
-let gamers = [];
-
+/*  SOCKET  */
 io.on('connection', (socket) => {
   users += 1;
   console.log('a user connected', 'total users connected :', users);
 
   socket.on('join', (arg) => {
+    console.log('join', arg)
     // Join room
     const joinRoom = () => {
       socket.join(arg.roomId);
@@ -73,12 +78,16 @@ io.on('connection', (socket) => {
       gamemaster = socket.id;
       joinRoom()
     } else if (arg.role === ROLE.STUDENT) {
-      if (!gamers.find(gamer => gamer.id === socket.id)) {
-        gamers.push({
-          id: socket.id
-        })
+      if (!gamers.find(gamer => gamer === socket.id)) {
+        gamers.push(socket.id)
       }
       joinRoom()
+    }
+
+    if(gamemaster) {
+      io.to(gamemaster).emit(EVENT.TOTAL_TEAMS, {
+        totalTeams: gamers.length
+      })
     }
 
     console.log("users status", gamemaster, gamers);
@@ -103,20 +112,20 @@ io.on('connection', (socket) => {
   socket.on(EVENT.LAUNCH_STORY, (arg) => {
     io.to(arg.roomId).emit(EVENT.LAUNCH_STORY, {
       chapterId: arg.chapterId
-    })
+    });
   });
 
   socket.on(EVENT.LAUNCH_GAME, (arg) => {
-    let gamers = shuffle(gamers);
+    gamers = shuffle(gamers);
 
     gamers.map((gamer, index) => {
       console.log('EVENT.LAUNCH_GAME', gamer, index);
-      io.sockets.socket(gamer.id).emit(EVENT.LAUNCH_GAME, {
+      io.to(gamer).emit(EVENT.LAUNCH_GAME, {
         gameId: arg.gameId,
         teamId: index,
         totalTeams: gamers.length
-      })
-    })
+      });
+    });
 
     /*
     io.to(arg.roomId).emit(EVENT.LAUNCH_GAME, {
@@ -127,17 +136,18 @@ io.on('connection', (socket) => {
   });
 
   socket.on(EVENT.START_GAME, (arg) => {
+    console.log('EVENT.START_GAME', arg)
     io.to(arg.roomId).emit(EVENT.START_GAME)
   });
 
   socket.on(EVENT.TEAM_VALIDATION, (arg) => {
     io.to(arg.roomId).emit(EVENT.TEAM_VALIDATION, {
       teamId: arg.teamId
-    })
-  })
+    });
+  });
 
   socket.on(EVENT.GAME_VALIDATION, (arg) => {
     io.to(arg.roomId).emit(EVENT.GAME_VALIDATION)
-  })
+  });
 
 });

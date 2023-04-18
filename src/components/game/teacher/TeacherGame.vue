@@ -34,6 +34,14 @@ export default defineComponent({
       roomId: this.mainStore.roomId,
       gameId: this.mainStore.getFullGameId
     });
+
+    this.gameStore.$subscribe((mutation, state) => {
+      if (this.gameStore.totalTeamsFinished === this.gameStore.totalTeams) {
+        this.socket.emit(EVENT.GAME_VALIDATION, {
+          roomId: this.mainStore.roomId
+        })
+      }
+    });
   }
 });
 </script>

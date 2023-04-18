@@ -2,7 +2,7 @@ import {io, Socket} from "socket.io-client";
 import {pinia} from "./main";
 import router from "./router";
 import {useMainStore} from "./stores/mainStore";
-import {EVENT, ROLE} from "./common/Constants";
+import {EVENT, ROLE, STEP} from "./common/Constants";
 import {Pinia} from "pinia";
 import {useGameStore} from "./stores/gameStore";
 
@@ -35,22 +35,29 @@ export const initClient = (pinia: Pinia) => {
     console.log("join", mainStore.roomId);
   });
   
+  socket.on(EVENT.TOTAL_TEAMS, (arg) => {
+    gameStore.totalTeams = arg.totalTeams;
+  });
+  
   socket.on(EVENT.LAUNCH_STORY, async (arg) => {
-    await router.push('/histoire/' + arg.chapterId)
+    await router.push('/histoire/' + arg.chapterId);
   });
   
   socket.on(EVENT.LAUNCH_GAME, async (arg) => {
+    console.log('EVENT.LAUNCH_GAME', arg)
+    gameStore.reset();
     gameStore.teamId = arg.teamId;
     gameStore.totalTeams = arg.totalTeams;
     await router.push('/exercice/' + arg.gameId);
   });
   
   socket.on(EVENT.TEAM_VALIDATION, (arg) => {
+    console.log('EVENT.TEAM_VALIDATION')
     gameStore.totalTeamsFinished += 1;
   })
   
-  socket.on(EVENT.GAME_VALIDATION, async (arg) => {
-    // TODO :
+  socket.on(EVENT.GAME_VALIDATION, (arg) => {
+    gameStore.currentStep = STEP.END;
   })
   
   socket.on(EVENT.END_GAME, async (arg) => {
@@ -59,6 +66,7 @@ export const initClient = (pinia: Pinia) => {
   
   socket.on(EVENT.BACK_STORY, async (arg) => {
     gameStore.reset();
+    mainStore.gameId += 1;
     await router.push('/histoire/' + mainStore.getChapterId);
   })
   

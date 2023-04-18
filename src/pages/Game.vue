@@ -25,6 +25,8 @@ onBeforeMount(async () => {
   await socket.emit('join', roomId);
 });
 
+console.log('teamId', gameStore.teamId)
+
 </script>
 
 <template>

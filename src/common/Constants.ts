@@ -5,6 +5,7 @@ export enum ROLE {
 }
 
 export enum EVENT {
+  TOTAL_TEAMS = 'TotalTeams',
   LAUNCH_STORY = 'LaunchStory',
   LAUNCH_GAME = 'LaunchGame',
   START_GAME = 'StartGame',

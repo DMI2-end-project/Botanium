@@ -30,10 +30,6 @@ export default defineComponent({
       roomId: this.store.roomId,
       chapterId: this.store.getChapterId
     });
-
-    this.socket.on(EVENT.SEND_INSTRUCTION, async (arg) => {
-
-    });
   }
 });
 </script>
