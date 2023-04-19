@@ -1,8 +1,10 @@
 import {io, Socket} from "socket.io-client";
 import {pinia} from "./main";
 import router from "./router";
-import {useStore} from "./stores/main";
-import {EVENT} from "./common/Constants";
+import {useMainStore} from "./stores/mainStore";
+import {EVENT, ROLE, STEP} from "./common/Constants";
+import {Pinia} from "pinia";
+import {useGameStore} from "./stores/gameStore";
 
 
 // TODO : for production
@@ -12,61 +14,79 @@ const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-serve
 let socket: Socket;
 export const getSocket = () => socket;
 
-export const initClient = () => {
-  const store = useStore(pinia);
-
+export const initClient = (pinia: Pinia) => {
+  const mainStore = useMainStore(pinia);
+  const gameStore = useGameStore(pinia);
+  
   socket = io(URL, {
     autoConnect: false,
     rejectUnauthorized: false // WARN: please do not do this in production
   });
-
+  
   socket.on("connect", () => {
-    store.connected = true;
+    mainStore.connected = true;
   });
-
+  
   socket.on("disconnect", () => {
-    store.connected = false;
+    mainStore.connected = false;
   });
-
-  socket.on("join", (arg) => {
-    console.log("join", arg);
+  
+  socket.on("join", () => {
+    console.log("join", mainStore.roomId);
   });
-
+  
+  socket.on(EVENT.TOTAL_TEAMS, (arg) => {
+    gameStore.totalTeams = arg.totalTeams;
+  });
+  
   socket.on(EVENT.LAUNCH_STORY, async (arg) => {
-    // TODO :
+    await router.push('/histoire/' + arg.chapterId);
   });
-
-  socket.on(EVENT.START_GAME, async (arg) => {
-    await router.push('/game');
+  
+  socket.on(EVENT.LAUNCH_GAME, async (arg) => {
+    console.log('EVENT.LAUNCH_GAME', arg)
+    gameStore.reset();
+    gameStore.teamId = arg.teamId;
+    gameStore.totalTeams = arg.totalTeams;
+    await router.push('/exercice/' + arg.gameId);
   });
-
-  socket.on(EVENT.GAME_VALIDATION, async (arg) => {
-    // TODO :
+  
+  socket.on(EVENT.TEAM_VALIDATION, (arg) => {
+    console.log('EVENT.TEAM_VALIDATION')
+    gameStore.totalTeamsFinished += 1;
   })
-
+  
+  socket.on(EVENT.GAME_VALIDATION, (arg) => {
+    gameStore.currentStep = STEP.END;
+  })
+  
   socket.on(EVENT.END_GAME, async (arg) => {
     // TODO :
   })
-
+  
   socket.on(EVENT.BACK_STORY, async (arg) => {
-    // TODO :
+    gameStore.reset();
+    mainStore.gameId += 1;
+    await router.push('/histoire/' + mainStore.getChapterId);
   })
-
+  
   socket.on(EVENT.END_STORY, async (arg) => {
     // TODO :
-  })
-
-  socket.on(EVENT.SEND_INSTRUCTION, async (arg) => {
-    // TODO :
+    switch (mainStore.role) {
+      case ROLE.TEACHER:
+        await router.push('/histoire')
+      case ROLE.STUDENT:
+        await router.push('/histoire')
+    }
   })
 }
 
 export const connectClient = async () => {
-  const store = useStore(pinia);
-
+  const mainStore = useMainStore(pinia);
+  
   await socket.connect();
   await socket.emit('join', {
-    role: store.role,
-    roomId: store.roomId
+    role: mainStore.role,
+    roomId: '2023'//store.roomId
   });
 }

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import {useStore} from "../stores/main";
+import {useMainStore} from "../stores/mainStore";
+import {leading} from "../common/Lib";
 
-const store = useStore();
+const store = useMainStore();
 
 </script>
 <template>
   <div>
     <h1>Dashboard</h1>
-    <router-link :to="{ path: 'game/'+ store.fullGameId}" class="mt-8 block">Let's play !</router-link>
-    <br>
+    <router-link :to="{ path: '/histoire/'+ store.getChapterId }">Lancer le chapitre {{ store.chapterId }}</router-link>
+    <!-- query: { id: store.getFullGameId }} -->
     <router-link :to="{ name: 'LogBook'}"  class="block">Carnet de bord</router-link>
-    <!-- query: { id: store.fullGameId }} -->
   </div>
 </template>
 <style scoped>
