@@ -5,17 +5,17 @@ module.exports = {
       boxShadow: {},
       borderRadius: {},
       fontSize: {
-        xs: "12px",
-        sm: "14px",
-        md: "20px",
-        lg: "24px",
-        xl: "32px",
-        xxl: "40px",
+        xs: "0.75rem", // 12px
+        sm: "1rem", // 16px
+        md: "1.25rem", // 20px
+        lg: "1.5rem", // 24px
+        xl: "2rem", // 32px
+        xxl: "2.5rem", // 40px
       },
       fontFamily: {
         base: "Quicksand",
         title: "Apfel Grotezk",
-        handwritten: "Belle Allure CE",
+        "hand-written": "Belle Allure CE",
       },
       colors: {
         primary: "#4d6b36", // Green

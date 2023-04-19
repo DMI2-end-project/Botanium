@@ -63,6 +63,7 @@ const login = async () => {
     <h3>h3 title</h3>
     <h4>h4 title</h4>
     <p class="bold">p.bold text</p>
+    <p class="hand-written">p.hand-written text</p>
     <p>p text</p>
     <a href="#">a link</a>
   </div>
