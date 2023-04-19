@@ -1,12 +1,13 @@
 import {createRouter, createWebHistory, RouterOptions} from "vue-router";
-import Home from "../pages/Home.vue";
 import Login from "../pages/Login.vue";
+import Home from "../pages/Home.vue";
 import Dashboard from "../pages/Dashboard.vue";
+import Story from "../pages/Story.vue";
 import Game from "../pages/Game.vue";
-import LogBook from "../pages/LogBook.vue";
-import {useStore} from "../stores/main";
-import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import {useMainStore} from "../stores/mainStore";
 import {ROLE} from "../common/Constants";
+import LogBook from "../pages/LogBook.vue";
+import {DatabaseManagerInstance} from "../common/DatabaseManager";
 
 const config: RouterOptions = {
   history: createWebHistory(),
@@ -21,7 +22,7 @@ const config: RouterOptions = {
     },
     {
       name: 'Login',
-      path: '/login',
+      path: '/connexion',
       component: Login,
       meta: {
         layout: 'Dev',
@@ -29,15 +30,23 @@ const config: RouterOptions = {
     },
     {
       name: 'Dashboard',
-      path: '/dashboard',
+      path: '/tableau-de-bord',
       component: Dashboard,
       meta: {
         layout: 'Dev',
       },
     },
     {
+      name: 'Story',
+      path: '/histoire/:id', // 001
+      component: Story,
+      meta: {
+        layout: 'Dev',
+      }
+    },
+    {
       name: 'Game',
-      path: '/game/:id',
+      path: '/exercice/:id', // 00101
       component: Game,
       meta: {
         layout: 'Dev',
@@ -50,20 +59,20 @@ const config: RouterOptions = {
       meta: {
         layout: 'Dev',
       },
-    }
+    },
   ]
 }
 
 const router = createRouter(config);
 
 router.beforeEach((to, from) => {
-  const store = useStore();
-
+  const store = useMainStore();
+  
   // Need auth to acces pages, redirect the user to the login page
   if (!DatabaseManagerInstance.pb.authStore.isValid && to.name !== 'Login') {
     return {name: 'Login'}
   }
-
+  
   // TODO : not working, example : https://pinia.vuejs.org/core-concepts/outside-component-usage.html
   if (DatabaseManagerInstance.pb.authStore.isValid && to.name === 'Login') {
     let roles = DatabaseManagerInstance.roles;
@@ -77,9 +86,9 @@ router.beforeEach((to, from) => {
         return {name: 'Home'}
     }
   }
-
+  
   if (DatabaseManagerInstance.pb.authStore.isValid) {
-
+  
   }
 });
 

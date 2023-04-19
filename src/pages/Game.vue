@@ -1,36 +1,42 @@
 <script setup lang="ts">
 import {onBeforeMount} from "vue";
-import { getSocket } from "../client";
+import {useRoute, useRouter} from "vue-router";
+import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import StudentGame from "./../components/game/student/StudentGame.vue";
-import TeacherGame from "./../components/game/teacher/TeacherGame.vue";
-import { useStore } from "../stores/main";
-import {ROLE} from "../common/Constants"
+import {useMainStore} from "../stores/mainStore";
+import {useGameStore} from "../stores/gameStore";
+import {ROLE} from "../common/Constants";
 
-const store = useStore();
+import gameData from "../assets/game-data/game-data.json";
+
+import StudentGame from "../components/game/student/StudentGame.vue";
+import TeacherGame from "../components/game/teacher/TeacherGame.vue";
 
 const pb = DatabaseManagerInstance.pb;
-console.log('pb.authStore.model',pb.authStore.model)
+console.log('pb.authStore.model', pb.authStore.model)
 const roomId = 2023 //pb.authStore.model?.id
-const teamId = "2"
-const isTeacher = store.role === ROLE.TEACHER;
-// console.log(isTeacher, store.role, ROLE.TEACHER)
-const socket = getSocket()
 
-//const classId  = await pb.collection('classroom').getOne()
+const mainStore = useMainStore();
+const gameStore = useGameStore();
+const socket = getSocket();
+const router = useRouter();
+const route = useRoute();
 
 onBeforeMount(async () => {
   await socket.connect();
   await socket.emit('join', roomId);
-})
+
+  // @ts-ignore
+  gameStore.data = gameData[mainStore.getFullGameId];
+});
+
+console.log('teamId', gameStore.teamId)
+
 </script>
 
 <template>
   <div class="w-full h-full">
-    <!-- <div>State : {{ state.connected }}, RoomID : {{ roomId }}</div>
-    <div>Game ID {{ $route.params.id }}</div> -->
-    <!-- <h1>Jeu</h1> -->
-    <StudentGame v-if="store.role === ROLE.STUDENT" :teamId="teamId" />
-    <TeacherGame v-if="store.role === ROLE.TEACHER" />
+    <StudentGame v-if="mainStore.role === ROLE.STUDENT" :teamId="gameStore.teamId"/>
+    <TeacherGame v-if="mainStore.role === ROLE.TEACHER"/>
   </div>
 </template>

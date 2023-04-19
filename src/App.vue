@@ -1,6 +1,6 @@
 <script lang="ts">
 import {defineComponent} from "vue";
-import {useStore} from "./stores/main";
+import {useMainStore} from "./stores/mainStore";
 import {DatabaseManagerInstance} from "./common/DatabaseManager";
 import {ROLE} from "./common/Constants";
 import {connectClient} from "./client";
@@ -16,8 +16,9 @@ export default defineComponent({
     }
   },
   mounted() {
-    const store = useStore();
+    const store = useMainStore();
     store.roomId = this.roomId;
+    store.roleId = DatabaseManagerInstance.pb.authStore.model?.role;
 
     if (DatabaseManagerInstance.pb.authStore.isValid && store.role !== ROLE.PARENT) {
       connectClient()

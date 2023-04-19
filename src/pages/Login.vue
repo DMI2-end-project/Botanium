@@ -2,7 +2,7 @@
 import {ref} from "vue";
 import {useRouter} from "vue-router";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {useStore} from "../stores/main";
+import {useMainStore} from "../stores/mainStore";
 import {getSocket, connectClient} from "../client";
 import {ROLE} from "../common/Constants";
 
@@ -12,10 +12,9 @@ const password = ref();
 const router = useRouter();
 const pb = DatabaseManagerInstance.pb;
 
-const store = useStore();
+const store = useMainStore();
 
 // TODO : roomId from classroom
-
 
 const socket = getSocket();
 const login = async () => {
@@ -28,17 +27,22 @@ const login = async () => {
     );
 
     if (pb.authStore.isValid) {
+      store.roomId = '2023';
       store.roleId = pb.authStore.model?.role;
 
       switch (store.role) {
         case ROLE.TEACHER:
           await connectClient();
-          await router.push('/dashboard');
+          await router.push({
+            name: 'Dashboard'
+          });
           break;
         case ROLE.STUDENT:
           await connectClient();
         case ROLE.PARENT:
-          await router.push('/');
+          await router.push({
+            name: 'Home'
+          });
           break;
       }
     }

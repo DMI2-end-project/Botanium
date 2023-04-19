@@ -1,47 +1,54 @@
 <template>
-  <div class="bg-gray-100">
-    <Instruction v-if="step === 0" :gameData="gameData" />
-    <InGame v-if="step === 1" :teamId="teamId" @validated="validated" :gameData="gameData" />
-    <Waiting v-if="step === 2" :teamId="teamId" :gameData="gameData" />
+  <div class="w-full h-full border-4 border-orange-400">
+    <Instruction v-if="gameStore.currentStep === STEP.INSTRUCTION"/>
+    <InGame v-if="gameStore.currentStep === STEP.PLAY" :teamId="gameStore.teamId" @validated="validated"/>
+    <Waiting v-if="gameStore.currentStep === STEP.WAIT || gameStore.currentStep === STEP.END" :teamId="gameStore.teamId"/>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { getSocket } from "../../../client";
-import {EVENT} from "../../../common/Constants";
+import {defineComponent} from 'vue';
+import {getSocket} from "../../../client";
+import {useGameStore} from "../../../stores/gameStore";
+import {EVENT, STEP} from "../../../common/Constants";
+
 import Instruction from "./../Instruction.vue";
 import InGame from "./InGame.vue";
 import Waiting from "./Waiting.vue";
-import type { GameData } from '../../../common/Interfaces';
-import gameData from "./../../../assets/game-data/game-data.json";
 
 export default defineComponent({
   name: 'InGameComponent',
+  computed: {
+    STEP() {
+      return STEP
+    }
+  },
   components: {
     Instruction,
     InGame,
     Waiting
   },
-  emits: ['validated'],
   props: {
     teamId: {
       type: String,
       default: "1",
     }
   },
-  data () {
+  data() {
     return {
       socket: getSocket(),
-      gameData: gameData as GameData,
-      step: 0 as number
+      gameStore: useGameStore(),
+      step: 0,
     }
   },
   mounted() {
-    // this.step += 1;
+    console.log('mounted')
     this.socket.on(EVENT.START_GAME, () => {
-      this.step = 1
-    })
+      this.gameStore.currentStep = STEP.PLAY;
+    });
+    this.socket.on(EVENT.START_GAME, () => {
+      this.gameStore.currentStep = STEP.PLAY;
+    });
   },
   methods: {
     validated() {

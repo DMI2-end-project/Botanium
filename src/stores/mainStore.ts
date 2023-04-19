@@ -2,7 +2,6 @@ import {defineStore} from "pinia";
 import {Record} from "pocketbase";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {leading} from "../common/Lib";
-import * as stream from "stream";
 
 export type StoreState = {
   connected: boolean,
@@ -10,26 +9,35 @@ export type StoreState = {
   roleId: string | undefined,
   roles: Record[],
   chapterId: number
-  gameId: number
+  gameId: number,
+  totalGames: number
 };
 
-export const useStore = defineStore('main', {
+export const useMainStore = defineStore('main', {
   state: (): StoreState => ({
     connected: false,
     roomId: undefined,
     roleId: undefined,
     roles: [],
     chapterId: 1,
-    gameId: 1
+    gameId: 1,
+    totalGames: 1 // TODO : fetch from ???
   }),
   getters: {
     role(): string {
-      let role = this.roles.find(item => item.id === this.roleId);
+      let role = this.roleId ? this.roleId : DatabaseManagerInstance.pb.authStore.model?.role;
+      role = this.roles.find(item => item.id === this.roleId);
       return role ? role.name : undefined;
     },
-    fullGameId(): string {
+    getChapterId(): string {
+      return leading(this.chapterId, 3)
+    },
+    getGameId(): string {
+      return leading(this.gameId, 2)
+    },
+    getFullGameId(): string {
       return leading(this.chapterId, 3) + leading(this.gameId, 2);
-    }
+    },
   },
   actions: {
     async fetchRoles() {
