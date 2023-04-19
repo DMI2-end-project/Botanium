@@ -22,3 +22,7 @@ export enum STEP {
   WAIT,
   END
 }
+
+export enum GAMETYPE {
+  MCQ = 'multiple-choice'
+}

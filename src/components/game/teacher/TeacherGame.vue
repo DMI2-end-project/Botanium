@@ -37,6 +37,7 @@ export default defineComponent({
 
     this.gameStore.$subscribe((mutation, state) => {
       if (this.gameStore.totalTeamsFinished === this.gameStore.totalTeams) {
+        this.gameStore.currentStep = STEP.END;
         this.socket.emit(EVENT.GAME_VALIDATION, {
           roomId: this.mainStore.roomId
         })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, onMounted} from "vue";
+import {onBeforeMount} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
@@ -7,8 +7,10 @@ import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
 import {ROLE} from "../common/Constants";
 
-import StudentGame from "./../components/game/student/StudentGame.vue";
-import TeacherGame from "./../components/game/teacher/TeacherGame.vue";
+import gameData from "../assets/game-data/game-data.json";
+
+import StudentGame from "../components/game/student/StudentGame.vue";
+import TeacherGame from "../components/game/teacher/TeacherGame.vue";
 
 const pb = DatabaseManagerInstance.pb;
 console.log('pb.authStore.model', pb.authStore.model)
@@ -23,6 +25,9 @@ const route = useRoute();
 onBeforeMount(async () => {
   await socket.connect();
   await socket.emit('join', roomId);
+
+  // @ts-ignore
+  gameStore.data = gameData[mainStore.getFullGameId];
 });
 
 console.log('teamId', gameStore.teamId)

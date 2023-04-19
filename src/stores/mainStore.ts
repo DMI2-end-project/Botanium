@@ -9,7 +9,8 @@ export type StoreState = {
   roleId: string | undefined,
   roles: Record[],
   chapterId: number
-  gameId: number
+  gameId: number,
+  totalGames: number
 };
 
 export const useMainStore = defineStore('main', {
@@ -19,7 +20,8 @@ export const useMainStore = defineStore('main', {
     roleId: undefined,
     roles: [],
     chapterId: 1,
-    gameId: 1
+    gameId: 1,
+    totalGames: 1 // TODO : fetch from ???
   }),
   getters: {
     role(): string {
@@ -30,7 +32,7 @@ export const useMainStore = defineStore('main', {
     getChapterId(): string {
       return leading(this.chapterId, 3)
     },
-    getGameId(): string{
+    getGameId(): string {
       return leading(this.gameId, 2)
     },
     getFullGameId(): string {

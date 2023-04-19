@@ -51,8 +51,7 @@ const shuffle = (array) => {
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
 
   console.log('after shuffle', array)
@@ -147,7 +146,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on(EVENT.GAME_VALIDATION, (arg) => {
-    io.to(arg.roomId).emit(EVENT.GAME_VALIDATION)
+    io.in(arg.roomId).emit(EVENT.GAME_VALIDATION)
   });
 
 });
