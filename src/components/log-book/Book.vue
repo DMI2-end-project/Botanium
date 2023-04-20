@@ -73,8 +73,7 @@ export default {
     this.pageLeft = this.$refs.pageLeft as HTMLElement;
     this.pageRight = this.$refs.pageRight as HTMLElement;
     this.openVideo?.pause();
-    this.pagesContent = await this.pb.collection('page').getFullList()
-    this.pagesContent.sort((a:PageData, b:PageData) => (a.pageNumber > b.pageNumber) ? 1 : ((b.pageNumber > a.pageNumber) ? -1 : 0))
+    this.pagesContent = await DatabaseManagerInstance.fetchPages();
     this.lastPage = this.page = this.pagesContent.length + 1
   },
   methods: {
@@ -114,14 +113,8 @@ export default {
     },
     async onCloseAddPage(n:number) {
       this.onPageAdd = false
-      await this.pb.collection('page').create({
-        "pageNumber": this.lastPage,
-        "template": n,
-        "texts": null,
-        "stickers": null
-      });
-      this.pagesContent = await this.pb.collection('page').getFullList()
-      this.pagesContent.sort((a:PageData, b:PageData) => (a.pageNumber > b.pageNumber) ? 1 : ((b.pageNumber > a.pageNumber) ? -1 : 0))
+      await DatabaseManagerInstance.createPage(this.lastPage, n);
+      this.pagesContent = await DatabaseManagerInstance.fetchPages();
       this.lastPage = this.pagesContent.length + 1
     }
   },

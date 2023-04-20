@@ -1,20 +1,20 @@
 <template>
-  <button class="image-element h-full bg-gray-100 p-0" :class="classProperty + ' ' + (image ? 'bg-transparent' : '')" @click="modify">
-    <div v-if="image" class="relative flex justify-center max-w-full max-h-full" :style="'transform: rotate(' + rotate + 'deg)'">
+  <button class="image-element h-full bg-gray-100 p-0" :class="classProperty + ' ' + (photoData.id ? 'bg-transparent' : '')" @click="modify">
+    <div v-if="photoData.id" class="relative flex justify-center max-w-full max-h-full" :style="'transform: rotate(' + rotate + 'deg)'">
       <div class="w-16 h-4 bg-purple-600/75 absolute -top-2 z-10"></div>
-      <img :src="image" class="image max-h-full max-w-full object-contain bg-white border-4 border-white drop-shadow-lg">
+      <img :src="photoUrl(photoData)" class="image max-h-full max-w-full object-contain bg-white border-4 border-white drop-shadow-lg">
     </div>
-    <p v-if="!image">image</p>
+    <p v-if="!photoData.id">image</p>
   </button>
   <div v-if="onModify" class="fixed z-40 w-screen h-screen top-0 left-0 flex items-end">
       <div class="relative h-5/6 mt-auto w-fit flex items-center" :class="isPageLeft ? 'ml-auto' : 'mr-auto'">
-        <button v-if="imageSelected" @click="saveData" class="absolute z-10 h-24 w-24 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-12' : '-right-12'">Valider</button>
+        <button v-if="photoDataLast != photoData" @click="saveData" class="absolute z-10 h-24 w-24 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-12' : '-right-12'">Valider</button>
         <div class="bg-white p-8 h-full" :class="isPageLeft ? '' : 'scroll-left'">
           <div class="overflow-y-scroll h-full">
             <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
-              <div v-for="image in imageList" :v-bind="image" class="w-48 h-48 flex justify-center items-center">
-                <button @click="changeImage(image)" class="p-0 overflow-hidden">
-                  <img :src="getImageUrl(image)" class="object-contain w-full h-full pointer-events-none">
+              <div v-for="photo in photos" :v-bind="photo" class="w-48 h-48 flex justify-center items-center">
+                <button @click="changeImage(photo)" class="p-0 overflow-hidden">
+                  <img :src="photoUrl(photo)" class="object-contain w-full h-full pointer-events-none">
                 </button>
               </div>
             </div>
@@ -26,8 +26,6 @@
 </template>
 
 <script lang="ts">
-import { classProperty } from "@babel/types";
-import Client, { Record } from "pocketbase";
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import type { PhotoData } from './../../../common/Interfaces'
 
@@ -52,26 +50,19 @@ export default {
     }
   },
   emits: ['onModify'],
-  inject: ['pocketBaseUrl'],
   data: () => {
     return {
-      pb: DatabaseManagerInstance.pb as Client,
-      image: '' as string,
-      idRecord: undefined as string | undefined,
+      photoData: {} as PhotoData,
+      photoDataLast: {} as PhotoData,
       onModify: false as Boolean,
-      imageList: [] as Array<PhotoData>,
-      imageSelected: undefined as PhotoData | undefined,
+      photos: [] as Array<PhotoData>,
       rotate: 0 as number,
     }
   },
-  mounted() {
-    this.pb.collection('photo').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then((result:Record) => {
-      this.idRecord = result.id
-      this.updateRotate()
-      this.image = this.getImageUrl(result);
-    }).catch(error => {
-      // console.error(error.message)
-    })
+  async mounted() {
+    this.photoData = await DatabaseManagerInstance.fetchPhoto(this.pageId, this.slotNumber);
+    this.photoDataLast = this.photoData
+    this.updateRotate()
   },
   watch: {
     onModify(value) {
@@ -79,57 +70,32 @@ export default {
     }
   },
   methods: {
-    modify() {
-      this.onModify = true
-      this.pb.collection('photo').getFullList(200 /* batch size */, {
-        sort: '-created',
-        filter: 'page = ""',
-      }).then((result: Array<Record>) => {
-        result.forEach((r: Record) => {
-          const data: PhotoData = {
-            id: r.id,
-            collectionId: r.collectionId,
-            file: r.file,
-            slot: r.slot,
-            page: r.page,
-          }
-          this.imageList.push(data)
-        })
-      }).catch(error => {
-        // console.error(error.message)
-      })
+    photoUrl(data: PhotoData):string {
+      return DatabaseManagerInstance.getImageUrl(data)
     },
-    changeImage(image:PhotoData) {
-      this.imageSelected = image
-      this.image = this.getImageUrl(this.imageSelected)
+    async modify() {
+      this.onModify = true
+      this.photos = await DatabaseManagerInstance.fetchPhotos('page = ""')
+    },
+    changeImage(photo: PhotoData) {
+      this.photoData = photo
       this.updateRotate()
     },
     updateRotate() {
       this.rotate = (Math.random() - 0.5) * 10;
     },
-    getImageUrl(data:PhotoData | Record):string {
-      return this.pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file
-    },
     async saveData() {
-      const data = {
-        "page": this.pageId,
-        "slot": this.slotNumber
-      };
-
-      const dataDelete = {
-        "page": "",
-        "slot": 0
-      };
-
-      await this.pb.collection('photo').update((this.imageSelected as PhotoData).id, data);
-
-      if (this.idRecord) {
-        await this.pb.collection('photo').update(this.idRecord, dataDelete);
+      if (this.photoDataLast.id !== '') {
+        this.photoDataLast.page = '';
+        this.photoDataLast.slot = 0;
+        await DatabaseManagerInstance.updatePhoto(this.photoDataLast)
       }
 
-      this.idRecord = this.imageSelected?.id
-      this.image = this.getImageUrl(this.imageSelected as PhotoData)
-      this.imageSelected = undefined
+      this.photoData.page = this.pageId;
+      this.photoData.slot = this.slotNumber;
+      this.photoData = await DatabaseManagerInstance.updatePhoto(this.photoData)
+      this.photoDataLast = this.photoData
+
       this.onModify = false
     }
   }
