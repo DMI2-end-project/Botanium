@@ -8,6 +8,7 @@ import {useMainStore} from "../stores/mainStore";
 import {ROLE} from "../common/Constants";
 import LogBook from "../pages/LogBook.vue";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import Stories from "../pages/Stories.vue";
 
 const config: RouterOptions = {
   history: createWebHistory(),
@@ -35,6 +36,14 @@ const config: RouterOptions = {
       meta: {
         layout: 'Dev',
       },
+    },
+    {
+      name: 'Stories',
+      path: '/histoire',
+      component: Stories,
+      meta: {
+        layout: 'Dev',
+      }
     },
     {
       name: 'Story',

@@ -1,16 +1,17 @@
 <template>
   <div class="border-4 border-green-400">
-    <Instruction :show="gameStore.currentStep === STEP.INSTRUCTION" :isTeacher="true"/>
+    <InGame v-show="gameStore.currentStep === STEP.PLAY" :teamId="gameStore.teamId" @validated="validated"/>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue'
 import {getSocket} from "../../../client";
-import {EVENT, STEP} from "../../../common/Constants";
-import Instruction from "../Instruction.vue";
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
+import {EVENT, STEP} from "../../../common/Constants";
+
+import InGame from "./InGame.vue";
 
 export default defineComponent({
   name: 'InGameComponent',
@@ -20,7 +21,7 @@ export default defineComponent({
     }
   },
   components: {
-    Instruction
+    InGame
   },
   data() {
     return {

@@ -10,26 +10,32 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {defineComponent} from 'vue'
+import {useGameStore} from "../../../stores/gameStore";
 
 export default defineComponent({
-  name: 'BarComponent',
+  name: 'GameHeaderComponent',
   props: {
     teamId: {
       type: String,
       default: "1",
     },
-    gameData: {
-      type: Object,
-      default: {},
-    }
+
   },
-  data () {
+  data() {
     return {
+      gameStore: useGameStore(),
       publicPath: window.location.origin,
-      text: this.gameData[this.$route.params.id as string].gameContent[this.$props.teamId].instruction,
     }
   },
+  computed: {
+    text() {
+      if (this.gameStore.teamId) {
+        console.log('GameHeader computed', this.gameStore.data.gameContent[this.gameStore.teamId])
+        return this.gameStore.data.gameContent[this.gameStore.teamId].instruction
+      }
+    }
+  }
 });
 </script>
 
