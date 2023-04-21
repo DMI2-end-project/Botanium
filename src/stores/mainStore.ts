@@ -8,8 +8,8 @@ export type StoreState = {
   roomId: string | undefined,
   roleId: string | undefined,
   roles: Record[],
-  chapterId: number
-  gameId: number,
+  chapterId: number | undefined
+  gameId: number | undefined,
   totalGames: number
 };
 
@@ -19,8 +19,8 @@ export const useMainStore = defineStore('main', {
     roomId: undefined,
     roleId: undefined,
     roles: [],
-    chapterId: 1,
-    gameId: 1,
+    chapterId: undefined,
+    gameId: undefined,
     totalGames: 1 // TODO : fetch from ???
   }),
   getters: {
@@ -29,19 +29,32 @@ export const useMainStore = defineStore('main', {
       role = this.roles.find(item => item.id === this.roleId);
       return role ? role.name : undefined;
     },
-    getChapterId(): string {
-      return leading(this.chapterId, 3)
+    getChapterId(): string|undefined {
+      if (this.chapterId) {
+        return leading(this.chapterId, 3)
+      }
     },
-    getGameId(): string {
-      return leading(this.gameId, 2)
+    getGameId(): string|undefined {
+      if (this.gameId) {
+        return leading(this.gameId, 2)
+      }
     },
-    getFullGameId(): string {
-      return leading(this.chapterId, 3) + leading(this.gameId, 2);
+    getFullGameId(): string|undefined {
+      if (this.chapterId && this.gameId) {
+        return leading(this.chapterId, 3) + leading(this.gameId, 2);
+      }
     },
   },
   actions: {
     async fetchRoles() {
       this.roles = await DatabaseManagerInstance.fetchRoles();
+    },
+    reset() {
+      this.connected = false;
+      this.roomId = undefined;
+      this.roleId = undefined;
+      this.chapterId = undefined;
+      this.gameId = undefined;
     }
   }
 })

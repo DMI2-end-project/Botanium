@@ -12,23 +12,39 @@ export default defineComponent({
   components: {TheAppLayout, TheDevLayout},
   data() {
     return {
-      roomId: '2023'
+      mainStore: useMainStore()
     }
   },
   mounted() {
-    const store = useMainStore();
-    store.roomId = this.roomId;
-    store.roleId = DatabaseManagerInstance.pb.authStore.model?.role;
+    this.mainStore.roleId = DatabaseManagerInstance.pb.authStore.model?.role;
 
-    if (DatabaseManagerInstance.pb.authStore.isValid && store.role !== ROLE.PARENT) {
-      connectClient()
+    if (DatabaseManagerInstance.pb.authStore.isValid) {
+      this.connectSocket()
+    }
+  },
+  methods: {
+    async connectSocket() {
+      let classRoom = undefined;
+      console.log('app role', DatabaseManagerInstance.pb.authStore.model?.role, this.mainStore.roleId)
+
+      switch (this.mainStore.role) {
+        case ROLE.TEACHER:
+          classRoom = await DatabaseManagerInstance.pb.collection('classroom').getFirstListItem(`owner="${DatabaseManagerInstance.pb.authStore.model?.id}"`);
+          this.mainStore.roomId = classRoom?.id;
+          await connectClient();
+          break;
+        case ROLE.STUDENT:
+          classRoom = await DatabaseManagerInstance.pb.collection('classroom').getFirstListItem(`students.id="${DatabaseManagerInstance.pb.authStore.model?.id}"`);
+          this.mainStore.roomId = classRoom?.id;
+          await connectClient();
+          break;
+      }
     }
   }
 });
 </script>
 
 <template>
-  <!-- <router-view/> -->
   <TheAppLayout>
     <router-view/>
   </TheAppLayout>

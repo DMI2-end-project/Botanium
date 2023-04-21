@@ -10,19 +10,18 @@ const ROLE = {
 
 const EVENT = {
   TOTAL_TEAMS: 'TotalTeams',
-  LAUNCH_STORY : 'LaunchStory',
-  LAUNCH_GAME : 'LaunchGame',
-  START_GAME : 'StartGame',
-  TEAM_VALIDATION : 'TeamValidation',
-  GAME_VALIDATION : 'GameValidation',
-  END_GAME : 'EndGame',
-  BACK_STORY : 'BackStory',
-  END_STORY : 'EndStory',
+  LAUNCH_STORY: 'LaunchStory',
+  LAUNCH_GAME: 'LaunchGame',
+  START_GAME: 'StartGame',
+  TEAM_VALIDATION: 'TeamValidation',
+  GAME_VALIDATION: 'GameValidation',
+  END_GAME: 'EndGame',
+  BACK_STORY: 'BackStory',
+  END_STORY: 'EndStory',
 };
 
 let users = 0;
-let gamemaster = undefined;
-let gamers = [];
+let rooms = [];
 
 const port = 8080;
 const app = express();
@@ -66,46 +65,53 @@ io.on('connection', (socket) => {
 
   socket.on('join', (arg) => {
     console.log('join', arg)
+
     // Join room
-    const joinRoom = () => {
-      socket.join(arg.roomId);
-      io.to(arg.roomId).emit("join");
+    socket.join(arg.roomId);
+    io.to(arg.roomId).emit("join");
+
+    let gamemaster = undefined;
+    let gamers = [];
+
+    if (arg.role && arg.role === ROLE.TEACHER) {
+      gamemaster = socket.id
+    } else if (arg.role && arg.role === ROLE.STUDENT) {
+      gamers.push(socket.id)
     }
 
     // Set roles
-    if (arg.role === ROLE.TEACHER) {
-      gamemaster = socket.id;
-      joinRoom()
-    } else if (arg.role === ROLE.STUDENT) {
-      if (!gamers.find(gamer => gamer === socket.id)) {
-        gamers.push(socket.id)
-      }
-      joinRoom()
-    }
-
-    if(gamemaster) {
-      io.to(gamemaster).emit(EVENT.TOTAL_TEAMS, {
-        totalTeams: gamers.length
+    let index = rooms.findIndex(room => room.id === arg.roomId);
+    if (index < 0) {
+      rooms.push({
+        id: arg.roomId,
+        gamemaster,
+        gamers,
       })
+    } else {
+      if (rooms[index] && !rooms[index].gamers.find(gamer => gamer === socket.id)) {
+        rooms[index].gamers.push(socket.id)
+      }
     }
 
-    console.log("users status", gamemaster, gamers);
+    io.to(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
+      totalTeams: rooms[index >= 0 ? index : rooms.length - 1].gamers.length
+    })
   })
 
   socket.on('disconnect', () => {
     users -= 1;
     console.log('user disconnected', 'total users connected :', users);
 
-    if (socket.id === gamemaster) {
-      gamemaster = undefined;
-    } else {
-      let index = gamers.indexOf(socket.id);
-      if (index) {
-        gamers.splice(index, 1);
-      }
-    }
-
-    console.log("users status", gamemaster, gamers)
+    // TODO remove of room
+    // TODO remove empty rooms
+    //if (socket.id === gamemaster) {
+    //  gamemaster = undefined;
+    //} else {
+    //  let index = gamers.indexOf(socket.id);
+    //  if (index) {
+    //    gamers.splice(index, 1);
+    //  }
+    //}
   });
 
   socket.on(EVENT.LAUNCH_STORY, (arg) => {
@@ -115,16 +121,20 @@ io.on('connection', (socket) => {
   });
 
   socket.on(EVENT.LAUNCH_GAME, (arg) => {
-    gamers = shuffle(gamers);
+    let room = rooms.find(room => room.id === arg.roomId);
 
-    gamers.map((gamer, index) => {
-      console.log('EVENT.LAUNCH_GAME', gamer, index);
-      io.to(gamer).emit(EVENT.LAUNCH_GAME, {
-        gameId: arg.gameId,
-        teamId: index,
-        totalTeams: gamers.length
+    if (room) {
+      let gamers = shuffle(room.gamers);
+
+      gamers.map((gamer, index) => {
+        console.log('EVENT.LAUNCH_GAME', gamer, index);
+        io.to(gamer).emit(EVENT.LAUNCH_GAME, {
+          gameId: arg.gameId,
+          teamId: index,
+          totalTeams: gamers.length
+        });
       });
-    });
+    }
 
     /*
     io.to(arg.roomId).emit(EVENT.LAUNCH_GAME, {

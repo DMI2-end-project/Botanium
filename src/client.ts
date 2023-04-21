@@ -87,6 +87,6 @@ export const connectClient = async () => {
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,
-    roomId: '2023'//store.roomId
+    roomId: mainStore?.roomId
   });
 }

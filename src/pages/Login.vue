@@ -27,17 +27,22 @@ const login = async () => {
     );
 
     if (pb.authStore.isValid) {
-      store.roomId = '2023';
+      let classRoom = undefined; // TODO add active=true state in request
       store.roleId = pb.authStore.model?.role;
+      console.log('login role', pb.authStore.model?.role, store.roleId)
 
       switch (store.role) {
         case ROLE.TEACHER:
+          classRoom = await pb.collection('classroom').getFirstListItem(`owner="${pb.authStore.model?.id}"`);
+          store.roomId = classRoom?.id;
           await connectClient();
           await router.push({
             name: 'Dashboard'
           });
           break;
         case ROLE.STUDENT:
+          classRoom = await pb.collection('classroom').getFirstListItem(`students.id="${pb.authStore.model?.id}"`);
+          store.roomId = classRoom?.id;
           await connectClient();
         case ROLE.PARENT:
           await router.push({
@@ -45,6 +50,7 @@ const login = async () => {
           });
           break;
       }
+
     }
   } catch (e) {
     console.log('error', e)
