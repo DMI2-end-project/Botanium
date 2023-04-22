@@ -20,7 +20,8 @@ export enum STEP {
   INSTRUCTION,
   PLAY,
   WAIT,
-  END
+  END,
+  CONGRATS
 }
 
 export enum GAMETYPE {

@@ -8,7 +8,7 @@ const props = defineProps(['chapterId']);
 </script>
 <template>
   <router-link :to="{ path: '/histoire/'+ mainStore.getChapterId }"
-               class="inline-block bg-white rounded-md p-2">
+               class="inline-block bg-beige rounded-md p-2">
     Chapitre {{ chapterId }}
   </router-link>
 </template>

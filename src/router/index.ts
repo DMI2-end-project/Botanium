@@ -9,6 +9,7 @@ import {ROLE} from "../common/Constants";
 import LogBook from "../pages/LogBook.vue";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import Stories from "../pages/Stories.vue";
+import Dev from "../pages/Dev.vue";
 
 const config: RouterOptions = {
   history: createWebHistory(),
@@ -69,6 +70,14 @@ const config: RouterOptions = {
         layout: 'Dev',
       },
     },
+    {
+      name: 'Dev',
+      path: '/dev',
+      component: Dev,
+      meta: {
+        layout: 'Dev',
+      }
+    }
   ]
 }
 

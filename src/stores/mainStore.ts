@@ -16,11 +16,11 @@ export type StoreState = {
 export const useMainStore = defineStore('main', {
   state: (): StoreState => ({
     connected: false,
-    roomId: undefined,
+    roomId: '2023',
     roleId: undefined,
     roles: [],
-    chapterId: undefined,
-    gameId: undefined,
+    chapterId: 1,
+    gameId: 1,
     totalGames: 1 // TODO : fetch from ???
   }),
   getters: {
@@ -54,7 +54,7 @@ export const useMainStore = defineStore('main', {
       this.roomId = undefined;
       this.roleId = undefined;
       this.chapterId = undefined;
-      this.gameId = undefined;
+      this.gameId = 1;
     }
   }
 })

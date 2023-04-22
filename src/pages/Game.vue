@@ -12,6 +12,7 @@ import gameData from "../assets/game-data/game-data.json";
 import StudentGame from "../components/game/student/StudentGame.vue";
 import TeacherGame from "../components/game/teacher/TeacherGame.vue";
 import Instruction from "../components/game/Instruction.vue";
+import Congratulation from "../components/game/Congratulation.vue";
 
 const pb = DatabaseManagerInstance.pb;
 console.log('pb.authStore.model', pb.authStore.model)
@@ -39,9 +40,10 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="w-full h-full">
-    <Instruction v-show="gameStore.currentStep === STEP.INSTRUCTION"/>
-    <StudentGame v-if="mainStore.role === ROLE.STUDENT" :teamId="gameStore.teamId"/>
-    <TeacherGame v-if="mainStore.role === ROLE.TEACHER"/>
+  <div class="w-full h-full bg-green-medium grid grid-cols-12 text-center">
+    <Instruction v-show="gameStore.currentStep === STEP.INSTRUCTION" class=" col-start-3 col-span-8"/>
+    <StudentGame v-show="mainStore.role === ROLE.STUDENT" :teamId="gameStore.teamId"/>
+    <TeacherGame v-show="mainStore.role === ROLE.TEACHER"/>
+    <Congratulation v-show="gameStore.currentStep === STEP.CONGRATS" class=" col-start-3 col-span-8"/>
   </div>
 </template>

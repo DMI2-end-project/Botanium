@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-gray-100 flex p-6 text-black">
     <h1>Student Story</h1>
   </div>
 </template>
@@ -10,7 +10,7 @@ import { getSocket } from "../../../client";
 import {EVENT} from "../../../common/Constants";
 
 export default defineComponent({
-  name: 'InGameComponent',
+  name: 'InGame',
   components: {
   },
   props: {
@@ -24,15 +24,12 @@ export default defineComponent({
   mounted() {
     // this.step += 1;
     this.socket.on(EVENT.START_GAME, () => {
-      this.step = 1
+      this.step = 1;
     })
-
-    this.socket.on(EVENT.SEND_INSTRUCTION, async (arg) => {
-    });
   },
   methods: {
     validated() {
-      this.$emit('validated')
+      this.$emit('validated');
       this.step += 1;
     }
   }

@@ -1,16 +1,16 @@
 <template>
-  <div>
-    <div class="flex flex-wrap justify-between items-center">
-      <div v-for="(answer, index) in answers" :v-bind="index" class="w-1/2 p-5">
-        <button class="w-max-content h-full w-full p-20 flex flex-col items-center" :data-id="index"
-                :class="answer.status == 'error' ? 'bg-red-300' : (answer.status == 'valid' ? 'bg-green-300' : (answer.isClicked ? 'bg-gray-200' : 'bg-white'))"
-                @click="itemSelected">
-          <img :src="publicPath + '/src/assets' + answer.icon" alt="" class="w-10 h-10 pointer-events-none">
-          <p class="mt-5 pointer-events-none">{{ answer.text }}</p>
-        </button>
-      </div>
-      <button class="mx-auto my-5" @click="itemValidated">Valider</button>
+  <div class="relative grid grid-cols-12">
+    <div class="col-start-2 col-span-10 grid grid-cols-2 gap-x-10 gap-y-12">
+{{ answers}}
+      <button v-for="(answer, index) in answers" :v-bind="index" :data-id="index" @click="itemSelected"
+              class="bg-beige rounded-md shadow-md w-max-content h-full w-full p-20 flex flex-col items-center text-center text-green gap-5"
+              :class="answer.status == 'error' ? 'bg-red-300' : (answer.status == 'valid' ? 'bg-green-300' : (answer.isClicked ? 'bg-gray-200' : 'bg-beige'))">
+        <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
+             class="w-16 aspect-square pointer-events-none">
+        <p class="mt-5 pointer-events-none">{{ answer.text }}</p>
+      </button>
     </div>
+    <button class="col-span-12 mx-auto my-5" @click="itemValidated">Valider</button>
   </div>
 </template>
 
@@ -21,12 +21,6 @@ import {useGameStore} from "../../../../stores/gameStore";
 
 export default defineComponent({
   name: 'GameViewComponent',
-  props: {
-    teamId: {
-      type: String,
-      default: "1",
-    }
-  },
   data() {
     return {
       publicPath: window.location.origin,
@@ -45,21 +39,20 @@ export default defineComponent({
   methods: {
     itemSelected(e: Event) {
       this.answers.forEach((answer: Answer) => {
-        answer.isClicked = false
-        answer.status = ""
+        answer.isClicked = false;
+        answer.status = "";
       });
       const target = e.target as HTMLElement;
       if (target.dataset?.id != null) {
-        this.answers[target.dataset.id].isClicked = true
-        this.currentAnswer = this.answers[target.dataset.id]
+        this.answers[target.dataset.id].isClicked = true;
+        this.currentAnswer = this.answers[target.dataset.id];
       }
     },
     itemValidated() {
-      this.currentAnswer.status = this.currentAnswer.isValid ? 'valid' : 'error'
+      this.currentAnswer.status = this.currentAnswer.isValid ? 'valid' : 'error';
       if (this.currentAnswer.status === 'valid') {
         setTimeout(() => {
           this.$emit('validated');
-          console.log('1')
         }, 500)
       }
     }

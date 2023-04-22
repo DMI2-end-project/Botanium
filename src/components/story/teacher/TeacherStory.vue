@@ -29,10 +29,10 @@ export default defineComponent({
   },
   mounted() {
     console.log('store', this.store.getChapterId)
-    this.socket.emit(EVENT.LAUNCH_STORY, {
-      roomId: this.store.roomId,
-      chapterId: this.store.getChapterId
-    });
+    //this.socket.emit(EVENT.LAUNCH_STORY, {
+    //  roomId: this.store.roomId,
+    //  chapterId: this.store.getChapterId
+    //});
   }
 });
 </script>

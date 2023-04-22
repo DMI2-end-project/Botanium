@@ -11,6 +11,7 @@ module.exports = {
         lg: "24px",
         xl: "32px",
         xxl: "40px",
+        '2xl': "80px",
       },
       fontFamily: {
         base: "Quicksand",

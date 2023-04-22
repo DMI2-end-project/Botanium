@@ -61,12 +61,14 @@ export const initClient = (pinia: Pinia) => {
   })
   
   socket.on(EVENT.END_GAME, async (arg) => {
-    // TODO :
+    gameStore.currentStep = STEP.CONGRATS;
   })
   
   socket.on(EVENT.BACK_STORY, async (arg) => {
     gameStore.reset();
-    mainStore.gameId += 1;
+    if (mainStore.gameId) {
+      mainStore.gameId += 1;
+    }
     await router.push('/histoire/' + mainStore.getChapterId);
   })
   
@@ -74,9 +76,9 @@ export const initClient = (pinia: Pinia) => {
     // TODO :
     switch (mainStore.role) {
       case ROLE.TEACHER:
-        await router.push('/histoire')
+        await router.push('/histoire');
       case ROLE.STUDENT:
-        await router.push('/histoire')
+        await router.push('/histoire');
     }
   })
 }

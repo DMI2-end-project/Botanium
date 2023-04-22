@@ -1,7 +1,5 @@
 <template>
-  <div class="border-4 border-green-400">
-    <InGame v-show="gameStore.currentStep === STEP.PLAY" :teamId="gameStore.teamId" @validated="validated"/>
-  </div>
+  <InGame v-show="gameStore.currentStep === STEP.PLAY"/>
 </template>
 
 <script lang="ts">

@@ -1,19 +1,19 @@
 <template>
-  <div class="bg-gray-100">
-    <GameBar :teamId="teamId"/>
-    <component v-bind:is="GameView" :teamId="teamId" @validated="validated"/>
+  <div>
+    <GameHeader/>
+    <component v-bind:is="GameView"/>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent} from 'vue';
 import {getSocket} from "../../../client";
-import {EVENT, GAMETYPE, STEP} from "../../../common/Constants";
-import GameHeader from "./GameHeader.vue";
-import MCQ from "./multiple-choice-test/GameView.vue";
-
+import {GAMETYPE} from "../../../common/Constants";
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
+
+import GameHeader from "../GameHeader.vue";
+import MCQ from "./multiple-choice-test/GameView.vue";
 
 export default defineComponent({
   name: 'InGameComponent',
@@ -29,23 +29,14 @@ export default defineComponent({
   },
   computed: {
     GameView() {
-      switch (this.gameStore.data.gameType) {
-        case GAMETYPE.MCQ:
-          return MCQ;
-        default:
-          return;
+      if (this.gameStore.data) {
+        switch (this.gameStore.data.gameType) {
+          case GAMETYPE.MCQ:
+            return MCQ;
+          default:
+            return;
+        }
       }
-    }
-  },
-  emits: ['validated'],
-  methods: {
-    validated() {
-      this.gameStore.currentStep = STEP.WAIT;
-      this.socket.emit(EVENT.TEAM_VALIDATION, {
-        roomId: this.mainStore.roomId,
-        teamId: this.gameStore.teamId
-      })
-      this.$emit('validated')
     }
   }
 });

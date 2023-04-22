@@ -1,11 +1,13 @@
 <template>
-  <Breadcrumb/>
-  <div class="w-full h-full bg-green-medium !text-beige flex flex-col items-center justify-center my-auto gap-5 p-5">
-    <div class="bg-green rounded-md p-16">
-      <h1><span class="block bg-beige-medium shadow-lg p-4">{{ title }}</span></h1>
-      <h3>{{ text }}</h3>
+  <div class="relative flex flex-col items-center">
+    <h1 class="translate-y-[20%] flex flex-col items-center">
+      <span class="inline-block bg-beige-medium text-green shadow-lg p-4 z-10">Enigme n°1</span>
+      <span class="inline-block bg-beige-medium text-purple shadow-lg p-4 rotate-[1.80deg]">{{ title }}</span>
+    </h1>
+    <div class="flex flex-col items-center gap-6 bg-green rounded-md p-16">
+      <h3 class="text-beige">{{ text }}</h3>
+      <button v-if="mainStore.role === ROLE.TEACHER" @click="next">Suivant</button>
     </div>
-    <button v-if="mainStore.role === ROLE.TEACHER" @click="next">Suivant</button>
   </div>
 </template>
 
@@ -17,7 +19,7 @@ import {EVENT, ROLE, STEP} from "../../common/Constants";
 
 import gameData from "./../../assets/game-data/game-data.json";
 import {useGameStore} from "../../stores/gameStore";
-import Breadcrumb from "./Breadcrumb.vue";
+import Breadcrumb from "../Breadcrumb.vue";
 
 export default defineComponent({
   name: 'InstructionComponent',
@@ -34,19 +36,19 @@ export default defineComponent({
       return ROLE
     },
     title() {
-      return this.gameStore.data.instructionTitle
+      return this.gameStore.data?.instructionTitle
     },
     text() {
-      return this.gameStore.data.instructionText
+      return this.gameStore.data?.instructionText
     }
   },
   methods: {
     next() {
-      this.socket.emit(EVENT.START_GAME, {
-        roomId: this.mainStore.roomId
-      });
+      //this.socket.emit(EVENT.START_GAME, {
+      //  roomId: this.mainStore.roomId
+      //});
       this.gameStore.currentStep = STEP.PLAY
-      console.log('next',this.gameStore.currentStep )
+      console.log('next', this.gameStore.currentStep)
     }
   }
 });

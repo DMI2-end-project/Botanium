@@ -12,10 +12,10 @@ const store = useMainStore();
     <h1>Bonjour {{ DatabaseManagerInstance.pb.authStore.model?.firstname }}, que souhaitez-vous faire ?</h1>
     <div class="grid grid-cols-12">
       <div class="col-start-10 col-span-3 flex flex-col gap-4">
-        <router-link :to="{ name: 'LogBook'}" class="inline-block bg-white p-4 rounded-md origin-left">
+        <router-link :to="{ name: 'LogBook'}" class="inline-block bg-beige p-4 rounded-md origin-left">
           <!--Book class="w-full h-full"/--> Carnet de bord
         </router-link>
-        <div class=" bg-white rounded-md flex flex-col gap-6 p-6">
+        <div class=" bg-beige rounded-md flex flex-col gap-6 p-6">
           <span class="text-lg text-black">L'histoire </span>
           <router-link :to="{ path: '/histoire'}"
                        class="inline-block bg-primary p-4 rounded-md">

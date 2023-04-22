@@ -3,39 +3,40 @@
     "gameType": "multiple-choice",
     "instructionTitle": "Les bienfaits des carottes",
     "instructionText": "Chaque groupe doit retrouver un bienfait, afin que tous ensemble vous puissiez communiquer tous les bienfaits à Capucine !",
-    "congratulation": "Bravo ! Grâce à vous Capucine connait les bienfaits des carottes !",
+    "instructionGame": "Chaque groupe doit retrouver un bienfait, afin que tous ensemble vous puissiez communiquer tous les bienfaits à Capucine !",
+    "congratulation": "Grâce à vous Capucine connait les bienfaits des carottes !",
     "waitingMessage": "Patiente que tous les bienfaits soient trouvés",
     "gameContent": [
       {
         "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
         "congratulation": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
-        "congratulationIcon": "/game-data/icons/00101/eyes.svg",
+        "congratulationIcon": "eye.svg",
         "answers": [
           {
             "isValid": true,
             "feedback": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
-            "icon": "/game-data/icons/00101/eyes.svg",
+            "icon": "eye.svg",
             "text": "Elle améliore la vision nocturne",
             "isClicked": false,
             "status": ""
           },
           {
             "isValid": false,
-            "icon": "/game-data/icons/00101/muscle.svg",
+            "icon": "muscle.svg",
             "text": "Elle donne des muscles",
             "isClicked": false,
             "status": ""
           },
           {
             "isValid": false,
-            "icon": "/game-data/icons/00101/tooth.svg",
+            "icon": "tooth.svg",
             "text": "Elle blanchit les dents",
             "isClicked": false,
             "status": ""
           },
           {
             "isValid": false,
-            "icon": "/game-data/icons/00101/bone.svg",
+            "icon": "bone.svg",
             "text": "Elle renforce les os",
             "isClicked": false,
             "status": ""
@@ -45,33 +46,33 @@
       {
         "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
         "congratulation": "La carotte possède ... qui ralenti le vieillissement",
-        "congratulationIcon": "/game-data/icons/00101/disease.svg",
+        "congratulationIcon": "disease.svg",
         "answers": [
           {
             "isValid": true,
             "feedback": "La carotte possède ... qui ralenti le vieillissement",
-            "icon": "/game-data/icons/00101/disease.svg",
+            "icon": "disease.svg",
             "text": "Elle ralentit le vieillissement",
             "isClicked": false,
             "status": ""
           },
           {
             "isValid": false,
-            "icon": "/game-data/icons/00101/muscle.svg",
+            "icon": "muscle.svg",
             "text": "Elle donne des muscles",
             "isClicked": false,
             "status": ""
           },
           {
             "isValid": false,
-            "icon": "/game-data/icons/00101/tooth.svg",
+            "icon": "tooth.svg",
             "text": "Elle blanchit les dents",
             "isClicked": false,
             "status": ""
           },
           {
             "isValid": false,
-            "icon": "/game-data/icons/00101/bone.svg",
+            "icon": "bone.svg",
             "text": "Elle renforce les os",
             "isClicked": false,
             "status": ""

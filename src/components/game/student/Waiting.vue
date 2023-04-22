@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="flex flex-col justify-between items-center bg-gray-200 p-10">
-      <div class="rounded-full bg-white p-5">
+      <div class="rounded-full bg-beige p-5">
         <img :src="publicPath + '/src/assets' + icon" alt="" class="w-16 h-16">
       </div>
       <p class="mt-5 uppercase font-bold">Bravo !</p>
       <p>C’est la bonne réponse</p>
       <p class="">{{ text }}</p>
-      <div v-if="gameStore.currentStep === STEP.WAIT" class="bg-white mt-10 p-5 rounded-xl"><p>{{ waitingMessage }}</p>
+      <div v-if="gameStore.currentStep === STEP.WAIT" class="bg-beige mt-10 p-5 rounded-xl"><p>{{ waitingMessage }}</p>
       </div>
     </div>
   </div>

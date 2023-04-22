@@ -1,19 +1,19 @@
 <template>
-  <div class="bg-gray-100">
-    <GameBar :teamId="teamId"/>
-    <component v-bind:is="GameView" :teamId="teamId" @validated="validated"/>
+  <div>
+    <GameHeader/>
+    <component v-bind:is="GameView" @validated="validated"/>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent} from 'vue';
 import {getSocket} from "../../../client";
-import {EVENT, GAMETYPE, STEP} from "../../../common/Constants";
-import GameHeader from "./GameHeader.vue";
-import MCQ from "./multiple-choice-test/GameView.vue";
-
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
+import {EVENT, GAMETYPE, STEP} from "../../../common/Constants";
+
+import GameHeader from "../GameHeader.vue";
+import MCQ from "./multiple-choice-test/GameView.vue";
 
 export default defineComponent({
   name: 'InGameComponent',
@@ -29,11 +29,13 @@ export default defineComponent({
   },
   computed: {
     GameView() {
-      switch (this.gameStore.data.gameType) {
-        case GAMETYPE.MCQ:
-          return MCQ;
-        default:
-          return;
+      if (this.gameStore.data) {
+        switch (this.gameStore.data.gameType) {
+          case GAMETYPE.MCQ:
+            return MCQ;
+          default:
+            return;
+        }
       }
     }
   },
@@ -45,7 +47,7 @@ export default defineComponent({
         roomId: this.mainStore.roomId,
         teamId: this.gameStore.teamId
       })
-      this.$emit('validated')
+      this.$emit('validated');
     }
   }
 });
