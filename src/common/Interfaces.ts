@@ -81,4 +81,4 @@ interface Answer {
 }
 
 
-export type { PageData, TextData, DrawData, StickerData, PhotoData, GameData, Answer };
+export type {PageData, TextData, DrawData, StickerData, PhotoData, GameData, Answer};

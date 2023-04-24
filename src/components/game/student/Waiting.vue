@@ -1,28 +1,43 @@
 <template>
-  <div>
-    <div class="flex flex-col justify-between items-center bg-gray-200 p-10">
-      <div class="rounded-full bg-beige p-5">
-        <img :src="publicPath + '/src/assets' + icon" alt="" class="w-16 h-16">
+  <div class="flex flex-col gap-24 items-center text-green">
+    <div class="w-full bg-green-light rounded-md flex py-24 px-10">
+      <div class="aspect-square shrink-0 w-36 bg-beige text-green rounded-full font-bold p-3">
+        <span class="block w-full h-full flex justify-center items-center rounded-full border border-green bg-beige p-2">
+          <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + icon" alt=""
+               class="w-14 aspect-square">
+        </span>
       </div>
-      <p class="mt-5 uppercase font-bold">Bravo !</p>
-      <p>C’est la bonne réponse</p>
-      <p class="">{{ text }}</p>
-      <div v-if="gameStore.currentStep === STEP.WAIT" class="bg-beige mt-10 p-5 rounded-xl"><p>{{ waitingMessage }}</p>
+      <div class=" flex flex-col gap-4 items-center">
+        <h1>Bravo !</h1>
+        <p class="">{{ text }}</p>
       </div>
+    </div>
+    <div v-show="gameStore.currentStep === STEP.WAIT" class=" bg-green text-white rounded-full flex justify-center items-center gap-5 p-2">
+      <!-- absolute bottom-24 -->
+      <div class="h-full aspect-square rounded-full bg-green-medium">
+        <!--Loading class="w-8 aspect-square"/-->
+      </div>
+      <p class="m-2">Patiente un peu, tes camarades réfléchissent encore</p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
-import gameData from "../../../assets/game-data/game-data.json";
-import {STEP} from "../../../common/Constants";
+import {defineComponent} from 'vue';
+import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
+import {STEP} from "../../../common/Constants";
+import Loading from "../../../assets/svg/ico-loading.svg";
 
 export default defineComponent({
   name: 'WaitingComponent',
+  props: {
+    data: Object,
+    teamId: Number
+  },
   data() {
     return {
+      mainStore: useMainStore(),
       gameStore: useGameStore(),
       publicPath: window.location.origin,
     }
@@ -31,20 +46,17 @@ export default defineComponent({
     STEP() {
       return STEP
     },
+    tID() {
+      return this.$props.teamId ? this.$props.teamId : 0;
+    },
     text() {
-      if (this.gameStore.teamId) {
-        return this.gameStore.data.gameContent[this.gameStore.teamId].congratulation
-      }
+      return this.$props.data?.gameContent[this.tID].congratulation;
     },
     icon() {
-      if (this.gameStore.teamId) {
-        return this.gameStore.data.gameContent[this.gameStore.teamId].congratulationIcon
-      }
+      return this.$props.data?.gameContent[this.tID].congratulationIcon;
     },
     waitingMessage() {
-      if (this.gameStore.teamId) {
-        return this.gameStore.data[this.gameStore.teamId].waitingMessage
-      }
+      return this.$props.data?.waitingMessage;
     }
   },
   mounted() {

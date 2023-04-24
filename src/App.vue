@@ -4,12 +4,14 @@ import {useMainStore} from "./stores/mainStore";
 import {DatabaseManagerInstance} from "./common/DatabaseManager";
 import {ROLE} from "./common/Constants";
 import {connectClient} from "./client";
-import TheDevLayout from "./layouts/TheDevLayout.vue";
-import TheAppLayout from "./layouts/TheAppLayout.vue";
+
+import AppLayout from "./layouts/AppLayout.vue";
+import DevLayout from "./layouts/DevLayout.vue";
+import GameLayout from "./layouts/GameLayout.vue";
 
 export default defineComponent({
   name: 'App',
-  components: {TheAppLayout, TheDevLayout},
+  components: {AppLayout, DevLayout, GameLayout},
   data() {
     return {
       mainStore: useMainStore()
@@ -45,7 +47,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <TheAppLayout>
+  <AppLayout>
     <router-view/>
-  </TheAppLayout>
+  </AppLayout>
 </template>

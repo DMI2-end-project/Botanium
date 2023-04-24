@@ -1,13 +1,13 @@
 import {createRouter, createWebHistory, RouterOptions} from "vue-router";
+import {useMainStore} from "../stores/mainStore";
+import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import {ROLE} from "../common/Constants";
 import Login from "../pages/Login.vue";
 import Home from "../pages/Home.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import Story from "../pages/Story.vue";
 import Game from "../pages/Game.vue";
-import {useMainStore} from "../stores/mainStore";
-import {ROLE} from "../common/Constants";
 import LogBook from "../pages/LogBook.vue";
-import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import Stories from "../pages/Stories.vue";
 import Dev from "../pages/Dev.vue";
 
@@ -16,7 +16,7 @@ const config: RouterOptions = {
   routes: [
     {
       name: 'Home',
-      path: '/',
+      path: '/accueil',
       component: Home,
       meta: {
         layout: 'Dev',
@@ -40,7 +40,7 @@ const config: RouterOptions = {
     },
     {
       name: 'Stories',
-      path: '/histoire',
+      path: '/chapitres',
       component: Stories,
       meta: {
         layout: 'Dev',
@@ -48,7 +48,7 @@ const config: RouterOptions = {
     },
     {
       name: 'Story',
-      path: '/histoire/:id', // 001
+      path: '/chapitre/:id', // 001
       component: Story,
       meta: {
         layout: 'Dev',
@@ -59,7 +59,7 @@ const config: RouterOptions = {
       path: '/exercice/:id', // 00101
       component: Game,
       meta: {
-        layout: 'Dev',
+        layout: 'Game',
       },
     },
     {

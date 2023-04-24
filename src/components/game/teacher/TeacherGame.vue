@@ -1,25 +1,24 @@
 <template>
-  <InGame v-show="gameStore.currentStep === STEP.PLAY"/>
+  <div>
+    <component v-bind:is="GameView" :data="$props.data"/>
+  </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {Component, defineComponent} from 'vue'
 import {getSocket} from "../../../client";
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
-import {EVENT, STEP} from "../../../common/Constants";
+import {GAMETYPE} from "../../../common/Constants";
 
-import InGame from "./InGame.vue";
+import MCQ from "./multiple-choice-test/GameView.vue";
+
+// TODO : Error GameView
 
 export default defineComponent({
-  name: 'InGameComponent',
-  computed: {
-    STEP() {
-      return STEP
-    }
-  },
-  components: {
-    InGame
+  name: 'TeacherGame',
+  props: {
+    data: Object,
   },
   data() {
     return {
@@ -28,24 +27,15 @@ export default defineComponent({
       gameStore: useGameStore()
     }
   },
-  mounted() {
-    this.socket.emit(EVENT.LAUNCH_GAME, {
-      roomId: this.mainStore.roomId,
-      gameId: this.mainStore.getFullGameId
-    });
-
-    this.gameStore.$subscribe((mutation, state) => {
-      if (this.gameStore.totalTeamsFinished === this.gameStore.totalTeams) {
-        this.gameStore.currentStep = STEP.END;
-        this.socket.emit(EVENT.GAME_VALIDATION, {
-          roomId: this.mainStore.roomId
-        })
+  computed: {
+    GameView(): Component | undefined {
+      switch (this.gameStore.data?.gameType) {
+        case GAMETYPE.MCQ:
+          return MCQ;
+        default:
+          return;
       }
-    });
+    }
   }
 });
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -24,10 +24,7 @@ export const useGameStore = defineStore('game', {
   },
   actions: {
     reset() {
-      this.data = undefined;
       this.currentStep = STEP.INSTRUCTION;
-      this.teamId = undefined;
-      this.totalTeams = 0;
       this.totalTeamsFinished = 0;
     }
   }

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {useRouter} from "vue-router";
-import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {useMainStore} from "../stores/mainStore";
 import {getSocket, connectClient} from "../client";
+import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {ROLE} from "../common/Constants";
+import {useMainStore} from "../stores/mainStore";
 
 const email = ref();
 const password = ref();
@@ -29,7 +29,6 @@ const login = async () => {
     if (pb.authStore.isValid) {
       let classRoom = undefined; // TODO add active=true state in request
       store.roleId = pb.authStore.model?.role;
-      console.log('login role', pb.authStore.model?.role, store.roleId)
 
       switch (store.role) {
         case ROLE.TEACHER:
@@ -59,7 +58,7 @@ const login = async () => {
 
 </script>
 <template>
-  <div>
+  <div class="bg-green-medium w-full h-full">
     <h1>Login</h1>
     <form @submit.prevent="login">
       <label for="email">Adresse email :</label>
@@ -68,13 +67,6 @@ const login = async () => {
       <input type="password" name="password" v-model="password" autocomplete="password">
       <button type="submit" class="bg-secondary">Se connecter</button>
     </form>
-    <h1>h1 title</h1>
-    <h2>h2 title</h2>
-    <h3>h3 title</h3>
-    <h4>h4 title</h4>
-    <p class="bold">p.bold text</p>
-    <p>p text</p>
-    <a href="#">a link</a>
   </div>
 </template>
 <style scoped>

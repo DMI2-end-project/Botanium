@@ -6,7 +6,7 @@
      - Loader Teacher
 */
 
-import {onBeforeMount} from "vue";
+import {onBeforeMount, onMounted} from "vue";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {useMainStore} from "../stores/mainStore";
@@ -14,7 +14,7 @@ import {useGameStore} from "../stores/gameStore";
 import {ROLE} from "../common/Constants"
 import gameData from "../assets/game-data/game-data.json";
 
-import InGame from "./../components/story/student/StudentStory.vue";
+import StudentStory from "./../components/story/student/StudentStory.vue";
 import TeacherStory from "./../components/story/teacher/TeacherStory.vue";
 
 const mainStore = useMainStore();
@@ -31,7 +31,11 @@ onBeforeMount(async () => {
     roomId: mainStore.roomId
   });
 
+  //  @ts-ignore
   gameStore.data = gameData[mainStore.getFullGameId];
+})
+
+onMounted(() => {
 
 })
 </script>
@@ -39,6 +43,6 @@ onBeforeMount(async () => {
 <template>
   <div class="w-full h-full">
     <TeacherStory v-if="mainStore.role === ROLE.TEACHER"/>
-    <InGame v-if="mainStore.role === ROLE.STUDENT"/>
+    <StudentStory v-if="mainStore.role === ROLE.STUDENT"/>
   </div>
 </template>

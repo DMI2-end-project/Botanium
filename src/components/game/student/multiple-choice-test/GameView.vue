@@ -1,16 +1,24 @@
 <template>
-  <div class="relative grid grid-cols-12">
-    <div class="col-start-2 col-span-10 grid grid-cols-2 gap-x-10 gap-y-12">
-{{ answers}}
-      <button v-for="(answer, index) in answers" :v-bind="index" :data-id="index" @click="itemSelected"
-              class="bg-beige rounded-md shadow-md w-max-content h-full w-full p-20 flex flex-col items-center text-center text-green gap-5"
-              :class="answer.status == 'error' ? 'bg-red-300' : (answer.status == 'valid' ? 'bg-green-300' : (answer.isClicked ? 'bg-gray-200' : 'bg-beige'))">
-        <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
-             class="w-16 aspect-square pointer-events-none">
-        <p class="mt-5 pointer-events-none">{{ answer.text }}</p>
-      </button>
+  <div class="relative grid grid-cols-12 gap-6">
+    <div class="col-start-2 col-span-10 grid grid-cols-2 gap-4">
+      <div v-for="(answer, index) in answers" :v-bind="index" class="w-full border rounded-md p-3.5"
+           :class="answer.isClicked ? 'border-green-light':'border-transparent'">
+        <button @click="itemSelected" :data-id="index"
+                class="w-full h-full rounded-md shadow-md w-max-content flex flex-col items-center gap-5 text-center py-14 px-10 focus:outline-none "
+                :class="answer.status === 'error' ? '!bg-red text-white' : (answer.status === 'valid' ? '!bg-blue text-white' : (answer.isClicked ? '!bg-green-light text-green' : '!bg-beige text-green'))">
+          <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
+               class="w-16 aspect-square pointer-events-none">
+          <span class="text-md pointer-events-none">{{ answer.text }}</span>
+        </button>
+      </div>
     </div>
-    <button class="col-span-12 mx-auto my-5" @click="itemValidated">Valider</button>
+    <button class="col-span-12 mx-auto aspect-square w-20 text-green bg-green-light rounded-full font-bold p-1.5"
+            @click="itemValidated">
+      <span
+          class="block w-full h-full flex justify-center items-center rounded-full border border-green bg-green-light p-2">
+        <!--Check class="h-10 aspect-square"/-->
+      </span>
+    </button>
   </div>
 </template>
 
@@ -18,22 +26,33 @@
 import {defineComponent} from 'vue'
 import type {Answer} from '../../../../common/Interfaces'
 import {useGameStore} from "../../../../stores/gameStore";
+import {useMainStore} from "../../../../stores/mainStore";
+import Check from "../../../../assets/svg/ico-check.svg";
 
+// TODO : DYNAMIC SVG
 export default defineComponent({
-  name: 'GameViewComponent',
+  name: 'StudentGameView',
   data() {
     return {
       publicPath: window.location.origin,
+      mainStore: useMainStore(),
       gameStore: useGameStore(),
       currentAnswer: {} as Answer,
     }
   },
   computed: {
     answers() {
-      if (this.gameStore.teamId) {
-        console.log('this.gameStore.teamId', this.gameStore.teamId, this.gameStore.data.gameContent[this.gameStore.teamId].answers)
-        return this.gameStore.data.gameContent[this.gameStore.teamId].answers
+      if (this.gameStore.teamId !== undefined) {
+        return this.gameStore.data.gameContent[this.gameStore.teamId].answers;
       }
+    }
+  },
+  mounted() {
+    if (this.answers) {
+      this.answers.forEach((answer: Answer) => {
+        answer.isClicked = false;
+        answer.status = "";
+      })
     }
   },
   methods: {
@@ -50,6 +69,7 @@ export default defineComponent({
     },
     itemValidated() {
       this.currentAnswer.status = this.currentAnswer.isValid ? 'valid' : 'error';
+      this.currentAnswer.isClicked = false;
       if (this.currentAnswer.status === 'valid') {
         setTimeout(() => {
           this.$emit('validated');
@@ -59,7 +79,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style lang="scss" scoped>
-
-</style>

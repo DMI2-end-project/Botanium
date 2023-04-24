@@ -27,7 +27,7 @@ module.exports = {
           light: "#e3f0a5",
         },
         red: "#fb6f4a",
-        blue: "#85a754",
+        blue: "#36E28F",
         beige: {
           DEFAULT: "#fefbe9",
           medium: "#e5d9b6",

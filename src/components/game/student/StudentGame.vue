@@ -1,39 +1,49 @@
 <template>
-  <div class="w-full h-full border-4 border-orange-400">
-    <InGame v-if="gameStore.currentStep === STEP.PLAY" :teamId="gameStore.teamId" @validated="validated"/>
-    <Waiting v-if="gameStore.currentStep === STEP.WAIT || gameStore.currentStep === STEP.END" :teamId="gameStore.teamId"/>
+  <div class="w-full h-full">
+    <!--InGame v-show="gameStore.currentStep === STEP.PLAY" :data="$props.data" :teamId="gameStore.teamId"
+            @validated="validated"/-->
+    <div v-show="gameStore.currentStep === STEP.PLAY">
+      <component v-bind:is="GameView" :data="$props.data" :teamId="gameStore.teamId" @validated="validated"/>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {Component, defineComponent} from 'vue';
 import {getSocket} from "../../../client";
 import {useGameStore} from "../../../stores/gameStore";
-import {EVENT, STEP} from "../../../common/Constants";
+import {useMainStore} from "../../../stores/mainStore";
+import {EVENT, GAMETYPE, STEP} from "../../../common/Constants";
 
-import InGame from "./InGame.vue";
 import Waiting from "./Waiting.vue";
+import MCQ from "./multiple-choice-test/GameView.vue";
 
 export default defineComponent({
-  name: 'InGameComponent',
-  computed: {
-    STEP() {
-      return STEP
-    }
-  },
-  components: {
-    InGame,
-    Waiting
+  name: 'StudentGame',
+  props: {
+    data: Object,
   },
   data() {
     return {
       socket: getSocket(),
+      mainStore: useMainStore(),
       gameStore: useGameStore(),
-      step: 0,
+    }
+  },
+  computed: {
+    STEP() {
+      return STEP
+    },
+    GameView(): Component | undefined {
+      switch (this.gameStore.data?.gameType) {
+        case GAMETYPE.MCQ:
+          return MCQ;
+        default:
+          return;
+      }
     }
   },
   mounted() {
-    console.log('mounted')
     this.socket.on(EVENT.START_GAME, () => {
       this.gameStore.currentStep = STEP.PLAY;
     });
@@ -43,8 +53,12 @@ export default defineComponent({
   },
   methods: {
     validated() {
-      this.$emit('validated')
-      this.step += 1;
+      this.$emit('validated');
+      this.gameStore.currentStep = STEP.WAIT;
+      this.socket.emit(EVENT.TEAM_VALIDATION, {
+        roomId: this.mainStore.roomId,
+        teamId: this.gameStore.teamId
+      });
     }
   }
 });

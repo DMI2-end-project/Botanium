@@ -3,8 +3,8 @@
     <Reading/>
     <div class="flex flex-col">
       <button>Projection</button>
-      <router-link :to="{ path: '/exercice/'+store.getFullGameId}">
-        Lancer l'exercice {{ store.gameId }}
+      <router-link :to="{ path: '/exercice/'+mainStore.getFullGameId}">
+        Lancer l'exercice {{ mainStore.gameId }}
       </router-link>
     </div>
   </div>
@@ -15,6 +15,7 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../../client";
 import {EVENT} from "../../../common/Constants";
 import {useMainStore} from "../../../stores/mainStore";
+import {useGameStore} from "../../../stores/gameStore";
 import Reading from "./Reading.vue";
 
 export default defineComponent({
@@ -24,15 +25,16 @@ export default defineComponent({
     return {
       step: 0,
       socket: getSocket(),
-      store: useMainStore()
+      mainStore: useMainStore(),
+      gameStore: useGameStore()
     }
   },
   mounted() {
-    console.log('store', this.store.getChapterId)
-    //this.socket.emit(EVENT.LAUNCH_STORY, {
-    //  roomId: this.store.roomId,
-    //  chapterId: this.store.getChapterId
-    //});
+    console.log('store', this.mainStore.getChapterId)
+    this.socket.emit(EVENT.LAUNCH_STORY, {
+      roomId: this.mainStore.roomId,
+      chapterId: this.mainStore.getChapterId
+    });
   }
 });
 </script>

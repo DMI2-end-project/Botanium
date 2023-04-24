@@ -12,18 +12,22 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent} from 'vue';
 import {getSocket} from "../../client";
 import {useMainStore} from "../../stores/mainStore";
+import {useGameStore} from "../../stores/gameStore";
 import {EVENT, ROLE, STEP} from "../../common/Constants";
 
 import gameData from "./../../assets/game-data/game-data.json";
-import {useGameStore} from "../../stores/gameStore";
+
 import Breadcrumb from "../Breadcrumb.vue";
 
 export default defineComponent({
   name: 'InstructionComponent',
   components: {Breadcrumb},
+  props: {
+    data: Object
+  },
   data() {
     return {
       socket: getSocket(),
@@ -36,18 +40,26 @@ export default defineComponent({
       return ROLE
     },
     title() {
-      return this.gameStore.data?.instructionTitle
+      return this.$props.data?.instructionTitle
     },
     text() {
-      return this.gameStore.data?.instructionText
+      return this.$props.data?.instructionText
+    }
+  },
+  mounted() {
+    if (this.mainStore.role === ROLE.TEACHER) {
+      this.socket.emit(EVENT.LAUNCH_GAME, {
+        roomId: this.mainStore.roomId,
+        gameId: this.mainStore.getFullGameId
+      });
     }
   },
   methods: {
     next() {
-      //this.socket.emit(EVENT.START_GAME, {
-      //  roomId: this.mainStore.roomId
-      //});
-      this.gameStore.currentStep = STEP.PLAY
+      this.socket.emit(EVENT.START_GAME, {
+        roomId: this.mainStore.roomId
+      });
+      this.gameStore.currentStep = STEP.PLAY;
       console.log('next', this.gameStore.currentStep)
     }
   }

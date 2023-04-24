@@ -1,7 +1,7 @@
 <template>
   <div class="relative grid grid-cols-12">
     <div class="absolute top-0 left-0 text-xl">
-      <div class="aspect-square w-20 text-beige bg-secondary rounded-full font-bold p-3">
+      <div class="aspect-square w-20 text-beige bg-secondary rounded-full font-bold p-1.5">
       <span
           class="block w-full h-full flex justify-center items-center rounded-full border border-beige bg-secondary p-2">
         {{ mainStore.gameId }}
@@ -20,13 +20,9 @@ import {useMainStore} from "../../stores/mainStore";
 import {ROLE} from "../../common/Constants";
 
 export default defineComponent({
-  name: 'GameHeaderComponent',
-  props: {
-    teamId: {
-      type: String,
-      default: "1",
-    },
-
+  name: 'GameHeader',
+  props:{
+    data: Object
   },
   data() {
     return {
@@ -40,7 +36,7 @@ export default defineComponent({
       return ROLE
     },
     text() {
-      return this.gameStore.data.instructionGame
+      return this.data?.instructionGame
     }
   }
 });
