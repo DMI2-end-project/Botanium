@@ -1,17 +1,17 @@
 <template>
-  <button class="edit-element w-full p-0" :class="classProperty + ' ' + (textData.id || drawData.id ? 'bg-transparent' : 'bg-gray-100')" @click="onModify = true">
+  <button class="edit-element w-full p-0" ref="container" :class="classProperty + ' ' + (textData.id || drawData.id ? 'bg-transparent' : 'bg-gray-100')" @click="onModify = true">
     <p v-if="!textData.id && !drawData.id">edit</p>
     <div v-if="textData.id" class="flex flex-col justify-between h-full bg-gray-200 p-4 drop-shadow-lg">
       <p class="text-xs text-left">{{ textData.content }}</p>
       <p class="text-right mt-4">{{ textData.signature }}</p>
     </div>
-    <div v-if="drawData.id" class="flex flex-col justify-between h-full">
-      <img :src="drawUrl" class="w-full h-full object-contain my-auto">
-      <p class="text-right mt-4">{{ drawData.signature }}</p>
+    <div v-if="drawData.id" class="flex flex-col justify-between h-full relative">
+      <div class="w-full h-full"><img :src="drawUrl" class="w-full h-full object-contain my-auto"></div>
+      <p class="text-right mt-4 absolute bottom-0 right-0 bg-beige m-2">{{ drawData.signature }}</p>
     </div>
   </button>
   <div v-if="onModify" class="fixed z-40 w-screen h-screen bg-black/25 flex justify-center items-center top-0 left-0">
-    <div v-if="!onSignature" class="bg-white h-5/6 w-full p-8 m-12">
+    <div v-if="!onSignature" class="bg-white h-[94%] w-full p-8 m-12">
       <div v-if="!onWrite && !onDraw" class="h-full w-full grid grid-cols-2 gap-8">
         <button @click="onWrite = true">Ecrire</button>
         <button @click="onDraw = true">Dessiner</button>
@@ -21,8 +21,8 @@
         </textarea>
         <button @click="onSignature = true" class="mt-10">Valider</button>
       </div>
-      <div v-if="onDraw" class="w-full h-full p-12 flex flex-col items-end">
-        <Draw @save="saveDraw" />
+      <div v-if="onDraw" class="w-full h-full p-0 flex flex-col items-end">
+        <Draw @save="saveDraw" :lastDrawUrl="drawUrl" :ratio="ratio" />
       </div>
     </div>
     <div v-if="onSignature" class="bg-white p-8 flex flex-col items-center">
@@ -68,6 +68,7 @@ export default {
       textData: {} as TextData,
       drawData: {} as DrawData,
       signature: '' as string,
+      ratio: 1 as number,
     }
   },
   computed: {
@@ -84,6 +85,7 @@ export default {
     }
   },
   async mounted() {
+    this.ratio = this.$refs.container.clientWidth / this.$refs.container.clientHeight;
     this.textData = await DatabaseManagerInstance.fetchText(this.pageId, this.slotNumber);
     this.drawData = await DatabaseManagerInstance.fetchDraw(this.pageId, this.slotNumber);
     this.signature = (this.textData.id ? this.textData.signature : this.drawData.signature);
