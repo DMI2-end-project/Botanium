@@ -1,13 +1,13 @@
 <template>
-  <button class="edit-element w-full p-0" :class="classProperty + ' ' + (text || drawUrl ? 'bg-transparent' : 'bg-gray-100')" @click="onModify = true">
-    <p v-if="!text && !drawUrl">edit</p>
-    <div v-if="text" class="flex flex-col justify-between h-full bg-gray-200 p-4 drop-shadow-lg">
-      <p class="text-xs text-left">{{ text }}</p>
-      <p class="text-right mt-4">{{ signature }}</p>
+  <button class="edit-element w-full p-0" :class="classProperty + ' ' + (textData.id || drawData.id ? 'bg-transparent' : 'bg-gray-100')" @click="onModify = true">
+    <p v-if="!textData.id && !drawData.id">edit</p>
+    <div v-if="textData.id" class="flex flex-col justify-between h-full bg-gray-200 p-4 drop-shadow-lg">
+      <p class="text-xs text-left">{{ textData.content }}</p>
+      <p class="text-right mt-4">{{ textData.signature }}</p>
     </div>
-    <div v-if="drawUrl" class="flex flex-col justify-between h-full">
+    <div v-if="drawData.id" class="flex flex-col justify-between h-full">
       <img :src="drawUrl" class="w-full h-full object-contain my-auto">
-      <p class="text-right mt-4">{{ signature }}</p>
+      <p class="text-right mt-4">{{ drawData.signature }}</p>
     </div>
   </button>
   <div v-if="onModify" class="fixed z-40 w-screen h-screen bg-black/25 flex justify-center items-center top-0 left-0">
@@ -17,7 +17,7 @@
         <button @click="onDraw = true">Dessiner</button>
       </div>
       <div v-if="onWrite" class="w-full h-full p-12 flex flex-col items-end">
-        <textarea v-model="text" autofocus class="w-full h-full text-xl p-4">
+        <textarea v-model="textData.content" autofocus class="w-full h-full text-xl p-4">
         </textarea>
         <button @click="onSignature = true" class="mt-10">Valider</button>
       </div>
@@ -34,10 +34,10 @@
 </template>
 
 <script lang="ts">
-import Client, { Record } from "pocketbase";
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import Draw from "./../Draw.vue"
 import type { TextData, DrawData } from './../../../common/Interfaces'
+import { base64ToFile } from './../../../common/Lib';
 
 export default {
   name: "EditElementComponent",
@@ -59,92 +59,58 @@ export default {
     },
   },
   emits: ['onModify'],
-  inject: ['pocketBaseUrl'],
   data: () => {
     return {
-      pb: DatabaseManagerInstance.pb as Client,
       onModify: false as Boolean,
       onWrite: false as Boolean,
       onDraw: false as Boolean,
       onSignature: false as Boolean,
-      text: '' as string,
+      textData: {} as TextData,
+      drawData: {} as DrawData,
       signature: '' as string,
-      draw: undefined as File | undefined,
-      drawUrl: '' as string,
-      idRecordText: undefined as string | undefined,
-      idRecordDraw: undefined as string | undefined,
+    }
+  },
+  computed: {
+    drawUrl():string {
+      return DatabaseManagerInstance.getImageUrl(this.drawData)
     }
   },
   watch: {
     onModify(value:Boolean) {
       this.$emit('onModify', value)
+    },
+    signature(value: string) {
+      this.textData.signature = this.drawData.signature = value;
     }
   },
-  mounted() {
-    this.pb.collection('text').getFirstListItem('page="'+ this.pageId +'" && slot=' + this.slotNumber + '').then((result:Record) => {
-      this.text = result.content
-      this.signature = result.signature
-      this.idRecordText = result.id
-    }).catch(error => {
-      // console.error(error.message)
-    })
-    this.pb.collection('drawing').getFirstListItem('page="' + this.pageId + '" && slot=' + this.slotNumber + '').then((result: Record) => {
-      const data: DrawData = {
-        id: result.id,
-        collectionId: result.collectionId,
-        file: result.file,
-        slot: result.slot,
-        page: result.page,
-        signature: result.signature
-      }
-      this.drawUrl = this.getImageUrl(data)
-      this.signature = result.signature
-      this.idRecordDraw = result.id
-    }).catch(error => {
-      // console.error(error.message)
-    })
+  async mounted() {
+    this.textData = await DatabaseManagerInstance.fetchText(this.pageId, this.slotNumber);
+    this.drawData = await DatabaseManagerInstance.fetchDraw(this.pageId, this.slotNumber);
+    this.signature = (this.textData.id ? this.textData.signature : this.drawData.signature);
+    this.textData.slot = this.drawData.slot = this.slotNumber;
+    this.textData.page = this.drawData.page = this.pageId;
   },
   methods: {
     async saveData() {
       if (this.onWrite) {
-        const data = {
-          "content": this.text,
-          "slot": this.slotNumber,
-          "page": this.pageId,
-          "signature": this.signature
-        };
-
-        if (!this.idRecordText) {
-          const newText = await this.pb.collection('text').create(data);
-          this.idRecordText = newText.id
+        if (this.textData.id === '') {
+          this.textData = await DatabaseManagerInstance.createText(this.textData);
         } else {
-          await this.pb.collection('text').update(this.idRecordText, data);
+          this.textData = await DatabaseManagerInstance.updateText(this.textData);
         }
-        if (this.idRecordDraw) {
-          await this.pb.collection('drawing').delete(this.idRecordDraw);
-          this.idRecordDraw = undefined
-          this.drawUrl = ''
+        if (this.drawData.id != '') {
+          await DatabaseManagerInstance.deleteDraw(this.drawData)
+          this.drawData.id = ''
         }
       } else if (this.onDraw) {
-        const formData:FormData = new FormData();
-        formData.append('file', this.draw as File);
-        formData.append('slot', this.slotNumber.toString());
-        formData.append('page', this.pageId as string);
-        formData.append('signature', this.signature as string);
-
-        if (!this.idRecordDraw) {
-          const newDraw:DrawData = await this.pb.collection('drawing').create(formData)
-          this.idRecordDraw = newDraw.id
-          this.drawUrl = this.getImageUrl(newDraw)
+        if (this.drawData.id === '') {
+          this.drawData = await DatabaseManagerInstance.createDraw(this.drawData);
         } else {
-          const newDraw:DrawData = await this.pb.collection('drawing').update(this.idRecordDraw as string, formData)
-          this.drawUrl = this.getImageUrl(newDraw)
+          this.drawData = await DatabaseManagerInstance.updateDraw(this.drawData);
         }
-
-        if (this.idRecordText) {
-          await this.pb.collection('text').delete(this.idRecordText as string);
-          this.idRecordText = undefined
-          this.text = ''
+        if (this.textData.id !== '') {
+          await DatabaseManagerInstance.deleteText(this.textData)
+          this.textData.id = ''
         }
       }
 
@@ -156,18 +122,8 @@ export default {
     saveDraw(data:string) {
       this.onSignature = true
 
-      const byteCharacters:string = atob(data.split(',')[1]);
-      const byteNumbers:Array<any> = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray:Uint8Array = new Uint8Array(byteNumbers);
-      const blob:Blob = new Blob([byteArray], { type: 'image/png' });
-      this.draw = new File([blob], 'image.png', { type: 'image/png' });
-    },
-    getImageUrl(data:DrawData):string {
-      return this.pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file
-    },
+      this.drawData.file = base64ToFile(data);
+    }
   }
 };
 </script>
