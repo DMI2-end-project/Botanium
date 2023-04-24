@@ -1,18 +1,18 @@
 <template>
   <div>
-    <button class="sticker-element w-full h-min bg-gray-300 rounded-full relative p-0 flex justify-center items-center" @click="onModify = true">
-      <img v-if="stickerData.idSticker >= 0" :src="getStickerUrl(stickerData.idSticker)" class="h-full w-full object-contain absolute">
+    <button class="sticker-element w-full h-min bg-beige-medium/50 text-beige-dark rounded-full relative p-0 flex justify-center items-center outline outline-8 transition-all duration-400" :class="(onModify ? 'outline-yellow' : 'outline-transparent')" @click="onModify = true">
+      <img v-if="stickerData.idSticker >= 0" :src="getStickerUrl(stickerData.idSticker)" class="h-full w-full rounded-full object-contain absolute shadow-md">
       <p v-if="!(stickerData.idSticker >= 0)" class="absolute">sticker</p>
     </button>
     <div v-if="onModify" class="fixed z-40 w-screen h-screen top-0 left-0 flex items-end">
       <div class="relative h-5/6 mt-auto w-fit flex items-center" :class="isPageLeft ? 'ml-auto' : 'mr-auto'">
         <button v-if="stickerData.idSticker !== stickerDataLast.idSticker" @click="saveData" class="absolute z-10 h-24 w-24 rounded-full top-0 bottom-0 my-auto h-fit" :class="isPageLeft ? '-left-12' : '-right-12'">Valider</button>
-        <div class="bg-white p-8 h-full" :class="isPageLeft ? '' : 'scroll-left'">
+        <div class="bg-beige p-8 h-full" :class="isPageLeft ? '' : 'scroll-left'">
           <div class="overflow-y-scroll h-full">
             <p>Les autocollants du jardin</p>
             <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
               <div v-for="index in numberStickers" :v-bind="index" class="w-32 h-32 flex justify-center items-center">
-                <button @click="changeSticker(index % 3 + 1)" class="p-0 overflow-hidden rounded-full">
+                <button @click="changeSticker(index % 3 + 1)" class="p-0 overflow-hidden rounded-full shadow-md">
                   <img :src="getStickerUrl(index % 3 + 1)" class="object-contain w-full h-full pointer-events-none">
                 </button>
               </div>

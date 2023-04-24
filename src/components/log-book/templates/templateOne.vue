@@ -4,7 +4,7 @@
     <EditElement :pageId="pageContent.id" :slotNumber="0" @onModify="$emit('onModify', $event)" />
     <div class="grid grid-rows-2 grid-flow-col gap-4">
       <EditElement :pageId="pageContent.id" :slotNumber="1" @onModify="$emit('onModify', $event)" />
-      <StickerElement :pageId="pageContent.id" :slotNumber="0" class="w-2/3 mt-auto ml-auto" :isPageLeft="pageContent.pageNumber % 2 === 1" @onModify="$emit('onModify', $event)" />
+      <StickerElement :pageId="pageContent.id" :slotNumber="0" class="w-2/3 mt-auto mr-auto" :isPageLeft="pageContent.pageNumber % 2 === 1" @onModify="$emit('onModify', $event)" />
     </div>
     <ImageElement :pageId="pageContent.id" :slotNumber="1" :isPageLeft="pageContent.pageNumber % 2 === 1" @onModify="$emit('onModify', $event)" />
   </div>
