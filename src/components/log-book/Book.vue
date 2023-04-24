@@ -1,13 +1,13 @@
 <template>
   <div>
     <video ref="next" width="100" muted autoplay>
-        <source src="./../../assets/log-book/next.mp4" type="video/mp4">
+        <source src="./../../assets/log-book/v2/next.webm" type="video/webm">
     </video>
     <video ref="previous" width="100" muted autoplay>
-        <source src="./../../assets/log-book/previous.mp4" type="video/mp4">
+        <source src="./../../assets/log-book/v2/previous.webm" type="video/webm">
     </video>
-    <video ref="open" width="100" muted autoplay>
-        <source src="./../../assets/log-book/open.mp4" type="video/mp4">
+    <video ref="open" width="100" class="first" muted autoplay>
+        <source src="./../../assets/log-book/v2/open.webm" type="video/webm">
     </video>
     <div class="content">
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
@@ -124,15 +124,19 @@ export default {
 <style scoped>
 video {
   position: fixed;
-  width: 100%;
-  height: auto;
+  width: auto;
+  /* max-width: 100vw; */
+  height: 100vh;
   inset: 0;
   margin: auto;
   z-index: 1;
+  opacity: 0;
+  filter: brightness(1.1);
 }
 
 video.first {
   z-index: 2;
+  opacity: 1;
 }
 .content {
   position: fixed;
@@ -157,31 +161,41 @@ button.disable {
 }
 
 button.open {
-  margin-left: 18%;
+  margin-left: 25%;
+  margin-top: 5%;
 }
 
 button.next {
   position: absolute;
-  margin-left: calc(40% + 100px);
+  margin-left: calc(55% + 100px);
 }
 
 button.previous {
   position: absolute;
-  margin-left: calc(-40% - 150px);
+  margin-left: calc(-55% - 100px);
 }
 
 .book-content {
   position: absolute;
-  width: 100vw;
-  height: 0;
-  padding-bottom: 56.5%;
+  width: 0;
+  height: 100vh;
+  padding-left: 177vh;
   inset: 0;
+  margin: auto;
+}
+.book-content-container {
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
   margin: auto;
 }
 
 .book-content .page {
-  width: 15%;
-  height: 40%;
+  width: 24%;
+  height: 65%;
   position: absolute;
   inset:0;
   margin: auto;
@@ -189,20 +203,21 @@ button.previous {
   transition: opacity 0.2s ease;
 }
 
+
 .book-content .page-active {
   opacity: 1;
 }
 
 .book-content .page-left {
   /* transform: translate(-65%, 4%); */
-  left: -19%;
-  top: 4%;
+  left: -27%;
+  top: 11%;
 }
 
 .book-content .page-right {
   /* transform: translate(55%, 4%); */
-  left: 16%;
-  top: 4%;
+  left: 28%;
+  top: 11%;
 }
 
 </style>
