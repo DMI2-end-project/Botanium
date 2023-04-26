@@ -36,8 +36,6 @@ onBeforeMount(async () => {
     roomId: mainStore.roomId
   });
 
-  mainStore.gameId += 1
-
   if (mainStore.role === ROLE.TEACHER) {
     socket.emit(EVENT.LAUNCH_GAME, {
       roomId: mainStore.roomId,

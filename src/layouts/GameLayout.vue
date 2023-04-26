@@ -10,7 +10,11 @@ import {STEP} from "../common/Constants";
 import Breadcrumb from "../components/Breadcrumb.vue";
 import GameHeader from "../components/game/GameHeader.vue";
 
-import data from "../assets/game-data/game-data.json";
+import gameData from "../assets/game-data/game-data.json"; // {[key: string]: any}
+
+interface GameData {
+  [key: string]: any;
+}
 
 export default defineComponent({
   name: 'GameLayout',
@@ -19,27 +23,24 @@ export default defineComponent({
       return STEP
     },
     gameData(): {[key: string]: any} {
-      return data;
+      return gameData;
     }
   },
   components: {GameHeader, Breadcrumb},
   data() {
     return {
-
       mainStore: useMainStore(),
       gameStore: useGameStore(),
       router: useRouter(),
       socket: getSocket(),
       pb: DatabaseManagerInstance.pb,
-
     }
   },
   mounted() {
-
-    console.log('router', this.router)
     if (this.mainStore.getFullGameId) {
-      // @ts-ignore
-      this.gameStore.data = gameData[this.mainStore.getFullGameId]
+      const key = this.mainStore.getFullGameId as string;
+      const data: GameData = gameData;
+      this.gameStore.data = data[key];
     }
   },
   methods: {
@@ -74,7 +75,8 @@ export default defineComponent({
           Socket state : {{ mainStore.connected }},
           RoomID : {{ mainStore.roomId }},
           TeamID : {{ gameStore.teamId }},
-          Step : {{ gameStore.currentStep }}
+          GameId : {{ mainStore.gameId }},
+          Step : {{ gameStore.currentStep }},
         </div>
         <button @click="disconnect" class="ml-auto block">Déconnexion</button>
       </div>

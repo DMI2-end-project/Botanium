@@ -1,4 +1,4 @@
-# Botanium
+# Les petites pousses
 ## Installation
       npm install
 ## Run project
