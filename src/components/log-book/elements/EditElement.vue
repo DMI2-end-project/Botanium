@@ -85,7 +85,7 @@ export default {
     }
   },
   async mounted() {
-    this.ratio = this.$refs.container.clientWidth / this.$refs.container.clientHeight;
+    this.ratio = (this.$refs.container as HTMLElement).clientWidth / (this.$refs.container as HTMLElement).clientHeight;
     this.textData = await DatabaseManagerInstance.fetchText(this.pageId, this.slotNumber);
     this.drawData = await DatabaseManagerInstance.fetchDraw(this.pageId, this.slotNumber);
     this.signature = (this.textData.id ? this.textData.signature : this.drawData.signature);

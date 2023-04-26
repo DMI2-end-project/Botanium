@@ -19,7 +19,7 @@ initClient(pinia);
 DatabaseManagerInstance.pb;
 
 const store = useMainStore();
-await store.fetchRoles();
+store.fetchRoles();
 
 app.use(router);
 
