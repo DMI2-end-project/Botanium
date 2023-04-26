@@ -1,17 +1,17 @@
 <template>
-  <button class="edit-element w-full p-0" ref="container" :class="classProperty + ' ' + (textData.id || drawData.id ? 'bg-transparent' : 'bg-gray-100')" @click="onModify = true">
+  <button class="edit-element w-full p-0 text-beige-dark outline outline-8 transition-all duration-400" ref="container" :class="classProperty + ' ' + (textData.id || drawData.id ? 'bg-transparent' : 'bg-beige-medium/50') + ' ' + (onModify ? 'outline-yellow' : 'outline-transparent')" @click="onModify = true">
     <p v-if="!textData.id && !drawData.id">edit</p>
-    <div v-if="textData.id" class="flex flex-col justify-between h-full bg-gray-200 p-4 drop-shadow-lg">
-      <p class="text-xs text-left">{{ textData.content }}</p>
-      <p class="text-right mt-4">{{ textData.signature }}</p>
+    <div v-if="textData.id" class="flex flex-col justify-between h-full bg-green-light p-4 drop-shadow-lg">
+      <p class="text-sm text-left text-green font-semibold">{{ textData.content }}</p>
+      <p class="text-right mt-4 font-hand-written text-xs text-green">{{ textData.signature }}</p>
     </div>
     <div v-if="drawData.id" class="flex flex-col justify-between h-full relative">
       <div class="w-full h-full"><img :src="drawUrl" class="w-full h-full object-contain my-auto"></div>
-      <p class="text-right mt-4 absolute bottom-0 right-0 bg-beige m-2">{{ drawData.signature }}</p>
+      <p class="text-right font-hand-written text-xs text-green p-1 pt-2 absolute bottom-0 right-0 bg-beige m-2">{{ drawData.signature }}</p>
     </div>
   </button>
   <div v-if="onModify" class="fixed z-40 w-screen h-screen bg-black/25 flex justify-center items-center top-0 left-0">
-    <div v-if="!onSignature" class="bg-white h-[94%] w-full p-8 m-12">
+    <div v-if="!onSignature" class="bg-beige h-[94%] w-full p-8 m-12">
       <div v-if="!onWrite && !onDraw" class="h-full w-full grid grid-cols-2 gap-8">
         <button @click="onWrite = true">Ecrire</button>
         <button @click="onDraw = true">Dessiner</button>
@@ -25,7 +25,7 @@
         <Draw @save="saveDraw" :lastDrawUrl="drawUrl" :ratio="ratio" />
       </div>
     </div>
-    <div v-if="onSignature" class="bg-white p-8 flex flex-col items-center">
+    <div v-if="onSignature" class="bg-beige p-8 flex flex-col items-center">
       <p>Note le ou les prénoms des élèves qui ont vécu  ce souvenir au jardin :</p>
       <input type="text" v-model="signature" class="mt-5">
       <button v-if="signature != ''" @click="saveData" class="mt-5">Valider</button>

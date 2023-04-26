@@ -67,7 +67,7 @@ const config: RouterOptions = {
       path: '/carnet-de-bord',
       component: LogBook,
       meta: {
-        layout: 'Dev',
+        layout: 'LogBook',
       },
     },
     {
@@ -85,12 +85,12 @@ const router = createRouter(config);
 
 router.beforeEach((to, from) => {
   const store = useMainStore();
-  
+
   // Need auth to acces pages, redirect the user to the login page
   if (!DatabaseManagerInstance.pb.authStore.isValid && to.name !== 'Login') {
     return {name: 'Login'}
   }
-  
+
   // TODO : not working, example : https://pinia.vuejs.org/core-concepts/outside-component-usage.html
   if (DatabaseManagerInstance.pb.authStore.isValid && to.name === 'Login') {
     let roles = DatabaseManagerInstance.roles;
@@ -104,9 +104,9 @@ router.beforeEach((to, from) => {
         return {name: 'Home'}
     }
   }
-  
+
   if (DatabaseManagerInstance.pb.authStore.isValid) {
-  
+
   }
 });
 

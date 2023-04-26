@@ -12,12 +12,12 @@
     <div class="content">
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
         <div ref="pageLeft" class="page page-left flex">
-          <p class="absolute -bottom-6">page {{ pageNumber - 1 }}</p>
+          <!-- <p class="absolute -bottom-6">page {{ pageNumber - 1 }}</p> -->
           <button v-if="lastPage === pageNumber - 1" class="m-auto" @click="addPage">+</button>
           <PageContent v-else-if="pagesContent[pageNumber - 2]" :content="pagesContent[pageNumber - 2]" @onModify="onModify = $event" />
         </div>
         <div ref="pageRight" class="page page-right flex">
-          <p class="absolute -bottom-6">page {{ pageNumber }}</p>
+          <!-- <p class="absolute -bottom-6">page {{ pageNumber }}</p> -->
           <button v-if="lastPage === pageNumber" class="m-auto" @click="addPage">+</button>
           <PageContent v-else-if="pagesContent[pageNumber - 1]" :content="pagesContent[pageNumber - 1]" @onModify="onModify = $event" />
         </div>
@@ -45,19 +45,18 @@ export default {
   },
   data: () => {
     return {
-      pb: DatabaseManagerInstance.pb as Client,
       lastPage: 1 as number,
       page: 1 as number,
       isBookOpen: false as Boolean,
       onPageAdd: false as Boolean,
       onModify: false as Boolean,
       pagesContent: [] as Array<PageData>,
-      openVideo:  undefined as HTMLVideoElement | undefined,
-      nextVideo:  undefined as HTMLVideoElement | undefined,
-      previousVideo:  undefined as HTMLVideoElement | undefined,
-      buttonOpen:  undefined as HTMLButtonElement | undefined,
-      pageLeft:  undefined as HTMLElement | undefined,
-      pageRight:  undefined as HTMLElement | undefined,
+      openVideo: undefined as HTMLVideoElement | undefined,
+      nextVideo: undefined as HTMLVideoElement | undefined,
+      previousVideo: undefined as HTMLVideoElement | undefined,
+      buttonOpen: undefined as HTMLButtonElement | undefined,
+      pageLeft: undefined as HTMLElement | undefined,
+      pageRight: undefined as HTMLElement | undefined,
     }
   },
   computed: {
