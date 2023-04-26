@@ -5,17 +5,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { getSocket } from "../../../client";
+import {defineComponent} from 'vue'
+import {getSocket} from "../../../client";
 import {EVENT} from "../../../common/Constants";
 
 export default defineComponent({
   name: 'InGame',
-  components: {
-  },
-  props: {
-  },
-  data () {
+  data() {
     return {
       socket: getSocket(),
       step: 0

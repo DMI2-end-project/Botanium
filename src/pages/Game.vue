@@ -12,7 +12,7 @@ import TeacherGame from "../components/game/teacher/TeacherGame.vue";
 import Instruction from "../components/game/Instruction.vue";
 import Congratulation from "../components/game/Congratulation.vue";
 
-import gameData from "../assets/game-data/game-data.json";
+import data from "../assets/game-data/game-data.json";
 import Waiting from "../components/game/student/Waiting.vue";
 
 const pb = DatabaseManagerInstance.pb;
@@ -25,12 +25,18 @@ const route = useRoute();
 
 console.log('router', route);
 
+const gameData: {
+  [key: string]: any
+} = data;
+
 onBeforeMount(async () => {
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,
     roomId: mainStore.roomId
   });
+
+  mainStore.gameId += 1
 
   if (mainStore.role === ROLE.TEACHER) {
     socket.emit(EVENT.LAUNCH_GAME, {
@@ -58,15 +64,15 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="w-full h-full bg-green-medium grid grid-cols-12 text-center">
+  <div class="w-full h-full grid grid-cols-12 text-center">
     <Instruction v-show="gameStore.currentStep === STEP.INSTRUCTION" class="col-start-3 col-span-8"
                  :data="gameData[mainStore.getFullGameId]"/>
-    <StudentGame
-        v-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep !== STEP.INSTRUCTION || gameStore.currentStep !== STEP.CONGRATS)"
-        class="col-span-12" :data="gameStore.data" :teamId="gameStore.teamId"/>
     <TeacherGame
         v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === STEP.PLAY || gameStore.currentStep === STEP.END)"
         class="col-span-12" :data="gameData[mainStore.getFullGameId]"/>
+    <StudentGame
+        v-if="(mainStore.role === ROLE.STUDENT && gameStore.currentStep !== STEP.INSTRUCTION) || (mainStore.role === ROLE.STUDENT && gameStore.currentStep !== STEP.CONGRATS)"
+        class="col-span-12" :data="gameStore.data" :teamId="gameStore.teamId"/>
     <Waiting
         v-show="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === STEP.WAIT || gameStore.currentStep === STEP.END)"
         class="col-start-3 col-span-8" :data="gameStore.data" :teamId="gameStore.teamId"/>

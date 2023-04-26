@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-24 items-center text-green">
-    <div class="w-full bg-green-light rounded-md flex py-24 px-10">
+    <div class="w-full bg-green-light rounded-md flex gap-14 py-24 px-10">
       <div class="aspect-square shrink-0 w-36 bg-beige text-green rounded-full font-bold p-3">
         <span class="block w-full h-full flex justify-center items-center rounded-full border border-green bg-beige p-2">
           <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + icon" alt=""

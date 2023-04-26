@@ -24,7 +24,6 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue'
-import type {Answer} from '../../../../common/Interfaces'
 import {useGameStore} from "../../../../stores/gameStore";
 import {useMainStore} from "../../../../stores/mainStore";
 import Check from "../../../../assets/svg/ico-check.svg";
@@ -37,7 +36,7 @@ export default defineComponent({
       publicPath: window.location.origin,
       mainStore: useMainStore(),
       gameStore: useGameStore(),
-      currentAnswer: {} as Answer,
+      currentAnswer: {} as any,
     }
   },
   computed: {
@@ -49,7 +48,7 @@ export default defineComponent({
   },
   mounted() {
     if (this.answers) {
-      this.answers.forEach((answer: Answer) => {
+      this.answers.forEach((answer: any) => {
         answer.isClicked = false;
         answer.status = "";
       })
@@ -57,7 +56,7 @@ export default defineComponent({
   },
   methods: {
     itemSelected(e: Event) {
-      this.answers.forEach((answer: Answer) => {
+      this.answers.forEach((answer: any) => {
         answer.isClicked = false;
         answer.status = "";
       });
