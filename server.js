@@ -1,6 +1,7 @@
 import express from "express";
 import {createServer} from "http";
-import {Server} from "socket.io";
+import { Server } from "socket.io";
+import ClapGameManager from "./server/clapGameManager.js";
 
 const ROLE = {
   TEACHER: 'teacher',
@@ -29,8 +30,8 @@ const app = express();
 const http = createServer(app);
 const io = new Server(http, {
   cors: {
-    origins: [`http://localhost:${port}`]
-  }
+    origins: [`http://localhost:${port}`],
+  },
 });
 
 http.listen(port, () => {
@@ -195,4 +196,5 @@ io.on('connection', (socket) => {
     io.in(arg.roomId).emit(EVENT.END_GAME)
   })
 
+  new ClapGameManager(io, socket);
 });

@@ -1,7 +1,7 @@
 <template>
   <div class="relative flex flex-col items-center">
     <h1 class="translate-y-[20%] flex flex-col items-center">
-      <span class="inline-block bg-beige-medium text-green shadow-lg p-4 z-10">Enigme n°1</span>
+      <span class="inline-block bg-beige-medium text-green shadow-lg p-4 z-10">Enigme n°{{ mainStore.gameId }}</span>
       <span class="inline-block bg-beige-medium text-purple shadow-lg p-4 rotate-[1.80deg]">{{ title }}</span>
     </h1>
     <div class="flex flex-col items-center gap-6 bg-green rounded-md p-16">
@@ -47,12 +47,13 @@ export default defineComponent({
     }
   },
   mounted() {
-    if (this.mainStore.role === ROLE.TEACHER) {
-      this.socket.emit(EVENT.LAUNCH_GAME, {
-        roomId: this.mainStore.roomId,
-        gameId: this.mainStore.getFullGameId
-      });
-    }
+    // Already done in Game.vue
+    // if (this.mainStore.role === ROLE.TEACHER) {
+    //   this.socket.emit(EVENT.LAUNCH_GAME, {
+    //     roomId: this.mainStore.roomId,
+    //     gameId: this.mainStore.getFullGameId
+    //   });
+    // }
   },
   methods: {
     next() {

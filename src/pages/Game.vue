@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {onBeforeMount} from "vue";
-import {useRoute, useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {EVENT, ROLE, STEP} from "../common/Constants";
@@ -20,7 +20,6 @@ const pb = DatabaseManagerInstance.pb;
 const mainStore = useMainStore();
 const gameStore = useGameStore();
 const socket = getSocket();
-const router = useRouter();
 const route = useRoute();
 
 console.log('router', route);
@@ -39,7 +38,7 @@ onBeforeMount(async () => {
   if (mainStore.role === ROLE.TEACHER) {
     socket.emit(EVENT.LAUNCH_GAME, {
       roomId: mainStore.roomId,
-      gameId: mainStore.getFullGameId
+      gameId: mainStore.gameId
     });
 
     console.log('Game roomId', mainStore.roomId)

@@ -17,6 +17,7 @@ import {EVENT, GAMETYPE, STEP} from "../../../common/Constants";
 
 import Waiting from "./Waiting.vue";
 import MCQ from "./multiple-choice-test/GameView.vue";
+import Rhythm from "./rhythm/GameView.vue";
 
 export default defineComponent({
   name: 'StudentGame',
@@ -38,6 +39,8 @@ export default defineComponent({
       switch (this.gameStore.data?.gameType) {
         case GAMETYPE.MCQ:
           return MCQ;
+        case GAMETYPE.Rhythm:
+          return Rhythm;
         default:
           return;
       }
