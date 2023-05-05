@@ -103,6 +103,11 @@
         "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette.",
         "congratulation": "La carotte possède ... qui ralenti le vieillissement",
         "congratulationIcon": "disease.svg"
+      },
+      {
+        "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette.",
+        "congratulation": "La carotte possède ... qui ralenti le vieillissement",
+        "congratulationIcon": "disease.svg"
       }
     ]
   }

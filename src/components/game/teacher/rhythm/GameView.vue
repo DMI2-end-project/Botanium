@@ -1,9 +1,9 @@
 <template>
   <div class="relative">
-    <Gauge :content="score" />
+    <Gauge v-if="isPlaying" :content="score" />
+    <p v-if="cantPlay">Aucun micro n'est activé. L'enigme ne peut pas être résolue. Passez à la suite</p>
     <p>student ready : {{ studentReady }}</p>
     <p>student with micro : {{ studentWithMicro }}</p>
-    <button @click="launchGame">Lancer</button>
   </div>
 </template>
 
@@ -30,6 +30,8 @@ export default defineComponent({
             score: 0 as number,
             studentReady: 0,
             studentWithMicro: 0,
+            isPlaying: false,
+            cantPlay: false,
         };
     },
     mounted() {
@@ -41,6 +43,10 @@ export default defineComponent({
                 this.studentWithMicro += 1
             }
         });
+        this.socket.on(CLAPEVENT.CLAP_LAUNCH, (arg) => {
+            this.isPlaying = arg
+            this.cantPlay = !arg
+        });
     },
     computed: {
         STEP() {
@@ -51,11 +57,6 @@ export default defineComponent({
         next() {
             this.gameStore.currentStep = STEP.CONGRATS;
             this.socket.emit(EVENT.END_GAME, {
-                roomId: this.mainStore.roomId
-            });
-        },
-        launchGame() {
-            this.socket.emit(CLAPEVENT.CLAP_LAUNCH, {
                 roomId: this.mainStore.roomId
             });
         },

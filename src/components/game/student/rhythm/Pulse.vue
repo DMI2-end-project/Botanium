@@ -20,7 +20,7 @@ export default defineComponent({
     };
   },
   methods: {
-    resetAnimation() {
+    startAnimation() {
       this.pulse = false;
       setTimeout(() => {
         this.pulse = true;
@@ -58,7 +58,7 @@ export default defineComponent({
 }
 
 .animate-pulse {
-  animation: pulse 2000ms infinite;
+  animation: pulse 1500ms infinite;
 }
 
 .animate-circle {
@@ -98,6 +98,6 @@ export default defineComponent({
 }
 
 .animate-text-pulse {
-  animation: text-pulse 2000ms infinite;
+  animation: text-pulse 1500ms infinite;
 }
 </style>

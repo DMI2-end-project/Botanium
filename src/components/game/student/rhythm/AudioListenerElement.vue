@@ -25,6 +25,10 @@ export default defineComponent({
     microActive: {
       type: Boolean,
       default: false,
+    },
+    deltaTime: {
+      type: Number,
+      default: 0,
     }
   },
   data() {
@@ -33,7 +37,7 @@ export default defineComponent({
       mainStore: useMainStore(),
       pathModel: window.location.origin + "/tensorflow/m3/",
       frequencyData: {} as Uint8Array,
-      rhythmFreq: 2000 as number, // ms
+      rhythmFreq: 1500 as number, // ms
       lastTime: 0 as number,
       lastFreq: 0 as number, // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
       rhythm: 0 as number, // value between -1 & 1, -1 il faut surtout pas clapper, 1 c'est le meilleur moment pour clapper
@@ -48,39 +52,49 @@ export default defineComponent({
       feedbackMessage: "",
       recognizer: {} as speechCommands.SpeechCommandRecognizer,
       raf: 0 as number,
+      raf2: 0 as number,
     };
   },
   mounted() {
-    this.socket.on(CLAPEVENT.CLAP_LAUNCH, () => {
-      this.reset()
-    });
-    if (this.microActive) {
-      this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
-      this.raf = requestAnimationFrame(this.listenLoop);
-      this.initClapRecognition()
-    }
+    const waitTime = this.rhythmFreq - ((Date.now() + this.deltaTime) % this.rhythmFreq)
+    setTimeout(() => {
+      if (this.microActive) {
+        this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+        this.initClapRecognition()
+      }
+      this.start()
+    }, waitTime)
   },
   methods: {
-    reset() {
+    start() {
+      (this.$refs.pulse as typeof Pulse).startAnimation();
+      this.lastTime = 0
       if (this.microActive) {
         cancelAnimationFrame(this.raf)
-        this.lastTime = 0
         this.raf = requestAnimationFrame(this.listenLoop);
+      } else {
+        cancelAnimationFrame(this.raf2)
+        this.raf2 = requestAnimationFrame(this.loop);
       }
-      (this.$refs.pulse as typeof Pulse).resetAnimation();
     },
-    listenLoop (time: number) {
-      this.rhythm = Math.abs(((time - this.lastTime) / this.rhythmFreq) - 0.5) * -4 + 1
+    loop() {
+      const time = (Date.now() + this.deltaTime) % this.rhythmFreq
+      if (time < this.lastTime) {
+        (this.$refs.pulse as typeof Pulse).startAnimation();
+      }
+      this.lastTime = (Date.now() + this.deltaTime) % this.rhythmFreq
+      this.raf2 = requestAnimationFrame(this.loop);
+    },
+    listenLoop() {
+      const time = (Date.now() + this.deltaTime) % this.rhythmFreq
+      this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
       this.analyser.getByteFrequencyData(this.frequencyData);
       this.detectClap(this.frequencyData);
 
-      if ((time - this.lastTime) < this.rhythmFreq) {
-        this.raf = requestAnimationFrame(this.listenLoop);
-        return;
+      if (time < this.lastTime) {
+        (this.$refs.pulse as typeof Pulse).startAnimation();
       }
-
-      this.lastTime = time;
-      // this.resetAnimation()
+      this.lastTime = (Date.now() + this.deltaTime) % this.rhythmFreq
       this.raf = requestAnimationFrame(this.listenLoop);
     },
     detectClap(frequencyData:Uint8Array) {
@@ -162,6 +176,7 @@ export default defineComponent({
   beforeUnmount() {
     this.recognizer.stopListening()
     cancelAnimationFrame(this.raf)
+    cancelAnimationFrame(this.raf2)
   }
 });
 </script>

@@ -20,6 +20,7 @@ export enum CLAPEVENT {
   CLAP_LAUNCH = 'clapLaunch',
   CLAP_READY = 'clapReady',
   CLAP_SCORE = 'clapScore',
+  CLAP_SYNCHRO = 'clapSynchro',
 }
 
 export enum STEP {

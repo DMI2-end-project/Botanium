@@ -1,7 +1,7 @@
 import express from "express";
 import {createServer} from "http";
 import { Server } from "socket.io";
-import ClapGameManager from "./server/clapGameManager.js";
+import {ClapGameManagerInstance} from "./server/clapGameManager.js";
 
 const ROLE = {
   TEACHER: 'teacher',
@@ -154,9 +154,11 @@ io.on('connection', (socket) => {
 
     if (room) {
       room.teams = shuffle(room.teams);
+      ClapGameManagerInstance.reset();
+      ClapGameManagerInstance.setTotalTeams(room.teams.length);
 
       room.teams.map((team, index) => {
-        console.log('EVENT.LAUNCH_GAME', team, index, room.teams.length);
+        console.log('EVENT.LAUNCH_GAME', team, index, room.teams.length, arg.gameId);
         io.to(team).emit(EVENT.LAUNCH_GAME, {
           gameId: arg.gameId,
           teamId: index,
@@ -196,5 +198,5 @@ io.on('connection', (socket) => {
     io.in(arg.roomId).emit(EVENT.END_GAME)
   })
 
-  new ClapGameManager(io, socket);
+  ClapGameManagerInstance.initListenners(io, socket);
 });
