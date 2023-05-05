@@ -35,7 +35,7 @@ onBeforeMount(async () => {
 })
 
 onMounted(() => {
-
+  gameStore.reset()
 })
 </script>
 

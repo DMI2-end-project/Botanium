@@ -20,6 +20,14 @@ const EVENT = {
   END_STORY: 'EndStory',
 };
 
+let roomData = {
+  id: '',
+  gamemaster: '',
+  teams: [],
+  chapterId: 0,
+  gameId: 0
+}
+
 let rooms = [];
 //let currentStep = ;
 // TODO : save currentStep
@@ -170,7 +178,7 @@ io.on('connection', (socket) => {
     io.to(arg.roomId).emit(EVENT.START_GAME);
   });
 
-  socket.on(EVENT.TOTAL_TEAMS, (arg)=>{
+  socket.on(EVENT.TOTAL_TEAMS, (arg) => {
     let room = rooms.find(room => room.id === arg.roomId);
     console.log('EVENT.TOTAL_TEAMS', arg.roomId, room, room.teams);
     io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
@@ -190,9 +198,22 @@ io.on('connection', (socket) => {
     io.in(arg.roomId).emit(EVENT.GAME_VALIDATION)
   });
 
-  socket.on(EVENT.END_GAME, (arg)=>{
+  socket.on(EVENT.END_GAME, (arg) => {
     console.log('EVENT.END_GAME', arg)
     io.in(arg.roomId).emit(EVENT.END_GAME)
   })
+
+  socket.on(EVENT.BACK_STORY, (arg) => {
+    console.log('EVENT.BACK_STORY', arg)
+    io.in(arg.roomId).emit(EVENT.GAME_VALIDATION, {
+      gameId: arg.gameId
+    })
+  });
+
+  socket.on(EVENT.END_STORY, (arg) => {
+    console.log('EVENT.END_STORY', arg)
+    io.in(arg.roomId).emit(EVENT.END_STORY, {
+    })
+  });
 
 });

@@ -22,7 +22,7 @@ export default defineComponent({
     STEP() {
       return STEP
     },
-    gameData(): {[key: string]: any} {
+    gameData(): { [key: string]: any } {
       return gameData;
     }
   },
@@ -36,7 +36,7 @@ export default defineComponent({
       pb: DatabaseManagerInstance.pb,
     }
   },
-  mounted() {
+  created() {
     if (this.mainStore.getFullGameId) {
       const key = this.mainStore.getFullGameId as string;
       const data: GameData = gameData;
@@ -85,7 +85,6 @@ export default defineComponent({
       <slot name="header"/>
     </header>
     <main class="w-full h-full">
-      <!--The <slot> element is a slot outlet that indicates where the "VIEW" content should be rendered.-->
       <slot></slot>
     </main>
   </div>

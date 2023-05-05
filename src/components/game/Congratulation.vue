@@ -14,7 +14,8 @@ const router = useRouter();
 const next = async () => {
   mainStore.gameId += 1;
   await socket.emit(EVENT.BACK_STORY, {
-    roomId: mainStore.roomId
+    roomId: mainStore.roomId,
+    gameId: mainStore.gameId
   });
   await router.push('/chapitre/' + mainStore.chapterId)
 }
