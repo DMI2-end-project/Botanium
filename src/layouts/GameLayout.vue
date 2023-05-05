@@ -37,6 +37,9 @@ export default defineComponent({
     }
   },
   created() {
+    if (this.router) {
+      this.mainStore.gameId = Number(this.$route.params.id);
+    }
     if (this.mainStore.getFullGameId) {
       const key = this.mainStore.getFullGameId as string;
       const data: GameData = gameData;

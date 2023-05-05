@@ -2,7 +2,6 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      boxShadow: {},
       borderRadius: {},
       fontSize: {
         xs: "0.75rem", // 12px
@@ -11,7 +10,7 @@ module.exports = {
         lg: "1.5rem", // 24px
         xl: "2rem", // 32px
         xxl: "2.5rem", // 40px
-        '2xl': "80px",
+        "2xl": "80px",
       },
       fontFamily: {
         base: "Quicksand",

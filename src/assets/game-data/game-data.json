@@ -83,5 +83,32 @@
   },
   "00102": {
 
+  },
+  "00103": {
+
+  },
+  "00104": {
+    "gameType": "rhythm",
+    "instructionTitle": "Déterrer la carotte",
+    "instructionText": "Capucine doit déterrer la précieuse carotte et guérir Pinpin. Frappe dans tes mains en rythme avec tes camarades pour l’aider.",
+    "instructionGame": "Capucine a besoin de ton aide pour déterrer la carotte. Frappe dans tes mains avec tes camarades pour lui donner le rythme.",
+    "congratulation": "Grâce à vous Capucine a réussi à déterrer la carotte !",
+    "gameContent": [
+      {
+        "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette.",
+        "congratulation": "La carotte possède ... qui ralenti le vieillissement",
+        "congratulationIcon": "disease.svg"
+      },
+      {
+        "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette.",
+        "congratulation": "La carotte possède ... qui ralenti le vieillissement",
+        "congratulationIcon": "disease.svg"
+      },
+      {
+        "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette.",
+        "congratulation": "La carotte possède ... qui ralenti le vieillissement",
+        "congratulationIcon": "disease.svg"
+      }
+    ]
   }
 }

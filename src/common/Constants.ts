@@ -16,6 +16,13 @@ export enum EVENT {
   END_STORY = 'EndStory',
 }
 
+export enum CLAPEVENT {
+  CLAP_LAUNCH = 'clapLaunch',
+  CLAP_READY = 'clapReady',
+  CLAP_SCORE = 'clapScore',
+  CLAP_SYNCHRO = 'clapSynchro',
+}
+
 export enum STEP {
   INSTRUCTION,
   PLAY,
@@ -25,5 +32,6 @@ export enum STEP {
 }
 
 export enum GAMETYPE {
-  MCQ = 'multiple-choice'
+  MCQ = 'multiple-choice',
+  Rhythm = "rhythm"
 }

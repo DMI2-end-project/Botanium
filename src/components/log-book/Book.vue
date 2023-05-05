@@ -1,13 +1,13 @@
 <template>
   <div>
     <video ref="next" width="100" muted autoplay>
-        <source src="./../../assets/log-book/v2/next.webm" type="video/webm">
+        <source src="./../../assets/log-book/v5/next.webm" type="video/webm">
     </video>
     <video ref="previous" width="100" muted autoplay>
-        <source src="./../../assets/log-book/v2/previous.webm" type="video/webm">
+        <source src="./../../assets/log-book/v5/previous.webm" type="video/webm">
     </video>
     <video ref="open" width="100" class="first" muted autoplay>
-        <source src="./../../assets/log-book/v2/open.webm" type="video/webm">
+        <source src="./../../assets/log-book/v5/open.webm" type="video/webm">
     </video>
     <div class="content">
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
@@ -130,7 +130,6 @@ video {
   margin: auto;
   z-index: 1;
   opacity: 0;
-  filter: brightness(1.1);
 }
 
 video.first {
@@ -160,26 +159,26 @@ button.disable {
 }
 
 button.open {
-  margin-left: 25%;
-  margin-top: 5%;
+  margin-left: 30%;
+  margin-top: 8%;
 }
 
 button.next {
   position: absolute;
-  margin-left: calc(55% + 100px);
+  margin-left: calc(60% + 100px);
 }
 
 button.previous {
   position: absolute;
-  margin-left: calc(-55% - 100px);
+  margin-left: calc(-60% - 100px);
 }
 
 .book-content {
   position: absolute;
-  width: 0;
+  max-width: 100vw;
+  max-height: 56.5vw;
   height: 100vh;
-  padding-left: 177vh;
-  inset: 0;
+  width: 177vh;
   margin: auto;
 }
 .book-content-container {
@@ -193,7 +192,7 @@ button.previous {
 }
 
 .book-content .page {
-  width: 24%;
+  width: 27%;
   height: 65%;
   position: absolute;
   inset:0;
@@ -209,13 +208,13 @@ button.previous {
 
 .book-content .page-left {
   /* transform: translate(-65%, 4%); */
-  left: -27%;
+  left: -30%;
   top: 11%;
 }
 
 .book-content .page-right {
   /* transform: translate(55%, 4%); */
-  left: 28%;
+  left: 31%;
   top: 11%;
 }
 
