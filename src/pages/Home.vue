@@ -10,7 +10,6 @@ import {onBeforeMount} from "vue";
 * */
 
 const pb = DatabaseManagerInstance.pb;
-console.log('pb', pb.authStore.model?.role);
 const store = useMainStore();
 
 onBeforeMount(() => {

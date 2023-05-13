@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onBeforeMount, onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
 import {getSocket, connectClient} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
@@ -11,19 +11,17 @@ const password = ref();
 
 const router = useRouter();
 const pb = DatabaseManagerInstance.pb;
+const socket = getSocket();
 
 const store = useMainStore();
 
-// TODO : roomId from classroom
-
-const socket = getSocket();
 const login = async () => {
   try {
-    await store.fetchRoles();
+    store.roles = await DatabaseManagerInstance.fetchRoles();
 
     const authData = await pb.collection('person').authWithPassword(
-        email.value,
-        password.value,
+      email.value,
+      password.value,
     );
 
     if (pb.authStore.isValid) {

@@ -1,6 +1,7 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import {useMainStore} from "./stores/mainStore";
+import {useGameStore} from "./stores/gameStore";
 import {DatabaseManagerInstance} from "./common/DatabaseManager";
 import {ROLE} from "./common/Constants";
 import {connectClient} from "./client";
@@ -14,7 +15,8 @@ export default defineComponent({
   components: {AppLayout, DevLayout, GameLayout},
   data() {
     return {
-      mainStore: useMainStore()
+      mainStore: useMainStore(),
+      gameStore: useGameStore()
     }
   },
   mounted() {
@@ -27,7 +29,6 @@ export default defineComponent({
   methods: {
     async connectSocket() {
       let classRoom = undefined;
-      console.log('app role', DatabaseManagerInstance.pb.authStore.model?.role, this.mainStore.roleId)
 
       switch (this.mainStore.role) {
         case ROLE.TEACHER:
@@ -38,6 +39,9 @@ export default defineComponent({
         case ROLE.STUDENT:
           classRoom = await DatabaseManagerInstance.pb.collection('classroom').getFirstListItem(`students.id="${DatabaseManagerInstance.pb.authStore.model?.id}"`);
           this.mainStore.roomId = classRoom?.id;
+          let teamId = localStorage.getItem('teamId');
+          console.log('teamId', teamId);
+          this.gameStore.teamId = teamId ? +teamId : undefined;
           await connectClient();
           break;
       }

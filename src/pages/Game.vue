@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {onBeforeMount} from "vue";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {EVENT, ROLE, STEP} from "../common/Constants";
-import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
+import {useMainStore} from "../stores/mainStore";
 
 import StudentGame from "../components/game/student/StudentGame.vue";
 import TeacherGame from "../components/game/teacher/TeacherGame.vue";
@@ -20,6 +20,7 @@ const pb = DatabaseManagerInstance.pb;
 const mainStore = useMainStore();
 const gameStore = useGameStore();
 const socket = getSocket();
+const router = useRouter();
 const route = useRoute();
 
 console.log('router', route);
@@ -36,22 +37,20 @@ onBeforeMount(async () => {
   });
 
   if (mainStore.role === ROLE.TEACHER) {
+    console.log('EVENT.LAUNCH_GAME', EVENT.LAUNCH_GAME, mainStore.roomId, mainStore.gameId)
     socket.emit(EVENT.LAUNCH_GAME, {
       roomId: mainStore.roomId,
-      gameId: mainStore.gameId
+      gameId: mainStore.gameId//mainStore.getFullGameId
     });
 
-    console.log('Game roomId', mainStore.roomId)
-    socket.emit(EVENT.TOTAL_TEAMS, {
-      roomId: mainStore.roomId
-    })
-
-    console.log('subscribe', mainStore.role)
+    console.log('subscribe', mainStore.role);
     gameStore.$subscribe((mutation, state) => {
+      console.log('gameStore.totalTeams', gameStore.totalTeams, gameStore.totalTeamsFinished)
       if (gameStore.currentStep === STEP.PLAY && gameStore.totalTeamsFinished === gameStore.totalTeams) {
         gameStore.currentStep = STEP.END;
         socket.emit(EVENT.GAME_VALIDATION, {
-          roomId: mainStore.roomId
+          roomId: mainStore.roomId,
+          step: STEP.END
         })
       }
     });
