@@ -5,6 +5,7 @@ import {leading} from "../common/Lib";
 
 export type StoreState = {
   connected: boolean,
+  socketId: string | undefined,
   roomId: string | undefined,
   roleId: string | undefined,
   roles: Record[],
@@ -16,6 +17,7 @@ export type StoreState = {
 export const useMainStore = defineStore('main', {
   state: (): StoreState => ({
     connected: false,
+    socketId: undefined,
     roomId: undefined,
     roleId: undefined,
     roles: [],
@@ -40,9 +42,6 @@ export const useMainStore = defineStore('main', {
     },
   },
   actions: {
-    async fetchRoles() {
-      this.roles = await DatabaseManagerInstance.fetchRoles();
-    },
     reset() {
       this.connected = false;
       this.roomId = undefined;

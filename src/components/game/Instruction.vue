@@ -50,17 +50,18 @@ export default defineComponent({
     if (this.mainStore.role === ROLE.TEACHER) {
       this.socket.emit(EVENT.LAUNCH_GAME, {
         roomId: this.mainStore.roomId,
-        gameId: this.mainStore.getFullGameId
+        gameId: this.mainStore.gameId
       });
     }
   },
   methods: {
     next() {
       this.socket.emit(EVENT.START_GAME, {
-        roomId: this.mainStore.roomId
+        roomId: this.mainStore.roomId,
+        step: STEP.PLAY
       });
       this.gameStore.currentStep = STEP.PLAY;
-      console.log('next', this.gameStore.currentStep)
+      console.log('next', this.mainStore.roomId, this.gameStore.currentStep)
     }
   }
 });
