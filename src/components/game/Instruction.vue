@@ -4,10 +4,10 @@
       <span class="inline-block bg-beige-medium text-green shadow-lg p-4 z-10">Enigme n°{{ mainStore.gameId }}</span>
       <span class="inline-block bg-beige-medium text-purple shadow-lg p-4 rotate-[1.80deg]">{{ title }}</span>
     </h1>
-    <div class="flex flex-col items-center gap-6 bg-green rounded-md p-16">
+    <div class="flex flex-col items-center gap-6 bg-green rounded-md p-16 mb-8">
       <h3 class="text-beige">{{ text }}</h3>
-      <button v-if="mainStore.role === ROLE.TEACHER" @click="next">Suivant</button>
     </div>
+    <Button v-show="mainStore.role === ROLE.TEACHER" @click="next" label="Suivant" :color="BTN_COlOR.PINK"/>
   </div>
 </template>
 
@@ -16,15 +16,16 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../client";
 import {useMainStore} from "../../stores/mainStore";
 import {useGameStore} from "../../stores/gameStore";
-import {EVENT, ROLE, STEP} from "../../common/Constants";
+import {BTN_COlOR, EVENT, ROLE, STEP} from "../../common/Constants";
 
 import gameData from "./../../assets/game-data/game-data.json";
 
 import Breadcrumb from "../Breadcrumb.vue";
+import Button from "../Button.vue";
 
 export default defineComponent({
   name: 'InstructionComponent',
-  components: {Breadcrumb},
+  components: {Button, Breadcrumb},
   props: {
     data: Object
   },
@@ -36,6 +37,9 @@ export default defineComponent({
     }
   },
   computed: {
+    BTN_COlOR() {
+      return BTN_COlOR
+    },
     ROLE() {
       return ROLE
     },

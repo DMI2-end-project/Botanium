@@ -30,7 +30,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    console.log('chapterId', this.mainStore.getChapterId)
+    console.log('chapterId', this.mainStore.getChapterId, this.mainStore.gameId)
     this.socket.emit(EVENT.LAUNCH_STORY, {
       roomId: this.mainStore.roomId,
       chapterId: this.mainStore.getChapterId

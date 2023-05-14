@@ -12,13 +12,7 @@
         </button>
       </div>
     </div>
-    <button class="col-span-12 mx-auto aspect-square w-20 text-green bg-green-light rounded-full font-bold p-1.5"
-            @click="itemValidated">
-      <span
-          class="block w-full h-full flex justify-center items-center rounded-full border border-green bg-green-light p-2">
-        <!--Check class="h-10 aspect-square"/-->
-      </span>
-    </button>
+    <Button @click="itemValidated" :color="BTN_COlOR.GREEN"/> <!-- :icon="Check" -->
   </div>
 </template>
 
@@ -26,11 +20,14 @@
 import {defineComponent} from 'vue'
 import {useGameStore} from "../../../../stores/gameStore";
 import {useMainStore} from "../../../../stores/mainStore";
-import Check from "../../../../assets/svg/ico-check.svg";
+import {BTN_COlOR} from "../../../../common/Constants";
+import Button from "../../../Button.vue";
 
-// TODO : DYNAMIC SVG
+//import Check from "../../../../assets/svg/ico-check-transparency.svg?component";
+
 export default defineComponent({
   name: 'StudentGameView',
+  components: {Button},
   data() {
     return {
       publicPath: window.location.origin,
@@ -40,6 +37,9 @@ export default defineComponent({
     }
   },
   computed: {
+    BTN_COlOR() {
+      return BTN_COlOR
+    },
     answers() {
       if (this.gameStore.teamId !== undefined) {
         return this.gameStore.data.gameContent[this.gameStore.teamId].answers;
@@ -77,4 +77,7 @@ export default defineComponent({
     }
   }
 });
+</script>
+
+<script setup lang="ts">
 </script>

@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import {useGameStore} from "../../stores/gameStore";
-import Trophy from "../../assets/svg/ico-trophy.svg";
 import {getSocket} from "../../client";
 import {useMainStore} from "../../stores/mainStore";
-import {EVENT, ROLE} from "../../common/Constants";
+import {BTN_COlOR, EVENT, ROLE} from "../../common/Constants";
 import {useRouter} from "vue-router";
+
+import Trophy from "../../assets/svg/ico-trophy.svg?component";
+import Button from "../Button.vue";
+// TODO : Add ico-arrow.svg
+//import Arrow from "../../assets/svg/ico-arrow.svg?component";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
@@ -23,18 +27,13 @@ const next = async () => {
 
 <template>
   <div class="relative flex flex-col items-center text-beige text-center mt-20">
-    <div class="absolute -translate-y-1/2 aspect-square w-36 text-beige bg-secondary rounded-full font-bold p-3">
-      <span
-          class="block w-full h-full flex justify-center items-center rounded-full border border-beige bg-secondary p-2">
-        <!--Trophy class="w-14 aspect-square"/-->
-      </span>
+    <div class="absolute flex justify-center items-center -translate-y-1/2 aspect-square w-36 text-beige bg-secondary rounded-full font-bold p-3">
+        <Trophy class="w-14 aspect-square"/>
     </div>
-    <div class="w-full bg-green rounded-md flex flex-col gap-4 items-center py-24 px-28">
+    <div class="w-full bg-green rounded-md flex flex-col gap-4 items-center py-24 px-28 mb-8">
       <h1>Incroyable !</h1>
       <p>{{ gameStore.data?.congratulation }}</p>
-      <button v-show="mainStore.role === ROLE.TEACHER" class="cmx-auto my-5" @click="next">
-        Continuer
-      </button>
     </div>
+    <Button v-show="mainStore.role === ROLE.TEACHER" @click="next" label="Suivant" :color="BTN_COlOR.PINK"/>
   </div>
 </template>

@@ -2,7 +2,7 @@
 import {useMainStore} from "../stores/mainStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 
-//import Book from "../assets/svg/ico-book.svg"
+import Book from "../assets/svg/ico-book.svg?component"
 
 const store = useMainStore();
 

@@ -15,7 +15,7 @@
     <div v-show="gameStore.currentStep === STEP.WAIT" class=" bg-green text-white rounded-full flex justify-center items-center gap-5 p-2">
       <!-- absolute bottom-24 -->
       <div class="h-full aspect-square rounded-full bg-green-medium">
-        <!--Loading class="w-8 aspect-square"/-->
+        <Loading class="w-8 aspect-square"/>
       </div>
       <p class="m-2">Patiente un peu, tes camarades réfléchissent encore</p>
     </div>
@@ -27,7 +27,8 @@ import {defineComponent} from 'vue';
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
 import {STEP} from "../../../common/Constants";
-import Loading from "../../../assets/svg/ico-loading.svg";
+
+import Loading from "../../../assets/svg/ico-loading.svg?component";
 
 export default defineComponent({
   name: 'WaitingComponent',

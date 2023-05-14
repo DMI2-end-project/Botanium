@@ -2,8 +2,8 @@
   "00101": {
     "gameType": "multiple-choice",
     "instructionTitle": "Les bienfaits des carottes",
-    "instructionText": "Chaque groupe doit retrouver un bienfait, afin que tous ensemble vous puissiez communiquer tous les bienfaits à Capucine !",
-    "instructionGame": "Chaque groupe doit retrouver un bienfait, afin que tous ensemble vous puissiez communiquer tous les bienfaits à Capucine !",
+    "instructionText": "Retrouvez tous ensemble les bienfaits de la carotte et communiquez les à Capucine !",
+    "instructionGame": "Chaque groupe doit retrouver un bienfait pour ensuite les communiquer tous ensemble à Capucine !",
     "congratulation": "Grâce à vous Capucine connait les bienfaits des carottes !",
     "waitingMessage": "Patiente que tous les bienfaits soient trouvés",
     "gameContent": [
@@ -82,10 +82,59 @@
     ]
   },
   "00102": {
-
+    "gameType": "drag-and-drop",
+    "instructionTitle": "Les couleurs des carottes",
+    "instructionText": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées.",
+    "instructionGame": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées.",
+    "congratulation": "Grâce à vous Capucine connait les différents types des carottes !",
+    "waitingMessage": "Patiente un peu, tes camarades réfléchissent encore",
+    "gameContent": [
+      {
+        "step1": {
+          "gameType": "find",
+          "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot ! "
+        },
+        "step2": {
+          "gameType": "drag-and-drop",
+          "instruction": "Range ta carotte jaune au bon endroit : Lis bien les informations dans les cases préparées par papi lapin.",
+          "answers": [
+            {
+              "isValid": true,
+              "feedback": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
+              "icon": "eye.svg",
+              "text": "Elle améliore la vision nocturne",
+              "isClicked": false,
+              "status": ""
+            },
+            {
+              "isValid": false,
+              "icon": "muscle.svg",
+              "text": "Elle donne des muscles",
+              "isClicked": false,
+              "status": ""
+            },
+            {
+              "isValid": false,
+              "icon": "tooth.svg",
+              "text": "Elle blanchit les dents",
+              "isClicked": false,
+              "status": ""
+            },
+            {
+              "isValid": false,
+              "icon": "bone.svg",
+              "text": "Elle renforce les os",
+              "isClicked": false,
+              "status": ""
+            }
+          ]
+        },
+        "congratulation": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
+        "congratulationIcon": "eye.svg"
+      }
+    ]
   },
   "00103": {
-
   },
   "00104": {
     "gameType": "rhythm",

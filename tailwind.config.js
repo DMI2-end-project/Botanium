@@ -36,6 +36,9 @@ module.exports = {
         purple: "#9b85ff",
         yellow: "#edbd56",
       },
+      backgroundImage: {
+        'dotted': "url('/src/assets/dot.png')"
+      }
     },
   },
   plugins: [],

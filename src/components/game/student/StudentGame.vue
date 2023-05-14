@@ -39,7 +39,7 @@ export default defineComponent({
       switch (this.gameStore.data?.gameType) {
         case GAMETYPE.MCQ:
           return MCQ;
-        case GAMETYPE.Rhythm:
+        case GAMETYPE.RHYTHM:
           return Rhythm;
         default:
           return;

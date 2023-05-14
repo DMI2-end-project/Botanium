@@ -34,5 +34,11 @@ export enum STEP {
 
 export enum GAMETYPE {
   MCQ = 'multiple-choice',
-  Rhythm = "rhythm"
+  RHYTHM = "rhythm",
+  DRAG_DROP = 'drag-and-drop'
+}
+
+export enum BTN_COlOR {
+  PINK = 'pink',
+    GREEN = 'green'
 }

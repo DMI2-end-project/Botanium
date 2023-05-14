@@ -38,7 +38,8 @@ export default defineComponent({
   },
   created() {
     if (this.router) {
-      this.mainStore.gameId = Number(this.$route.params.id);
+      // TODO : à quoi ça sert ?
+      //this.mainStore.gameId = Number(this.$route.params.id);
     }
     if (this.mainStore.getFullGameId) {
       const key = this.mainStore.getFullGameId as string;
