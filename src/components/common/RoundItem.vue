@@ -47,6 +47,10 @@ export default defineComponent({
         this.containerClass += ' bg-green text-beige';
         this.textClass += ' text-beige';
         break;
+      case COlOR.YELLOW:
+        this.containerClass += ' bg-yellow text-beige';
+        this.textClass += ' text-beige';
+        break;
       case COlOR.GREEN_MEDIUM:
         this.containerClass += ' bg-green-medium text-beige';
         this.textClass += ' text-beige';
