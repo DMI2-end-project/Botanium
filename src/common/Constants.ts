@@ -38,7 +38,16 @@ export enum GAMETYPE {
   DRAG_DROP = 'drag-and-drop'
 }
 
-export enum BTN_COlOR {
+export enum COlOR {
   PINK = 'pink',
-    GREEN = 'green'
+  GREEN = 'green',
+  GREEN_MEDIUM = 'green-medium'
+}
+
+export enum SIZE {
+  XS = 'xs',
+  SM = 'sm',
+  MD = 'md',
+  LG = 'lg',
+  XL = 'xl',
 }

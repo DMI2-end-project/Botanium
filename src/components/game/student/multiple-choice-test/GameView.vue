@@ -12,7 +12,7 @@
         </button>
       </div>
     </div>
-    <Button @click="itemValidated" :color="BTN_COlOR.GREEN"/> <!-- :icon="Check" -->
+    <RoundButton @click="itemValidated" :color="COlOR.GREEN"/> <!-- :icon="Check" -->
   </div>
 </template>
 
@@ -20,14 +20,14 @@
 import {defineComponent} from 'vue'
 import {useGameStore} from "../../../../stores/gameStore";
 import {useMainStore} from "../../../../stores/mainStore";
-import {BTN_COlOR} from "../../../../common/Constants";
-import Button from "../../../Button.vue";
+import {COlOR} from "../../../../common/Constants";
+import RoundButton from "../../../common/RoundButton.vue";
 
 //import Check from "../../../../assets/svg/ico-check-transparency.svg?component";
 
 export default defineComponent({
   name: 'StudentGameView',
-  components: {Button},
+  components: {RoundButton},
   data() {
     return {
       publicPath: window.location.origin,
@@ -37,8 +37,8 @@ export default defineComponent({
     }
   },
   computed: {
-    BTN_COlOR() {
-      return BTN_COlOR
+    COlOR() {
+      return COlOR
     },
     answers() {
       if (this.gameStore.teamId !== undefined) {

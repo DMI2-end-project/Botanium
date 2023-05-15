@@ -218,3 +218,12 @@ button:focus-visible {
     src: url('src/assets/fonts/ApfelGrotezk/ApfelGrotezk-Regular.woff2') format('woff2');
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'Apfel Grotezk';
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    src: url('src/assets/fonts/ApfelGrotezk/ApfelGrotezk-Fett.woff2') format('woff2');
+    font-display: swap;
+}

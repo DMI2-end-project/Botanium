@@ -1,13 +1,15 @@
 <template>
   <div class="relative flex flex-col items-center">
-    <h1 class="translate-y-[20%] flex flex-col items-center">
-      <span class="inline-block bg-beige-medium text-green shadow-lg p-4 z-10">Enigme n°{{ mainStore.gameId }}</span>
-      <span class="inline-block bg-beige-medium text-purple shadow-lg p-4 rotate-[1.80deg]">{{ title }}</span>
-    </h1>
-    <div class="flex flex-col items-center gap-6 bg-green rounded-md p-16 mb-8">
+    <div class="flex flex-col items-center">
+      <SignboardVue :text="'Enigme n°' + mainStore.gameId" class="z-10" />
+      <SignboardVue :text="title" :is-rotate="true" class="text-purple min-w-[25vw] -mt-3" />
+    </div>
+    <div class="w-full flex flex-col items-center gap-6 bg-green rounded-md p-28 -mt-6">
       <h3 class="text-beige">{{ text }}</h3>
     </div>
-    <Button v-show="mainStore.role === ROLE.TEACHER" @click="next" label="Suivant" :color="BTN_COlOR.PINK"/>
+    <RoundButtonVue v-if="mainStore.role === ROLE.TEACHER" @click="next" :color="COlOR.PINK" class="mt-8 text-lg font-bold">
+      >
+    </RoundButtonVue>
   </div>
 </template>
 
@@ -16,16 +18,15 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../client";
 import {useMainStore} from "../../stores/mainStore";
 import {useGameStore} from "../../stores/gameStore";
-import {BTN_COlOR, EVENT, ROLE, STEP} from "../../common/Constants";
+import {COlOR, EVENT, ROLE, STEP} from "../../common/Constants";
 
 import gameData from "./../../assets/game-data/game-data.json";
-
-import Breadcrumb from "../Breadcrumb.vue";
-import Button from "../Button.vue";
+import SignboardVue from "../common/Signboard.vue";
+import RoundButtonVue from "../common/RoundButton.vue";
 
 export default defineComponent({
   name: 'InstructionComponent',
-  components: {Button, Breadcrumb},
+  components: {SignboardVue, RoundButtonVue},
   props: {
     data: Object
   },
@@ -37,8 +38,8 @@ export default defineComponent({
     }
   },
   computed: {
-    BTN_COlOR() {
-      return BTN_COlOR
+    COlOR() {
+      return COlOR
     },
     ROLE() {
       return ROLE
