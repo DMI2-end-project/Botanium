@@ -8,7 +8,8 @@ import Breadcrumb from "../components/Breadcrumb.vue";
 import Congratulation from "../components/game/Congratulation.vue";
 import Waiting from "../components/game/student/Waiting.vue";
 import gameData from "../assets/game-data/game-data.json";
-import {STEP} from "../common/Constants";
+import { STEP } from "../common/Constants";
+import TeamSignboardVue from "../components/common/TeamSignboard.vue";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
@@ -27,11 +28,12 @@ gameStore.currentStep = STEP.WAIT;
     <TeacherGame class="col-span-12"/>
     <Congratulation class="col-start-3 col-span-8"/>
     -->
-    <Breadcrumb class="col-span-12"/>
+    <Breadcrumb class="col-start-2 col-span-10"/>
     <StoryStudent class="col-span-12"/>
     <Instruction class="col-start-3 col-span-8"/>
     <StudentGame class="col-span-12"/>
     <Waiting class="col-start-3 col-span-8"/>
     <Congratulation class="col-start-3 col-span-8"/>
+    <TeamSignboardVue text="Les papillons" class="col-start-4 col-span-12" />
   </div>
 </template>
