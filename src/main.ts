@@ -18,10 +18,15 @@ initClient(pinia);
 DatabaseManagerInstance.pb;
 
 const store = useMainStore();
-store.roles = await DatabaseManagerInstance.fetchRoles();
 
-app.use(router);
+const init = async () => {
+  store.roles = await DatabaseManagerInstance.fetchRoles();
+  app.use(router);
+  
+  registerLayouts(app);
+  
+  app.mount('#app');
+}
+init();
 
-registerLayouts(app);
 
-app.mount('#app');

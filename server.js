@@ -99,6 +99,9 @@ const joinRoom = (socket, arg) => {
     } else if (arg.role === ROLE.STUDENT) {
       if (!room.teams.find(t => t === socket.id)) {
         room.teams.push(socket.id);
+        if(room.isPlaying && room.playingTeams && arg.teamId) {
+          room.playingTeams[arg.teamId] = socket.id;
+        }
       }
       /*
       let teamIndex = room.teams.findIndex(t => t.id === socket.id);
@@ -256,10 +259,12 @@ io.on('connection', (socket) => {
 
     let room = rooms.find(room => room.id === arg.roomId);
     if (room) {
+      let newTeams = shuffle(room.teams);
       io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
-        totalTeams: room.teams
+        totalTeams: newTeams
       });
 
+      room.playingTeams = newTeams;
       room.isPlaying = true;
       room.step = arg.step;
       room.teamsValidation = []

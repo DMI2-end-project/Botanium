@@ -23,8 +23,8 @@ switch (props.color) {
       <span :class="spanClass"
           class="block w-full aspect-square flex justify-center items-center rounded-full border p-2">
         <!--Arrow class="w-14 aspect-square"/-->
-        <component :is="props.icon" class="aspect-square w-10"/>
-        {{ props.label }}
+        <slot/>
+
       </span>
   </button>
 </template>

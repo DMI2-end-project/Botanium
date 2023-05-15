@@ -91,7 +91,7 @@
     "gameContent": [
       {
         "step1": {
-          "gameType": "find",
+          "gameType": "swipe",
           "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot ! "
         },
         "step2": {
