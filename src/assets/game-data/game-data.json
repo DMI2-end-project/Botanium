@@ -1,20 +1,24 @@
 {
   "00101": {
     "gameType": "multiple-choice",
-    "instructionTitle": "Les bienfaits des carottes",
-    "instructionText": "Retrouvez tous ensemble les bienfaits de la carotte et communiquez les à Capucine !",
+    "teamsNeeded": true,
+    "introduction": {
+      "title": "Les bienfaits des carottes",
+      "text": "Retrouvez tous ensemble les bienfaits de la carotte et communiquez les à Capucine !"
+    },
     "instructionGame": "Chaque groupe doit retrouver un bienfait pour ensuite les communiquer tous ensemble à Capucine !",
-    "congratulation": "Grâce à vous Capucine connait les bienfaits des carottes !",
     "waitingMessage": "Patiente que tous les bienfaits soient trouvés",
+    "congratulation": "Grâce à vous Capucine connait les bienfaits des carottes !",
     "gameContent": [
       {
         "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
-        "congratulation": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
-        "congratulationIcon": "eye.svg",
+        "congratulation": {
+          "text": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
+          "icon": "eye.svg"
+        },
         "answers": [
           {
             "isValid": true,
-            "feedback": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
             "icon": "eye.svg",
             "text": "Elle améliore la vision nocturne",
             "isClicked": false,
@@ -45,12 +49,13 @@
       },
       {
         "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
-        "congratulation": "La carotte possède ... qui ralenti le vieillissement",
-        "congratulationIcon": "disease.svg",
+        "congratulation": {
+          "text": "La carotte possède ... qui ralenti le vieillissement",
+          "icon": "disease.svg"
+        },
         "answers": [
           {
             "isValid": true,
-            "feedback": "La carotte possède ... qui ralenti le vieillissement",
             "icon": "disease.svg",
             "text": "Elle ralentit le vieillissement",
             "isClicked": false,
@@ -82,40 +87,55 @@
     ]
   },
   "00102": {
-    "instructionTitle": "Les couleurs des carottes",
-    "instructionText": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées.",
+    "gameType": "drag-and-drop",
+    "teamsNeeded": true,
+    "introduction": {
+      "title": "Les couleurs des carottes",
+      "text": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées."
+    },
     "instructionGame": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées.",
-    "congratulation": "Grâce à vous Capucine connait les différents types des carottes !",
     "waitingMessage": "Patiente un peu, tes camarades réfléchissent encore",
+    "congratulation": "Grâce à vous Capucine connait les différents types des carottes !",
     "gameContent": [
       {
-        "step1": {
-          "gameType": "swipe",
-          "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !"
-        },
-        "step2": {
-          "gameType": "drag-and-drop",
-          "instruction": "Range ta carotte jaune au bon endroit : Lis bien les informations dans les cases préparées par papi lapin.",
-          "answers": [
-            {
-              "isValid": true,
-              "feedback": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
-              "icon": "eye.svg",
-              "text": "Elle améliore la vision nocturne",
-              "isClicked": false,
-              "status": ""
-            },
-            {
-              "isValid": false,
-              "icon": "muscle.svg",
-              "text": "Elle donne des muscles",
-              "isClicked": false,
-              "status": ""
-            }
-          ]
-        },
-        "congratulation": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
-        "congratulationIcon": "eye.svg"
+        "games": [
+          {
+            "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !"
+          },
+          {
+            "instruction": "Range ta carotte jaune au bon endroit : Lis bien les informations dans les cases préparées par papi lapin.",
+            "answers": [
+              {
+                "isValid": false,
+                "feedback": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
+                "icon": "eye.svg",
+                "text": "Elle améliore la vision nocturne",
+                "isClicked": false,
+                "status": ""
+              },
+              {
+                "isValid": true,
+                "feedback": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
+                "icon": "eye.svg",
+                "text": "Elle améliore la vision nocturne",
+                "isClicked": false,
+                "status": ""
+              },
+              {
+                "isValid": false,
+                "feedback": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
+                "icon": "eye.svg",
+                "text": "Elle améliore la vision nocturne",
+                "isClicked": false,
+                "status": ""
+              }
+            ]
+          }
+        ],
+        "congratulation": {
+          "text": "",
+          "image": ".png"
+        }
       }
     ]
   },
@@ -123,25 +143,22 @@
   },
   "00104": {
     "gameType": "rhythm",
-    "instructionTitle": "Déterrer la carotte",
-    "instructionText": "Capucine doit déterrer la précieuse carotte et guérir Pinpin. Frappe dans tes mains en rythme avec tes camarades pour l’aider.",
+    "teamsNeeded": false,
+    "introduction": {
+      "title": "Déterrer la carotte",
+      "text": "Capucine doit déterrer la précieuse carotte et guérir Pinpin. Frappe dans tes mains en rythme avec tes camarades pour l’aider."
+    },
     "instructionGame": "Capucine a besoin de ton aide pour déterrer la carotte. Frappe dans tes mains avec tes camarades pour lui donner le rythme.",
     "congratulation": "Grâce à vous Capucine a réussi à déterrer la carotte !",
     "gameContent": [
       {
-        "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette.",
-        "congratulation": "La carotte possède ... qui ralenti le vieillissement",
-        "congratulationIcon": "disease.svg"
+        "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette."
       },
       {
-        "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette.",
-        "congratulation": "La carotte possède ... qui ralenti le vieillissement",
-        "congratulationIcon": "disease.svg"
+        "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette."
       },
       {
-        "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette.",
-        "congratulation": "La carotte possède ... qui ralenti le vieillissement",
-        "congratulationIcon": "disease.svg"
+        "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette."
       }
     ]
   }

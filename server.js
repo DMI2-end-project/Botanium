@@ -1,6 +1,6 @@
 import express from "express";
 import {createServer} from "http";
-import { Server } from "socket.io";
+import {Server} from "socket.io";
 import {ClapGameManagerInstance} from "./server/clapGameManager.js";
 
 const ROLE = {
@@ -99,7 +99,7 @@ const joinRoom = (socket, arg) => {
     } else if (arg.role === ROLE.STUDENT) {
       if (!room.teams.find(t => t === socket.id)) {
         room.teams.push(socket.id);
-        if(room.isPlaying && room.playingTeams && arg.teamId) {
+        if (room.isPlaying && room.playingTeams && arg.teamId) {
           room.playingTeams[arg.teamId] = socket.id;
         }
       }
@@ -239,6 +239,7 @@ io.on('connection', (socket) => {
       ClapGameManagerInstance.reset();
       ClapGameManagerInstance.setTotalTeams(room.teams.length);
 
+      console.log('room.teams', room.teams);
       room.teams.map((team, index) => {
         console.log('EVENT.LAUNCH_GAME', team, index, room.teams.length, arg.gameId);
         io.to(team).emit(EVENT.LAUNCH_GAME, {
@@ -269,7 +270,7 @@ io.on('connection', (socket) => {
       room.step = arg.step;
       room.teamsValidation = []
 
-      for(let i = 0; i < room.teams.length; i++) {
+      for (let i = 0; i < room.teams.length; i++) {
         room.teamsValidation.push(false)
       }
     }

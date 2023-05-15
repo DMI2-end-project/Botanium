@@ -45,10 +45,10 @@ export default defineComponent({
       return ROLE
     },
     title() {
-      return this.$props.data?.instructionTitle
+      return this.$props.data?.introduction.title
     },
     text() {
-      return this.$props.data?.instructionText
+      return this.$props.data?.introduction.text
     }
   },
   mounted() {
