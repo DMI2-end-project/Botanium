@@ -37,7 +37,8 @@ module.exports = {
         yellow: "#edbd56",
       },
       backgroundImage: {
-        'dotted': "url('/src/assets/dot.png')"
+        'dotted': "url('/src/assets/dot.png')",
+        'signboard': "url('/src/assets/images/common/texture-signboard.png')"
       }
     },
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="signboard w-fit px-12 py-6 shadow-lg flex justify-center" :class="isRotate ? 'transform rotate-2' : ''">
+  <div class="signboard bg-signboard w-fit px-12 py-6 shadow-lg flex justify-center" :class="isRotate ? 'transform rotate-2' : ''">
     <h1 class="w-fit" :class="isRotate ? 'transform -rotate-2' : ''">{{ text }}</h1>
   </div>
 </template>
@@ -28,7 +28,6 @@ export default defineComponent({
 
 <style scoped>
 .signboard {
-  background-image: url('src/assets/images/common/texture-signboard.png');
   background-size: auto 100%;
 }
 </style>

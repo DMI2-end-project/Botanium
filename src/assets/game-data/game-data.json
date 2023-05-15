@@ -82,7 +82,6 @@
     ]
   },
   "00102": {
-    "gameType": "drag-and-drop",
     "instructionTitle": "Les couleurs des carottes",
     "instructionText": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées.",
     "instructionGame": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées.",
@@ -92,7 +91,7 @@
       {
         "step1": {
           "gameType": "swipe",
-          "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot ! "
+          "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !"
         },
         "step2": {
           "gameType": "drag-and-drop",
@@ -110,20 +109,6 @@
               "isValid": false,
               "icon": "muscle.svg",
               "text": "Elle donne des muscles",
-              "isClicked": false,
-              "status": ""
-            },
-            {
-              "isValid": false,
-              "icon": "tooth.svg",
-              "text": "Elle blanchit les dents",
-              "isClicked": false,
-              "status": ""
-            },
-            {
-              "isValid": false,
-              "icon": "bone.svg",
-              "text": "Elle renforce les os",
               "isClicked": false,
               "status": ""
             }
