@@ -1,5 +1,74 @@
 {
   "001": {
-
+    "title": "Capucine, Pinpin et les carottes",
+    "quote": "Et si je te racontais l’histoire de Pinpin et des carottes...",
+    "image": "",
+    "contents": [
+      [
+        {
+          "text": "Aujourd'hui, Capucine est très inquiète... Cela fait quelques jours qu'elle n'a plus de nouvelles de son ami Pinpin le lapin. C'est étrange car Pinpin lui rend souvent visite et ne manque jamais une occasion de voir Capucine. Convaincue que quelque chose cloche, Capucine décide donc de se rendre directement chez Pinpin."
+        },
+        {
+          "text": "En arrivant devant son terrier, elle se rend compte que la porte est restée entrouverte. Elle jette un oeil dans l'entrebâillement de la porte, tout est sombre à l'intérieur. Dans la pénombre, on distingue seulement une lueur au fond de la pièce, là où se trouve habituellement le lit de Pinpin. Inquiète, elle entre et tâtonne jusqu'à atteindre le lit."
+        },
+        {
+          "text": "Inquiète, elle entre et tâtonne jusqu'à atteindre le lit. À son grand soulagement, elle découvre Pinpin, enseveli sous une montagne de couvertures."
+        },
+        {
+          "text": "Capucine se penche au-dessus du lit et demande ce qu'il ne va pas.<br/>Pinpin renifle et répond faiblement : \" Je suis malade Capucine... Je suis très fatigué...\"<br/>Capucine s'assoit à son chevet : Pinpin est brûlant de fièvre ! Il faut qu'elle l'aide ! Dans un murmure, son ami lui confie qu'il a besoin de manger une carotte mystérieuse pour aller mieux."
+        },
+        {
+          "text": "Capucine a déjà entendu parler de cette mystérieuse carotte. C'est une légende parmi les habitants du jardin où elle vit. Selon la légende, cette carotte est plus grande que toutes les autres, d'une couleur éclatante et très juteuse."
+        }
+      ],
+      [
+        {
+          "text": "Pinpin explique à Capucine que les anciens de sa famille en savent d'avantage sur cette carotte mystérieuse.<br/>Capucine se lance alors à la rencontre de la famille de Pinpin qui habite le jardin d'à côté."
+        },
+        {
+          "text": "Capucine arrive devant le terrier de la famille de Pinpin : ils sont tous en train de grignoter des carottes grillées au barbecue. Elle se joint à eux et leur fait part de son inquiétude vis-à-vis de l'état de Pinpin. Elle leur parle de la mystérieuse carotte et leur demande s'ils savent comment trouver le précieux remède."
+        },
+        {
+          "text": "Le grand-père de Pinpin révèle que l'emplacement de la carotte est un secret gardé depuis de nombreuses années par toute la communauté lapin. Le révéler à un inconnu non-initié est très rare. Mais, étant donné l'urgence de la situation, il accepte de révéler à Capucine le secret à condition qu'elle se montre digne de confiance en lui. Pour cela, il lui soumet une énigme ardue."
+        }
+      ],
+      [
+        {
+          "text": "Capucine a résolu avec brio l'énigme, le grand-père de Pinpin est impressionné ! <br/>Il lui révèle donc le secret que gardent les lapins depuis de nombreuses générations : la carotte mystérieuse pousse dans la clairière de \"blablabla\", là où toutes les conditions sont parfaitement réunies pour la pousse de cette carotte si particulière."
+        },
+        {
+          "text": "Capucine est très reconnaissante envers la famille de Pinpin. Avant de partir en quête de la carotte, elle les remercie chaleureusement pour leur aide et leur confiance.<br/>Pour l'accompagner dans sa quête, ils lui donnent un grand sac à dos remplit de tout le nécessaire : paniers-repas, couvertures, eau, jus de carotte. <br/>Capucine est prête à partir à la recherche de la carotte !"
+        },
+        {
+          "text": "Capucine commence son périple mais il n'est pas sans difficulté...<br/>Pour accéder à la clairière, elle passe par des collines ventées, des étangs humides, des forêts sombres."
+        },
+        {
+          "text": "Lorsqu'elle arrive enfin à destination, elle est épuisée... Et nulle carotte à l'horizon !<br/>La clairière est très grande...<br/>Elle ne sait pas par où commencer ses recherches et le jour commence à tomber, il faut se dépêcher !"
+        },
+        {
+          "text": "Elle se rend alors compte que la clairière est constituée de différents types de sols selon les zones. Capucine se souvint alors de tout ce qu'elle avait appris sur les carottes. Elle se rappela que les carottes préféraient un type de sol spécifique."
+        },
+        {
+          "text": "Capucine a enfin identifié la zone de la clairière où poussent les carottes. Elle s'y précipite !<br/>Arrivée à l'endroit précis, elle remarque pleins de jeunes fanes de carottes dépassant de la parcelle. Il lui faut encore creuser pour déterrer toutes les carottes nécessaires à la guérison de Pinpin."
+        }
+      ],
+      [
+        {
+          "text": "Ça y est ! Capucine brandit victorieuse la botte de carotte, elle a enfin réussi !<br/>Elle remplit son sac à ras bord de carottes et se met en route pour le chemin du retour. Elle a hâte de retrouver son ami et pouvoir enfin l'aider !"
+        },
+        {
+          "text": "Lorsqu'elle arrive, Pinpin est encore plus faible qu'avant. Elle lui donne la carotte mystérieuse, qui a une odeur incroyablement sucrée. Pinpin la mange lentement, profitant de chaque bouchée. Peu à peu, sa fièvre baisse et son énergie revient."
+        },
+        {
+          "text": "C'était moins une ! Il remercie Capucine du fond du cœur et lui promet qu'il lui rendra la pareille un jour."
+        }
+      ]
+    ],
+    "games": [
+      "00101",
+      "00102",
+      "00103",
+      "00104"
+    ]
   }
 }
