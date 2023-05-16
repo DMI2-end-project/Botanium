@@ -20,7 +20,7 @@ import {useMainStore} from "../../stores/mainStore";
 import {useGameStore} from "../../stores/gameStore";
 import {COlOR, EVENT, ROLE, STEP} from "../../common/Constants";
 
-import gameData from "./../../assets/game-data/game-data.json";
+import gameData from "./../../assets/game-data/game-data-v2.json";
 import SignboardVue from "../common/Signboard.vue";
 import RoundButtonVue from "../common/RoundButton.vue";
 

@@ -10,7 +10,7 @@ import {STEP} from "../common/Constants";
 import Breadcrumb from "../components/Breadcrumb.vue";
 import GameHeader from "../components/game/GameHeader.vue";
 
-import gameData from "../assets/game-data/game-data.json"; // {[key: string]: any}
+import gameData from "../assets/game-data/game-data-v2.json"; // {[key: string]: any}
 
 interface GameData {
   [key: string]: any;

@@ -12,7 +12,7 @@ import TeacherGame from "../components/game/teacher/TeacherGame.vue";
 import Instruction from "../components/game/Instruction.vue";
 import Congratulation from "../components/game/Congratulation.vue";
 
-import data from "../assets/game-data/game-data.json";
+import data from "../assets/game-data/game-data-v2.json";
 import Waiting from "../components/game/student/Waiting.vue";
 
 const pb = DatabaseManagerInstance.pb;
