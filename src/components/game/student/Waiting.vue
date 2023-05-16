@@ -53,12 +53,15 @@ export default defineComponent({
     tID() {
       return this.$props.teamId ? this.$props.teamId : 0;
     },
+    currentPart() {
+      return this.$props.data?.games[this.gameStore.currentPart]
+    },
     text() {
-      return this.$props.data?.games[this.gameStore.currentPart].teams[this.tID].congratulation.text;
+      return this.currentPart.teams[this.currentPart.teamsNeeded ? this.tID : 0].congratulation?.text;
       //return this.$props.data?.gameContent[this.tID].congratulation;
     },
     icon() {
-      return this.$props.data?.games[this.gameStore.currentPart].teams[this.tID].congratulation.icon;
+      return this.currentPart.teams[this.currentPart.teamsNeeded ? this.tID : 0].congratulation.icon;
       //return this.$props.data?.gameContent[this.tID].congratulationIcon;
     },
     waitingMessage() {

@@ -35,11 +35,14 @@ export default defineComponent({
     ROLE() {
       return ROLE
     },
+    currentPart() {
+      return this.data?.games[this.gameStore.currentPart]
+    },
     text() {
       if (this.gameStore.teamId !== undefined) {
-        return this.data?.games[this.gameStore.currentPart].teams[this.gameStore.teamId].instruction;
+        return this.currentPart.teams[this.currentPart.teamsNeeded ? this.gameStore.teamId : 0].instruction;
       } else {
-        return this.data?.games[this.gameStore.currentPart].gamemaster.instruction;
+        return this.currentPart.gamemaster.instruction;
       }
     }
   }

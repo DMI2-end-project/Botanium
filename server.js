@@ -239,6 +239,7 @@ io.on('connection', (socket) => {
 
     if (room) {
       resetRoomStatus(room);
+      room.gameId = arg.gameId;
 
       io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
         totalTeams: room.teams
