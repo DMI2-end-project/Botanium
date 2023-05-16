@@ -38,12 +38,6 @@ onBeforeMount(async () => {
   gameStore.totalParts = gameData[mainStore.getFullGameId].games.length;
 
   if (mainStore.role === ROLE.TEACHER) {
-    //console.log('EVENT.LAUNCH_GAME', EVENT.LAUNCH_GAME, mainStore.roomId, mainStore.gameId)
-    socket.emit(EVENT.LAUNCH_GAME, {
-      roomId: mainStore.roomId,
-      gameId: mainStore.gameId//mainStore.getFullGameId
-    });
-
     gameStore.$subscribe((mutation, state) => {
       console.log('gameStore.totalTeams', gameStore.totalTeams, gameStore.totalTeamsFinished)
       if (gameStore.currentStep === STEP.PLAY && gameStore.totalTeamsFinished === gameStore.totalTeams) {

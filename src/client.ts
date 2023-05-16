@@ -17,28 +17,28 @@ export const getSocket = () => socket;
 export const initClient = (pinia: Pinia) => {
   const mainStore = useMainStore(pinia);
   const gameStore = useGameStore(pinia);
-  
+
   socket = io(URL, {
     autoConnect: false,
     rejectUnauthorized: false // WARN: please do not do this in production
   });
-  
+
   socket.on("connect", () => {
     mainStore.connected = true;
     mainStore.socketId = socket.id
   });
-  
+
   socket.on("disconnect", () => {
     mainStore.connected = false;
   });
-  
+
   socket.on("join", () => {
     console.log("join", mainStore.roomId);
   });
-  
+
   socket.on(EVENT.ROOM_STATUS, (arg) => {
     console.log('EVENT.ROOM_STATUS', arg)
-    
+
     if (arg.chapterId) {
       mainStore.chapterId = arg.chapterId
     }
@@ -52,22 +52,22 @@ export const initClient = (pinia: Pinia) => {
         gameStore.currentStep = arg.step
       }
     }
-    
+
     if (arg.isPlaying) {
       router.push('/exercice/' + mainStore.getFullGameId);
     }
   });
-  
+
   socket.on(EVENT.TOTAL_TEAMS, (arg) => {
     console.log('EVENT.TOTAL_TEAMS', arg)
     gameStore.totalTeams = arg.totalTeams.length;
     //localStorage.setItem('totalTeams', arg.totalTeams);
   });
-  
+
   socket.on(EVENT.LAUNCH_STORY, async (arg) => {
     await router.push('/chapitre/' + arg.chapterId);
   });
-  
+
   socket.on(EVENT.LAUNCH_GAME, async (arg) => {
     console.log('EVENT.LAUNCH_GAME', arg)
     gameStore.reset();
@@ -77,25 +77,26 @@ export const initClient = (pinia: Pinia) => {
     //gameStore.totalTeams = arg.totalTeams.length;
     await router.push('/exercice/' + mainStore.getFullGameId);
   });
-  
+
   socket.on(EVENT.START_GAME, async (arg) => {
     console.log('EVENT.START_GAME', arg);
+    gameStore.currentStep = STEP.PLAY;
   });
-  
+
   socket.on(EVENT.TEAM_VALIDATION, () => {
     console.log('EVENT.TEAM_VALIDATION')
     gameStore.totalTeamsFinished += 1;
   })
-  
+
   socket.on(EVENT.GAME_VALIDATION, () => {
     gameStore.currentStep = STEP.END;
   })
-  
+
   socket.on(EVENT.END_GAME, () => {
     gameStore.currentStep = STEP.CONGRATS;
     localStorage.removeItem('teamId');
   })
-  
+
   socket.on(EVENT.BACK_STORY, async (arg: any) => {
     console.log('EVENT.BACK_STORY', EVENT.BACK_STORY, arg)
     gameStore.reset();
@@ -104,7 +105,7 @@ export const initClient = (pinia: Pinia) => {
     //}
     await router.push('/chapitre/' + mainStore.getChapterId);
   })
-  
+
   socket.on(EVENT.END_STORY, async (arg: any) => {
     // TODO :
     switch (mainStore.role) {
@@ -117,7 +118,7 @@ export const initClient = (pinia: Pinia) => {
 
 export const connectClient = async () => {
   const mainStore = useMainStore(pinia);
-  
+
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,

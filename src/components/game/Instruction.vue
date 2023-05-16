@@ -15,10 +15,10 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {getSocket} from "../../client";
 import {useMainStore} from "../../stores/mainStore";
 import {useGameStore} from "../../stores/gameStore";
-import {COlOR, EVENT, ROLE, STEP} from "../../common/Constants";
+import { COlOR, ROLE } from "../../common/Constants";
+import { GameMasterManagerInstance } from "../../common/GameMasterManager"
 
 import gameData from "./../../assets/game-data/game-data-v2.json";
 import SignboardVue from "../common/Signboard.vue";
@@ -32,7 +32,6 @@ export default defineComponent({
   },
   data() {
     return {
-      socket: getSocket(),
       mainStore: useMainStore(),
       gameStore: useGameStore(),
     }
@@ -52,21 +51,10 @@ export default defineComponent({
     }
   },
   mounted() {
-    // Already done in Game.vue
-    // if (this.mainStore.role === ROLE.TEACHER) {
-    //   this.socket.emit(EVENT.LAUNCH_GAME, {
-    //     roomId: this.mainStore.roomId,
-    //     gameId: this.mainStore.gameId
-    //   });
-    // }
   },
   methods: {
     next() {
-      this.socket.emit(EVENT.START_GAME, {
-        roomId: this.mainStore.roomId,
-        step: STEP.PLAY
-      });
-      this.gameStore.currentStep = STEP.PLAY;
+      GameMasterManagerInstance.startGame()
     }
   }
 });

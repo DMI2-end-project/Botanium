@@ -5,6 +5,7 @@ import {useGameStore} from "../stores/gameStore";
 import {leading} from "../common/Lib";
 import gameData from "../assets/game-data/game-data-v2.json";
 import Card from "../components/Card.vue";
+import {GameMasterManagerInstance} from "../common/GameMasterManager";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
@@ -12,11 +13,7 @@ const router = useRouter();
 let chapters = 2;
 
 const goTo = async (e: Event, c: number) => {
-  gameStore.reset();
-  let chapter = c + 1;
-  mainStore.chapterId = chapter;
-  gameStore.data = gameData;
-  await router.push('/chapitre/' + leading(chapter, 3));
+  GameMasterManagerInstance.launchStory(c + 1)
 }
 </script>
 

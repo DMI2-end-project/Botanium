@@ -1,9 +1,8 @@
 <script setup lang="ts">
+import { GameMasterManagerInstance } from "../../common/GameMasterManager"
 import {useGameStore} from "../../stores/gameStore";
-import {getSocket} from "../../client";
 import {useMainStore} from "../../stores/mainStore";
-import {COlOR, SIZE, EVENT, ROLE} from "../../common/Constants";
-import { useRouter } from "vue-router";
+import {COlOR, SIZE, ROLE} from "../../common/Constants";
 import RoundButtonVue from "../common/RoundButton.vue";
 import RoundItemVue from "../common/RoundItem.vue";
 
@@ -13,16 +12,9 @@ import Trophy from "./../../assets/svg/ico-trophy.svg?component";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
-const socket = getSocket();
-const router = useRouter();
 
 const next = async () => {
-  mainStore.gameId += 1;
-  await socket.emit(EVENT.BACK_STORY, {
-    roomId: mainStore.roomId,
-    gameId: mainStore.gameId
-  });
-  await router.push('/chapitre/' + mainStore.chapterId)
+  GameMasterManagerInstance.backStory()
 }
 </script>
 

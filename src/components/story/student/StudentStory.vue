@@ -14,19 +14,13 @@ export default defineComponent({
   data() {
     return {
       socket: getSocket(),
-      step: 0
     }
   },
   mounted() {
-    // this.step += 1;
-    this.socket.on(EVENT.START_GAME, () => {
-      this.step = 1;
-    })
   },
   methods: {
     validated() {
       this.$emit('validated');
-      this.step += 1;
     }
   }
 });

@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import {useMainStore} from "../stores/mainStore";
+import {GameMasterManagerInstance} from "./../common/GameMasterManager";
 
 // TODO : Add modal intermédiaire
-const mainStore = useMainStore();
 const props = defineProps(['chapterId']);
+
+const launchStory = () => {
+  GameMasterManagerInstance.launchChapter(props.chapterId);
+}
 
 </script>
 <template>
-  <router-link :to="{ path: '/chapitre/'+ mainStore.getChapterId }"
-               class="inline-block bg-beige rounded-md p-2">
+  <button class="inline-block bg-beige rounded-md p-2" @click="launchStory">
     Chapitre {{ chapterId }}
-  </router-link>
+  </button>
 </template>
 <style scoped>
 

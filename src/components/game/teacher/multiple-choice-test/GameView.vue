@@ -28,7 +28,8 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import {EVENT, STEP} from "../../../../common/Constants";
+import { EVENT, STEP } from "../../../../common/Constants";
+import { GameMasterManagerInstance } from "../../../../common/GameMasterManager"
 
 // TODO : DYNAMIC SVG
 export default defineComponent({
@@ -71,10 +72,7 @@ export default defineComponent({
   },
   methods: {
     next() {
-      this.gameStore.currentStep = STEP.CONGRATS;
-      this.socket.emit(EVENT.END_GAME, {
-        roomId: this.mainStore.roomId
-      })
+      GameMasterManagerInstance.endGame()
     }
   }
 });
