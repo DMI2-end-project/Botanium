@@ -97,10 +97,11 @@ export const initClient = (pinia: Pinia) => {
   })
   
   socket.on(EVENT.BACK_STORY, async (arg: any) => {
+    console.log('EVENT.BACK_STORY', EVENT.BACK_STORY, arg)
     gameStore.reset();
-    if (mainStore.gameId) {
-      mainStore.gameId = arg.gameId;
-    }
+    //if (mainStore.gameId) {
+    //  mainStore.gameId = arg.gameId;
+    //}
     await router.push('/chapitre/' + mainStore.getChapterId);
   })
   

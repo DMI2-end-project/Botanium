@@ -330,7 +330,7 @@ io.on('connection', (socket) => {
 
   socket.on(EVENT.BACK_STORY, (arg) => {
     console.log('EVENT.BACK_STORY', arg)
-    io.in(arg.roomId).emit(EVENT.GAME_VALIDATION, {
+    io.in(arg.roomId).emit(EVENT.BACK_STORY, {
       gameId: arg.gameId
     })
   });
