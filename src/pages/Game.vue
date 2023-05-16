@@ -3,6 +3,7 @@ import {onBeforeMount} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {EVENT, ROLE, STEP} from "../common/Constants";
 import {useGameStore} from "../stores/gameStore";
 import {useMainStore} from "../stores/mainStore";
@@ -41,11 +42,7 @@ onBeforeMount(async () => {
     gameStore.$subscribe((mutation, state) => {
       console.log('gameStore.totalTeams', gameStore.totalTeams, gameStore.totalTeamsFinished)
       if (gameStore.currentStep === STEP.PLAY && gameStore.totalTeamsFinished === gameStore.totalTeams) {
-        gameStore.currentStep = STEP.END;
-        socket.emit(EVENT.GAME_VALIDATION, {
-          roomId: mainStore.roomId,
-          step: STEP.END
-        })
+        GameMasterManagerInstance.gameValidation()
       }
     });
   }

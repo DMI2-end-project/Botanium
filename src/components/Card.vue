@@ -5,7 +5,7 @@ import {GameMasterManagerInstance} from "./../common/GameMasterManager";
 const props = defineProps(['chapterId']);
 
 const launchStory = () => {
-  GameMasterManagerInstance.launchChapter(props.chapterId);
+  GameMasterManagerInstance.launchStory(props.chapterId);
 }
 
 </script>

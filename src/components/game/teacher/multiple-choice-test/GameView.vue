@@ -46,14 +46,6 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.socket.on(EVENT.TEAM_VALIDATION, (arg) => {
-      this.answers[arg.teamId].status = 'valid';
-    });
-    //this.socket.on(EVENT.GAME_VALIDATION, (arg) => {
-    //  this.answers.forEach((answer:any) => {
-    //    answer.status = '';
-    //  })
-    //});
   },
   computed: {
     STEP() {
