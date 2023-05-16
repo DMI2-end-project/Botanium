@@ -13,6 +13,7 @@ import {getSocket} from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
 import {EVENT, STEP, CLAPEVENT} from "../../../../common/Constants";
+import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
 import Gauge from './Gauge.vue';
 
 // TODO : DYNAMIC SVG
@@ -55,10 +56,7 @@ export default defineComponent({
     },
     methods: {
         next() {
-            this.gameStore.currentStep = STEP.CONGRATS;
-            this.socket.emit(EVENT.END_GAME, {
-                roomId: this.mainStore.roomId
-            });
+            GameMasterManagerInstance.endGame()
         },
         updateScore(clapScore: number) {
             this.score += Number(clapScore) * 5

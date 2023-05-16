@@ -122,10 +122,6 @@ const joinRoom = (socket, arg) => {
 
   let i = roomIndex >= 0 ? roomIndex : rooms.length - 1;
 
-  //io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
-  //  totalTeams: rooms[i].teams ? rooms[i].teams : undefined
-  //})
-
   io.to(socket.id).emit(EVENT.ROOM_STATUS, {
     //roomStatus: rooms[i]
     chapterId: rooms[i].chapterId,
@@ -286,13 +282,13 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on(EVENT.TOTAL_TEAMS, (arg) => {
-    let room = rooms.find(room => room.id === arg.roomId);
-    console.log('EVENT.TOTAL_TEAMS', arg.roomId, room, room.teams);
-    //io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
-    //  totalTeams: room.teams
-    //})
-  });
+  // socket.on(EVENT.TOTAL_TEAMS, (arg) => {
+  //   let room = rooms.find(room => room.id === arg.roomId);
+  //   console.log('EVENT.TOTAL_TEAMS', arg.roomId, room, room.teams);
+  //   //io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
+  //   //  totalTeams: room.teams
+  //   //})
+  // });
 
   socket.on(EVENT.TEAM_VALIDATION, (arg) => {
     console.log('EVENT.TEAM_VALIDATION', arg);
@@ -330,9 +326,9 @@ io.on('connection', (socket) => {
 
   socket.on(EVENT.BACK_STORY, (arg) => {
     console.log('EVENT.BACK_STORY', arg)
-    io.in(arg.roomId).emit(EVENT.GAME_VALIDATION, {
-      gameId: arg.gameId
-    })
+    io.in(arg.roomId).emit(EVENT.BACK_STORY, {
+      gameId: arg.gameId,
+    });
   });
 
   socket.on(EVENT.END_STORY, (arg) => {

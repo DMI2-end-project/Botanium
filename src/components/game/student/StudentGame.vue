@@ -14,6 +14,7 @@ import {getSocket} from "../../../client";
 import {useGameStore} from "../../../stores/gameStore";
 import {useMainStore} from "../../../stores/mainStore";
 import {EVENT, GAMETYPE, STEP} from "../../../common/Constants";
+import {TeamManagerInstance} from "../../../common/TeamManager";
 
 import Waiting from "./Waiting.vue";
 import MCQ from "./multiple-choice-test/GameView.vue";
@@ -56,11 +57,7 @@ export default defineComponent({
   methods: {
     validated() {
       this.$emit('validated');
-      this.gameStore.currentStep = STEP.WAIT;
-      this.socket.emit(EVENT.TEAM_VALIDATION, {
-        roomId: this.mainStore.roomId,
-        teamId: this.gameStore.teamId
-      });
+      TeamManagerInstance.teamValidation()
     }
   }
 });

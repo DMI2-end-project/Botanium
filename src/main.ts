@@ -4,6 +4,8 @@ import {createPinia} from 'pinia';
 import {initClient} from "./client";
 import { DatabaseManagerInstance } from "./common/DatabaseManager";
 import { mountGameMasterManagerInstance } from "./common/GameMasterManager";
+import { ROLE } from "./common/Constants";
+import { mountTeamManagerInstance } from "./common/TeamManager";
 import router from "./router";
 import App from './App.vue';
 import {useMainStore} from "./stores/mainStore";
@@ -28,7 +30,7 @@ const init = async () => {
 
   app.mount('#app');
 
-
   mountGameMasterManagerInstance(router);
+  mountTeamManagerInstance(router);
 }
 init();
