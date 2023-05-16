@@ -7,7 +7,7 @@ import StudentGame from "../components/game/student/StudentGame.vue";
 import Breadcrumb from "../components/Breadcrumb.vue";
 import Congratulation from "../components/game/Congratulation.vue";
 import Waiting from "../components/game/student/Waiting.vue";
-import gameData from "../assets/game-data/game-data.json";
+import gameData from "../assets/game-data/game-data-v2.json";
 import { STEP } from "../common/Constants";
 import TeamSignboardVue from "../components/common/TeamSignboard.vue";
 

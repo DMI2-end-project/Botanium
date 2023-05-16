@@ -5,7 +5,7 @@ export enum ROLE {
 }
 
 export enum EVENT {
-  ROOM_STATUS='RoomStatus',
+  ROOM_STATUS = 'RoomStatus',
   TOTAL_TEAMS = 'TotalTeams',
   LAUNCH_STORY = 'LaunchStory',
   LAUNCH_GAME = 'LaunchGame',
@@ -33,9 +33,10 @@ export enum STEP {
 }
 
 export enum GAMETYPE {
+  DRAG_DROP = 'drag-and-drop',
   MCQ = 'multiple-choice',
   RHYTHM = "rhythm",
-  DRAG_DROP = 'drag-and-drop'
+  SWIPE = 'swipe',
 }
 
 export enum COlOR {

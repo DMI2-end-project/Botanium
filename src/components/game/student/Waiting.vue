@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-col gap-24 items-center text-green">
     <div class="w-full bg-green-light rounded-md flex gap-14 py-24 px-10">
-      <RoundItem :color="COLOR.GREEN_MEDIUM" :size="SIZE.XL" ><Loading /></RoundItem>
+      <RoundItem :color="COLOR.GREEN_MEDIUM" :size="SIZE.XL">
+        <Loading/>
+      </RoundItem>
       <div class=" flex flex-col gap-4 items-center">
         <h1>Bravo !</h1>
         <p class="">{{ text }}</p>
@@ -51,14 +53,19 @@ export default defineComponent({
     tID() {
       return this.$props.teamId ? this.$props.teamId : 0;
     },
+    currentPart() {
+      return this.$props.data?.games[this.gameStore.currentPart]
+    },
     text() {
-      return this.$props.data?.gameContent[this.tID].congratulation;
+      return this.currentPart.teams[this.currentPart.teamsNeeded ? this.tID : 0].congratulation?.text;
+      //return this.$props.data?.gameContent[this.tID].congratulation;
     },
     icon() {
-      return this.$props.data?.gameContent[this.tID].congratulationIcon;
+      return this.currentPart.teams[this.currentPart.teamsNeeded ? this.tID : 0].congratulation.icon;
+      //return this.$props.data?.gameContent[this.tID].congratulationIcon;
     },
     waitingMessage() {
-      return this.$props.data?.waitingMessage;
+      return this.$props.data ? this.$props.data.waitingMessage : "Patiente un peu, tes camarades réfléchissent encore...";
     }
   },
   mounted() {

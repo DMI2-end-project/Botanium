@@ -20,7 +20,7 @@ import {useGameStore} from "../../stores/gameStore";
 import { COlOR, ROLE } from "../../common/Constants";
 import { GameMasterManagerInstance } from "../../common/GameMasterManager"
 
-import gameData from "./../../assets/game-data/game-data.json";
+import gameData from "./../../assets/game-data/game-data-v2.json";
 import SignboardVue from "../common/Signboard.vue";
 import RoundButtonVue from "../common/RoundButton.vue";
 

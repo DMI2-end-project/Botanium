@@ -4,7 +4,7 @@ import { useGameStore } from "../stores/gameStore";
 import { getSocket } from "./../client";
 import { leading } from "../common/Lib";
 import { EVENT, STEP } from "./Constants";
-import gameData from "../assets/game-data/game-data.json";
+import gameData from "../assets/game-data/game-data-v2.json";
 
 class GameMasterManager {
   private static _instance: GameMasterManager;

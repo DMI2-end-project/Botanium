@@ -11,9 +11,9 @@ import StudentGame from "../components/game/student/StudentGame.vue";
 import TeacherGame from "../components/game/teacher/TeacherGame.vue";
 import Instruction from "../components/game/Instruction.vue";
 import Congratulation from "../components/game/Congratulation.vue";
-
-import data from "../assets/game-data/game-data.json";
 import Waiting from "../components/game/student/Waiting.vue";
+
+import data from "../assets/game-data/game-data-v2.json";
 
 const pb = DatabaseManagerInstance.pb;
 
@@ -22,8 +22,6 @@ const gameStore = useGameStore();
 const socket = getSocket();
 const router = useRouter();
 const route = useRoute();
-
-console.log('router', route);
 
 const gameData: {
   [key: string]: any
@@ -36,14 +34,10 @@ onBeforeMount(async () => {
     roomId: mainStore.roomId
   });
 
-  if (mainStore.role === ROLE.TEACHER) {
-    // console.log('EVENT.LAUNCH_GAME', EVENT.LAUNCH_GAME, mainStore.roomId, mainStore.gameId)
-    // socket.emit(EVENT.LAUNCH_GAME, {
-    //   roomId: mainStore.roomId,
-    //   gameId: mainStore.gameId//mainStore.getFullGameId
-    // });
+  gameStore.currentPart = 0;
+  gameStore.totalParts = gameData[mainStore.getFullGameId].games.length;
 
-    console.log('subscribe', mainStore.role);
+  if (mainStore.role === ROLE.TEACHER) {
     gameStore.$subscribe((mutation, state) => {
       console.log('gameStore.totalTeams', gameStore.totalTeams, gameStore.totalTeamsFinished)
       if (gameStore.currentStep === STEP.PLAY && gameStore.totalTeamsFinished === gameStore.totalTeams) {
@@ -55,7 +49,6 @@ onBeforeMount(async () => {
       }
     });
   }
-  console.log('teamId', gameStore.teamId)
 });
 </script>
 

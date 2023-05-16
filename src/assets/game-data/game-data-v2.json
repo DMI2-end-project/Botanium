@@ -1,0 +1,299 @@
+{
+  "00101": {
+    "introduction": {
+      "title": "Les bienfaits des carottes",
+      "text": "Retrouvez tous ensemble les bienfaits de la carotte et communiquez les à Capucine !"
+    },
+    "games": [
+      {
+        "type": "multiple-choice",
+        "teamsNeeded": true,
+        "gamemaster": {
+          "instruction": "Chaque groupe doit retrouver un bienfait pour ensuite les communiquer tous ensemble à Capucine !",
+          "answers": [
+            {
+              "isValid": true,
+              "icon": "eye.svg",
+              "text": "Elle améliore la vision nocturne",
+              "isClicked": false,
+              "status": ""
+            },
+            {
+              "isValid": true,
+              "icon": "disease.svg",
+              "text": "Elle ralentit le vieillissement",
+              "isClicked": false,
+              "status": ""
+            }
+          ]
+        },
+        "teams": [
+          {
+            "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
+            "clue": "",
+            "congratulation": {
+              "text": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
+              "icon": "eye.svg"
+            },
+            "answers": [
+              {
+                "isValid": true,
+                "icon": "eye.svg",
+                "text": "Elle améliore la vision nocturne",
+                "isClicked": false,
+                "status": ""
+              },
+              {
+                "isValid": false,
+                "icon": "muscle.svg",
+                "text": "Elle donne des muscles",
+                "isClicked": false,
+                "status": ""
+              },
+              {
+                "isValid": false,
+                "icon": "tooth.svg",
+                "text": "Elle blanchit les dents",
+                "isClicked": false,
+                "status": ""
+              },
+              {
+                "isValid": false,
+                "icon": "bone.svg",
+                "text": "Elle renforce les os",
+                "isClicked": false,
+                "status": ""
+              }
+            ]
+          },
+          {
+            "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
+            "clue": "",
+            "congratulation": {
+              "text": "La carotte possède ... qui ralenti le vieillissement",
+              "icon": "disease.svg"
+            },
+            "answers": [
+              {
+                "isValid": true,
+                "icon": "disease.svg",
+                "text": "Elle ralentit le vieillissement",
+                "isClicked": false,
+                "status": ""
+              },
+              {
+                "isValid": false,
+                "icon": "muscle.svg",
+                "text": "Elle donne des muscles",
+                "isClicked": false,
+                "status": ""
+              },
+              {
+                "isValid": false,
+                "icon": "tooth.svg",
+                "text": "Elle blanchit les dents",
+                "isClicked": false,
+                "status": ""
+              },
+              {
+                "isValid": false,
+                "icon": "bone.svg",
+                "text": "Elle renforce les os",
+                "isClicked": false,
+                "status": ""
+              }
+            ]
+          }
+        ],
+        "congratulation": {
+          "text": "Grâce à vous Capucine connait les bienfaits des carottes !"
+        }
+      }
+    ]
+  },
+  "00102": {
+    "introduction": {
+      "title": "Les couleurs des carottes",
+      "text": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées."
+    },
+    "games": [
+      {
+        "type": "swipe",
+        "teamsNeeded": true,
+        "teams": [
+          {
+            "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
+            "answers": [
+              {
+                "image": "amfine.png"
+              }
+            ],
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "Tu as découvert la carotte Amfine !",
+              "image": "amfine.png"
+            }
+          },
+          {
+            "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
+            "answers": [
+              {
+                "image": "lubiana.png"
+              }
+            ],
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "Tu as découvert la carotte Lubiana !",
+              "image": "lubiana.png"
+            }
+          },
+          {
+            "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
+            "answers": [
+              {
+                "image": "cosmic.png"
+              }
+            ],
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "Tu as découvert la carotte Cosmic !",
+              "image": "cosmic.png"
+            }
+          }
+        ]
+      },
+      {
+        "type": "drag-and-drop",
+        "teamsNeeded": true,
+        "gamemaster": {
+          "instruction": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées.",
+          "answers": [
+            {
+              "label": "Am",
+              "name": "Amfine",
+              "molecule": "Carotène"
+            },
+            {
+              "label": "Lu",
+              "name": "Lubiana",
+              "molecule": "Lutéine"
+            },
+            {
+              "label": "Co",
+              "name": "Cosmic",
+              "molecule": "Anthocyane"
+            }
+          ]
+        },
+        "teams": [
+          {
+            "instruction": "Range ta carotte orange au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
+            "clue": "",
+            "answers": [
+              {
+                "isValid": true,
+                "label": "Am",
+                "name": "Amfine",
+                "molecule": "Carotène"
+              },
+              {
+                "isValid": false,
+                "label": "Lu",
+                "name": "Lubiana",
+                "molecule": "Lutéine"
+              },
+              {
+                "isValid": false,
+                "label": "Co",
+                "name": "Cosmic",
+                "molecule": "Anthocyane"
+              }
+            ],
+            "congratulation": {
+              "text": "",
+              "icon": ""
+            }
+          },
+          {
+            "instruction": "Range ta carotte jaune au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
+            "clue": "",
+            "answers": [
+              {
+                "isValid": false,
+                "label": "Am",
+                "molecule": "Carotène"
+              },
+              {
+                "isValid": true,
+                "label": "Lu",
+                "molecule": "Lutéine"
+              },
+              {
+                "isValid": false,
+                "label": "Co",
+                "molecule": "Anthocyane"
+              }
+            ],
+            "congratulation": {
+              "text": "",
+              "icon": ""
+            }
+          },
+          {
+            "instruction": "Range ta carotte violette au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
+            "clue": "",
+            "answers": [
+              {
+                "isValid": false,
+                "label": "Am",
+                "molecule": "Carotène"
+              },
+              {
+                "isValid": false,
+                "label": "Lu",
+                "molecule": "Lutéine"
+              },
+              {
+                "isValid": true,
+                "label": "Co",
+                "molecule": "Anthocyane"
+              }
+            ],
+            "congratulation": {
+              "text": "",
+              "icon": ""
+            }
+          }
+        ],
+        "congratulation": {
+          "text": "Grâce à vous Capucine connait les différents types des carottes !"
+        }
+      }
+    ]
+  },
+  "00103": {
+  },
+  "00104": {
+    "introduction": {
+      "title": "Déterrer la carotte",
+      "text": "Capucine doit déterrer la précieuse carotte et guérir Pinpin. Frappe dans tes mains en rythme avec tes camarades pour l’aider."
+    },
+    "games": [
+      {
+        "type": "rhythm",
+        "teamsNeeded": false,
+        "gamemaster": {
+          "instruction": "Capucine a besoin de ton aide pour déterrer la carotte. Frappe dans tes mains avec tes camarades pour lui donner le rythme."
+        },
+        "teams": [
+          {
+            "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette."
+          }
+        ],
+        "congratulation": {
+          "text": "Grâce à vous Capucine a réussi à déterrer la carotte !"
+        }
+      }
+    ]
+  }
+}

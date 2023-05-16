@@ -25,7 +25,7 @@ const next = async () => {
     </RoundItemVue>
     <div class="w-full bg-green rounded-md flex flex-col gap-4 items-center py-24 px-28">
       <h1>Incroyable !</h1>
-      <p>{{ gameStore.data?.congratulation }}</p>
+      <p>{{ gameStore.data?.games[gameStore.currentPart].congratulation.text }}</p>
     </div>
     <RoundButtonVue v-if="mainStore.role === ROLE.TEACHER" @click="next" class="mt-8 text-lg font-bold">
       >

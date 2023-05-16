@@ -4,6 +4,7 @@ import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {GameMasterManagerInstance} from "../common/GameMasterManager";
 
 import Book from "../assets/svg/ico-book.svg?component"
+import router from "../router";
 
 const store = useMainStore();
 

@@ -30,16 +30,8 @@ export default defineComponent({
       gameStore: useGameStore()
     }
   },
-  mounted() {
-    // console.log('chapterId', this.mainStore.getChapterId, this.mainStore.gameId)
-    // this.socket.emit(EVENT.LAUNCH_STORY, {
-    //   roomId: this.mainStore.roomId,
-    //   chapterId: this.mainStore.getChapterId
-    // });
-  },
   methods: {
     launchGame() {
-      console.log(GameMasterManagerInstance)
       GameMasterManagerInstance.launchGame(this.mainStore.gameId);
     }
   }

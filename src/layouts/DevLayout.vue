@@ -42,9 +42,6 @@ export default defineComponent({
       pb: DatabaseManagerInstance.pb
     }
   },
-  mounted() {
-    console.log('router', this.router)
-  },
   methods: {
     DatabaseManagerInstance() {
       return DatabaseManagerInstance

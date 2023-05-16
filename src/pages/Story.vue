@@ -11,7 +11,7 @@ import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
 import {ROLE} from "../common/Constants"
-import gameData from "../assets/game-data/game-data.json";
+import gameData from "../assets/game-data/game-data-v2.json";
 
 import StudentStory from "./../components/story/student/StudentStory.vue";
 import TeacherStory from "./../components/story/teacher/TeacherStory.vue";

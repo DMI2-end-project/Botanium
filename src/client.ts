@@ -71,10 +71,11 @@ export const initClient = (pinia: Pinia) => {
   socket.on(EVENT.LAUNCH_GAME, async (arg) => {
     console.log('EVENT.LAUNCH_GAME', arg)
     gameStore.reset();
+    mainStore.gameId = arg.gameId
     localStorage.setItem('teamId', arg.teamId);
     gameStore.teamId = arg.teamId;
     //gameStore.totalTeams = arg.totalTeams.length;
-    await router.push('/exercice/' + arg.gameId);
+    await router.push('/exercice/' + mainStore.getFullGameId);
   });
 
   socket.on(EVENT.START_GAME, async (arg) => {

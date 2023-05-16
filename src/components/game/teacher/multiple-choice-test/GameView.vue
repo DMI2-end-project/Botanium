@@ -60,11 +60,14 @@ export default defineComponent({
       return STEP
     },
     answers() {
+      return this.gameStore.data.games[this.gameStore.currentPart].gamemaster.answers
+      /*
       let answers = this.gameStore.data.gameContent; //.filter((content: any, i: number) => i < this.gameStore.totalTeams);
       answers = answers.filter((content: any, i: number) => i < this.gameStore.totalTeams);
       return answers.map((content: any) => {
         return content.answers.find((answer: any) => answer.isValid);
       })
+       */
     }
   },
   methods: {
