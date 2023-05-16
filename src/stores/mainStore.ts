@@ -5,10 +5,10 @@ import {leading} from "../common/Lib";
 
 export type StoreState = {
   connected: boolean,
-  socketId: string | undefined,
   roomId: string | undefined,
   roleId: string | undefined,
   roles: Record[],
+  realChapterId: string | undefined,
   chapterId: number
   gameId: number,
   totalGames: number
@@ -17,10 +17,10 @@ export type StoreState = {
 export const useMainStore = defineStore('main', {
   state: (): StoreState => ({
     connected: false,
-    socketId: undefined,
     roomId: undefined,
     roleId: undefined,
     roles: [],
+    realChapterId: undefined,
     chapterId: 1,
     gameId: 0,
     totalGames: 1 // TODO : fetch from ???

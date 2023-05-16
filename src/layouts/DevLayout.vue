@@ -8,7 +8,6 @@
       </div>
       <div>
         Socket state : {{ mainStore.connected }},
-        Socket id : {{ mainStore.socketId }},
         RoomID : {{ mainStore.roomId }},
         TeamID : {{ gameStore.teamId }},
         Step : {{ gameStore.currentStep }}

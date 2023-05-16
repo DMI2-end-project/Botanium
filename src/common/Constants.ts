@@ -39,6 +39,13 @@ export enum GAMETYPE {
   SWIPE = 'swipe',
 }
 
+export enum CHAPTER_STATUS {
+  TODO = 'to do',
+  IN_PROGRESS = 'in progress',
+  PAUSE = 'pause',
+  DONE = 'done'
+}
+
 export enum COlOR {
   PINK = 'pink',
   GREEN = 'green',

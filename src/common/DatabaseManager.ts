@@ -12,14 +12,17 @@ import {
   getStickerData,
   getDefaultStickerData
 } from './Lib';
-import {ROLE} from "./Constants";
+import {CHAPTER_STATUS, ROLE} from "./Constants";
 import {connectClient} from "../client";
 
 class DatabaseManager {
   private static _instance: DatabaseManager;
   private pocketBaseUrl: string = "https://pocketbase-dmi2.fly.dev/";
   private _pocketbase: PocketBase = new PocketBase(this.pocketBaseUrl);
+  
   private _roles: Record[] = [];
+  
+  private _classroomId: string | undefined = undefined;
   
   private constructor() {
   }
@@ -33,11 +36,47 @@ class DatabaseManager {
     return this._pocketbase;
   }
   
+  async getRoomId() {
+    //this._classroomId =
+  }
+  
+  /* USER */
   async fetchRoles() {
     let roles = await this._pocketbase.collection('role').getFullList();
     this._roles = roles;
     return roles;
   }
+  
+  get roles() {
+    return this._roles;
+  }
+  
+  /* STORY & CHAPTERS */
+  async fetchChapters(classroomId: string) {
+    let chapters = await this._pocketbase.collection('chapter').getFullList(200, {
+      filter: `classroom="${classroomId}"`
+    });
+    return chapters;
+  }
+  
+  async updateChapterStatus(id: string, status: CHAPTER_STATUS) {
+    await this._pocketbase.collection('chapter').update(id, {
+      status
+    });
+  }
+  
+  async getPreviousGameId(id: string) {
+    let chapter = await this._pocketbase.collection('chapter').getFirstListItem(`id="${id}"`)
+    return chapter.previousGame ? chapter.previousGame : 0;
+  }
+  
+  async updatePreviousGameId(id: string, previousGame: number) {
+    await this._pocketbase.collection('chapter').update(id, {
+      previousGame
+    });
+  }
+  
+  /* LOGBOOK */
   
   // Pages
   async fetchPages(): Promise<Array<PageData>> {
@@ -168,13 +207,8 @@ class DatabaseManager {
     await this._pocketbase.collection('sticker').delete(data.id);
   }
   
-  
   getImageUrl(data: DrawData | PhotoData): string {
     return data.id !== '' ? this.pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file : ''
-  }
-  
-  get roles() {
-    return this._roles;
   }
 }
 

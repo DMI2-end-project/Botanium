@@ -76,8 +76,7 @@ export default defineComponent({
           Role : {{ mainStore.role }}
         </div>
         <div>
-          Socket state : {{ mainStore.socketId }},
-          Socket id : {{ mainStore.connected }},
+          Socket state : {{ mainStore.connected }},
           RoomID : {{ mainStore.roomId }},
           TeamID : {{ gameStore.teamId }},
           GameId : {{ mainStore.gameId }},

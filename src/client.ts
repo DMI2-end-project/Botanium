@@ -25,7 +25,6 @@ export const initClient = (pinia: Pinia) => {
 
   socket.on("connect", () => {
     mainStore.connected = true;
-    mainStore.socketId = socket.id
   });
 
   socket.on("disconnect", () => {
