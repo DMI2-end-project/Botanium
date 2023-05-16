@@ -2,7 +2,8 @@ import './style.css';
 import {createApp} from 'vue';
 import {createPinia} from 'pinia';
 import {initClient} from "./client";
-import {DatabaseManagerInstance} from "./common/DatabaseManager";
+import { DatabaseManagerInstance } from "./common/DatabaseManager";
+import { mountGameMasterManagerInstance } from "./common/GameMasterManager";
 import router from "./router";
 import App from './App.vue';
 import {useMainStore} from "./stores/mainStore";
@@ -22,11 +23,12 @@ const store = useMainStore();
 const init = async () => {
   store.roles = await DatabaseManagerInstance.fetchRoles();
   app.use(router);
-  
+
   registerLayouts(app);
-  
+
   app.mount('#app');
+
+
+  mountGameMasterManagerInstance(router);
 }
 init();
-
-

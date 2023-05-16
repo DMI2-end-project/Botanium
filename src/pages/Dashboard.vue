@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import {useMainStore} from "../stores/mainStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import {GameMasterManagerInstance} from "../common/GameMasterManager";
 
 import Book from "../assets/svg/ico-book.svg?component"
 
 const store = useMainStore();
+
+const launchGame = (i: number) => {
+  GameMasterManagerInstance.launchGame(i)
+}
 
 </script>
 <template>
@@ -27,10 +32,9 @@ const store = useMainStore();
         </div>
         <div class=" bg-beige rounded-md flex flex-col gap-6 p-6">
           <span class="text-lg text-black">DEV : Les exercices </span>
-          <router-link v-for="i in 4" :v-bind="i" :to="{ name: 'Game', params: { id: i }}"
-                       class="inline-block bg-primary p-4 rounded-md">
+          <button v-for="i in 4" :v-bind="i" class="inline-block bg-primary p-4 rounded-md" @click="launchGame(i)">
             Exercice {{ i }}
-          </router-link>
+          </button>
         </div>
       </div>
     </div>

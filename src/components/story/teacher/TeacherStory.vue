@@ -3,9 +3,9 @@
     <Reading/>
     <div class="flex flex-col">
       <button>Projection</button>
-      <router-link :to="{ path: '/exercice/'+mainStore.getFullGameId}">
+      <button @click="launchGame">
         Lancer l'exercice {{ mainStore.gameId }}
-      </router-link>
+      </button>
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ import {EVENT} from "../../../common/Constants";
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
 import Reading from "./Reading.vue";
+import {GameMasterManagerInstance} from "./../../../common/GameMasterManager";
 
 export default defineComponent({
   name: 'TeacherStoryComponent',
@@ -30,11 +31,17 @@ export default defineComponent({
     }
   },
   mounted() {
-    console.log('chapterId', this.mainStore.getChapterId, this.mainStore.gameId)
-    this.socket.emit(EVENT.LAUNCH_STORY, {
-      roomId: this.mainStore.roomId,
-      chapterId: this.mainStore.getChapterId
-    });
+    // console.log('chapterId', this.mainStore.getChapterId, this.mainStore.gameId)
+    // this.socket.emit(EVENT.LAUNCH_STORY, {
+    //   roomId: this.mainStore.roomId,
+    //   chapterId: this.mainStore.getChapterId
+    // });
+  },
+  methods: {
+    launchGame() {
+      console.log(GameMasterManagerInstance)
+      GameMasterManagerInstance.launchGame(this.mainStore.gameId);
+    }
   }
 });
 </script>

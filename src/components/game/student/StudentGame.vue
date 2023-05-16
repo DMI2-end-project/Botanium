@@ -47,12 +47,6 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.socket.on(EVENT.START_GAME, () => {
-      this.gameStore.currentStep = STEP.PLAY;
-    });
-    this.socket.on(EVENT.START_GAME, () => {
-      this.gameStore.currentStep = STEP.PLAY;
-    });
   },
   methods: {
     validated() {

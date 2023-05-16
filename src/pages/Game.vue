@@ -37,11 +37,11 @@ onBeforeMount(async () => {
   });
 
   if (mainStore.role === ROLE.TEACHER) {
-    console.log('EVENT.LAUNCH_GAME', EVENT.LAUNCH_GAME, mainStore.roomId, mainStore.gameId)
-    socket.emit(EVENT.LAUNCH_GAME, {
-      roomId: mainStore.roomId,
-      gameId: mainStore.gameId//mainStore.getFullGameId
-    });
+    // console.log('EVENT.LAUNCH_GAME', EVENT.LAUNCH_GAME, mainStore.roomId, mainStore.gameId)
+    // socket.emit(EVENT.LAUNCH_GAME, {
+    //   roomId: mainStore.roomId,
+    //   gameId: mainStore.gameId//mainStore.getFullGameId
+    // });
 
     console.log('subscribe', mainStore.role);
     gameStore.$subscribe((mutation, state) => {
