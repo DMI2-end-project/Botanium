@@ -21,7 +21,7 @@ import {ROLE} from "../../common/Constants";
 
 export default defineComponent({
   name: 'GameHeader',
-  props:{
+  props: {
     data: Object
   },
   data() {
@@ -36,7 +36,11 @@ export default defineComponent({
       return ROLE
     },
     text() {
-      return this.data?.instructionGame
+      if (this.gameStore.teamId !== undefined) {
+        return this.data?.games[this.gameStore.currentPart].teams[this.gameStore.teamId].instruction;
+      } else {
+        return this.data?.games[this.gameStore.currentPart].gamemaster.instruction;
+      }
     }
   }
 });

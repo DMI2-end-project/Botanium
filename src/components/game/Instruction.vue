@@ -67,7 +67,6 @@ export default defineComponent({
         step: STEP.PLAY
       });
       this.gameStore.currentStep = STEP.PLAY;
-      console.log('next', this.mainStore.roomId, this.gameStore.currentStep)
     }
   }
 });

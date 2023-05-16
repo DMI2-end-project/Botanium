@@ -183,6 +183,12 @@ const leaveRoom = (socket) => {
   //console.log('rooms', rooms);
 }
 
+const resetRoomStatus = (room) =>{
+  room.isPlaying = false;
+  room.teamsValidation = [];
+  room.step = 0;
+}
+
 const reachStep = () => {
   // TODO : reconnect to the game if is not finished
 }
@@ -215,6 +221,7 @@ io.on('connection', (socket) => {
     let room = rooms.find(room => room.id === arg.roomId);
 
     if (room) {
+      resetRoomStatus(room);
       io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
         totalTeams: room.teams
       });
@@ -231,6 +238,8 @@ io.on('connection', (socket) => {
     let room = rooms.find(room => room.id === arg.roomId);
 
     if (room) {
+      resetRoomStatus(room);
+
       io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
         totalTeams: room.teams
       });

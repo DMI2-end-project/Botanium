@@ -36,13 +36,18 @@ export default defineComponent({
       return STEP
     },
     GameView(): Component | undefined {
-      switch (this.gameStore.data?.gameType) {
+      let currentPart = this.$props.data?.games[this.gameStore.currentPart]
+      switch (currentPart.type) {
+        case GAMETYPE.DRAG_DROP:
+          //return ;
         case GAMETYPE.MCQ:
           return MCQ;
         case GAMETYPE.RHYTHM:
           return Rhythm;
+        case GAMETYPE.SWIPE:
+          return ;
         default:
-          return;
+          //return;
       }
     }
   },

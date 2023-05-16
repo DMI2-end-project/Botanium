@@ -9,7 +9,23 @@
         "type": "multiple-choice",
         "teamsNeeded": true,
         "gamemaster": {
-          "instruction": "Chaque groupe doit retrouver un bienfait pour ensuite les communiquer tous ensemble à Capucine !"
+          "instruction": "Chaque groupe doit retrouver un bienfait pour ensuite les communiquer tous ensemble à Capucine !",
+          "answers": [
+            {
+              "isValid": true,
+              "icon": "eye.svg",
+              "text": "Elle améliore la vision nocturne",
+              "isClicked": false,
+              "status": ""
+            },
+            {
+              "isValid": true,
+              "icon": "disease.svg",
+              "text": "Elle ralentit le vieillissement",
+              "isClicked": false,
+              "status": ""
+            }
+          ]
         },
         "teams": [
           {

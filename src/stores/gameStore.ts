@@ -8,7 +8,9 @@ export type StoreState = {
   currentStep: STEP,
   teamId: number | undefined,
   totalTeams: number,
-  totalTeamsFinished: number
+  totalTeamsFinished: number,
+  totalParts: number,
+  currentPart: number
 };
 
 export const useGameStore = defineStore('game', {
@@ -17,7 +19,9 @@ export const useGameStore = defineStore('game', {
     currentStep: STEP.INSTRUCTION,
     teamId: undefined,
     totalTeams: 0,
-    totalTeamsFinished: 0
+    totalTeamsFinished: 0,
+    totalParts: 0,
+    currentPart: 0
   }),
   getters: {
     gameFinished(): boolean {
