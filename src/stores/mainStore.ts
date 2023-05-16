@@ -22,7 +22,7 @@ export const useMainStore = defineStore('main', {
     roleId: undefined,
     roles: [],
     chapterId: 1,
-    gameId: 1,
+    gameId: 0,
     totalGames: 1 // TODO : fetch from ???
   }),
   getters: {
@@ -47,7 +47,7 @@ export const useMainStore = defineStore('main', {
       this.roomId = undefined;
       this.roleId = undefined;
       this.chapterId = 1;
-      this.gameId = 1;
+      this.gameId = 0;
     }
   }
 })

@@ -62,7 +62,6 @@ class GameMasterManager {
 
   public async backStory() {
     console.log("GameMasterManager BACK_STORY")
-    this._mainStore.gameId += 1;
     await this._router.push('/chapitre/' + this._mainStore.chapterId)
     await this._socket.emit(EVENT.BACK_STORY, {
       roomId: this._mainStore.roomId,

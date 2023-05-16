@@ -4,7 +4,7 @@
     <div class="flex flex-col">
       <button>Projection</button>
       <button @click="launchGame">
-        Lancer l'exercice {{ mainStore.gameId }}
+        Lancer l'exercice {{ mainStore.gameId + 1 }}
       </button>
     </div>
   </div>
@@ -32,7 +32,7 @@ export default defineComponent({
   },
   methods: {
     launchGame() {
-      GameMasterManagerInstance.launchGame(this.mainStore.gameId);
+      GameMasterManagerInstance.launchGame(this.mainStore.gameId + 1);
     }
   }
 });
