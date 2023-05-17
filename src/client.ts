@@ -4,7 +4,7 @@ import {pinia} from "./main";
 import router from "./router";
 import {useMainStore} from "./stores/mainStore";
 import {useGameStore} from "./stores/gameStore";
-import {EVENT, ROLE, STEP} from "./common/Constants";
+import {EVENT, ROLE, GAMESTEP} from "./common/Constants";
 
 
 // TODO : for production
@@ -45,7 +45,7 @@ export const initClient = (pinia: Pinia) => {
       mainStore.gameId = arg.gameId
     }
     if (arg.teamsValidation && gameStore.teamId && arg.teamsValidation[gameStore.teamId]) {
-      gameStore.currentStep = STEP.WAIT
+      gameStore.currentStep = GAMESTEP.WAIT
     } else {
       if (arg.step) {
         gameStore.currentStep = arg.step

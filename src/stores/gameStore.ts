@@ -1,11 +1,11 @@
 import {defineStore} from "pinia";
-import {STEP} from "../common/Constants";
+import {GAMESTEP} from "../common/Constants";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {state} from "vue-tsc/out/shared";
 
 export type StoreState = {
   data: any | undefined,
-  currentStep: STEP,
+  currentStep: GAMESTEP,
   teamId: number | undefined,
   totalTeams: number,
   totalTeamsFinished: number,
@@ -16,7 +16,7 @@ export type StoreState = {
 export const useGameStore = defineStore('game', {
   state: (): StoreState => ({
     data: undefined,
-    currentStep: STEP.INSTRUCTION,
+    currentStep: GAMESTEP.INSTRUCTION,
     teamId: undefined,
     totalTeams: 0,
     totalTeamsFinished: 0,
@@ -30,7 +30,7 @@ export const useGameStore = defineStore('game', {
   },
   actions: {
     reset() {
-      this.currentStep = STEP.INSTRUCTION;
+      this.currentStep = GAMESTEP.INSTRUCTION;
       this.totalTeamsFinished = 0;
     },
   }

@@ -1,9 +1,10 @@
 import {Router, useRouter} from "vue-router";
 import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
+import {useStoryStore} from "../stores/storyStore";
 import {getSocket} from "./../client";
 import {leading} from "../common/Lib";
-import {CHAPTER_STATUS, EVENT, STEP} from "./Constants";
+import {CHAPTER_STATUS, EVENT, GAMESTEP} from "./Constants";
 import gameData from "../assets/game-data/game-data-v2.json";
 import {DatabaseManagerInstance} from "./DatabaseManager";
 
@@ -12,6 +13,7 @@ class GameMasterManager {
   private static _instance: GameMasterManager;
   private _dbInstance = DatabaseManagerInstance;
   private _mainStore = useMainStore();
+  private _storyStore = useStoryStore();
   private _gameStore = useGameStore();
   public _router: Router = useRouter();
   private _socket = getSocket();
@@ -63,18 +65,18 @@ class GameMasterManager {
   
   public async startGame() {
     console.log("GameMasterManager START_GAME")
-    this._gameStore.currentStep = STEP.PLAY;
+    this._gameStore.currentStep = GAMESTEP.PLAY;
     await this._socket.emit(EVENT.START_GAME, {
       roomId: this._mainStore.roomId,
-      step: STEP.PLAY
+      step: GAMESTEP.PLAY
     });
   }
   
   public async gameValidation() {
-    this._gameStore.currentStep = STEP.END;
+    this._gameStore.currentStep = GAMESTEP.END;
     this._socket.emit(EVENT.GAME_VALIDATION, {
       roomId: this._mainStore.roomId,
-      step: STEP.END
+      step: GAMESTEP.END
     })
   }
   
@@ -85,7 +87,7 @@ class GameMasterManager {
       await this._dbInstance.updatePreviousGameId(this._mainStore.realChapterId, this._mainStore.gameId);
     }
     
-    this._gameStore.currentStep = STEP.CONGRATS;
+    this._gameStore.currentStep = GAMESTEP.CONGRATS;
     
     await this._socket.emit(EVENT.END_GAME, {
       roomId: this._mainStore.roomId
@@ -94,9 +96,12 @@ class GameMasterManager {
   
   public async backStory() {
     console.log("GameMasterManager BACK_STORY")
+    this._storyStore.currentText = 0;
+    this._storyStore.currentPart += 1;
     await this._socket.emit(EVENT.BACK_STORY, {
       roomId: this._mainStore.roomId,
-      gameId: this._mainStore.gameId
+      gameId: this._mainStore.gameId,
+      currentPart: this._storyStore.currentPart
     });
     await this._router.push('/chapitre/' + this._mainStore.chapterId)
   }

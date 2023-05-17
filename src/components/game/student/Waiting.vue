@@ -19,7 +19,7 @@
 import {defineComponent} from 'vue';
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
-import {STEP, SIZE, COlOR} from "../../../common/Constants";
+import {GAMESTEP, SIZE, COlOR} from "../../../common/Constants";
 import Loading from "../../../assets/svg/ico-loading.svg?component";
 import Info from "../../common/Info.vue";
 import RoundItem from "../../common/RoundItem.vue";
@@ -48,7 +48,7 @@ export default defineComponent({
       return SIZE
     },
     STEP() {
-      return STEP
+      return GAMESTEP
     },
     tID() {
       return this.$props.teamId ? this.$props.teamId : 0;

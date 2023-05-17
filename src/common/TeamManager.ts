@@ -3,7 +3,7 @@ import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
 import {getSocket} from "./../client";
 import {leading} from "../common/Lib";
-import {EVENT, STEP} from "./Constants";
+import {EVENT, GAMESTEP} from "./Constants";
 import gameData from "../assets/game-data/game-data-v2.json";
 
 // TODO : END_STORY
@@ -41,15 +41,15 @@ class TeamManager {
     });
     
     this._socket.on(EVENT.START_GAME, async () => {
-      this._gameStore.currentStep = STEP.PLAY;
+      this._gameStore.currentStep = GAMESTEP.PLAY;
     });
     
     this._socket.on(EVENT.GAME_VALIDATION, () => {
-      this._gameStore.currentStep = STEP.END;
+      this._gameStore.currentStep = GAMESTEP.END;
     })
     
     this._socket.on(EVENT.END_GAME, () => {
-      this._gameStore.currentStep = STEP.CONGRATS;
+      this._gameStore.currentStep = GAMESTEP.CONGRATS;
       localStorage.removeItem('teamId');
     })
     
@@ -63,7 +63,7 @@ class TeamManager {
   }
   
   public teamValidation() {
-    this._gameStore.currentStep = STEP.WAIT;
+    this._gameStore.currentStep = GAMESTEP.WAIT;
     this._socket.emit(EVENT.TEAM_VALIDATION, {
       roomId: this._mainStore.roomId,
       teamId: this._gameStore.teamId

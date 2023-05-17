@@ -28,7 +28,7 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import { EVENT, STEP } from "../../../../common/Constants";
+import { EVENT, GAMESTEP } from "../../../../common/Constants";
 import { GameMasterManagerInstance } from "../../../../common/GameMasterManager"
 
 // TODO : DYNAMIC SVG
@@ -49,7 +49,7 @@ export default defineComponent({
   },
   computed: {
     STEP() {
-      return STEP
+      return GAMESTEP
     },
     answers() {
       return this.gameStore.data.games[this.gameStore.currentPart].gamemaster.answers

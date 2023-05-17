@@ -3,7 +3,7 @@ import { GameMasterManagerInstance } from "../../common/GameMasterManager"
 import {useGameStore} from "../../stores/gameStore";
 import {useMainStore} from "../../stores/mainStore";
 import {COlOR, SIZE, ROLE} from "../../common/Constants";
-import RoundButtonVue from "../common/RoundButton.vue";
+import RoundButton from "../common/RoundButton.vue";
 import RoundItemVue from "../common/RoundItem.vue";
 
 import Trophy from "./../../assets/svg/ico-trophy.svg?component";
@@ -27,8 +27,8 @@ const next = async () => {
       <h1>Incroyable !</h1>
       <p>{{ gameStore.data?.games[gameStore.currentPart].congratulation.text }}</p>
     </div>
-    <RoundButtonVue v-if="mainStore.role === ROLE.TEACHER" @click="next" class="mt-8 text-lg font-bold">
+    <RoundButton v-if="mainStore.role === ROLE.TEACHER" @click="next" class="mt-8 text-lg font-bold">
       >
-    </RoundButtonVue>
+    </RoundButton>
   </div>
 </template>

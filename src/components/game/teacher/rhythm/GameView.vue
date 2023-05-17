@@ -12,7 +12,7 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import {EVENT, STEP, CLAPEVENT} from "../../../../common/Constants";
+import {EVENT, GAMESTEP, CLAPEVENT} from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
 import Gauge from './Gauge.vue';
 
@@ -51,7 +51,7 @@ export default defineComponent({
     },
     computed: {
         STEP() {
-            return STEP;
+            return GAMESTEP;
         },
     },
     methods: {

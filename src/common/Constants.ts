@@ -24,7 +24,13 @@ export enum CLAPEVENT {
   CLAP_SYNCHRO = 'clapSynchro',
 }
 
-export enum STEP {
+export enum STORYSTEP {
+  INTRODUCTION,
+  STORY,
+  END
+}
+
+export enum GAMESTEP {
   INSTRUCTION,
   PLAY,
   WAIT,

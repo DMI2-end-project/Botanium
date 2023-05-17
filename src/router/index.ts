@@ -51,7 +51,7 @@ const config: RouterOptions = {
       path: '/chapitre/:id', // 001
       component: Story,
       meta: {
-        layout: 'Dev',
+        layout: 'Story',
       }
     },
     {
