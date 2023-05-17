@@ -20,7 +20,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {getSocket} from "../../../client";
-import {COlOR, EVENT, STORYSTEP} from "../../../common/Constants";
+import {COlOR, STORYSTEP} from "../../../common/Constants";
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
 import Reading from "./Reading.vue";
@@ -80,6 +80,8 @@ export default defineComponent({
               break;
             }
           }
+        case STORYSTEP.END:
+          this.GMIntsance.endStory();
       }
     }
   }
