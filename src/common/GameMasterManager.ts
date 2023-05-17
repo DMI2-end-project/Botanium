@@ -8,7 +8,6 @@ import {CHAPTER_STATUS, EVENT, GAMESTEP} from "./Constants";
 import gameData from "../assets/game-data/game-data-v2.json";
 import {DatabaseManagerInstance} from "./DatabaseManager";
 
-// TODO : END_STORY
 class GameMasterManager {
   private static _instance: GameMasterManager;
   private _dbInstance = DatabaseManagerInstance;
