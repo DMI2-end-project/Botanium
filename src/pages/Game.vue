@@ -35,9 +35,6 @@ onBeforeMount(async () => {
     roomId: mainStore.roomId
   });
 
-  gameStore.currentPart = 0;
-  gameStore.totalParts = gameData[mainStore.getFullGameId].games.length;
-
   if (mainStore.role === ROLE.TEACHER) {
     gameStore.$subscribe((mutation, state) => {
       console.log('gameStore.totalTeams', gameStore.totalTeams, gameStore.totalTeamsFinished)

@@ -2,7 +2,7 @@
 import { GameMasterManagerInstance } from "../../common/GameMasterManager"
 import {useGameStore} from "../../stores/gameStore";
 import {useMainStore} from "../../stores/mainStore";
-import {COlOR, SIZE, ROLE} from "../../common/Constants";
+import {COlOR, SIZE, ROLE, STEP} from "../../common/Constants";
 import RoundButtonVue from "../common/RoundButton.vue";
 import RoundItemVue from "../common/RoundItem.vue";
 
@@ -12,6 +12,14 @@ import Trophy from "./../../assets/svg/ico-trophy.svg?component";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
+
+
+const text = () => {
+  if (!gameStore.data?.games[gameStore.currentPart].congratulation && gameStore.currentPart + 1 < gameStore.data?.games.length) {
+    gameStore.currentPart += 1;
+  }
+  return gameStore.data?.games[gameStore.currentPart].congratulation?.text
+}
 
 const next = async () => {
   GameMasterManagerInstance.backStory()
@@ -25,7 +33,7 @@ const next = async () => {
     </RoundItemVue>
     <div class="w-full bg-green rounded-md flex flex-col gap-4 items-center py-24 px-28">
       <h1>Incroyable !</h1>
-      <p>{{ gameStore.data?.games[gameStore.currentPart].congratulation.text }}</p>
+      <p>{{ text() }}</p>
     </div>
     <RoundButtonVue v-if="mainStore.role === ROLE.TEACHER" @click="next" class="mt-8 text-lg font-bold">
       >

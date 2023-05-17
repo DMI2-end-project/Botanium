@@ -28,12 +28,12 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import { EVENT, STEP } from "../../../../common/Constants";
+import { STEP } from "../../../../common/Constants";
 import { GameMasterManagerInstance } from "../../../../common/GameMasterManager"
 
 // TODO : DYNAMIC SVG
 export default defineComponent({
-  name: 'TeachcerGameView',
+  name: 'TeacherGameView',
   props: {
     data: Object,
   },

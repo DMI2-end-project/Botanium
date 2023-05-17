@@ -4,6 +4,9 @@
     <p v-if="cantPlay">Aucun micro n'est activé. L'enigme ne peut pas être résolue. Passez à la suite</p>
     <p>student ready : {{ studentReady }}</p>
     <p>student with micro : {{ studentWithMicro }}</p>
+    <button class="col-span-12 mx-auto my-5" @click="next">
+      Exercice reussi
+    </button>
   </div>
 </template>
 

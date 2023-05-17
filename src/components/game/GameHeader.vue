@@ -42,7 +42,12 @@ export default defineComponent({
       if (this.gameStore.teamId !== undefined) {
         return this.currentPart.teams[this.currentPart.teamsNeeded ? this.gameStore.teamId : 0].instruction;
       } else {
-        return this.currentPart.gamemaster.instruction;
+        let i = this.gameStore.currentPart;
+        while (!this.currentPart.gamemaster && i < this.data?.games.lenght)
+        if (this.currentPart.gamemaster) {
+          return this.currentPart.gamemaster.instruction;
+        }
+        i += 1
       }
     }
   }
