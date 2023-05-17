@@ -53,7 +53,7 @@ export default defineComponent({
         });
     },
     computed: {
-        STEP() {
+        GAMESTEP() {
             return GAMESTEP;
         },
     },

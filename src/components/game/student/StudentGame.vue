@@ -1,8 +1,8 @@
 <template>
   <div class="w-full h-full">
-    <!--InGame v-show="gameStore.currentStep === STEP.PLAY" :data="$props.data" :teamId="gameStore.teamId"
+    <!--InGame v-show="gameStore.currentStep === GAMESTEP.PLAY" :data="$props.data" :teamId="gameStore.teamId"
             @validated="validated"/-->
-    <div v-show="gameStore.currentStep === STEP.PLAY">
+    <div v-show="gameStore.currentStep === GAMESTEP.PLAY">
       <component v-bind:is="GameView" :data="$props.data" :teamId="gameStore.teamId" @validated="validated"/>
     </div>
   </div>
@@ -35,7 +35,7 @@ export default defineComponent({
     }
   },
   computed: {
-    STEP() {
+    GAMESTEP() {
       return GAMESTEP
     },
     GameView(): Component | undefined {
