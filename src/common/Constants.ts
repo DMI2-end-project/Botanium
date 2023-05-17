@@ -55,11 +55,12 @@ export enum GAME_TYPE {
 }
 
 /*  UI  */
-export enum COlOR {
+export enum COLOR {
   PINK = 'pink',
   GREEN = 'green',
   YELLOW = 'yellow',
-  GREEN_MEDIUM = 'greenMedium'
+  GREEN_MEDIUM = 'greenMedium',
+  GREEN_LIGHT = 'greenLight'
 }
 
 export enum SIZE {

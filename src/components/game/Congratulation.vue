@@ -2,7 +2,7 @@
 import { GameMasterManagerInstance } from "../../common/GameMasterManager"
 import {useGameStore} from "../../stores/gameStore";
 import {useMainStore} from "../../stores/mainStore";
-import {COlOR, SIZE, ROLE} from "../../common/Constants";
+import {COLOR, SIZE, ROLE} from "../../common/Constants";
 import RoundButton from "../common/RoundButton.vue";
 import RoundItemVue from "../common/RoundItem.vue";
 
@@ -28,7 +28,7 @@ const next = async () => {
 
 <template>
   <div class="relative flex flex-col items-center text-beige text-center my-20">
-    <RoundItemVue :size="SIZE.LG" :color="COlOR.YELLOW" class="absolute translate-y-1/2">
+    <RoundItemVue :size="SIZE.LG" :color="COLOR.YELLOW" class="absolute translate-y-1/2">
       <Trophy class="w-14 aspect-square"/>
     </RoundItemVue>
     <div class="w-full bg-green rounded-md flex flex-col gap-4 items-center py-24 px-28">

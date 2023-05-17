@@ -1,19 +1,8 @@
 <template>
-  <header class="flex items-center fixed z-50 w-full p-4">
-    <div class="flex flex-col justify-center w-full h-full">
-      <div>
-        Path : {{ router.currentRoute.path }},
-        Auth state : {{ pb.authStore.isValid }},
-        Role : {{ mainStore.role }}
-      </div>
-      <div>
-        Socket state : {{ mainStore.connected }},
-        RoomID : {{ mainStore.roomId }},
-        TeamID : {{ gameStore.teamId }},
-        Step : {{ gameStore.currentStep }}
-      </div>
-    </div>
-    <button @click="disconnect" class="ml-auto block">Déconnexion</button>
+  <header class="flex items-center justify-between fixed z-50 w-full p-4">
+    <RoundButton :color="COLOR.YELLOW" @click="router.push({name: 'Dashboard'})"><Home /></RoundButton>
+    <Info text="Ajoute une page au carnet de bord pour commencer !"><Speaker /></Info>
+    <button @click="disconnect" class="block">Déconnexion</button>
   </header>
   <main class="w-screen h-screen bg-green-medium">
 
@@ -28,10 +17,21 @@ import {useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {useGameStore} from "../stores/gameStore";
+import { useGameStore } from "../stores/gameStore";
+import RoundButton from "../components/common/RoundButton.vue";
+import Info from "../components/common/Info.vue";
+import { COLOR } from "../common/Constants";
+import Home from "../assets/svg/ico-home.svg?component";
+import Speaker from "../assets/svg/ico-speaker.svg?component";
 
 export default defineComponent({
   name: 'LogBookLayout',
+  components: {
+    RoundButton,
+    Info,
+    Home,
+    Speaker
+  },
   data() {
     return {
       mainStore: useMainStore(),
@@ -39,6 +39,11 @@ export default defineComponent({
       router: useRouter(),
       socket: getSocket(),
       pb: DatabaseManagerInstance.pb
+    }
+  },
+  computed: {
+    COLOR() {
+      return COLOR
     }
   },
   methods: {

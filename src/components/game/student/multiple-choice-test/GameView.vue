@@ -12,7 +12,7 @@
         </button>
       </div>
     </div>
-    <RoundButton @click="itemValidated" :color="COlOR.GREEN"/> <!-- :icon="Check" -->
+    <RoundButton @click="itemValidated" :color="COLOR.GREEN"/> <!-- :icon="Check" -->
   </div>
 </template>
 
@@ -20,7 +20,7 @@
 import {defineComponent} from 'vue'
 import {useGameStore} from "../../../../stores/gameStore";
 import {useMainStore} from "../../../../stores/mainStore";
-import {COlOR} from "../../../../common/Constants";
+import {COLOR} from "../../../../common/Constants";
 import RoundButton from "../../../common/RoundButton.vue";
 
 //import Check from "../../../../assets/svg/ico-check-transparency.svg?component";
@@ -37,8 +37,8 @@ export default defineComponent({
     }
   },
   computed: {
-    COlOR() {
-      return COlOR
+    COLOR() {
+      return COLOR
     },
     answers() {
       if (this.gameStore.teamId !== undefined) {
