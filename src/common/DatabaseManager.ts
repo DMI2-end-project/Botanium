@@ -51,7 +51,7 @@ class DatabaseManager {
     return this._roles;
   }
   
-  /* STORY & CHAPTERS */
+  /* CHAPTERS */
   async fetchChapters(classroomId: string) {
     let chapters = await this._pocketbase.collection('chapter').getFullList(200, {
       filter: `classroom="${classroomId}"`

@@ -10,16 +10,16 @@ const ROLE = {
 };
 
 const EVENT = {
-  ROOM_STATUS: 'RoomStatus',
-  TOTAL_TEAMS: 'TotalTeams',
-  LAUNCH_STORY: 'LaunchStory',
-  LAUNCH_GAME: 'LaunchGame',
-  START_GAME: 'StartGame',
-  TEAM_VALIDATION: 'TeamValidation',
-  GAME_VALIDATION: 'GameValidation',
-  END_GAME: 'EndGame',
-  BACK_STORY: 'BackStory',
-  END_STORY: 'EndStory',
+  ROOM_STATUS : 'roomStatus',
+  TOTAL_TEAMS : 'totalTeams',
+  LAUNCH_CHAPTER : 'launchChapter',
+  LAUNCH_GAME : 'launchGame',
+  START_GAME : 'startGame',
+  TEAM_VALIDATION : 'teamValidation',
+  GAME_VALIDATION : 'gameValidation',
+  END_GAME : 'endGame',
+  BACK_CHAPTER : 'backChapter',
+  END_CHAPTER : 'endChapter',
 };
 
 /*
@@ -212,8 +212,8 @@ io.on('connection', (socket) => {
     cleanRoom(socket);
   });
 
-  socket.on(EVENT.LAUNCH_STORY, (arg) => {
-    console.log('EVENT.LAUNCH_STORY', arg);
+  socket.on(EVENT.LAUNCH_CHAPTER, (arg) => {
+    console.log('EVENT.LAUNCH_CHAPTER', arg);
     let room = rooms.find(room => room.id === arg.roomId);
 
     if (room) {
@@ -221,7 +221,7 @@ io.on('connection', (socket) => {
       io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
         totalTeams: room.teams
       });
-      io.to(arg.roomId).emit(EVENT.LAUNCH_STORY, {
+      io.to(arg.roomId).emit(EVENT.LAUNCH_CHAPTER, {
         chapterId: arg.chapterId
       });
       room.chapterId = arg.chapterId;
@@ -308,7 +308,6 @@ io.on('connection', (socket) => {
     io.in(arg.roomId).emit(EVENT.GAME_VALIDATION)
     rooms.map((room) => {
       if (room.id === arg.roomId) {
-        room.isPlaying = false;
         room.step = arg.step;
       }
     });
@@ -319,21 +318,22 @@ io.on('connection', (socket) => {
     io.in(arg.roomId).emit(EVENT.END_GAME)
     rooms.map((room) => {
       if (room.id === arg.roomId) {
+        room.isPlaying = false;
         room.step = arg.step;
       }
     });
   })
 
-  socket.on(EVENT.BACK_STORY, (arg) => {
-    console.log('EVENT.BACK_STORY', arg)
-    io.in(arg.roomId).emit(EVENT.BACK_STORY, {
+  socket.on(EVENT.BACK_CHAPTER, (arg) => {
+    console.log('EVENT.BACK_CHAPTER', arg)
+    io.in(arg.roomId).emit(EVENT.BACK_CHAPTER, {
       gameId: arg.gameId,
     });
   });
 
-  socket.on(EVENT.END_STORY, (arg) => {
-    console.log('EVENT.END_STORY', arg)
-    io.in(arg.roomId).emit(EVENT.END_STORY, {})
+  socket.on(EVENT.END_CHAPTER, (arg) => {
+    console.log('EVENT.END_CHAPTER', arg)
+    io.to(arg.roomId).emit(EVENT.END_CHAPTER, {})
   });
 
   ClapGameManagerInstance.initListenners(io, socket);

@@ -27,15 +27,12 @@ onBeforeMount(async () => {
     // @ts-ignore
     if (mutation.events.key === "roomId" && state.roomId) {
       chapters.value = await DatabaseManagerInstance.fetchChapters(state.roomId);
-      console.log('chapters', chapters.value);
     }
   })
-
-  console.log('chapters', chapters.value);
 });
 
 const goTo = async (e: Event, c: number, id: string) => {
-  GameMasterManagerInstance.launchStory(c + 1, id)
+  GameMasterManagerInstance.launchChapter(c + 1, id)
 }
 </script>
 

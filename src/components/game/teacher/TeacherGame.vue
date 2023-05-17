@@ -9,7 +9,7 @@ import {Component, defineComponent} from 'vue'
 import {getSocket} from "../../../client";
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
-import {GAMETYPE} from "../../../common/Constants";
+import {GAME_TYPE} from "../../../common/Constants";
 
 import DragDrop from "./drag-drop/GameView.vue";
 import MCQ from "./multiple-choice-test/GameView.vue";
@@ -32,15 +32,16 @@ export default defineComponent({
   },
   computed: {
     GameView(): Component | undefined {
-      let currentPart = this.$props.data?.games[this.gameStore.currentPart]
+      let currentPart = this.$props.data?.gameSequences[this.gameStore.currentSequence]
+      console.log('GAMEVIEW', this.gameStore.currentSequence, this.$props.data?.gameSequences)
       switch (currentPart.type) {
-        case GAMETYPE.DRAG_DROP:
+        case GAME_TYPE.DRAG_DROP:
           return DragDrop;
-        case GAMETYPE.MCQ:
+        case GAME_TYPE.MCQ:
           return MCQ;
-        case GAMETYPE.RHYTHM:
+        case GAME_TYPE.RHYTHM:
           return Rhythm;
-        case GAMETYPE.SWIPE:
+        case GAME_TYPE.SWIPE:
           return Swipe;
         default:
           return;

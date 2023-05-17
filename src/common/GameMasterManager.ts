@@ -1,10 +1,10 @@
 import {Router, useRouter} from "vue-router";
 import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
-import {useStoryStore} from "../stores/storyStore";
+import {useChapterStore} from "../stores/chapterStore";
 import {getSocket} from "./../client";
 import {leading} from "../common/Lib";
-import {CHAPTER_STATUS, EVENT, GAMESTEP} from "./Constants";
+import {CHAPTER_STATUS, EVENT, GAME_STEP} from "./Constants";
 import gameData from "../assets/game-data/game-data-v2.json";
 import {DatabaseManagerInstance} from "./DatabaseManager";
 
@@ -12,7 +12,7 @@ class GameMasterManager {
   private static _instance: GameMasterManager;
   private _dbInstance = DatabaseManagerInstance;
   private _mainStore = useMainStore();
-  private _storyStore = useStoryStore();
+  private _chapterStore = useChapterStore();
   private _gameStore = useGameStore();
   public _router: Router = useRouter();
   private _socket = getSocket();
@@ -28,13 +28,13 @@ class GameMasterManager {
 
   private initEventsListenners() {
     this._socket.on(EVENT.TEAM_VALIDATION, (arg) => {
-      this._gameStore.data.games[this._gameStore.currentPart].gamemaster.answers[arg.teamId].status = 'valid';
+      this._gameStore.data.gameSequences[this._gameStore.currentSequence].gamemaster.answers[arg.teamId].status = 'valid';
       this._gameStore.totalTeamsFinished += 1;
     })
   }
 
-  public async launchStory(chapterId: number, realId: string) {
-    console.log("GameMasterManager LAUNCH_STORY : ", chapterId, realId);
+  public async launchChapter(chapterId: number, realId: string) {
+    console.log("GameMasterManager LAUNCH_CHAPTER : ", chapterId, realId);
 
     this._mainStore.chapterId = chapterId;
     this._mainStore.realChapterId = realId;
@@ -43,7 +43,7 @@ class GameMasterManager {
     this._mainStore.gameId = await this._dbInstance.getPreviousGameId(realId);
     this._gameStore.data = gameData;
 
-    await this._socket.emit(EVENT.LAUNCH_STORY, {
+    await this._socket.emit(EVENT.LAUNCH_CHAPTER, {
       roomId: this._mainStore.roomId,
       chapterId: this._mainStore.getChapterId
     });
@@ -64,18 +64,18 @@ class GameMasterManager {
 
   public async startGame() {
     console.log("GameMasterManager START_GAME")
-    this._gameStore.currentStep = GAMESTEP.PLAY;
+    this._gameStore.currentStep = GAME_STEP.PLAY;
     await this._socket.emit(EVENT.START_GAME, {
       roomId: this._mainStore.roomId,
-      step: GAMESTEP.PLAY
+      step: GAME_STEP.PLAY
     });
   }
 
   public async gameValidation() {
-    this._gameStore.currentStep = GAMESTEP.END;
+    this._gameStore.currentStep = GAME_STEP.END;
     this._socket.emit(EVENT.GAME_VALIDATION, {
       roomId: this._mainStore.roomId,
-      step: GAMESTEP.END
+      step: GAME_STEP.END
     })
   }
 
@@ -86,31 +86,31 @@ class GameMasterManager {
       await this._dbInstance.updatePreviousGameId(this._mainStore.realChapterId, this._mainStore.gameId);
     }
 
-    this._gameStore.currentStep = GAMESTEP.CONGRATS;
+    this._gameStore.currentStep = GAME_STEP.CONGRATS;
 
     await this._socket.emit(EVENT.END_GAME, {
       roomId: this._mainStore.roomId
     })
   }
 
-  public async backStory() {
-    this._storyStore.currentText = 0;
-    this._storyStore.currentPart += 1;
-    console.log("GameMasterManager BACK_STORY", this._storyStore.currentPart)
-    await this._socket.emit(EVENT.BACK_STORY, {
+  public async backChapter() {
+    this._chapterStore.currentParagraph = 0;
+    this._chapterStore.currentSection += 1;
+    console.log("GameMasterManager BACK_CHAPTER", this._chapterStore.currentSection)
+    await this._socket.emit(EVENT.BACK_CHAPTER, {
       roomId: this._mainStore.roomId,
       gameId: this._mainStore.gameId,
-      currentPart: this._storyStore.currentPart
+      currentSection: this._chapterStore.currentSection
     });
-    console.log("GameMasterManager BACK_STORY router", this._mainStore.chapterId)
+    console.log("GameMasterManager BACK_CHAPTER router", this._mainStore.chapterId)
     await this._router.push('/chapitre/' + this._mainStore.chapterId)
   }
 
-  public async endStory() {
+  public async endChapter() {
     if (this._mainStore.realChapterId) {
       await this._dbInstance.updateChapterStatus(this._mainStore.realChapterId, CHAPTER_STATUS.DONE);
     }
-    await this._socket.emit(EVENT.END_STORY, {
+    await this._socket.emit(EVENT.END_CHAPTER, {
       roomId: this._mainStore.roomId,
     })
     await this._router.push('/chapitres');

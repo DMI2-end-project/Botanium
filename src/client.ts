@@ -4,7 +4,7 @@ import {pinia} from "./main";
 import router from "./router";
 import {useMainStore} from "./stores/mainStore";
 import {useGameStore} from "./stores/gameStore";
-import {EVENT, ROLE, GAMESTEP} from "./common/Constants";
+import {EVENT, ROLE, GAME_STEP} from "./common/Constants";
 
 
 // TODO : for production

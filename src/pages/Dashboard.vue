@@ -26,7 +26,7 @@ const launchGame = (i: number) => {
         </router-link>
         <div class=" bg-beige rounded-md flex flex-col gap-6 p-6">
           <span class="text-lg text-black">L'histoire </span>
-          <router-link :to="{ name: 'Stories'}"
+          <router-link :to="{ name: 'Chapters'}"
                        class="inline-block bg-primary p-4 rounded-md">
             Consulter les chapitres
           </router-link>

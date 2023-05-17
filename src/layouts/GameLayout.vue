@@ -5,7 +5,7 @@ import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {GAMESTEP} from "../common/Constants";
+import {GAME_STEP} from "../common/Constants";
 
 import Breadcrumb from "../components/Breadcrumb.vue";
 import GameHeader from "../components/game/GameHeader.vue";
@@ -20,7 +20,7 @@ export default defineComponent({
   name: 'GameLayout',
   computed: {
     GAMESTEP() {
-      return GAMESTEP
+      return GAME_STEP
     },
     gameData(): { [key: string]: any } {
       return gameData;

@@ -3,9 +3,9 @@ import {defineComponent} from 'vue'
 import {useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
-import {useStoryStore} from "../stores/storyStore";
+import {useChapterStore} from "../stores/chapterStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {GAMESTEP} from "../common/Constants";
+import {GAME_STEP} from "../common/Constants";
 
 import Breadcrumb from "../components/Breadcrumb.vue";
 import GameHeader from "../components/game/GameHeader.vue";
@@ -17,10 +17,10 @@ interface GameData {
 }
 
 export default defineComponent({
-  name: 'StoryLayout',
+  name: 'ChapterLayout',
   computed: {
     GAMESTEP() {
-      return GAMESTEP
+      return GAME_STEP
     },
     gameData(): { [key: string]: any } {
       return gameData;
@@ -30,7 +30,7 @@ export default defineComponent({
   data() {
     return {
       mainStore: useMainStore(),
-      storyStore: useStoryStore(),
+      chapterStore: useChapterStore(),
       router: useRouter(),
       socket: getSocket(),
       pb: DatabaseManagerInstance.pb,
@@ -78,9 +78,9 @@ export default defineComponent({
           GameId : {{ mainStore.gameId }},
         </div>
         <div>
-          Step : {{ storyStore.currentStep}}
-          Part : {{ storyStore.currentPart}}
-          Text : {{ storyStore.currentText}}
+          Step : {{ chapterStore.currentStep}}
+          Part : {{ chapterStore.currentSection}}
+          Text : {{ chapterStore.currentParagraph}}
         </div>
         <button @click="disconnect" class="ml-auto block">Déconnexion</button>
       </div>

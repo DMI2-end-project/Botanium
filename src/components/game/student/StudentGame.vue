@@ -13,7 +13,7 @@ import {Component, defineComponent} from 'vue';
 import {getSocket} from "../../../client";
 import {useGameStore} from "../../../stores/gameStore";
 import {useMainStore} from "../../../stores/mainStore";
-import {EVENT, GAMETYPE, GAMESTEP} from "../../../common/Constants";
+import {EVENT, GAME_TYPE, GAME_STEP} from "../../../common/Constants";
 import {TeamManagerInstance} from "../../../common/TeamManager";
 
 import Waiting from "./Waiting.vue";
@@ -36,18 +36,18 @@ export default defineComponent({
   },
   computed: {
     GAMESTEP() {
-      return GAMESTEP
+      return GAME_STEP
     },
     GameView(): Component | undefined {
-      let currentPart = this.$props.data?.games[this.gameStore.currentPart]
+      let currentPart = this.$props.data?.gameSequences[this.gameStore.currentSequence]
       switch (currentPart.type) {
-        case GAMETYPE.DRAG_DROP:
+        case GAME_TYPE.DRAG_DROP:
           return DragDrop;
-        case GAMETYPE.MCQ:
+        case GAME_TYPE.MCQ:
           return MCQ;
-        case GAMETYPE.RHYTHM:
+        case GAME_TYPE.RHYTHM:
           return Rhythm;
-        case GAMETYPE.SWIPE:
+        case GAME_TYPE.SWIPE:
           return Swipe;
         default:
           //return;

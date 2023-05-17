@@ -1,3 +1,5 @@
+// TODO : fix cases
+/*  LOGIC  */
 export enum ROLE {
   TEACHER = 'teacher',
   STUDENT = 'student',
@@ -5,32 +7,39 @@ export enum ROLE {
 }
 
 export enum EVENT {
-  ROOM_STATUS = 'RoomStatus',
-  TOTAL_TEAMS = 'TotalTeams',
-  LAUNCH_STORY = 'LaunchStory',
-  LAUNCH_GAME = 'LaunchGame',
-  START_GAME = 'StartGame',
-  TEAM_VALIDATION = 'TeamValidation',
-  GAME_VALIDATION = 'GameValidation',
-  END_GAME = 'EndGame',
-  BACK_STORY = 'BackStory',
-  END_STORY = 'EndStory',
+  ROOM_STATUS = 'roomStatus',
+  TOTAL_TEAMS = 'totalTeams',
+  LAUNCH_CHAPTER = 'launchChapter',
+  LAUNCH_GAME = 'launchGame',
+  START_GAME = 'startGame',
+  TEAM_VALIDATION = 'teamValidation',
+  GAME_VALIDATION = 'gameValidation',
+  END_GAME = 'endGame',
+  BACK_CHAPTER = 'backChapter',
+  END_CHAPTER = 'endChapter',
 }
 
-export enum CLAPEVENT {
+export enum CLAP_EVENT {
   CLAP_LAUNCH = 'clapLaunch',
   CLAP_READY = 'clapReady',
   CLAP_SCORE = 'clapScore',
   CLAP_SYNCHRO = 'clapSynchro',
 }
 
-export enum STORYSTEP {
+export enum CHAPTER_STATUS {
+  TODO = 'todo',
+  IN_PROGRESS = 'inProgress',
+  PAUSE = 'pause',
+  DONE = 'done'
+}
+
+export enum CHAPTER_STEP {
   INTRODUCTION,
   STORY,
   END
 }
 
-export enum GAMESTEP {
+export enum GAME_STEP {
   INSTRUCTION,
   PLAY,
   WAIT,
@@ -38,25 +47,19 @@ export enum GAMESTEP {
   CONGRATS
 }
 
-export enum GAMETYPE {
-  DRAG_DROP = 'drag-and-drop',
-  MCQ = 'multiple-choice',
+export enum GAME_TYPE {
+  DRAG_DROP = 'dragDrop',
+  MCQ = 'multipleChoice',
   RHYTHM = "rhythm",
   SWIPE = 'swipe',
 }
 
-export enum CHAPTER_STATUS {
-  TODO = 'to do',
-  IN_PROGRESS = 'in progress',
-  PAUSE = 'pause',
-  DONE = 'done'
-}
-
+/*  UI  */
 export enum COlOR {
   PINK = 'pink',
   GREEN = 'green',
   YELLOW = 'yellow',
-  GREEN_MEDIUM = 'green-medium'
+  GREEN_MEDIUM = 'greenMedium'
 }
 
 export enum SIZE {

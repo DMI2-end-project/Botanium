@@ -15,14 +15,14 @@ const gameStore = useGameStore();
 
 
 const text = () => {
-  if (!gameStore.data?.games[gameStore.currentPart].congratulation && gameStore.currentPart + 1 < gameStore.data?.games.length) {
-    gameStore.currentPart += 1;
+  if (!gameStore.data?.gameSequences[gameStore.currentSequence].congratulation && gameStore.currentSequence + 1 < gameStore.data?.gameSequences.length) {
+    gameStore.currentSequence += 1;
   }
-  return gameStore.data?.games[gameStore.currentPart].congratulation?.text
+  return gameStore.data?.gameSequences[gameStore.currentSequence].congratulation?.text
 }
 
 const next = async () => {
-  GameMasterManagerInstance.backStory()
+  GameMasterManagerInstance.backChapter()
 }
 </script>
 

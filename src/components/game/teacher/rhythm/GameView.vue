@@ -15,7 +15,7 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import {EVENT, GAMESTEP, CLAPEVENT} from "../../../../common/Constants";
+import {EVENT, GAME_STEP, CLAP_EVENT} from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
 import Gauge from './Gauge.vue';
 
@@ -40,21 +40,21 @@ export default defineComponent({
     },
     mounted() {
         this.updateScore = this.updateScore.bind(this)
-        this.socket.on(CLAPEVENT.CLAP_SCORE, this.updateScore);
-        this.socket.on(CLAPEVENT.CLAP_READY, (arg) => {
+        this.socket.on(CLAP_EVENT.CLAP_SCORE, this.updateScore);
+        this.socket.on(CLAP_EVENT.CLAP_READY, (arg) => {
             this.studentReady += 1
             if (arg) {
                 this.studentWithMicro += 1
             }
         });
-        this.socket.on(CLAPEVENT.CLAP_LAUNCH, (arg) => {
+        this.socket.on(CLAP_EVENT.CLAP_LAUNCH, (arg) => {
             this.isPlaying = arg
             this.cantPlay = !arg
         });
     },
     computed: {
         GAMESTEP() {
-            return GAMESTEP;
+            return GAME_STEP;
         },
     },
     methods: {

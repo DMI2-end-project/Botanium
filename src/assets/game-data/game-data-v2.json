@@ -4,9 +4,9 @@
       "title": "Les bienfaits des carottes",
       "text": "Retrouvez tous ensemble les bienfaits de la carotte et communiquez les à Capucine !"
     },
-    "games": [
+    "gameSequences": [
       {
-        "type": "multiple-choice",
+        "type": "multipleChoice",
         "teamsNeeded": true,
         "gamemaster": {
           "instruction": "Chaque groupe doit retrouver un bienfait pour ensuite les communiquer tous ensemble à Capucine !",
@@ -116,7 +116,7 @@
       "title": "Les couleurs des carottes",
       "text": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées."
     },
-    "games": [
+    "gameSequences": [
       {
         "type": "swipe",
         "teamsNeeded": true,
@@ -163,7 +163,7 @@
         ]
       },
       {
-        "type": "drag-and-drop",
+        "type": "dragDrop",
         "teamsNeeded": true,
         "gamemaster": {
           "instruction": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées.",
@@ -276,9 +276,9 @@
       "title": "La terre parfaite",
       "text": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol"
     },
-    "games": [
+    "gameSequences": [
       {
-        "type": "drag-and-drop",
+        "type": "dragDrop",
         "teamsNeeded": true,
         "gamemaster": {
           "instruction": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol.",
@@ -372,7 +372,7 @@
       "title": "Déterrer la carotte",
       "text": "Capucine doit déterrer la précieuse carotte et guérir Pinpin. Frappe dans tes mains en rythme avec tes camarades pour l’aider."
     },
-    "games": [
+    "gameSequences": [
       {
         "type": "rhythm",
         "teamsNeeded": false,

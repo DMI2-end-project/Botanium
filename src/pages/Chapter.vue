@@ -8,16 +8,16 @@
 import {onBeforeMount} from "vue";
 import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
-import {useStoryStore} from "../stores/storyStore";
+import {useChapterStore} from "../stores/chapterStore";
 import {ROLE} from "../common/Constants";
 
 import data from "../assets/chapters-data/chapters-data.json";
 
-import StudentStory from "./../components/story/student/StudentStory.vue";
-import TeacherStory from "./../components/story/teacher/TeacherStory.vue";
+import StudentChapter from "./../components/chapter/student/StudentChapter.vue";
+import TeacherChapter from "./../components/chapter/teacher/TeacherChapter.vue";
 
 const mainStore = useMainStore();
-const storyStore = useStoryStore();
+const chapterStore = useChapterStore();
 
 const gameData: {
   [key: string]: any
@@ -26,7 +26,7 @@ const gameData: {
 const socket = getSocket();
 
 //  @ts-ignore
-storyStore.data = data[mainStore.getChapterId];
+chapterStore.data = data[mainStore.getChapterId];
 
 onBeforeMount(async () => {
   await socket.connect();
@@ -39,7 +39,7 @@ onBeforeMount(async () => {
 
 <template>
   <div class="w-full h-full">
-    <TeacherStory v-if="mainStore.role === ROLE.TEACHER" :data="data[mainStore.getChapterId]"/>
-    <StudentStory v-if="mainStore.role === ROLE.STUDENT" :data="data[mainStore.getChapterId]"/>
+    <TeacherChapter v-if="mainStore.role === ROLE.TEACHER" :data="data[mainStore.getChapterId]"/>
+    <StudentChapter v-if="mainStore.role === ROLE.STUDENT" :data="data[mainStore.getChapterId]"/>
   </div>
 </template>

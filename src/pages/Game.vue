@@ -4,7 +4,7 @@ import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {GameMasterManagerInstance} from "../common/GameMasterManager";
-import {ROLE, GAMESTEP} from "../common/Constants";
+import {ROLE, GAME_STEP} from "../common/Constants";
 import {useGameStore} from "../stores/gameStore";
 import {useMainStore} from "../stores/mainStore";
 
@@ -37,8 +37,7 @@ onBeforeMount(async () => {
 
   if (mainStore.role === ROLE.TEACHER) {
     gameStore.$subscribe((mutation, state) => {
-      console.log('gameStore.totalTeams', gameStore.totalTeams, gameStore.totalTeamsFinished)
-      if (gameStore.currentStep === GAMESTEP.PLAY && gameStore.totalTeamsFinished === gameStore.totalTeams) {
+      if (gameStore.currentStep === GAME_STEP.PLAY && gameStore.totalTeamsFinished === gameStore.totalTeams) {
         GameMasterManagerInstance.gameValidation()
       }
     });
@@ -48,18 +47,18 @@ onBeforeMount(async () => {
 
 <template>
   <div class="w-full h-full grid grid-cols-12 text-center">
-    <Instruction v-show="gameStore.currentStep === GAMESTEP.INSTRUCTION" class="col-start-3 col-span-8"
+    <Instruction v-show="gameStore.currentStep === GAME_STEP.INSTRUCTION" class="col-start-3 col-span-8"
                  :data="gameData[mainStore.getFullGameId]"/>
     <TeacherGame
-        v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAMESTEP.PLAY || gameStore.currentStep === GAMESTEP.END)"
+        v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
         class="col-span-12" :data="gameData[mainStore.getFullGameId]"/>
     <StudentGame
-        v-if="(mainStore.role === ROLE.STUDENT && gameStore.currentStep !== GAMESTEP.INSTRUCTION) || (mainStore.role === ROLE.STUDENT && gameStore.currentStep !== GAMESTEP.CONGRATS)"
+        v-if="(mainStore.role === ROLE.STUDENT && gameStore.currentStep !== GAME_STEP.INSTRUCTION) || (mainStore.role === ROLE.STUDENT && gameStore.currentStep !== GAME_STEP.CONGRATS)"
         class="col-span-12" :data="gameData[mainStore.getFullGameId]" :teamId="gameStore.teamId"/>
     <Waiting
-        v-show="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAMESTEP.WAIT || gameStore.currentStep === GAMESTEP.END)"
+        v-show="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
         class="col-start-3 col-span-8" :data="gameStore.data" :teamId="gameStore.teamId"/>
-    <Congratulation v-show="gameStore.currentStep === GAMESTEP.CONGRATS" class="col-start-3 col-span-8"
+    <Congratulation v-show="gameStore.currentStep === GAME_STEP.CONGRATS" class="col-start-3 col-span-8"
                     :data="gameData[mainStore.getFullGameId]"/>
   </div>
 </template>

@@ -22,7 +22,7 @@ import {useGameStore} from "../../../../stores/gameStore";
 import { useMainStore } from "../../../../stores/mainStore";
 import { getSocket } from "../../../../client";
 import AudioListenerElement from './AudioListenerElement.vue';
-import { CLAPEVENT } from "../../../../common/Constants";
+import { CLAP_EVENT } from "../../../../common/Constants";
 
 // TODO : DYNAMIC SVG
 export default defineComponent({
@@ -48,7 +48,7 @@ export default defineComponent({
     computed: {},
     components: { AudioListenerElement },
     mounted() {
-      this.socket.on(CLAPEVENT.CLAP_LAUNCH, (arg) => {
+      this.socket.on(CLAP_EVENT.CLAP_LAUNCH, (arg) => {
         this.launchGame= arg
       });
       setInterval(() => {
@@ -80,7 +80,7 @@ export default defineComponent({
         for (let i = 0; i < 10; i++) {
           setTimeout(() => {
             const dateEmit = Date.now()
-            this.socket.emit(CLAPEVENT.CLAP_SYNCHRO, {
+            this.socket.emit(CLAP_EVENT.CLAP_SYNCHRO, {
                 roomId: this.mainStore.roomId,
             }, (response: number) => {
                 const end = Date.now();
@@ -90,7 +90,7 @@ export default defineComponent({
                 this.deltaTime += (this.t1 + this.t2) / 2
                 if (i === 9) {
                   this.deltaTime = this.deltaTime / 10
-                  this.socket.emit(CLAPEVENT.CLAP_READY, {
+                  this.socket.emit(CLAP_EVENT.CLAP_READY, {
                     roomId: this.mainStore.roomId,
                     microIsActive: true,
                   });

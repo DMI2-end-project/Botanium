@@ -42,7 +42,7 @@ export default defineComponent({
     },
     answers() {
       if (this.gameStore.teamId !== undefined) {
-        return this.gameStore.data.games[this.gameStore.currentPart].teams[this.gameStore.teamId].answers
+        return this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers
         //return this.gameStore.data.gameContent[this.gameStore.teamId].answers;
       }
     }

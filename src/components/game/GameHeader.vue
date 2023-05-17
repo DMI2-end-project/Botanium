@@ -35,18 +35,17 @@ export default defineComponent({
     ROLE() {
       return ROLE
     },
-    currentPart() {
-      return this.data?.games[this.gameStore.currentPart]
+    currentSection() {
+      return this.data?.gameSequences[this.gameStore.currentSequence]
     },
     text() {
-      console.log('COUCOU', this.currentPart, this.gameStore.currentPart, this.data)
       if (this.gameStore.teamId !== undefined) {
-        return this.currentPart.teams[this.currentPart.teamsNeeded ? this.gameStore.teamId : 0].instruction;
+        return this.currentSection.teams[this.currentSection.teamsNeeded ? this.gameStore.teamId : 0].instruction;
       } else {
-        let i = this.gameStore.currentPart;
-        while (!this.currentPart.gamemaster && i < this.data?.games.lenght)
-        if (this.currentPart.gamemaster) {
-          return this.currentPart.gamemaster.instruction;
+        let i = this.gameStore.currentSequence;
+        while (!this.currentSection.gamemaster && i < this.data?.gameSequences.lenght)
+        if (this.currentSection.gamemaster) {
+          return this.currentSection.gamemaster.instruction;
         }
         i += 1
       }

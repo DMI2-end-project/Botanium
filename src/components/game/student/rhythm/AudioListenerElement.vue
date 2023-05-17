@@ -12,7 +12,7 @@ import { getSocket } from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import * as tf from "@tensorflow/tfjs";
 import * as speechCommands from "@tensorflow-models/speech-commands";
-import { CLAPEVENT } from "../../../../common/Constants";
+import { CLAP_EVENT } from "../../../../common/Constants";
 import Pulse from './Pulse.vue';
 
 export default defineComponent({
@@ -119,7 +119,7 @@ export default defineComponent({
       this.lastFreq = currentFreq;
     },
     onClap() {
-      this.socket.emit(CLAPEVENT.CLAP_SCORE, {
+      this.socket.emit(CLAP_EVENT.CLAP_SCORE, {
         roomId: this.mainStore.roomId,
         clapScore: this.rhythm
       });

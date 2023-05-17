@@ -10,7 +10,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {useGameStore} from "../../../../stores/gameStore";
-import { GAMESTEP } from "../../../../common/Constants";
+import { GAME_STEP } from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
 
 // TODO : DYNAMIC SVG
@@ -23,7 +23,7 @@ export default defineComponent({
   },
   computed: {
     GAMESTEP() {
-      return GAMESTEP
+      return GAME_STEP
     },
   },
   methods: {

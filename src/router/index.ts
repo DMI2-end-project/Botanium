@@ -5,11 +5,11 @@ import {ROLE} from "../common/Constants";
 import Login from "../pages/Login.vue";
 import Home from "../pages/Home.vue";
 import Dashboard from "../pages/Dashboard.vue";
-import Story from "../pages/Story.vue";
 import Game from "../pages/Game.vue";
 import LogBook from "../pages/LogBook.vue";
-import Stories from "../pages/Stories.vue";
 import Dev from "../pages/Dev.vue";
+import Chapter from "../pages/Chapter.vue";
+import Chapters from "../pages/Chapters.vue";
 
 const config: RouterOptions = {
   history: createWebHistory(),
@@ -39,19 +39,19 @@ const config: RouterOptions = {
       },
     },
     {
-      name: 'Stories',
+      name: 'Chapters',
       path: '/chapitres',
-      component: Stories,
+      component: Chapters,
       meta: {
         layout: 'Dev',
       }
     },
     {
-      name: 'Story',
+      name: 'Chapter',
       path: '/chapitre/:id', // 001
-      component: Story,
+      component: Chapter,
       meta: {
-        layout: 'Story',
+        layout: 'Chapter',
       }
     },
     {

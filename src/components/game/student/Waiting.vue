@@ -19,7 +19,7 @@
 import {defineComponent} from 'vue';
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
-import {GAMESTEP, SIZE, COlOR} from "../../../common/Constants";
+import {GAME_STEP, SIZE, COlOR} from "../../../common/Constants";
 import Loading from "../../../assets/svg/ico-loading.svg?component";
 import Info from "../../common/Info.vue";
 import RoundItem from "../../common/RoundItem.vue";
@@ -48,20 +48,20 @@ export default defineComponent({
       return SIZE
     },
     GAMESTEP() {
-      return GAMESTEP
+      return GAME_STEP
     },
     tID() {
       return this.$props.teamId ? this.$props.teamId : 0;
     },
-    currentPart() {
-      return this.$props.data?.games[this.gameStore.currentPart]
+    currentSection() {
+      return this.$props.data?.gameSequences[this.gameStore.currentSequence]
     },
     text() {
-      return this.currentPart.teams[this.currentPart.teamsNeeded ? this.tID : 0].congratulation?.text;
+      return this.currentSection.teams[this.currentSection.teamsNeeded ? this.tID : 0].congratulation?.text;
       //return this.$props.data?.gameContent[this.tID].congratulation;
     },
     icon() {
-      return this.currentPart.teams[this.currentPart.teamsNeeded ? this.tID : 0].congratulation.icon;
+      return this.currentSection.teams[this.currentSection.teamsNeeded ? this.tID : 0].congratulation.icon;
       //return this.$props.data?.gameContent[this.tID].congratulationIcon;
     },
     waitingMessage() {

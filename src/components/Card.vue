@@ -4,13 +4,13 @@ import {GameMasterManagerInstance} from "./../common/GameMasterManager";
 // TODO : Add modal intermédiaire
 const props = defineProps(['chapterId']);
 
-const launchStory = () => {
-  GameMasterManagerInstance.launchStory(props.chapterId);
+const launchChapter = () => {
+  GameMasterManagerInstance.launchChapter(props.chapterId);
 }
 
 </script>
 <template>
-  <button class="inline-block bg-beige rounded-md p-2" @click="launchStory">
+  <button class="inline-block bg-beige rounded-md p-2" @click="launchChapter">
     Chapitre {{ chapterId }}
   </button>
 </template>

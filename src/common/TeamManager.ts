@@ -3,10 +3,9 @@ import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
 import {getSocket} from "./../client";
 import {leading} from "../common/Lib";
-import {EVENT, GAMESTEP} from "./Constants";
+import {EVENT, GAME_STEP} from "./Constants";
 import gameData from "../assets/game-data/game-data-v2.json";
 
-// TODO : END_STORY
 class TeamManager {
   private static _instance: TeamManager;
   private _mainStore = useMainStore();
@@ -24,7 +23,7 @@ class TeamManager {
   }
   
   private initEventsListenners() {
-    this._socket.on(EVENT.LAUNCH_STORY, async (arg) => {
+    this._socket.on(EVENT.LAUNCH_CHAPTER, async (arg) => {
       this._mainStore.chapterId = arg.chapterId;
       this._gameStore.data = gameData;
       
@@ -41,29 +40,29 @@ class TeamManager {
     });
     
     this._socket.on(EVENT.START_GAME, async () => {
-      this._gameStore.currentStep = GAMESTEP.PLAY;
+      this._gameStore.currentStep = GAME_STEP.PLAY;
     });
     
     this._socket.on(EVENT.GAME_VALIDATION, () => {
-      this._gameStore.currentStep = GAMESTEP.END;
+      this._gameStore.currentStep = GAME_STEP.END;
     })
     
     this._socket.on(EVENT.END_GAME, () => {
-      this._gameStore.currentStep = GAMESTEP.CONGRATS;
+      this._gameStore.currentStep = GAME_STEP.CONGRATS;
       localStorage.removeItem('teamId');
     })
     
-    this._socket.on(EVENT.BACK_STORY, async () => {
+    this._socket.on(EVENT.BACK_CHAPTER, async () => {
       await this._router.push('/chapitre/' + this._mainStore.getChapterId);
     })
     
-    this._socket.on(EVENT.END_STORY, async () => {
+    this._socket.on(EVENT.END_CHAPTER, async () => {
       await this._router.push('/accueil');
     })
   }
   
   public teamValidation() {
-    this._gameStore.currentStep = GAMESTEP.WAIT;
+    this._gameStore.currentStep = GAME_STEP.WAIT;
     this._socket.emit(EVENT.TEAM_VALIDATION, {
       roomId: this._mainStore.roomId,
       teamId: this._gameStore.teamId
