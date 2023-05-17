@@ -3,12 +3,12 @@
     <div class="col-start-2 col-span-10 grid grid-cols-2 gap-4">
       <div v-for="(answer, index) in answers" :v-bind="index" class="w-full rounded-md p-3.5">
         <div :data-id="index" class="w-full h-full bg-beige rounded-md shadow-md w-max-content py-14 px-10"
-             :class="answer.status === 'valid' && gameStore.currentStep === STEP.PLAY ? 'bg-green-light' : 'bg-beige'">
-          <div v-show="gameStore.currentStep === STEP.PLAY">
+             :class="answer.status === 'valid' && gameStore.currentStep === GAMESTEP.PLAY ? 'bg-green-light' : 'bg-beige'">
+          <div v-show="gameStore.currentStep === GAMESTEP.PLAY">
             <span v-show="answer.status !== 'valid'" class="text-2xl text-beige-medium font-bold">{{ index + 1 }}</span>
             <!--Check v-show="answer.status === 'valid'" class="w-16"/-->
           </div>
-          <div v-show="gameStore.currentStep === STEP.END"
+          <div v-show="gameStore.currentStep === GAMESTEP.END"
                class="flex flex-col items-center text-center text-green gap-5">
             <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
                  class="w-16 pointer-events-none aspect-square">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <button v-show="gameStore.currentStep === STEP.END" class="col-span-12 mx-auto my-5" @click="next">
+    <button v-show="gameStore.currentStep === GAMESTEP.END" class="col-span-12 mx-auto my-5" @click="next">
       Continuer
     </button>
   </div>
@@ -28,7 +28,7 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import { STEP } from "../../../../common/Constants";
+import { EVENT, GAMESTEP } from "../../../../common/Constants";
 import { GameMasterManagerInstance } from "../../../../common/GameMasterManager"
 
 // TODO : DYNAMIC SVG
@@ -48,8 +48,8 @@ export default defineComponent({
   mounted() {
   },
   computed: {
-    STEP() {
-      return STEP
+    GAMESTEP() {
+      return GAMESTEP
     },
     answers() {
       return this.gameStore.data.games[this.gameStore.currentPart].gamemaster.answers

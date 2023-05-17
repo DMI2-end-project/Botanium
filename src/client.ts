@@ -4,7 +4,7 @@ import {pinia} from "./main";
 import router from "./router";
 import {useMainStore} from "./stores/mainStore";
 import {useGameStore} from "./stores/gameStore";
-import {EVENT, ROLE, STEP} from "./common/Constants";
+import {EVENT, ROLE, GAMESTEP} from "./common/Constants";
 
 
 // TODO : for production
@@ -35,27 +35,28 @@ export const initClient = (pinia: Pinia) => {
     console.log("join", mainStore.roomId);
   });
 
-  socket.on(EVENT.ROOM_STATUS, (arg) => {
-    console.log('EVENT.ROOM_STATUS', arg)
+  // TODO
+  // socket.on(EVENT.ROOM_STATUS, (arg) => {
+  //   console.log('EVENT.ROOM_STATUS', arg)
 
-    if (arg.chapterId) {
-      mainStore.chapterId = arg.chapterId
-    }
-    if (arg.gameId) {
-      mainStore.gameId = arg.gameId
-    }
-    if (arg.teamsValidation && gameStore.teamId && arg.teamsValidation[gameStore.teamId]) {
-      gameStore.currentStep = STEP.WAIT
-    } else {
-      if (arg.step) {
-        gameStore.currentStep = arg.step
-      }
-    }
+  //   if (arg.chapterId) {
+  //     mainStore.chapterId = arg.chapterId
+  //   }
+  //   if (arg.gameId) {
+  //     mainStore.gameId = arg.gameId
+  //   }
+  //   if (arg.teamsValidation && gameStore.teamId && arg.teamsValidation[gameStore.teamId]) {
+  //     gameStore.currentStep = GAMESTEP.WAIT
+  //   } else {
+  //     if (arg.step) {
+  //       gameStore.currentStep = arg.step
+  //     }
+  //   }
 
-    if (arg.isPlaying) {
-      router.push('/exercice/' + mainStore.getFullGameId);
-    }
-  });
+  //   if (arg.isPlaying) {
+  //     router.push('/exercice/' + mainStore.getFullGameId);
+  //   }
+  // });
 
   socket.on(EVENT.TOTAL_TEAMS, (arg) => {
     console.log('EVENT.TOTAL_TEAMS', arg)

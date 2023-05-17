@@ -1,7 +1,7 @@
 <template>
   <div >
     <p>Swipe</p>
-    <button v-show="gameStore.currentStep === STEP.END" class="col-span-12 mx-auto my-5" @click="next">
+    <button v-show="gameStore.currentStep === GAMESTEP.END" class="col-span-12 mx-auto my-5" @click="next">
       Continuer
     </button>
   </div>
@@ -10,7 +10,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {useGameStore} from "../../../../stores/gameStore";
-import { STEP } from "../../../../common/Constants";
+import { GAMESTEP } from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
 
 // TODO : DYNAMIC SVG
@@ -22,8 +22,8 @@ export default defineComponent({
     }
   },
   computed: {
-    STEP() {
-      return STEP
+    GAMESTEP() {
+      return GAMESTEP
     },
   },
   methods: {

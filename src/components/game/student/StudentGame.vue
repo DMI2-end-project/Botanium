@@ -13,7 +13,7 @@ import {Component, defineComponent} from 'vue';
 import {getSocket} from "../../../client";
 import {useGameStore} from "../../../stores/gameStore";
 import {useMainStore} from "../../../stores/mainStore";
-import {EVENT, GAMETYPE, STEP} from "../../../common/Constants";
+import {EVENT, GAMETYPE, GAMESTEP} from "../../../common/Constants";
 import {TeamManagerInstance} from "../../../common/TeamManager";
 
 import Waiting from "./Waiting.vue";
@@ -36,7 +36,7 @@ export default defineComponent({
   },
   computed: {
     STEP() {
-      return STEP
+      return GAMESTEP
     },
     GameView(): Component | undefined {
       let currentPart = this.$props.data?.games[this.gameStore.currentPart]

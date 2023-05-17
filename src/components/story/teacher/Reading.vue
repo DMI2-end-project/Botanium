@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import {useMainStore} from "../../../stores/mainStore";
-
-const mainStore = useMainStore()
+import {useStoryStore} from "../../../stores/storyStore";
+const storyStore = useStoryStore();
+const props = defineProps(['data']);
 </script>
+
 <template>
-  <div class="w-full h-full flex items-center justify-center">
-    <div class="bg-beige rounded-md p-6">
-      <h1>Chapitre {{ mainStore.chapterId }}</h1>
-      <h2>Capucine Pinpin et les carottes</h2>
-    </div>
+  <div class="w-full h-full flex flex-col items-center justify-center">
+      {{ props.data.contents[storyStore.currentPart][storyStore.currentText].text }}
   </div>
 </template>
-<style scoped>
-
-</style>

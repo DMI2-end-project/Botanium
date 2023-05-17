@@ -11,7 +11,6 @@ export type StoreState = {
   realChapterId: string | undefined,
   chapterId: number
   gameId: number,
-  totalGames: number
 };
 
 export const useMainStore = defineStore('main', {
@@ -23,7 +22,6 @@ export const useMainStore = defineStore('main', {
     realChapterId: undefined,
     chapterId: 1,
     gameId: 0,
-    totalGames: 1 // TODO : fetch from ???
   }),
   getters: {
     role(): string {

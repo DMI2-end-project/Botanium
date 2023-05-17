@@ -10,7 +10,7 @@ import { defineComponent } from 'vue'
 import { COlOR, SIZE } from "../../common/Constants";
 
 export default defineComponent({
-  name: 'RoundButtonComponent',
+  name: 'RoundButton',
   props: {
     color: {
       default: COlOR.PINK,

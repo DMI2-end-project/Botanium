@@ -7,9 +7,9 @@
     <div class="w-full flex flex-col items-center gap-6 bg-green rounded-md p-28 -mt-6">
       <h3 class="text-beige">{{ text }}</h3>
     </div>
-    <RoundButtonVue v-if="mainStore.role === ROLE.TEACHER" @click="next" :color="COlOR.PINK" class="mt-8 text-lg font-bold">
+    <RoundButton v-if="mainStore.role === ROLE.TEACHER" @click="next" :color="COlOR.PINK" class="mt-8 text-lg font-bold">
       >
-    </RoundButtonVue>
+    </RoundButton>
   </div>
 </template>
 
@@ -22,11 +22,11 @@ import { GameMasterManagerInstance } from "../../common/GameMasterManager"
 
 import gameData from "./../../assets/game-data/game-data-v2.json";
 import SignboardVue from "../common/Signboard.vue";
-import RoundButtonVue from "../common/RoundButton.vue";
+import RoundButton from "../common/RoundButton.vue";
 
 export default defineComponent({
   name: 'InstructionComponent',
-  components: {SignboardVue, RoundButtonVue},
+  components: {SignboardVue, RoundButton},
   props: {
     data: Object
   },

@@ -9,7 +9,7 @@
         <p class="">{{ text }}</p>
       </div>
     </div>
-    <Info v-show="gameStore.currentStep === STEP.WAIT" text="Patiente un peu, tes camarades réfléchissent encore">
+    <Info v-show="gameStore.currentStep === GAMESTEP.WAIT" text="Patiente un peu, tes camarades réfléchissent encore">
       <Loading class="w-8 aspect-square"/>
     </Info>
   </div>
@@ -19,7 +19,7 @@
 import {defineComponent} from 'vue';
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
-import {STEP, SIZE, COlOR} from "../../../common/Constants";
+import {GAMESTEP, SIZE, COlOR} from "../../../common/Constants";
 import Loading from "../../../assets/svg/ico-loading.svg?component";
 import Info from "../../common/Info.vue";
 import RoundItem from "../../common/RoundItem.vue";
@@ -47,8 +47,8 @@ export default defineComponent({
     SIZE() {
       return SIZE
     },
-    STEP() {
-      return STEP
+    GAMESTEP() {
+      return GAMESTEP
     },
     tID() {
       return this.$props.teamId ? this.$props.teamId : 0;

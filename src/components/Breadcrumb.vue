@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
-import {STEP} from "../common/Constants";
+import {GAMESTEP} from "../common/Constants";
 
 import Check from "../assets/svg/ico-check.svg?component";
 
@@ -57,7 +57,7 @@ const getNumberComponent = (number: number) => {
          :class="i + 1 <= mainStore.gameId ? 'bg-beige text-secondary' : 'bg-secondary text-beige'">
       <component :is="getNumberComponent(i + 1)"/>
       <div class="absolute top-0 right-0 -translate-y-1/5 translate-x-1/4 bg-green aspect-square w-6 rounded-full p-1.5"
-           :class="(i + 1 < mainStore.gameId) || (i + 1 === mainStore.gameId && gameStore.currentStep === STEP.CONGRATS) ? '':'hidden'">
+           :class="(i + 1 < mainStore.gameId) || (i + 1 === mainStore.gameId && gameStore.currentStep === GAMESTEP.CONGRATS) ? '':'hidden'">
         <Check class="text-white w-full aspect-square"/>
       </div>
     </div>
