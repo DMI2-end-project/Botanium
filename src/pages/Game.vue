@@ -39,7 +39,7 @@ onBeforeMount(async () => {
   if (mainStore.role === ROLE.TEACHER) {
     gameStore.$subscribe((mutation, state) => {
       if (gameStore.currentStep === GAME_STEP.PLAY && gameStore.totalTeamsFinished === gameStore.totalTeams) {
-        GameMasterManagerInstance.gameValidation()
+        GameMasterManagerInstance.gameValidation();
       }
     });
   }

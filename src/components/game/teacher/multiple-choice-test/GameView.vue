@@ -31,7 +31,6 @@ import {useGameStore} from "../../../../stores/gameStore";
 import { EVENT, GAME_STEP } from "../../../../common/Constants";
 import { GameMasterManagerInstance } from "../../../../common/GameMasterManager"
 
-// TODO : DYNAMIC SVG
 export default defineComponent({
   name: 'TeacherGameView',
   props: {

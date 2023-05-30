@@ -44,12 +44,8 @@ export default defineComponent({
       return COlOR
     },
     answers() {
-      console.log('answers', this.gameStore.data, this.$props.data, this.gameStore.currentSequence, this.gameStore.teamId);
       if (this.gameStore.teamId !== undefined) {
-        return [];
-        //return this.$props.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers
-        //return this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers
-        //return this.gameStore.data.gameContent[this.gameStore.teamId].answers;
+        return this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers;
       }
     }
   },

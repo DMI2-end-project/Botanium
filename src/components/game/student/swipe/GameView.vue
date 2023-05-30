@@ -8,6 +8,8 @@ let width = 200;
 let height = 390;
 
 onMounted(() => {
+  console.log('SWIPE');
+
   if (canvas.value) {
     let app = new PIXI.Application({
       resolution: window.devicePixelRatio,
@@ -76,6 +78,6 @@ onMounted(() => {
         <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full border-4 border-pink"/>
       </div>
     </div>
-    <button @click="$emit('validated');">Reussi</button>
+    <!--button @click="$emit('validated');">Reussi</button-->
   </div>
 </template>

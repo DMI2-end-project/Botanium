@@ -40,7 +40,7 @@ class GameMasterManager {
     this._mainStore.realChapterId = realId;
     await this._dbInstance.updateChapterStatus(realId, CHAPTER_STATUS.IN_PROGRESS);
 
-    this._mainStore.gameId = 0  // TODO :await this._dbInstance.getPreviousGameId(realId);
+    this._mainStore.gameId = 1  // TODO :await this._dbInstance.getPreviousGameId(realId);
     this._gameStore.data = gameData;
 
     await this._socket.emit(EVENT.LAUNCH_CHAPTER, {

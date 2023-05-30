@@ -16,7 +16,6 @@ import {useMainStore} from "../../../stores/mainStore";
 import {EVENT, GAME_TYPE, GAME_STEP} from "../../../common/Constants";
 import {TeamManagerInstance} from "../../../common/TeamManager";
 
-import Waiting from "./Waiting.vue";
 import DragDrop from "./drag-drop/GameView.vue";
 import MCQ from "./multiple-choice-test/GameView.vue";
 import Rhythm from "./rhythm/GameView.vue";
@@ -39,7 +38,8 @@ export default defineComponent({
       return GAME_STEP
     },
     GameView(): Component | undefined {
-      let currentPart = this.$props.data?.gameSequences[this.gameStore.currentSequence]
+      let currentPart = this.$props.data?.gameSequences[this.gameStore.currentSequence];
+      console.log('this.gameStore.currentSequence', this.gameStore.currentSequence, currentPart);
       switch (currentPart.type) {
         case GAME_TYPE.DRAG_DROP:
           return DragDrop;
@@ -50,7 +50,7 @@ export default defineComponent({
         case GAME_TYPE.SWIPE:
           return Swipe;
         default:
-          //return;
+        //return;
       }
     }
   },

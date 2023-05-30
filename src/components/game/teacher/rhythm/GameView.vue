@@ -19,7 +19,6 @@ import {EVENT, GAME_STEP, CLAP_EVENT} from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
 import Gauge from './Gauge.vue';
 
-// TODO : DYNAMIC SVG
 export default defineComponent({
     name: "TeachcerGameView",
     props: {

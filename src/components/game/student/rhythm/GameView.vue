@@ -24,7 +24,6 @@ import { getSocket } from "../../../../client";
 import AudioListenerElement from './AudioListenerElement.vue';
 import { CLAP_EVENT } from "../../../../common/Constants";
 
-// TODO : DYNAMIC SVG
 export default defineComponent({
     name: "StudentGameView",
     data() {

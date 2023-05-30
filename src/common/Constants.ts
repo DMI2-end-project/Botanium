@@ -1,4 +1,3 @@
-// TODO : fix cases
 /*  LOGIC  */
 export enum ROLE {
   TEACHER = 'teacher',

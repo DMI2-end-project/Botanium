@@ -137,13 +137,15 @@ io.on('connection', (socket) => {
     let room = rooms.find(room => room.id === arg.roomId);
 
     if (room) {
+      console.log('connectedTeams', room.connectedTeams)
       room.connectedTeams.map((team, index) => {
         team.teamId = index;
 
-        io.to(team.id).emit(EVENT.START_CHAPTER, {
+        io.to(team.socketId).emit(EVENT.START_CHAPTER, {
           teamId: index,
           teamName: team.name
         });
+        console.log('team', team, index);
       });
     }
   });
@@ -181,7 +183,6 @@ io.on('connection', (socket) => {
         }
       });
 
-      console.log('playing teams', room.playingTeams);
 
       room.isPlaying = true;
       room.step = arg.step;
@@ -194,8 +195,9 @@ io.on('connection', (socket) => {
       })
 
       room.playingTeams.map((team, index) => {
+        console.log('playing teams', team, team.socketId, index, team.name);
         team.teamId = index;
-        io.to(team.id).emit(EVENT.START_GAME, {
+        io.to(team.socketId).emit(EVENT.START_GAME, {
           //gameId: arg.gameId,
           teamId: index,
           teamName: team.name,
@@ -214,7 +216,7 @@ io.on('connection', (socket) => {
     let room = rooms.find(room => room.id === arg.roomId);
 
     if (room) {
-      let team = room.teams.find(team => team.id === arg.teamId);
+      let team = room.teams.find(team => team.teamId === arg.teamId);
 
       if (team) {
         team.isValidated = true;
