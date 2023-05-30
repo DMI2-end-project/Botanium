@@ -15,6 +15,7 @@ import DragDrop from "./drag-drop/GameView.vue";
 import MCQ from "./multiple-choice-test/GameView.vue";
 import Rhythm from "./rhythm/GameView.vue";
 import Swipe from "./swipe/GameView.vue";
+import Cursor from "./cursor/GameView.vue";
 
 // TODO : Error GameView
 
@@ -43,6 +44,8 @@ export default defineComponent({
           return Rhythm;
         case GAME_TYPE.SWIPE:
           return Swipe;
+        case GAME_TYPE.CURSOR:
+          return Cursor;
         default:
           return;
       }

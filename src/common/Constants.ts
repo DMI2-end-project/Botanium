@@ -52,6 +52,7 @@ export enum GAME_TYPE {
   MCQ = 'multipleChoice',
   RHYTHM = "rhythm",
   SWIPE = 'swipe',
+  CURSOR = 'cursor',
 }
 
 /*  UI  */

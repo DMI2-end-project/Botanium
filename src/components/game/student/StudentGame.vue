@@ -13,7 +13,7 @@ import {Component, defineComponent} from 'vue';
 import {getSocket} from "../../../client";
 import {useGameStore} from "../../../stores/gameStore";
 import {useMainStore} from "../../../stores/mainStore";
-import {EVENT, GAME_TYPE, GAME_STEP} from "../../../common/Constants";
+import {GAME_TYPE, GAME_STEP} from "../../../common/Constants";
 import {TeamManagerInstance} from "../../../common/TeamManager";
 
 import Waiting from "./Waiting.vue";
@@ -21,6 +21,7 @@ import DragDrop from "./drag-drop/GameView.vue";
 import MCQ from "./multiple-choice-test/GameView.vue";
 import Rhythm from "./rhythm/GameView.vue";
 import Swipe from "./swipe/GameView.vue";
+import Cursor from "./cursor/GameView.vue";
 
 export default defineComponent({
   name: 'StudentGame',
@@ -49,6 +50,8 @@ export default defineComponent({
           return Rhythm;
         case GAME_TYPE.SWIPE:
           return Swipe;
+        case GAME_TYPE.CURSOR:
+          return Cursor;
         default:
           //return;
       }
