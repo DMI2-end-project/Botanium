@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { GameMasterManagerInstance } from "../../common/GameMasterManager"
+import {computed, defineProps} from "vue";
 import {useGameStore} from "../../stores/gameStore";
 import {useMainStore} from "../../stores/mainStore";
 import {COlOR, SIZE, ROLE} from "../../common/Constants";
+import {GameMasterManagerInstance} from "../../common/GameMasterManager"
 import RoundButton from "../common/RoundButton.vue";
 import RoundItemVue from "../common/RoundItem.vue";
 
@@ -10,19 +11,33 @@ import Trophy from "./../../assets/svg/ico-trophy.svg?component";
 // TODO : Add ico-arrow.svg
 //import Arrow from "../../assets/svg/ico-arrow.svg?component";
 
+const props = defineProps(['data']);
+
 const mainStore = useMainStore();
 const gameStore = useGameStore();
 
+const currentSection = computed<any>(() => {
+  return props.data?.gameSequences[gameStore.currentSequence];
+});
 
 const text = () => {
-  if (!gameStore.data?.gameSequences[gameStore.currentSequence].congratulation && gameStore.currentSequence + 1 < gameStore.data?.gameSequences.length) {
-    gameStore.currentSequence += 1;
+  if (!currentSection.value.congratulation && gameStore.currentSequence + 1 < gameStore.data?.gameSequences.length) {
+    // TODO TODO
+    //gameStore.currentSequence += 1;
+    /*
+    while (!this.currentSection.gamemaster && this.gameStore.currentSequence < this.data?.gameSequences.length && this.mainStore.role === ROLE.TEACHER) {
+          this.gameStore.currentSequence += 1;
+          console.log('currentSequence', this.gameStore.currentSequence);
+        }
+
+        return this.currentSection.gamemaster.instruction;
+     */
   }
   return gameStore.data?.gameSequences[gameStore.currentSequence].congratulation?.text
 }
 
 const next = async () => {
-  GameMasterManagerInstance.backChapter()
+  GameMasterManagerInstance.backChapter();
 }
 </script>
 

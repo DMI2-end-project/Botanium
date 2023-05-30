@@ -2,7 +2,7 @@
   <div class="relative grid grid-cols-12 gap-4 px-8">
     <div class="col-start-2 col-span-10 grid grid-cols-2 gap-4">
       <div v-for="(answer, index) in answers" :v-bind="index" class="w-full border rounded-md p-3.5"
-           :class="answer.isClicked ? 'border-green-light':'border-transparent'">
+           :class="answer.isClicked ? 'border-green-light' : 'border-transparent'">
         <button @click="itemSelected" :data-id="index"
                 class="w-full h-full rounded-md shadow-md w-max-content flex flex-col items-center gap-5 text-center py-14 px-10 focus:outline-none "
                 :class="answer.status === 'error' ? '!bg-red text-white' : (answer.status === 'valid' ? '!bg-blue text-white' : (answer.isClicked ? '!bg-green-light text-green' : '!bg-beige text-green'))">

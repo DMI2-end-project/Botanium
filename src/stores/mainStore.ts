@@ -4,6 +4,7 @@ import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {leading} from "../common/Lib";
 
 export type StoreState = {
+  isModalOpen: boolean,
   connected: boolean,
   roomId: string | undefined,
   roleId: string | undefined,
@@ -15,6 +16,7 @@ export type StoreState = {
 
 export const useMainStore = defineStore('main', {
   state: (): StoreState => ({
+    isModalOpen: false,
     connected: false,
     roomId: undefined,
     roleId: undefined,

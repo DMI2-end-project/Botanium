@@ -3,7 +3,7 @@
     <!--InGame v-show="gameStore.currentStep === GAMESTEP.PLAY" :data="$props.data" :teamId="gameStore.teamId"
             @validated="validated"/-->
     <div v-show="gameStore.currentStep === GAMESTEP.PLAY">
-      <component v-bind:is="GameView" :data="$props.data" :teamId="gameStore.teamId" @validated="validated"/>
+      <component v-bind:is="GameView" :data="$props.data" :teamId="gameStore.teamId"/><!--  @validated="validated" -->
     </div>
   </div>
 </template>
@@ -39,7 +39,6 @@ export default defineComponent({
     },
     GameView(): Component | undefined {
       let currentPart = this.$props.data?.gameSequences[this.gameStore.currentSequence];
-      console.log('this.gameStore.currentSequence', this.gameStore.currentSequence, currentPart);
       switch (currentPart.type) {
         case GAME_TYPE.DRAG_DROP:
           return DragDrop;
@@ -68,3 +67,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 
 </style>
+
+<script setup lang="ts">
+</script>

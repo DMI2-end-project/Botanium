@@ -33,7 +33,6 @@ export default defineComponent({
   computed: {
     GameView(): Component | undefined {
       let currentPart = this.$props.data?.gameSequences[this.gameStore.currentSequence]
-      console.log('GAMEVIEW', this.gameStore.currentSequence, this.$props.data?.gameSequences)
       switch (currentPart.type) {
         case GAME_TYPE.DRAG_DROP:
           return DragDrop;

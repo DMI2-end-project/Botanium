@@ -40,14 +40,12 @@ export default defineComponent({
       return this.data?.gameSequences[this.gameStore.currentSequence]
     },
     text() {
-      console.log('text', this.$props.teamId);
       if (this.$props.teamId !== undefined) {
         let index = this.currentSection.teamsNeeded ? this.$props.teamId : 0;
         return this.currentSection.teams[index].instruction;
       } else {
         while (!this.currentSection.gamemaster && this.gameStore.currentSequence < this.data?.gameSequences.length && this.mainStore.role === ROLE.TEACHER) {
           this.gameStore.currentSequence += 1;
-          console.log('currentSequence', this.gameStore.currentSequence);
         }
 
         return this.currentSection.gamemaster.instruction;

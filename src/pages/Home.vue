@@ -2,6 +2,7 @@
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {useMainStore} from "../stores/mainStore";
 import {onBeforeMount} from "vue";
+import ModalView from "../components/common/ModalView.vue";
 
 /*
 * TODO : Ecran d'accueil enfant
