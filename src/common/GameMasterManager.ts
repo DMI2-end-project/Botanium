@@ -40,7 +40,7 @@ class GameMasterManager {
     this._mainStore.realChapterId = realId;
     await this._dbInstance.updateChapterStatus(realId, CHAPTER_STATUS.IN_PROGRESS);
 
-    this._mainStore.gameId = await this._dbInstance.getPreviousGameId(realId);
+    this._mainStore.gameId = 0  // TODO :await this._dbInstance.getPreviousGameId(realId);
     this._gameStore.data = gameData;
 
     await this._socket.emit(EVENT.LAUNCH_CHAPTER, {
@@ -50,10 +50,20 @@ class GameMasterManager {
 
     await this._router.push('/chapitre/' + leading(chapterId, 3));
   }
+  
+  public async startChapter() {
+    console.log("GameMasterManager START_CHAPTER");
+    
+    await this._socket.emit(EVENT.START_CHAPTER, {
+      roomId: this._mainStore.roomId,
+      chapterId: this._mainStore.getChapterId
+    });
+  }
 
   public async launchGame(gameId: number) {
     console.log("GameMasterManager LAUNCH_GAME : ", gameId);
     await this._gameStore.reset();
+    this._chapterStore.currentParagraph = 0;
     this._mainStore.gameId = gameId;
     await this._socket.emit(EVENT.LAUNCH_GAME, {
       roomId: this._mainStore.roomId,
@@ -94,13 +104,13 @@ class GameMasterManager {
   }
 
   public async backChapter() {
-    this._chapterStore.currentParagraph = 0;
-    this._chapterStore.currentSection += 1;
-    console.log("GameMasterManager BACK_CHAPTER", this._chapterStore.currentSection)
+    //this._chapterStore.currentParagraph = 0;
+    //this._chapterStore.currentSection += 1;
+    console.log("GameMasterManager BACK_CHAPTER", this._mainStore.gameId)
     await this._socket.emit(EVENT.BACK_CHAPTER, {
       roomId: this._mainStore.roomId,
       gameId: this._mainStore.gameId,
-      currentSection: this._chapterStore.currentSection
+      //currentSection: this._mainStore.gameId
     });
     console.log("GameMasterManager BACK_CHAPTER router", this._mainStore.chapterId)
     await this._router.push('/chapitre/' + this._mainStore.chapterId)

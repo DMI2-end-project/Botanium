@@ -1,6 +1,7 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import {useMainStore} from "./stores/mainStore";
+import {useChapterStore} from "./stores/chapterStore";
 import {useGameStore} from "./stores/gameStore";
 import {DatabaseManagerInstance} from "./common/DatabaseManager";
 import {ROLE} from "./common/Constants";
@@ -16,6 +17,7 @@ export default defineComponent({
   data() {
     return {
       mainStore: useMainStore(),
+      chapterStore: useChapterStore(),
       gameStore: useGameStore()
     }
   },
@@ -40,8 +42,14 @@ export default defineComponent({
           classRoom = await DatabaseManagerInstance.pb.collection('classroom').getFirstListItem(`students.id="${DatabaseManagerInstance.pb.authStore.model?.id}"`);
           this.mainStore.roomId = classRoom?.id;
           let teamId = localStorage.getItem('teamId');
-          console.log('teamId', teamId);
+          let teamName = localStorage.getItem('teamName');
+          let currentSequence = localStorage.getItem('currentSequence');
+          let currentParagraph = localStorage.getItem('currentParagraph');
+          console.log('teamId', teamId, teamName);
           this.gameStore.teamId = teamId ? +teamId : undefined;
+          this.gameStore.teamName = teamName ? teamName : undefined;
+          this.gameStore.currentSequence = currentSequence ? +currentSequence : 0;
+          this.chapterStore.currentParagraph = currentParagraph ? +currentParagraph : 0;
           await connectClient();
           break;
       }

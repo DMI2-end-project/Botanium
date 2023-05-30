@@ -2,6 +2,7 @@ import express from "express";
 import {createServer} from "http";
 import {Server} from "socket.io";
 import {ClapGameManagerInstance} from "./server/clapGameManager.js";
+import {Room} from "./server/Room.js";
 
 const ROLE = {
   TEACHER: 'teacher',
@@ -10,32 +11,20 @@ const ROLE = {
 };
 
 const EVENT = {
-  ROOM_STATUS : 'roomStatus',
-  TOTAL_TEAMS : 'totalTeams',
-  LAUNCH_CHAPTER : 'launchChapter',
-  LAUNCH_GAME : 'launchGame',
-  START_GAME : 'startGame',
-  TEAM_VALIDATION : 'teamValidation',
-  GAME_VALIDATION : 'gameValidation',
-  END_GAME : 'endGame',
-  BACK_CHAPTER : 'backChapter',
-  END_CHAPTER : 'endChapter',
+  ROOM_STATUS: 'roomStatus',
+  TOTAL_TEAMS: 'totalTeams',  // TODO ; change event
+  LAUNCH_CHAPTER: 'launchChapter',
+  START_CHAPTER: 'startChapter',
+  LAUNCH_GAME: 'launchGame',
+  START_GAME: 'startGame',
+  TEAM_VALIDATION: 'teamValidation',
+  GAME_VALIDATION: 'gameValidation',
+  END_GAME: 'endGame',
+  BACK_CHAPTER: 'backChapter',
+  END_CHAPTER: 'endChapter',
 };
 
-/*
-interface RoomData {
-  id: string,
-  isPlaying: boolean,
-  gamemaster: string,
-  teams: string[],
-  teamsValidation: boolean[],
-  chapterId: number,
-  gameId: number,
-  step: number
-}*/
-
 let rooms = [];
-//let currentStep = ;
 // TODO : save currentStep
 
 const port = 8080;
@@ -53,99 +42,50 @@ http.listen(port, () => {
 
 
 /*  METHODS  */
-const shuffle = (array) => {
-  let currentIndex = array.length, randomIndex;
-
-  // While there remain elements to shuffle.
-  while (currentIndex != 0) {
-
-    // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-  }
-
-  return array;
-}
 
 const joinRoom = (socket, arg) => {
 
-  let roomIndex = rooms.findIndex(room => room.id === arg.roomId);
   let room;
+  let roomIndex = rooms.findIndex(room => room.id === arg.roomId);
+
   // Is room already set ?
   if (roomIndex === -1) {
-    // Affect role & push room
-    if (arg.role === ROLE.TEACHER) {
-      rooms.push({
-        id: arg.roomId,
-        isPlaying: false,
-        gamemaster: socket.id,
-        teams: []
-      })
-    } else if (arg.role === ROLE.STUDENT) {
-      rooms.push({
-        id: arg.roomId,
-        isPlaying: false,
-        gamemaster: undefined,
-        teams: [socket.id],
-      })
-    }
+    room = new Room(arg.roomId);
+    rooms.push(room);
   } else {
-    let room = rooms[roomIndex];
-    if (arg.role === ROLE.TEACHER) {
-      room.gamemaster = socket.id;
-    } else if (arg.role === ROLE.STUDENT) {
-      if (!room.teams.find(t => t === socket.id)) {
-        room.teams.push(socket.id);
-        if (room.isPlaying && room.playingTeams && arg.teamId) {
-          room.playingTeams[arg.teamId] = socket.id;
-        }
-      }
-      /*
-      let teamIndex = room.teams.findIndex(t => t.id === socket.id);
-      if (teamIndex === -1) {
-        //room.teams.push({
-        //  id: socket.id,
-        //  isConnected: true,
-        //  isPlaying: false
-        //});
-        room.teams.push(socket.id)
-      } else {
-        room.teams[teamIndex].isConnected = true;
-      }
-       */
-
-    }
+    room = rooms[roomIndex];
   }
 
-  let i = roomIndex >= 0 ? roomIndex : rooms.length - 1;
+  // Affect role & push room
+  if (arg.role === ROLE.TEACHER) {
+    room.gamemaster = socket.id;
+  } else if (arg.role === ROLE.STUDENT) {
+    room.addTeam(socket.id, arg.teamName);
+  }
 
-  io.to(socket.id).emit(EVENT.ROOM_STATUS, {
-    //roomStatus: rooms[i]
-    chapterId: rooms[i].chapterId,
-    gameId: rooms[i].gameId,
-    isPlaying: rooms[i].isPlaying,
-    step: rooms[i].step,
-    teamsValidation: rooms[i].teamsValidation
-  })
-
-  console.log('rooms', rooms);//  io.sockets.adapter.rooms.get(arg.roomId)
+  io.to(socket.id).emit(EVENT.ROOM_STATUS, room);
+  //  io.sockets.adapter.rooms.get(arg.roomId)
 }
 
 const cleanRoom = (socket) => {
   let roomToRemove;
-  rooms.map((room, index) => {
+  rooms.map((room) => {
     // Remove user from room
     if (room.gamemaster === socket.id) {
-      room.gamemaster = undefined
+      room.gamemaster = undefined;
     } else {
-      room.teams = room.teams.filter(team => team !== socket.id);
+      room.removeTeam(socket.id);
     }
 
     // Remove empty rooms
-    if (!room.gamemaster && room.teams.length === 0) {
+    let hasToBeRemoved = true
+    room.teams.map(t => {
+      if (t.isConnected) {
+        hasToBeRemoved = false;
+      }
+    })
+
+    if (!room.gamemaster && hasToBeRemoved) {
       roomToRemove = room.id;
     }
 
@@ -155,60 +95,24 @@ const cleanRoom = (socket) => {
   if (roomToRemove) {
     rooms = rooms.filter(room => room.id !== roomToRemove);
   }
-
-  console.log('rooms', rooms);
-}
-
-const leaveRoom = (socket) => {
-  let roomToRemove;
-  rooms.map((room, index) => {
-    // Change status of team in room
-    if (room.gamemaster === socket.id) {
-      room.gamemaster = undefined
-    } else {
-      room.teams = room.teams.map(team => {
-        if (team.id === socket.id) {
-          team.isConnected = false
-        }
-      });
-    }
-    return room;
-  })
-
-
-  //console.log('rooms', rooms);
-}
-
-const resetRoomStatus = (room) =>{
-  room.isPlaying = false;
-  room.teamsValidation = [];
-  room.step = 0;
-}
-
-const reachStep = () => {
-  // TODO : reconnect to the game if is not finished
 }
 
 
 /*  SOCKET  */
 io.on('connection', (socket) => {
-  console.log('a user connected :', socket.id);
+  //console.log('a user connected :', socket.id);
 
   socket.on('join', (arg) => {
-    console.log('join', arg);
-
+    //console.log('join', arg);
     if (arg.roomId) {
       socket.join(arg.roomId);
-      io.to(arg.roomId).emit("join");
       joinRoom(socket, arg);
-      reachStep();
     }
   })
 
   socket.on('disconnect', () => {
-    console.log('a user disconnected', socket.id);
+    //console.log('a user disconnected', socket.id);
 
-    //leaveRoom(socket);
     cleanRoom(socket);
   });
 
@@ -217,7 +121,7 @@ io.on('connection', (socket) => {
     let room = rooms.find(room => room.id === arg.roomId);
 
     if (room) {
-      resetRoomStatus(room);
+      room.reset();
       io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
         totalTeams: room.teams
       });
@@ -228,31 +132,33 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on(EVENT.START_CHAPTER, (arg) => {
+    console.log('EVENT.START_CHAPTER', arg)
+    let room = rooms.find(room => room.id === arg.roomId);
+
+    if (room) {
+      room.connectedTeams.map((team, index) => {
+        team.teamId = index;
+
+        io.to(team.id).emit(EVENT.START_CHAPTER, {
+          teamId: index,
+          teamName: team.name
+        });
+      });
+    }
+  });
+
   socket.on(EVENT.LAUNCH_GAME, (arg) => {
     console.log('EVENT.LAUNCH_GAME', arg);
 
     let room = rooms.find(room => room.id === arg.roomId);
 
     if (room) {
-      resetRoomStatus(room);
+      room.reset();
       room.gameId = arg.gameId;
 
-      io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
-        totalTeams: room.teams
-      });
-
-      //room.teams = shuffle(room.teams);
-      ClapGameManagerInstance.reset();
-      ClapGameManagerInstance.setTotalTeams(room.teams.length);
-
-      console.log('room.teams', room.teams);
-      room.teams.map((team, index) => {
-        console.log('EVENT.LAUNCH_GAME', team, index, room.teams.length, arg.gameId);
-        io.to(team).emit(EVENT.LAUNCH_GAME, {
-          gameId: arg.gameId,
-          teamId: index,
-          //totalTeams: room.teams.length
-        });
+      io.in(arg.roomId).emit(EVENT.LAUNCH_GAME, {
+        gameId: arg.gameId
       });
 
       room.gameId = arg.gameId
@@ -262,33 +168,42 @@ io.on('connection', (socket) => {
   socket.on(EVENT.START_GAME, (arg) => {
     console.log('EVENT.START_GAME', arg)
 
-    io.to(arg.roomId).emit(EVENT.START_GAME);
-
     let room = rooms.find(room => room.id === arg.roomId);
+
     if (room) {
-      let newTeams = shuffle(room.teams);
-      io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
-        totalTeams: newTeams
+      room.shuffleTeams();
+      room.teams.map(team => {
+        console.log('START', team.isConnected)
+        if (team.isConnected) {
+          team.isPlaying = team.isConnected;
+        } else {
+          team.teamId = undefined;
+        }
       });
 
-      room.playingTeams = newTeams;
+      console.log('playing teams', room.playingTeams);
+
       room.isPlaying = true;
       room.step = arg.step;
-      room.teamsValidation = []
 
-      for (let i = 0; i < room.teams.length; i++) {
-        room.teamsValidation.push(false)
-      }
+      ClapGameManagerInstance.reset();
+      ClapGameManagerInstance.setTotalTeams(room.playingTeams.length);
+
+      io.to(room.gamemaster).emit(EVENT.TOTAL_TEAMS, {
+        totalTeams: room.playingTeams
+      })
+
+      room.playingTeams.map((team, index) => {
+        team.teamId = index;
+        io.to(team.id).emit(EVENT.START_GAME, {
+          //gameId: arg.gameId,
+          teamId: index,
+          teamName: team.name,
+          totalTeams: room.playingTeams
+        });
+      });
     }
   });
-
-  // socket.on(EVENT.TOTAL_TEAMS, (arg) => {
-  //   let room = rooms.find(room => room.id === arg.roomId);
-  //   console.log('EVENT.TOTAL_TEAMS', arg.roomId, room, room.teams);
-  //   //io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
-  //   //  totalTeams: room.teams
-  //   //})
-  // });
 
   socket.on(EVENT.TEAM_VALIDATION, (arg) => {
     console.log('EVENT.TEAM_VALIDATION', arg);
@@ -296,44 +211,54 @@ io.on('connection', (socket) => {
       teamId: arg.teamId,
     });
 
-    rooms.map((room) => {
-      if (room.id === arg.roomId) {
-        room.teamsValidation[arg.teamId] = true;
+    let room = rooms.find(room => room.id === arg.roomId);
+
+    if (room) {
+      let team = room.teams.find(team => team.id === arg.teamId);
+
+      if (team) {
+        team.isValidated = true;
       }
-    });
+    }
   });
 
   socket.on(EVENT.GAME_VALIDATION, (arg) => {
-    console.log('EVENT.GAME_VALIDATION', arg)
-    io.in(arg.roomId).emit(EVENT.GAME_VALIDATION)
-    rooms.map((room) => {
-      if (room.id === arg.roomId) {
-        room.step = arg.step;
-      }
-    });
+    console.log('EVENT.GAME_VALIDATION', arg);
+
+    io.in(arg.roomId).emit(EVENT.GAME_VALIDATION);
+
+    let room = rooms.find(room => room.id === arg.roomId);
+
+    if (room) {
+      room.step = arg.step;
+    }
   });
 
   socket.on(EVENT.END_GAME, (arg) => {
-    console.log('EVENT.END_GAME', arg)
-    io.in(arg.roomId).emit(EVENT.END_GAME)
-    rooms.map((room) => {
-      if (room.id === arg.roomId) {
-        room.isPlaying = false;
-        room.step = arg.step;
-      }
-    });
+    console.log('EVENT.END_GAME', arg);
+
+    io.in(arg.roomId).emit(EVENT.END_GAME);
+
+    let room = rooms.find(room => room.id === arg.roomId);
+
+    if (room) {
+      room.isPlaying = false;
+      room.step = arg.step;
+    }
   })
 
   socket.on(EVENT.BACK_CHAPTER, (arg) => {
     console.log('EVENT.BACK_CHAPTER', arg)
+
     io.in(arg.roomId).emit(EVENT.BACK_CHAPTER, {
       gameId: arg.gameId,
     });
   });
 
   socket.on(EVENT.END_CHAPTER, (arg) => {
-    console.log('EVENT.END_CHAPTER', arg)
-    io.to(arg.roomId).emit(EVENT.END_CHAPTER, {})
+    console.log('EVENT.END_CHAPTER', arg);
+
+    io.to(arg.roomId).emit(EVENT.END_CHAPTER);
   });
 
   ClapGameManagerInstance.initListenners(io, socket);
