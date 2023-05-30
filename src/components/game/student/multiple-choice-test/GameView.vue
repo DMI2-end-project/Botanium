@@ -1,5 +1,5 @@
 <template>
-  <div class="relative grid grid-cols-12 gap-6">
+  <div class="relative grid grid-cols-12 gap-4 px-8">
     <div class="col-start-2 col-span-10 grid grid-cols-2 gap-4">
       <div v-for="(answer, index) in answers" :v-bind="index" class="w-full border rounded-md p-3.5"
            :class="answer.isClicked ? 'border-green-light':'border-transparent'">
@@ -28,6 +28,9 @@ import RoundButton from "../../../common/RoundButton.vue";
 export default defineComponent({
   name: 'StudentGameView',
   components: {RoundButton},
+  props: {
+    data: Object
+  },
   data() {
     return {
       publicPath: window.location.origin,
@@ -41,8 +44,11 @@ export default defineComponent({
       return COLOR
     },
     answers() {
+      console.log('answers', this.gameStore.data, this.$props.data, this.gameStore.currentSequence, this.gameStore.teamId);
       if (this.gameStore.teamId !== undefined) {
-        return this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers
+        return [];
+        //return this.$props.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers
+        //return this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers
         //return this.gameStore.data.gameContent[this.gameStore.teamId].answers;
       }
     }

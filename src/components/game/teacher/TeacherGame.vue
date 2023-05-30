@@ -16,7 +16,7 @@ import MCQ from "./multiple-choice-test/GameView.vue";
 import Rhythm from "./rhythm/GameView.vue";
 import Swipe from "./swipe/GameView.vue";
 
-// TODO : Error GameView
+// TODO : localStorage.setItem('currentParagraph', ???)
 
 export default defineComponent({
   name: 'TeacherGame',

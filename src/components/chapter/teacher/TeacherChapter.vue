@@ -55,13 +55,14 @@ export default defineComponent({
       return this.$props.data?.sections.length;
     },
     totalTexts() {
-      return this.$props.data?.sections[this.chapterStore.currentSection].length;
+      return this.$props.data?.sections[this.mainStore.gameId].length;
     }
   },
   methods: {
     next() {
       switch (this.chapterStore.currentStep) {
         case CHAPTER_STEP.INTRODUCTION:
+          this.GMIntsance.startChapter();
           this.chapterStore.currentStep = CHAPTER_STEP.STORY;
           break;
         case CHAPTER_STEP.STORY:
@@ -69,7 +70,7 @@ export default defineComponent({
             this.chapterStore.currentParagraph += 1;
             break;
           } else {
-            if (this.chapterStore.currentSection < this.totalParts - 1) {
+            if (this.mainStore.gameId < this.totalParts - 1) {
               this.GMIntsance.launchGame(this.mainStore.gameId + 1)
               break;
             } else {

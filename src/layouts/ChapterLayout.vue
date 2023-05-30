@@ -78,9 +78,9 @@ export default defineComponent({
           GameId : {{ mainStore.gameId }},
         </div>
         <div>
-          Step : {{ chapterStore.currentStep}}
-          Part : {{ chapterStore.currentSection}}
-          Text : {{ chapterStore.currentParagraph}}
+          Step : {{ chapterStore.currentStep }}
+          Section : {{ mainStore.gameId }}
+          Paragraph : {{ chapterStore.currentParagraph }}
         </div>
         <button @click="disconnect" class="ml-auto block">Déconnexion</button>
       </div>

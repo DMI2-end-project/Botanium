@@ -13,7 +13,8 @@ const pb = DatabaseManagerInstance.pb;
 const store = useMainStore();
 
 onBeforeMount(() => {
-
+//localStorage.removeItem('teamId')
+//localStorage.removeItem('teamName')
 })
 </script>
 
