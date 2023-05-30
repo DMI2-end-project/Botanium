@@ -128,6 +128,18 @@
                 "image": "amfine.png"
               }
             ],
+            "points": [
+              65,
+              120,
+              140,
+              120,
+              110,
+              380,
+              90,
+              350,
+              70,
+              300
+            ],
             "congratulation": {
               "title": "Bravo !",
               "text": "Tu as découvert la carotte Amfine !",
@@ -141,6 +153,8 @@
                 "image": "lubiana.png"
               }
             ],
+            "points": [
+            ],
             "congratulation": {
               "title": "Bravo !",
               "text": "Tu as découvert la carotte Lubiana !",
@@ -153,6 +167,8 @@
               {
                 "image": "cosmic.png"
               }
+            ],
+            "points": [
             ],
             "congratulation": {
               "title": "Bravo !",

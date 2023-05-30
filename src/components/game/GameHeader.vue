@@ -1,5 +1,5 @@
 <template>
-  <div class="relative grid grid-cols-12">
+  <div class="relative grid grid-cols-12 gap-4 px-8">
     <div class="absolute top-0 left-0 text-xl">
       <div class="aspect-square w-20 text-beige bg-secondary rounded-full font-bold p-1.5">
       <span
@@ -39,14 +39,16 @@ export default defineComponent({
       return this.data?.gameSequences[this.gameStore.currentSequence]
     },
     text() {
-      if (this.gameStore.teamId !== undefined) {
-        return this.currentSection.teams[this.currentSection.teamsNeeded ? this.gameStore.teamId : 0].instruction;
+      if (this.gameStore.teamId) {
+        let index = this.currentSection.teamsNeeded ? this.gameStore.teamId : 0
+        console.log('index', index, this.currentSection.teams)
+        return this.currentSection.teams[index].instruction;
       } else {
         let i = this.gameStore.currentSequence;
-        while (!this.currentSection.gamemaster && i < this.data?.gameSequences.lenght)
-        if (this.currentSection.gamemaster) {
-          return this.currentSection.gamemaster.instruction;
-        }
+        while (!this.currentSection.gamemaster && i < this.data?.gameSequences.length)
+          if (this.currentSection.gamemaster) {
+            return this.currentSection.gamemaster.instruction;
+          }
         i += 1
       }
     }

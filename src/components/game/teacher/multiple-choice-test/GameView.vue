@@ -1,5 +1,5 @@
 <template>
-  <div class="relative grid grid-cols-12">
+  <div class="relative grid grid-cols-12 gap-4 px-8">
     <div class="col-start-2 col-span-10 grid grid-cols-2 gap-4">
       <div v-for="(answer, index) in answers" :v-bind="index" class="w-full rounded-md p-3.5">
         <div :data-id="index" class="w-full h-full bg-beige rounded-md shadow-md w-max-content py-14 px-10"
