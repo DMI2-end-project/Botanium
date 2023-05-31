@@ -10,11 +10,19 @@
       <p class="text-right font-hand-written text-xs text-green p-1 pt-2 absolute bottom-0 right-0 bg-beige m-2">{{ drawData.signature }}</p>
     </div>
   </button>
-  <div v-if="onModify" class="fixed z-40 w-screen h-screen bg-black/25 flex justify-center items-center top-0 left-0">
-    <div v-if="!onSignature" class="bg-beige h-[94%] w-full p-8 m-12">
-      <div v-if="!onWrite && !onDraw" class="h-full w-full grid grid-cols-2 gap-8">
-        <button @click="onWrite = true">Ecrire</button>
-        <button @click="onDraw = true">Dessiner</button>
+  <div v-if="onModify" class="fixed z-40 w-screen h-screen bg-black/25 flex justify-center items-center top-0 left-0 pt-24">
+    <div v-if="!onSignature" class="bg-beige h-[90%] w-full p-8 m-12">
+      <div v-if="!onWrite && !onDraw" class="h-full w-full flex gap-8">
+        <button @click="onWrite = true" class="bg-beige-light relative flex-1 max-h-full p-16 text-green text-xl font-bold">
+          <span class="w-[96%] h-[96%] block absolute top-[2%] left-[2%] border border-beige-dark rounded-lg" />
+          <WriteIcon class="mx-auto h-1/3 w-auto object-contain" />
+          <p class="mt-16">Écrire</p>
+        </button>
+        <button @click="onDraw = true" class="bg-beige-light relative flex-1 h-full text-green text-xl font-bold">
+          <span class="w-[96%] h-[96%] block absolute top-[2%] left-[2%] border border-beige-dark rounded-lg" />
+          <DrawIcon class="mx-auto h-1/3 w-auto object-contain" />
+          <p class="mt-16">Faire un dessin</p>
+        </button>
       </div>
       <div v-if="onWrite" class="w-full h-full p-12 flex flex-col items-end">
         <textarea v-model="textData.content" autofocus class="w-full h-full text-xl p-4">
@@ -38,11 +46,15 @@ import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import Draw from "./../Draw.vue"
 import type { TextData, DrawData } from './../../../common/Interfaces'
 import { base64ToFile } from './../../../common/Lib';
+import WriteIcon from "./../../../assets/svg/ico-write.svg?component"
+import DrawIcon from "./../../../assets/svg/ico-draw.svg?component"
 
 export default {
   name: "EditElementComponent",
   components: {
-    Draw
+    Draw,
+    WriteIcon,
+    DrawIcon
   },
   props: {
     pageId: {
