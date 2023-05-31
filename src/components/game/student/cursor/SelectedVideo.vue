@@ -1,10 +1,17 @@
 <template>
-  <div class="fixed w-full mt-20">
-    <div ref="canvasContainer"></div>
-    <input ref="range" type="range" v-model="selectedValue.current" min="0" max="5" step="0.001" class="w-2/3" />
-    <RoundButton :color="COlOR.GREEN" @click="select">
+  <div class="w-full h-full px-10 relative flex flex-col justify-between">
+    <div ref="canvasContainer" class="w-full -my-20"></div>
+    <div class="relative w-4/5 mx-auto">
+      <input ref="range" type="range" v-model="selectedValue.current" min="0" max="4" step="0.001" class="w-full"/>
+      <img :src="'/src/assets/game-data/images/00103/' + element + '-0.png'" class="absolute -top-24 left-0 w-14 -ml-5">
+      <img :src="'/src/assets/game-data/images/00103/' + element + '-1.png'" class="absolute -top-24 right-0 w-14 -mr-5">
+      <span v-for="i in 5" v-bind="i" class="w-3 h-3 m-1 bg-purple rounded-full absolute pointer-events-none" :style="`left: calc(${(i - 1) * 100 / 4}% - ${(i - 1) * 5}px);`" />
+    </div>
+    <div class="absolute top-[45%] right-10">
+      <RoundButton :color="COlOR.GREEN_MEDIUM_BEIGE" @click="select" class="">
       <Check />
     </RoundButton>
+    </div>
   </div>
 </template>
 
@@ -16,11 +23,14 @@ import Check from "../../../../assets/svg/ico-check.svg?component";
 import { COlOR } from '../../../../common/Constants';
 
 export default defineComponent({
-  component: {
+  components: {
     RoundButton,
     Check
   },
   emits: ['select'],
+  props: {
+    element: String
+  },
   computed: {
     COlOR() {
       return COlOR
@@ -36,7 +46,7 @@ export default defineComponent({
       isClicked: false,
       app: new PIXI.Application({
         autoStart: true,
-        width: 800,
+        width: 850,
         height: 600,
         backgroundAlpha: 0
       }) as PIXI.Application,
@@ -58,12 +68,14 @@ export default defineComponent({
     },
     async loadSprite() {
       const app = this.app;
+      this.app.view.style.width = '100vh';
+      this.app.view.style.margin = 'auto';
       (this.$refs.canvasContainer as HTMLElement).appendChild(app.view);
 
-      const textureData = await PIXI.Assets.load('/src/assets/cursor-game-videos/animation_texture.json');
+      const textureData = await PIXI.Assets.load('/src/assets/cursor-game-videos/animation_' + this.element + '.json');
       const animations = textureData.data.animations;
 
-      const animation = PIXI.AnimatedSprite.fromFrames(animations["animation_texture"]);
+      const animation = PIXI.AnimatedSprite.fromFrames(animations["animation_" + this.element]);
 
       animation.animationSpeed = 0;
       animation.width = app.view.width;
@@ -85,13 +97,20 @@ export default defineComponent({
         this.selectedValue.current = this.lerp(this.selectedValue.current, this.selectedValue.target, 0.05)
       }
       this.targetSprite = this.getMapSprite(this.selectedValue.current)
-      this.animation.animationSpeed = (this.targetSprite - this.animation.currentFrame) * 0.1;
+      console.log(this.animation.animationSpeed)
+      this.animation.animationSpeed = this.true0((this.targetSprite - this.animation.currentFrame) * 0.1, 0.05);
     },
     getMapSprite(n: number) {
-      return (n / 5) * (this.animation.totalFrames - 1)
+      return (n / 4) * (this.animation.totalFrames - 1)
     },
     lerp(start:number, end:number, t:number):number {
       return start * (1 - t) + end * t;
+    },
+    approximatelyEqual(n1:number, n2:number, precision:number):boolean {
+      return (n1 + precision > n2 && n1 - precision < n2)
+    },
+    true0(n: number, precision:number):number {
+      return (this.approximatelyEqual(n, 0, precision) ? 0 : n)
     },
     select() {
       this.$emit('select', this.selectedValue.target);
@@ -117,7 +136,6 @@ input[type="range"] {
   appearance: none;
   background: transparent;
   cursor: pointer;
-  width: 100%;
 }
 
 /* Removes default focus */
@@ -139,11 +157,12 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   margin-top: -21px; /* Centers thumb on the track */
   background-color: #9B85FF;
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
-  height: 60px;
-  width: 60px;
-  border: 3px solid #FFF;
-  box-shadow: 0px 3px 3px 5px rgba(0,0,0,0);
+  border: 1.5px solid #FFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  transform: scale(3.75);
 }
 
 /*********** Firefox styles ***********/
@@ -158,10 +177,11 @@ input[type="range"]::-moz-range-track {
 input[type="range"]::-moz-range-thumb {
   background-color: #9B85FF;
   border: none; /*Removes extra border that FF applies*/
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
-  height: 60px;
-  width: 60px;
-  border: 3px solid #FFF;
-  box-shadow: 0px 3px 3px 5px rgba(0,0,0,0);
+  border: 1.5px solid #FFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  transform: scale(3.75);
 }
 </style>
