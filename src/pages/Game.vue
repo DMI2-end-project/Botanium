@@ -37,14 +37,6 @@ onBeforeMount(async () => {
     role: mainStore.role,
     roomId: mainStore.roomId
   });
-
-  if (mainStore.role === ROLE.TEACHER) {
-    gameStore.$subscribe((mutation, state) => {
-      if (gameStore.currentStep === GAME_STEP.PLAY && gameStore.totalTeamsFinished === gameStore.totalTeams) {
-        GameMasterManagerInstance.gameValidation();
-      }
-    });
-  }
 });
 </script>
 

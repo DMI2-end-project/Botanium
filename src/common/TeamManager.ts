@@ -78,7 +78,6 @@ class TeamManager {
   }
   
   public teamValidation() {
-    console.log('TeamManager : teamValidation');
     this._gameStore.currentStep = GAME_STEP.WAIT;
     this._socket.emit(EVENT.TEAM_VALIDATION, {
       roomId: this._mainStore.roomId,

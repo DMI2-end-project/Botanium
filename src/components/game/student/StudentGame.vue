@@ -3,7 +3,7 @@
     <!--InGame v-show="gameStore.currentStep === GAMESTEP.PLAY" :data="$props.data" :teamId="gameStore.teamId"
             @validated="validated"/-->
     <div v-show="gameStore.currentStep === GAMESTEP.PLAY">
-      <component v-bind:is="GameView" :data="$props.data" :teamId="gameStore.teamId"/><!--  @validated="validated" -->
+      <component v-bind:is="GameView" :data="$props.data" :teamId="gameStore.teamId" @validated="validated"/>
     </div>
   </div>
 </template>
@@ -55,7 +55,6 @@ export default defineComponent({
   },
   methods: {
     validated() {
-      console.log('StudentGame : validated')
       this.$emit('validated');
       TeamManagerInstance.teamValidation();
     }

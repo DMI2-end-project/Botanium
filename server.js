@@ -214,16 +214,22 @@ io.on('connection', (socket) => {
     });
 
     let room = rooms.find(room => room.id === arg.roomId);
-
     if (room) {
       let team = room.teams.find(team => team.teamId === arg.teamId);
 
       if (team) {
         team.isValidated = true;
       }
+
+      if (room.isGameFinished()) {
+        console.log('EMIT PLS')
+        io.in(arg.roomId).emit(EVENT.GAME_VALIDATION);
+        room.step = 3
+      }
     }
   });
 
+  /*
   socket.on(EVENT.GAME_VALIDATION, (arg) => {
     console.log('EVENT.GAME_VALIDATION', arg);
 
@@ -235,6 +241,7 @@ io.on('connection', (socket) => {
       room.step = arg.step;
     }
   });
+   */
 
   socket.on(EVENT.END_GAME, (arg) => {
     console.log('EVENT.END_GAME', arg);

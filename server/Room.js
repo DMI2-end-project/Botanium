@@ -1,4 +1,4 @@
-let names = ['les papillons', 'les castors', 'les graines'];
+let names = ['les papillons', 'les escargots', 'les graines', 'les tulipes', 'les arrosoirs', 'les oiseaux'];
 
 const shuffle = (array) => {
   let currentIndex = array.length, randomIndex;
@@ -89,12 +89,15 @@ class Room {
   }
 
   get playingTeams() {
-    console.log('playingTeams', this._teams.filter(t => t.isPlaying))
     return this._teams.filter(t => t.isPlaying);
   }
 
   get validatedTeams() {
     return this.playingTeams.filter(t => t.isValidated)
+  }
+
+  isGameFinished() {
+    return this.validatedTeams.length >= this.playingTeams.length;
   }
 
   addTeam(socketId, teamName) {
@@ -108,13 +111,10 @@ class Room {
       team.name = names[0];
       this._teams.push(team);
     }
-
-    console.log('addTeam', teamName, team, this.teams);
   }
 
   removeTeam(socketId) {
     let teamIndex = this._teams.findIndex(t => t.socketId === socketId);
-    console.log('removeTeam :', socketId, teamIndex);
 
     if (teamIndex > -1) {
       this._teams[teamIndex].isConnected = false;

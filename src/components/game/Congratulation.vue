@@ -36,7 +36,7 @@ const text = () => {
   return gameStore.data?.gameSequences[gameStore.currentSequence].congratulation?.text
 }
 
-const next = async () => {
+const next = () => {
   GameMasterManagerInstance.backChapter();
 }
 </script>
