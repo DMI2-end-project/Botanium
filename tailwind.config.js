@@ -18,6 +18,7 @@ module.exports = {
         "hand-written": "Belle Allure CE",
       },
       colors: {
+        background: 'var(--color-background)',
         primary: "#4d6b36", // Green
         secondary: "#edbd56", // Yellow
         green: {

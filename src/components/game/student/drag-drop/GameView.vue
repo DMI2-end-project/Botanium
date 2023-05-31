@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {onMounted, ref, defineEmits, defineProps} from "vue";
+import {onMounted, ref, defineEmits, defineProps, nextTick} from "vue";
 import {gsap} from "gsap";
 import {Draggable} from "gsap/Draggable";
 import {Flip} from "gsap/Flip";
@@ -12,20 +12,22 @@ const gameStore = useGameStore();
 const props = defineProps(['data']);
 const emit = defineEmits(['validated']);
 
-const draggable = ref<HTMLDivElement>();
 const teamData = ref<any>(null);
 
+const draggable = ref<HTMLDivElement>();
+const droppables = ref<HTMLDivElement[]>([]);
 const currentAnswer = ref<any>(null);
 
 console.log('data', props.data, gameStore.data);
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick();
+  //const droppables = document.querySelectorAll<HTMLDivElement>('.droppable');
+  const container = document.querySelector('#container');
+
   if (gameStore.teamId !== undefined) {
     teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
     console.log('teamData', teamData.value);
-
-    const droppables = document.querySelectorAll<HTMLDivElement>('.droppable');
-    const container = document.querySelector('#container');
 
     if (draggable.value) {
       Draggable.create(draggable.value, {
@@ -33,7 +35,7 @@ onMounted(() => {
         edgeResistance: 0.65,
         inertia: true,
         onDrag: function (e) {
-          droppables.forEach(droppable => {
+          droppables.value.forEach(droppable => {
             if (this.hitTest(droppable, "50%")) {
               droppable.classList.add('bg-green-light');
             } else {
@@ -43,11 +45,13 @@ onMounted(() => {
         },
         onDragEnd: function (e) {
           let miss = true;
-          droppables.forEach(droppable => {
+          droppables.value.forEach(droppable => {
             if (this.hitTest(droppable, "50%")) {
               miss = false;
               if (draggable.value) {
-                Flip.fit(draggable.value, droppable);
+                Flip.fit(draggable.value, droppable, {
+                  scale: true
+                });
                 droppable.classList.add('selected');
                 currentAnswer.value = droppable.dataset.isValid
               }
@@ -79,7 +83,7 @@ const itemValidated = () => {
 <template>
   <div>
     <div
-        class="w-full h-full flex-1 flex items-center bg-green-medium grid grid-cols-12 gap-4 px-8 text-center gap-5">
+        class="w-full h-full flex-1 flex items-center bg-background grid grid-cols-12 gap-4 px-8 text-center gap-5">
       <div
           class="col-span-3 aspect-[3/5] flex justify-center items-center border border-dashed border-beige rounded-md p-7">
         <div id="container" class="relative w-full h-full aspect-[5/9]">
@@ -90,9 +94,11 @@ const itemValidated = () => {
         </div>
       </div>
       <div class="col-span-9 flex gap-9 rounded-md px-10 pt-9 pb-14 bg-beige-medium">
-        <div v-for="(answer, index) in teamData.answers" :v-bind="index" :data-is-valid="answer.isValid"
+        <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
              class="w-full flex flex-col justify-center items-center gap-6">
-          <div class="droppable w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center">
+          <div ref="droppables"
+               class="droppable w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center"
+               :data-is-valid="answer.isValid">
             {{ answer.label }}...
           </div>
           <h3 class="w-full bg-green text-beige rounded-md">

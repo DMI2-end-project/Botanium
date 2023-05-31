@@ -53,12 +53,11 @@ export default defineComponent({
       }
     }
   },
-  mounted() {
-  },
   methods: {
     validated() {
+      console.log('StudentGame : validated')
       this.$emit('validated');
-      TeamManagerInstance.teamValidation()
+      TeamManagerInstance.teamValidation();
     }
   }
 });
