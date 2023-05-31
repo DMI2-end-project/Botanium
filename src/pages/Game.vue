@@ -30,6 +30,8 @@ const gameData: {
 
 // TODO : localStorage.setItem('currentSequence', ???)
 onBeforeMount(async () => {
+  document.documentElement.style.setProperty('--color-background', '#69717c');
+
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,

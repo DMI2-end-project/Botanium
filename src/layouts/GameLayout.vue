@@ -66,7 +66,7 @@ export default defineComponent({
 
 
 <template>
-  <div class="bg-green-medium flex flex-col w-full h-full min-h-screen">
+  <div class="bg-background flex flex-col w-full h-full min-h-screen">
     <header class="flex flex-col w-full h-full p-4 z-20">
       <!-- DEV INFO -->
       <div class="flex justify-between items-center gap-6">
