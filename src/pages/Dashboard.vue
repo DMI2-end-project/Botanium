@@ -3,8 +3,6 @@ import {useMainStore} from "../stores/mainStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import { GameMasterManagerInstance } from "../common/GameMasterManager";
 
-import SelectedVideoCopy from '../components/game/student/cursor/SelectedVideo.vue';
-
 import Book from "../assets/svg/ico-book.svg?component"
 import router from "../router";
 
@@ -41,8 +39,6 @@ const launchGame = (i: number) => {
         </div>
       </div>
     </div>
-
-    <!-- <SelectedVideoCopy /> -->
 
     <!-- query: { id: store.getFullGameId }} -->
   </div>

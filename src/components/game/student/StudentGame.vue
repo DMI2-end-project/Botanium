@@ -70,6 +70,3 @@ export default defineComponent({
 <style lang="scss" scoped>
 
 </style>
-
-<script setup lang="ts">
-</script>
