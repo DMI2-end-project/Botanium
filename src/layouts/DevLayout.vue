@@ -1,25 +1,26 @@
 <template>
-  <header class="flex items-center">
-    <div class="flex flex-col justify-center w-full h-full p-4 z-20">
-      <div>
-        Path : {{ router.currentRoute.path }},
-        Auth state : {{ pb.authStore.isValid }},
-        Role : {{ mainStore.role }}
+  <div class="flex flex-col w-full h-full min-h-screen">
+    <header class="flex items-center">
+      <div class="flex flex-col justify-center w-full h-full p-4 z-20">
+        <div>
+          Path : {{ router.currentRoute.path }},
+          Auth state : {{ pb.authStore.isValid }},
+          Role : {{ mainStore.role }}
+        </div>
+        <div>
+          Socket state : {{ mainStore.connected }},
+          RoomID : {{ mainStore.roomId }},
+          TeamID : {{ gameStore.teamId }},
+          Step : {{ gameStore.currentStep }}
+        </div>
       </div>
-      <div>
-        Socket state : {{ mainStore.connected }},
-        RoomID : {{ mainStore.roomId }},
-        TeamID : {{ gameStore.teamId }},
-        Step : {{ gameStore.currentStep }}
-      </div>
-    </div>
-    <button @click="disconnect" class="ml-auto block">Déconnexion</button>
-  </header>
-  <main class="w-full h-full">
-
-    <!--The <slot> element is a slot outlet that indicates where the "VIEW" content should be rendered.-->
-    <slot></slot>
-  </main>
+      <button @click="disconnect" class="ml-auto block">Déconnexion</button>
+    </header>
+    <main class="flex-1 flex flex-col w-full h-full">
+      <!--The <slot> element is a slot outlet that indicates where the "VIEW" content should be rendered.-->
+      <slot></slot>
+    </main>
+  </div>
 </template>
 
 <script lang="ts">

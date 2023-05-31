@@ -1,5 +1,5 @@
 <template>
-  <div class="relative grid grid-cols-12">
+  <div class="relative grid grid-cols-12 gap-4 px-8">
     <div class="absolute top-0 left-0 text-xl">
       <div class="aspect-square w-20 text-beige bg-secondary rounded-full font-bold p-1.5">
       <span
@@ -22,7 +22,8 @@ import {ROLE} from "../../common/Constants";
 export default defineComponent({
   name: 'GameHeader',
   props: {
-    data: Object
+    data: Object,
+    teamId: Number || undefined
   },
   data() {
     return {
@@ -39,15 +40,16 @@ export default defineComponent({
       return this.data?.gameSequences[this.gameStore.currentSequence]
     },
     text() {
-      if (this.gameStore.teamId !== undefined) {
-        return this.currentSection.teams[this.currentSection.teamsNeeded ? this.gameStore.teamId : 0].instruction;
+      if (this.$props.teamId !== undefined) {
+        let index = this.currentSection.teamsNeeded ? this.$props.teamId : 0;
+        return this.currentSection.teams[index].instruction;
       } else {
-        let i = this.gameStore.currentSequence;
-        while (!this.currentSection.gamemaster && i < this.data?.gameSequences.lenght)
-        if (this.currentSection.gamemaster) {
-          return this.currentSection.gamemaster.instruction;
+        while (!this.currentSection.gamemaster && this.gameStore.currentSequence < this.data?.gameSequences.length && this.mainStore.role === ROLE.TEACHER) {
+          this.gameStore.currentSequence += 1;
         }
-        i += 1
+
+        return this.currentSection.gamemaster.instruction;
+
       }
     }
   }

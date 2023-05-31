@@ -1,4 +1,3 @@
-// TODO : fix cases
 /*  LOGIC  */
 export enum ROLE {
   TEACHER = 'teacher',
@@ -10,6 +9,7 @@ export enum EVENT {
   ROOM_STATUS = 'roomStatus',
   TOTAL_TEAMS = 'totalTeams',
   LAUNCH_CHAPTER = 'launchChapter',
+  START_CHAPTER = 'startChapter',
   LAUNCH_GAME = 'launchGame',
   START_GAME = 'startGame',
   TEAM_VALIDATION = 'teamValidation',

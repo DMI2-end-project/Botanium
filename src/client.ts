@@ -17,28 +17,28 @@ export const getSocket = () => socket;
 export const initClient = (pinia: Pinia) => {
   const mainStore = useMainStore(pinia);
   const gameStore = useGameStore(pinia);
-
+  
   socket = io(URL, {
     autoConnect: false,
     rejectUnauthorized: false // WARN: please do not do this in production
   });
-
+  
   socket.on("connect", () => {
     mainStore.connected = true;
   });
-
+  
   socket.on("disconnect", () => {
     mainStore.connected = false;
   });
-
+  
   socket.on("join", () => {
     console.log("join", mainStore.roomId);
   });
-
+  
   // TODO
   // socket.on(EVENT.ROOM_STATUS, (arg) => {
   //   console.log('EVENT.ROOM_STATUS', arg)
-
+  
   //   if (arg.chapterId) {
   //     mainStore.chapterId = arg.chapterId
   //   }
@@ -52,17 +52,17 @@ export const initClient = (pinia: Pinia) => {
   //       gameStore.currentStep = arg.step
   //     }
   //   }
-
+  
   //   if (arg.isPlaying) {
   //     router.push('/exercice/' + mainStore.getFullGameId);
   //   }
   // });
-
+  
   socket.on(EVENT.TOTAL_TEAMS, (arg) => {
     console.log('EVENT.TOTAL_TEAMS', arg)
     gameStore.totalTeams = arg.totalTeams.length;
   });
-
+  
   // socket.on(EVENT.END_STORY, async (arg: any) => {
   //   // TODO :
   //   switch (mainStore.role) {
@@ -75,10 +75,13 @@ export const initClient = (pinia: Pinia) => {
 
 export const connectClient = async () => {
   const mainStore = useMainStore(pinia);
-
+  const gameStore = useGameStore(pinia);
+  
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,
-    roomId: mainStore?.roomId
+    roomId: mainStore?.roomId,
+    teamId: gameStore?.teamId,
+    teamName: gameStore?.teamName
   });
 }

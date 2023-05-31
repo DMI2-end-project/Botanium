@@ -13,7 +13,6 @@ import {useGameStore} from "../../../../stores/gameStore";
 import { GAME_STEP } from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
 
-// TODO : DYNAMIC SVG
 export default defineComponent({
   name: "TeacherGameView",
     data() {

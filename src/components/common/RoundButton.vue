@@ -1,13 +1,19 @@
 <template>
-  <button class="RoundButton group relative rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 " :class="`${containerClass}`" >
-    <div class="RoundButton__bg absolute w-full h-full rounded-full outline outline-1 group-hover:outline-offset-[0px] group-hover:scale-75 transform" :class="`${bgClass}`" />
-    <div class="RoundButton__icon z-10" :class="`${textClass}`"><slot></slot></div>
+  <button
+      class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
+      :class="`${containerClass}`">
+    <div
+        class="RoundButton__bg absolute w-full h-full rounded-full outline outline-1 group-hover:outline-offset-[0px] group-hover:scale-75 transform"
+        :class="`${bgClass}`"/>
+    <div class="RoundButton__icon z-10" :class="`${textClass}`">
+      <slot/>
+    </div>
   </button>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { COlOR, SIZE } from "../../common/Constants";
+import {defineComponent} from 'vue'
+import {COlOR, SIZE} from "../../common/Constants";
 
 export default defineComponent({
   name: 'RoundButton',
@@ -67,31 +73,30 @@ export default defineComponent({
         break
     }
   },
-  methods: {
-  }
+  methods: {}
 });
 </script>
 
 <style>
 .RoundButton--md .RoundButton__icon > svg {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
 }
 
 .RoundButton--sm .RoundButton__icon > svg {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 .RoundButton--xs .RoundButton__icon > svg {
-  width: 12px;
-  height: 12px;
-  object-fit: contain;
+    width: 12px;
+    height: 12px;
+    object-fit: contain;
 }
 
 .RoundButton__bg {
-  transition: transform 0.4s cubic-bezier(0.3, 2.0, 0.45, 1.0), outline-offset 0.2s ease-out;
+    transition: transform 0.4s cubic-bezier(0.3, 2.0, 0.45, 1.0), outline-offset 0.2s ease-out;
 }
 </style>

@@ -5,6 +5,7 @@ export type StoreState = {
   data: any | undefined,
   currentStep: GAME_STEP,
   teamId: number | undefined,
+  teamName: string | undefined,
   totalTeams: number,
   totalTeamsFinished: number,
   currentSequence: number
@@ -15,6 +16,7 @@ export const useGameStore = defineStore('game', {
     data: undefined,
     currentStep: GAME_STEP.INSTRUCTION,
     teamId: undefined,
+    teamName: undefined,
     totalTeams: 0,
     totalTeamsFinished: 0,
     currentSequence: 0

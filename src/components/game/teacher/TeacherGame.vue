@@ -17,7 +17,7 @@ import Rhythm from "./rhythm/GameView.vue";
 import Swipe from "./swipe/GameView.vue";
 import Cursor from "./cursor/GameView.vue";
 
-// TODO : Error GameView
+// TODO : localStorage.setItem('currentParagraph', ???)
 
 export default defineComponent({
   name: 'TeacherGame',
@@ -34,7 +34,6 @@ export default defineComponent({
   computed: {
     GameView(): Component | undefined {
       let currentPart = this.$props.data?.gameSequences[this.gameStore.currentSequence]
-      console.log('GAMEVIEW', this.gameStore.currentSequence, this.$props.data?.gameSequences)
       switch (currentPart.type) {
         case GAME_TYPE.DRAG_DROP:
           return DragDrop;

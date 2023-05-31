@@ -1,14 +1,15 @@
 import {Router, useRouter} from "vue-router";
 import {useMainStore} from "../stores/mainStore";
+import {useChapterStore} from "../stores/chapterStore";
 import {useGameStore} from "../stores/gameStore";
 import {getSocket} from "./../client";
-import {leading} from "../common/Lib";
-import {EVENT, GAME_STEP} from "./Constants";
+import {EVENT, GAME_STEP, ROLE} from "./Constants";
 import gameData from "../assets/game-data/game-data-v2.json";
 
 class TeamManager {
   private static _instance: TeamManager;
   private _mainStore = useMainStore();
+  private _chapterStore = useChapterStore();
   private _gameStore = useGameStore();
   public _router: Router = useRouter();
   private _socket = getSocket();
@@ -30,17 +31,30 @@ class TeamManager {
       await this._router.push('/chapitre/' + this._mainStore.getChapterId);
     });
     
-    this._socket.on(EVENT.LAUNCH_GAME, async (arg) => {
-      await this._gameStore.reset();
-      this._mainStore.gameId = arg.gameId
+    this._socket.on(EVENT.START_CHAPTER, async (arg) => {
+      console.log('Team Manager EVENT.START_CHAPTER : ', arg)
       this._gameStore.teamId = arg.teamId;
+      this._gameStore.teamName = arg.teamName;
       localStorage.setItem('teamId', arg.teamId);
+      localStorage.setItem('teamName', arg.teamName);
+    })
+    
+    this._socket.on(EVENT.LAUNCH_GAME, async (arg) => {
+      console.log('Team Manager EVENT.LAUNCH_GAME : ', arg)
+      await this._gameStore.reset();
+      this._chapterStore.currentParagraph = 0;
+      this._mainStore.gameId = arg.gameId;
       
       await this._router.push('/exercice/' + this._mainStore.getFullGameId);
     });
     
-    this._socket.on(EVENT.START_GAME, async () => {
+    this._socket.on(EVENT.START_GAME, async (arg) => {
+      console.log('Team Manager EVENT.START_GAME : ', arg)
       this._gameStore.currentStep = GAME_STEP.PLAY;
+      this._gameStore.teamId = arg.teamId;
+      this._gameStore.teamName = arg.teamName;
+      localStorage.setItem('teamId', arg.teamId);
+      localStorage.setItem('teamName', arg.teamName);
     });
     
     this._socket.on(EVENT.GAME_VALIDATION, () => {
@@ -57,7 +71,9 @@ class TeamManager {
     })
     
     this._socket.on(EVENT.END_CHAPTER, async () => {
-      await this._router.push('/accueil');
+      if (this._mainStore.role === ROLE.STUDENT) {
+        await this._router.push('/accueil');
+      }
     })
   }
   

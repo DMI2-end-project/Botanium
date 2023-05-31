@@ -123,10 +123,21 @@
         "teams": [
           {
             "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
-            "answers": [
-              {
-                "image": "amfine.png"
-              }
+            "answers": {
+              "sprite": "soil-v2.png",
+              "background": "amfine.png"
+            },
+            "points": [
+              65,
+              120,
+              140,
+              120,
+              110,
+              380,
+              90,
+              350,
+              70,
+              300
             ],
             "congratulation": {
               "title": "Bravo !",
@@ -136,10 +147,11 @@
           },
           {
             "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
-            "answers": [
-              {
-                "image": "lubiana.png"
-              }
+            "answers": {
+              "sprite": "soil-v2.png",
+              "background": "lubiana.png"
+            },
+            "points": [
             ],
             "congratulation": {
               "title": "Bravo !",
@@ -149,10 +161,11 @@
           },
           {
             "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
-            "answers": [
-              {
-                "image": "cosmic.png"
-              }
+            "answers": {
+              "sprite": "soil-v2.png",
+              "background": "cosmic.png"
+            },
+            "points": [
             ],
             "congratulation": {
               "title": "Bravo !",

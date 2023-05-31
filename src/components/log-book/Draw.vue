@@ -4,13 +4,13 @@
     <div class="flex flex-col items-center">
       <div class="relative">
         <button @click="isOpenColor = !isOpenColor">Couleurs</button>
-        <div v-if="isOpenColor" class="flex flex-wrap justify-between absolute bg-white shadow-lg rounded-lg p-6 w-64 top-0 left-0 -translate-x-full">
+        <div v-if="isOpenColor" class="flex flex-wrap justify-between absolute bg-white shadow-lg rounded-md p-6 w-64 top-0 left-0 -translate-x-full">
           <button v-for="color in colors" :v-bind="color" class="w-12 h-12 rounded-full m-2 block" :style="'background-color: ' + color + ' ;'" @click="currentColor = color"></button>
         </div>
       </div>
       <div class="relative">
         <button @click="isOpenSize = !isOpenSize">Taille</button>
-        <div v-if="isOpenSize" class="flex items-center justify-between absolute bg-white shadow-lg rounded-lg p-6 top-0 left-0 -translate-x-full">
+        <div v-if="isOpenSize" class="flex items-center justify-between absolute bg-white shadow-lg rounded-md p-6 top-0 left-0 -translate-x-full">
           <button v-for="size in sizes" :v-bind="size" class="rounded-full m-2 block p-2" :style="'width:' + size * 1.5 + 'px; height:' + size * 1.5 + 'px'" @click="currentSize = size"></button>
         </div>
       </div>

@@ -28,6 +28,7 @@ const gameData: {
   [key: string]: any
 } = data;
 
+// TODO : localStorage.setItem('currentSequence', ???)
 onBeforeMount(async () => {
   await socket.connect();
   await socket.emit('join', {
@@ -38,7 +39,7 @@ onBeforeMount(async () => {
   if (mainStore.role === ROLE.TEACHER) {
     gameStore.$subscribe((mutation, state) => {
       if (gameStore.currentStep === GAME_STEP.PLAY && gameStore.totalTeamsFinished === gameStore.totalTeams) {
-        GameMasterManagerInstance.gameValidation()
+        GameMasterManagerInstance.gameValidation();
       }
     });
   }
@@ -46,7 +47,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="w-full h-full grid grid-cols-12 text-center">
+  <div class="w-full h-full grid grid-cols-12 gap-4 px-8 text-center">
     <Instruction v-show="gameStore.currentStep === GAME_STEP.INSTRUCTION" class="col-start-3 col-span-8"
                  :data="gameData[mainStore.getFullGameId]"/>
     <TeacherGame
