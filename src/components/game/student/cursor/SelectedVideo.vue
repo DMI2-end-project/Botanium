@@ -68,9 +68,9 @@ export default defineComponent({
     },
     async loadSprite() {
       const app = this.app;
-      this.app.view.style.width = '100vh';
-      this.app.view.style.margin = 'auto';
-      (this.$refs.canvasContainer as HTMLElement).appendChild(app.view);
+      (app.view as HTMLCanvasElement).style.width = '100vh';
+      (app.view as HTMLCanvasElement).style.margin = 'auto';
+      (this.$refs.canvasContainer as HTMLElement).appendChild(app.view as HTMLCanvasElement);
 
       const textureData = await PIXI.Assets.load('/src/assets/game-data/animations/00103/animation_' + this.element + '.json');
       const animations = textureData.data.animations;

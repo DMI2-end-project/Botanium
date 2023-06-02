@@ -33,8 +33,10 @@ export default defineComponent({
   },
   methods: {
     isValid(value: number) {
-      if (value === this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers) {
-        this.$emit('validated');
+      if (this.gameStore.teamId !== undefined) {
+        if (value === this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers) {
+          this.$emit('validated');
+        }
       }
     }
   }

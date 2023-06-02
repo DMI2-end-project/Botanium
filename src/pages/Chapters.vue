@@ -4,7 +4,6 @@ import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
 import {leading} from "../common/Lib";
 import gameData from "../assets/game-data/game-data-v2.json";
-import Card from "../components/Card.vue";
 import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {Record} from "pocketbase";
@@ -42,8 +41,7 @@ const goTo = async (e: Event, c: number, id: string) => {
       <h1>Capucine au monde des minuscules</h1>
       <h2>Choisissez le chapitre du jour</h2>
     </div>
-    <div class="grid grid-cols-12 gap-4 px-8">
-      <!--Card v-for="(c,i) in chapters" :chapterId="i+1" class="col-span-3"/-->
+    <div class="grid grid-cols-12 gap-4 px-8">*
       <div @click="(e) => goTo(e, i, c.id)" v-for="(c,i) in chapters"
            class="col-span-3 inline-block bg-beige rounded-md p-2">
         Chapitre {{ i + 1 }}
