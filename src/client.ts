@@ -36,27 +36,29 @@ export const initClient = (pinia: Pinia) => {
   });
   
   // TODO
-  // socket.on(EVENT.ROOM_STATUS, (arg) => {
-  //   console.log('EVENT.ROOM_STATUS', arg)
+   socket.on(EVENT.ROOM_STATUS, (arg) => {
+     console.log('EVENT.ROOM_STATUS', arg);
   
-  //   if (arg.chapterId) {
-  //     mainStore.chapterId = arg.chapterId
-  //   }
-  //   if (arg.gameId) {
-  //     mainStore.gameId = arg.gameId
-  //   }
-  //   if (arg.teamsValidation && gameStore.teamId && arg.teamsValidation[gameStore.teamId]) {
-  //     gameStore.currentStep = GAMESTEP.WAIT
-  //   } else {
-  //     if (arg.step) {
-  //       gameStore.currentStep = arg.step
-  //     }
-  //   }
+     /*
+     if (arg.chapterId) {
+       mainStore.chapterId = arg.chapterId
+     }
+     if (arg.gameId) {
+       mainStore.gameId = arg.gameId
+     }
+     if (arg.teamsValidation && gameStore.teamId && arg.teamsValidation[gameStore.teamId]) {
+       gameStore.currentStep = GAMESTEP.WAIT
+     } else {
+       if (arg.step) {
+         gameStore.currentStep = arg.step
+       }
+     }
   
-  //   if (arg.isPlaying) {
-  //     router.push('/exercice/' + mainStore.getFullGameId);
-  //   }
-  // });
+     if (arg.isPlaying) {
+       router.push('/exercice/' + mainStore.getFullGameId);
+     }
+      */
+   });
   
   socket.on(EVENT.TOTAL_TEAMS, (arg) => {
     console.log('EVENT.TOTAL_TEAMS', arg)

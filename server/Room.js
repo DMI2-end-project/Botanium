@@ -64,11 +64,9 @@ class Room {
   _teams = [];
   gamemaster = undefined;
 
-  isReading = false;
   chapterId = 0;
   chapterStep = 0;
 
-  isPlaying = false;
   gameId = 0;
   gameStep = 0;
 
@@ -123,11 +121,9 @@ class Room {
   }
 
   reset = () => {
-    this.isReading = false;
     this.chapterId = 0;
     this.chapterStep = 0;
 
-    this.isPlaying = false;
     this.gameId = 0;
     this.gameStep = 0;
 

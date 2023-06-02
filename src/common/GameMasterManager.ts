@@ -44,12 +44,12 @@ class GameMasterManager {
     this._mainStore.realChapterId = realId;
     await this._dbInstance.updateChapterStatus(realId, CHAPTER_STATUS.IN_PROGRESS);
     
-    this._mainStore.gameId = 1  // TODO :await this._dbInstance.getPreviousGameId(realId);
+    //this._mainStore.gameId = 0  // TODO :await this._dbInstance.getPreviousGameId(realId);
     this._gameStore.data = gameData;
     
     await this._socket.emit(EVENT.LAUNCH_CHAPTER, {
       roomId: this._mainStore.roomId,
-      chapterId: this._mainStore.getChapterId
+      chapterId: this._mainStore.chapterId  // this._mainStore.getChapterId
     });
     
     await this._router.push('/chapitre/' + leading(chapterId, 3));
@@ -81,19 +81,9 @@ class GameMasterManager {
     this._gameStore.currentStep = GAME_STEP.PLAY;
     await this._socket.emit(EVENT.START_GAME, {
       roomId: this._mainStore.roomId,
-      step: GAME_STEP.PLAY
+      //gameStep: GAME_STEP.PLAY
     });
   }
-  
-  /*
-  public async gameValidation() {
-    this._gameStore.currentStep = GAME_STEP.END;
-    this._socket.emit(EVENT.GAME_VALIDATION, {
-      roomId: this._mainStore.roomId,
-      step: GAME_STEP.END
-    })
-  }
-   */
   
   public async endGame() {
     console.log("GameMasterManager END_GAME", this._mainStore.realChapterId);

@@ -34,12 +34,14 @@ export enum CHAPTER_STATUS {
 }
 
 export enum CHAPTER_STEP {
+  IDLE,
   INTRODUCTION,
   STORY,
   END
 }
 
 export enum GAME_STEP {
+  IDLE,
   INSTRUCTION,
   PLAY,
   WAIT,

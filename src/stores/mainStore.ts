@@ -22,7 +22,7 @@ export const useMainStore = defineStore('main', {
     roleId: undefined,
     roles: [],
     realChapterId: undefined,
-    chapterId: 1,
+    chapterId: 0, // TODO ?
     gameId: 0,
   }),
   getters: {
@@ -46,7 +46,7 @@ export const useMainStore = defineStore('main', {
       this.connected = false;
       this.roomId = undefined;
       this.roleId = undefined;
-      this.chapterId = 1;
+      this.chapterId = 0; // TODO ?
       this.gameId = 0;
     }
   }
