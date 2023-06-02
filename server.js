@@ -10,8 +10,8 @@ const app = express();
 const http = createServer(app);
 const io = new Server(http, {
   cors: {
-    origins: [`http://localhost:${port}`]
-    //origins: [`http://172.28.59.22:${port}`]
+    //origins: [`http://localhost:${port}`]
+    origins: [`http://172.28.59.22:${port}`]
   }
 });
 
@@ -136,6 +136,15 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on(EVENT.NEXT_PARAGRAPH, (arg) => {
+    console.log('EVENT.NEXT_PARAGRAPH', arg)
+    let room = rooms.find(room => room.id === arg.roomId);
+
+    if (room && arg.currentParagraph) {
+      room.currentParagraph = arg.currentParagraph;
+    }
+  });
+
   socket.on(EVENT.LAUNCH_GAME, (arg) => {
     console.log('EVENT.LAUNCH_GAME', arg);
 
@@ -143,6 +152,7 @@ io.on('connection', (socket) => {
 
     if (room) {
       room.chapterStep = CHAPTER_STEP.IDLE;
+      room.currentParagraph = 0;
       room.gameStep = GAME_STEP.INSTRUCTION;
 
       room.gameId = arg.gameId;
@@ -198,6 +208,29 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on(EVENT.GAME_NEXT_SEQUENCE, (arg) => {
+    console.log('EVENT.GAME_NEXT_SEQUENCE', arg)
+    let room = rooms.find(room => room.id === arg.roomId);
+
+    if (room && arg.currentParagraph) {
+      room.currentSequence = arg.currentSequence;
+    }
+  });
+
+  socket.on(EVENT.TEAM_NEXT_SEQUENCE, (arg) => {
+    console.log('EVENT.TEAM_NEXT_SEQUENCE', arg)
+    let room = rooms.find(room => room.id === arg.roomId);
+
+    if (room) {
+      let team = room.teams.find(team => team.teamId === arg.teamId);
+      console.log('team', team)
+
+      if (team) {
+        team.currentSequence = arg.currentSequence;
+      }
+    }
+  });
+
   socket.on(EVENT.TEAM_VALIDATION, (arg) => {
     console.log('EVENT.TEAM_VALIDATION', arg);
     io.to(arg.roomId).emit(EVENT.TEAM_VALIDATION, {
@@ -214,7 +247,6 @@ io.on('connection', (socket) => {
       }
 
       if (room.isGameFinished()) {
-        console.log('EMIT PLS')
         io.in(arg.roomId).emit(EVENT.GAME_VALIDATION);
         room.gameStep = GAME_STEP.END;
       }
@@ -247,6 +279,9 @@ io.on('connection', (socket) => {
     let room = rooms.find(room => room.id === arg.roomId);
     if (room) {
       room.gameStep = GAME_STEP.IDLE;
+      room.currentSequence = 0;
+      room.teams.map(team => team.currentSequence = 0);
+
       room.chapterStep = CHAPTER_STEP.STORY;
 
       io.in(arg.roomId).emit(EVENT.ROOM_STATUS, room);
@@ -261,6 +296,7 @@ io.on('connection', (socket) => {
     let room = rooms.find(room => room.id === arg.roomId);
     if (room) {
       room.chapterStep = CHAPTER_STEP.END;
+      room.reset();
 
       io.in(arg.roomId).emit(EVENT.ROOM_STATUS, room);
     }

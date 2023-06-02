@@ -10,6 +10,8 @@ import {connectClient} from "./client";
 import AppLayout from "./layouts/AppLayout.vue";
 import DevLayout from "./layouts/DevLayout.vue";
 import GameLayout from "./layouts/GameLayout.vue";
+import chapterData from "./assets/chapters-data/chapters-data.json";
+import gameData from "./assets/game-data/game-data-v2.json";
 
 export default defineComponent({
   name: 'App',
@@ -20,6 +22,14 @@ export default defineComponent({
       chapterStore: useChapterStore(),
       gameStore: useGameStore()
     }
+  },
+  beforeCreate() {
+    // DATA : chapterData & gameData already exist
+  },
+  created() {
+    // STORES are available
+    this.chapterStore.data = chapterData;
+    this.gameStore.data = gameData;
   },
   mounted() {
     this.mainStore.roleId = DatabaseManagerInstance.pb.authStore.model?.role;

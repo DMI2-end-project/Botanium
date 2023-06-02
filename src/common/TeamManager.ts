@@ -84,6 +84,16 @@ class TeamManager {
       teamId: this._gameStore.teamId
     });
   }
+  
+  public async nextSequence() {
+    console.log("TeamManager TEAM_NEXT_SEQUENCE");
+    
+    await this._socket.emit(EVENT.TEAM_NEXT_SEQUENCE, {
+      roomId: this._mainStore.roomId,
+      teamId: this._gameStore.teamId,
+      currentSequence: this._gameStore.currentSequence
+    });
+  }
 }
 
 export let TeamManagerInstance: TeamManager;

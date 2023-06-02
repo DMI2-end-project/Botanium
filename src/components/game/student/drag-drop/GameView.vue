@@ -9,7 +9,6 @@ gsap.registerPlugin(Draggable, Flip);
 
 const gameStore = useGameStore();
 
-const props = defineProps(['data']);
 const emit = defineEmits(['validated']);
 
 const teamData = ref<any>(null);
@@ -18,7 +17,7 @@ const draggable = ref<HTMLDivElement>();
 const droppables = ref<HTMLDivElement[]>([]);
 const currentAnswer = ref<any>(null);
 
-console.log('data', props.data, gameStore.data);
+console.log('data', gameStore.data);
 
 onMounted(async () => {
   await nextTick();

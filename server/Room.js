@@ -19,11 +19,12 @@ const shuffle = (array) => {
 
 class Team {
   _socketId = undefined;
-  _teamId = undefined;
+  _teamId = undefined; // number : gameData.gameSequences.teams[0]
   _name = undefined;
   isPlaying = false;
   isConnected = true;
   isValidated = false;
+  currentSequence = 0;
 
   constructor(id) {
     this._socketId = id;
@@ -56,6 +57,7 @@ class Team {
   reset() {
     this.isPlaying = false;
     this.isValidated = false;
+    this.currentSequence = 0;
   }
 }
 
@@ -63,6 +65,8 @@ class Room {
   _id = undefined;
   _teams = [];
   gamemaster = undefined;
+  currentParagraph = 0;
+  currentSequence = 0;
 
   chapterId = 0;
   chapterStep = 0;
@@ -121,6 +125,9 @@ class Room {
   }
 
   reset = () => {
+    this.currentParagraph = 0;
+    this.currentSequence = 0;
+
     this.chapterId = 0;
     this.chapterStep = 0;
 

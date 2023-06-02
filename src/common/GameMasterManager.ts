@@ -37,12 +37,12 @@ class GameMasterManager {
     });
   }
   
-  public async launchChapter(chapterId: number, realId: string) {
-    console.log("GameMasterManager LAUNCH_CHAPTER : ", chapterId, realId);
+  public async launchChapter(chapterId: number, dbChapterId: string) {
+    console.log("GameMasterManager LAUNCH_CHAPTER : ", chapterId, dbChapterId);
     
     this._mainStore.chapterId = chapterId;
-    this._mainStore.realChapterId = realId;
-    await this._dbInstance.updateChapterStatus(realId, CHAPTER_STATUS.IN_PROGRESS);
+    this._mainStore.realChapterId = dbChapterId;
+    await this._dbInstance.updateChapterStatus(dbChapterId, CHAPTER_STATUS.IN_PROGRESS);
     
     //this._mainStore.gameId = 0  // TODO :await this._dbInstance.getPreviousGameId(realId);
     this._gameStore.data = gameData;
@@ -61,6 +61,24 @@ class GameMasterManager {
     await this._socket.emit(EVENT.START_CHAPTER, {
       roomId: this._mainStore.roomId,
       chapterId: this._mainStore.getChapterId
+    });
+  }
+  
+  public async nextParagraph() {
+    console.log("GameMasterManager NEXT_PARAGRAPH");
+    
+    await this._socket.emit(EVENT.NEXT_PARAGRAPH, {
+      roomId: this._mainStore.roomId,
+      currentParagraph: this._chapterStore.currentParagraph
+    });
+  }
+  
+  public async nextSequence() {
+    console.log("GameMasterManager GAME_NEXT_SEQUENCE");
+    
+    await this._socket.emit(EVENT.GAME_NEXT_SEQUENCE, {
+      roomId: this._mainStore.roomId,
+      currentSequence: this._gameStore.currentSequence
     });
   }
   

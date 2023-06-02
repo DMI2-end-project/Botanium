@@ -84,10 +84,8 @@ export default defineComponent({
         </div>
         <button @click="disconnect" class="ml-auto block">Déconnexion</button>
       </div>
-      <Breadcrumb v-if="gameStore.currentStep !== GAMESTEP.PLAY && gameData.currentStep !== GAMESTEP.WAIT"
-                  :data="gameData[mainStore.getFullGameId]" :teamId="gameStore.teamId"/>
-      <GameHeader v-if="gameStore.currentStep === GAMESTEP.PLAY || gameData.currentStep === GAMESTEP.WAIT"
-                  :data="gameData[mainStore.getFullGameId]" :teamId="gameStore.teamId"/>
+      <Breadcrumb v-if="gameStore.currentStep !== GAMESTEP.PLAY && gameData.currentStep !== GAMESTEP.WAIT" :teamId="gameStore.teamId"/>
+      <GameHeader v-if="gameStore.currentStep === GAMESTEP.PLAY || gameData.currentStep === GAMESTEP.WAIT" :teamId="gameStore.teamId"/>
       <slot name="header"/>
     </header>
     <main class="w-full h-full flex-1 flex flex-col justify-center">

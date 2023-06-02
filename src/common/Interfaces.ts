@@ -40,4 +40,12 @@ interface PhotoData {
   page: string;
 }
 
-export type { PageData, TextData, DrawData, StickerData, PhotoData };
+interface ChapterData {
+  [key: string]: any;
+}
+
+interface GameData {
+  [key: string]: any;
+}
+
+export type { PageData, TextData, DrawData, StickerData, PhotoData, ChapterData, GameData };

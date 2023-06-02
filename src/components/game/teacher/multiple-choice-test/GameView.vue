@@ -31,9 +31,6 @@ import {GameMasterManagerInstance} from "../../../../common/GameMasterManager"
 
 export default defineComponent({
   name: 'TeacherGameView',
-  props: {
-    data: Object,
-  },
   data() {
     return {
       publicPath: window.location.origin,
@@ -42,21 +39,12 @@ export default defineComponent({
       socket: getSocket(),
     }
   },
-  mounted() {
-  },
   computed: {
     GAMESTEP() {
       return GAME_STEP
     },
     answers() {
       return this.gameStore.data.gameSequences[this.gameStore.currentSequence].gamemaster.answers
-      /*
-      let answers = this.gameStore.data.gameContent; //.filter((content: any, i: number) => i < this.gameStore.totalTeams);
-      answers = answers.filter((content: any, i: number) => i < this.gameStore.totalTeams);
-      return answers.map((content: any) => {
-        return content.answers.find((answer: any) => answer.isValid);
-      })
-       */
     }
   },
   methods: {

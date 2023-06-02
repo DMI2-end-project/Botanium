@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <component v-bind:is="GameView" :data="$props.data"/>
-  </div>
+  <component v-bind:is="GameView"/>
 </template>
 
 <script lang="ts">
@@ -14,16 +12,12 @@ import {GAME_TYPE} from "../../../common/Constants";
 import DragDrop from "./drag-drop/GameView.vue";
 import MCQ from "./multiple-choice-test/GameView.vue";
 import Rhythm from "./rhythm/GameView.vue";
-import Swipe from "./swipe/GameView.vue";
 import Cursor from "./cursor/GameView.vue";
 
 // TODO : localStorage.setItem('currentParagraph', ???)
 
 export default defineComponent({
   name: 'TeacherGame',
-  props: {
-    data: Object,
-  },
   data() {
     return {
       socket: getSocket(),
@@ -33,7 +27,8 @@ export default defineComponent({
   },
   computed: {
     GameView(): Component | undefined {
-      let currentPart = this.$props.data?.gameSequences[this.gameStore.currentSequence]
+      let currentPart = this.gameStore.data?.gameSequences[this.gameStore.currentSequence]
+      console.log('TEACHER GAME GameView', currentPart)
       switch (currentPart.type) {
         case GAME_TYPE.DRAG_DROP:
           return DragDrop;
@@ -41,8 +36,6 @@ export default defineComponent({
           return MCQ;
         case GAME_TYPE.RHYTHM:
           return Rhythm;
-        case GAME_TYPE.SWIPE:
-          return Swipe;
         case GAME_TYPE.CURSOR:
           return Cursor;
         default:

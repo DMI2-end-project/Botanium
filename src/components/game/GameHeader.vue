@@ -21,10 +21,6 @@ import {ROLE} from "../../common/Constants";
 
 export default defineComponent({
   name: 'GameHeader',
-  props: {
-    data: Object,
-    teamId: Number || undefined
-  },
   data() {
     return {
       mainStore: useMainStore(),
@@ -37,19 +33,14 @@ export default defineComponent({
       return ROLE
     },
     currentSection() {
-      return this.data?.gameSequences[this.gameStore.currentSequence]
+      return this.gameStore.data?.gameSequences[this.gameStore.currentSequence]
     },
     text() {
-      if (this.$props.teamId !== undefined) {
-        let index = this.currentSection.teamsNeeded ? this.$props.teamId : 0;
+      if (this.gameStore.teamId !== undefined) {
+        let index = this.currentSection.teamsNeeded ? this.gameStore.teamId : 0;
         return this.currentSection.teams[index].instruction;
       } else {
-        while (!this.currentSection.gamemaster && this.gameStore.currentSequence < this.data?.gameSequences.length && this.mainStore.role === ROLE.TEACHER) {
-          this.gameStore.currentSequence += 1;
-        }
-
-        return this.currentSection.gamemaster.instruction;
-
+        return this.currentSection.gamemaster?.instruction;
       }
     }
   }

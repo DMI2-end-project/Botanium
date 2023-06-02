@@ -29,10 +29,6 @@ export default defineComponent({
   components: {
     Info, Loading, RoundItem
   },
-  props: {
-    data: Object,
-    teamId: Number
-  },
   data() {
     return {
       mainStore: useMainStore(),
@@ -51,21 +47,19 @@ export default defineComponent({
       return GAME_STEP
     },
     tID() {
-      return this.$props.teamId ? this.$props.teamId : 0;
+      return this.gameStore.teamId ? this.gameStore.teamId : 0;
     },
     currentSection() {
-      return this.$props.data?.gameSequences[this.gameStore.currentSequence]
+      return this.gameStore.data?.gameSequences[this.gameStore.currentSequence]
     },
     text() {
       return this.currentSection.teams[this.currentSection.teamsNeeded ? this.tID : 0].congratulation?.text;
-      //return this.$props.data?.gameContent[this.tID].congratulation;
     },
     icon() {
       return this.currentSection.teams[this.currentSection.teamsNeeded ? this.tID : 0].congratulation.icon;
-      //return this.$props.data?.gameContent[this.tID].congratulationIcon;
     },
     waitingMessage() {
-      return this.$props.data ? this.$props.data.waitingMessage : "Patiente un peu, tes camarades réfléchissent encore...";
+      return this.gameStore.data ? this.gameStore.data.waitingMessage : "Patiente un peu, tes camarades réfléchissent encore...";
     }
   },
   mounted() {

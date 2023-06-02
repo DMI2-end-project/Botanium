@@ -28,9 +28,6 @@ import RoundButton from "../../../common/RoundButton.vue";
 export default defineComponent({
   name: 'StudentGameView',
   components: {RoundButton},
-  props: {
-    data: Object
-  },
   emits: ['validated'],
   data() {
     return {

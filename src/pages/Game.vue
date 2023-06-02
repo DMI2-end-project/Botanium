@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import {onBeforeMount} from "vue";
+import {onBeforeMount, onMounted} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {GameMasterManagerInstance} from "../common/GameMasterManager";
+import {GameMasterManagerInstance} from "../common/GameMasterManager"
 import {ROLE, GAME_STEP} from "../common/Constants";
 import {useGameStore} from "../stores/gameStore";
 import {useMainStore} from "../stores/mainStore";
+
 
 import StudentGame from "../components/game/student/StudentGame.vue";
 import TeacherGame from "../components/game/teacher/TeacherGame.vue";
@@ -14,7 +15,7 @@ import Instruction from "../components/game/Instruction.vue";
 import Congratulation from "../components/game/Congratulation.vue";
 import Waiting from "../components/game/student/Waiting.vue";
 
-import data from "../assets/game-data/game-data-v2.json";
+import gameData from "../assets/game-data/game-data-v2.json";
 
 const pb = DatabaseManagerInstance.pb;
 
@@ -24,13 +25,35 @@ const socket = getSocket();
 const router = useRouter();
 const route = useRoute();
 
-const gameData: {
-  [key: string]: any
-} = data;
+mainStore.$subscribe((mutation, state) => {
+  if (gameStore.data) {
+    document.documentElement.style.setProperty('--color-background', gameStore.data.color);
+
+    let currentSection = gameStore.data?.gameSequences[gameStore.currentSequence];
+    while (mainStore.role === ROLE.TEACHER && currentSection && !currentSection.gamemaster && gameStore.currentSequence < gameStore.data?.gameSequences.length - 1) {
+      gameStore.currentSequence += 1;
+      GameMasterManagerInstance.nextSequence();
+    }
+  }
+});
+
+gameStore.$subscribe((mutation, state) => {
+  if (state.data) {
+    document.documentElement.style.setProperty('--color-background', gameStore.data.color);
+
+    let currentSection = gameStore.data?.gameSequences[gameStore.currentSequence];
+    while (mainStore.role === ROLE.TEACHER && currentSection && !currentSection.gamemaster && gameStore.currentSequence < gameStore.data?.gameSequences.length - 1) {
+      gameStore.currentSequence += 1;
+      GameMasterManagerInstance.nextSequence();
+    }
+  }
+});
 
 // TODO : localStorage.setItem('currentSequence', ???)
 onBeforeMount(async () => {
-  document.documentElement.style.setProperty('--color-background', gameData[mainStore.getFullGameId].color);
+  if (gameStore.data) {
+    document.documentElement.style.setProperty('--color-background', gameStore.data.color);
+  }
 
   await socket.connect();
   await socket.emit('join', {
@@ -38,22 +61,30 @@ onBeforeMount(async () => {
     roomId: mainStore.roomId
   });
 });
+
+onMounted(() => {
+
+})
+
 </script>
 
 <template>
-  <div class="w-full h-full grid grid-cols-12 gap-4 px-8 text-center">
-    <Instruction v-show="gameStore.currentStep === GAME_STEP.INSTRUCTION" class="col-start-3 col-span-8"
-                 :data="gameData[mainStore.getFullGameId]"/>
+  <div v-if="gameStore.data"
+       class="w-full h-full grid grid-cols-12 gap-4 px-8 text-center">
+    <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION"
+                 class="col-start-3 col-span-8"/>
     <TeacherGame
         v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
-        class="col-span-12" :data="gameData[mainStore.getFullGameId]"/>
+        class="col-span-12"/>
     <StudentGame
         v-if="(mainStore.role === ROLE.STUDENT && gameStore.currentStep !== GAME_STEP.INSTRUCTION) || (mainStore.role === ROLE.STUDENT && gameStore.currentStep !== GAME_STEP.CONGRATS)"
-        class="col-span-12" :data="gameData[mainStore.getFullGameId]" :teamId="gameStore.teamId"/>
+        :teamId="gameStore.teamId"
+        class="col-span-12"/>
     <Waiting
-        v-show="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
-        class="col-start-3 col-span-8" :data="gameStore.data" :teamId="gameStore.teamId"/>
-    <Congratulation v-show="gameStore.currentStep === GAME_STEP.CONGRATS" class="col-start-3 col-span-8"
-                    :data="gameData[mainStore.getFullGameId]"/>
+        v-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
+        :teamId="gameStore.teamId"
+        class="col-start-3 col-span-8"/>
+    <Congratulation v-if="gameStore.currentStep === GAME_STEP.CONGRATS"
+                    class="col-start-3 col-span-8"/>
   </div>
 </template>

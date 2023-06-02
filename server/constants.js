@@ -9,8 +9,11 @@ export const EVENT = {
   TOTAL_TEAMS: 'totalTeams',  // TODO ; change event
   LAUNCH_CHAPTER: 'launchChapter',
   START_CHAPTER: 'startChapter',
+  NEXT_PARAGRAPH: 'nextParagraph',
   LAUNCH_GAME: 'launchGame',
   START_GAME: 'startGame',
+  GAME_NEXT_SEQUENCE: 'gameNextSequence',
+  TEAM_NEXT_SEQUENCE: 'teamNextSequence',
   TEAM_VALIDATION: 'teamValidation',
   GAME_VALIDATION: 'gameValidation',
   END_GAME: 'endGame',

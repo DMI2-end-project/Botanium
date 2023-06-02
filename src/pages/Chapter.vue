@@ -39,7 +39,7 @@ onBeforeMount(async () => {
 
 <template>
   <div class="w-full h-full">
-    <TeacherChapter v-if="mainStore.role === ROLE.TEACHER" :data="data[mainStore.getChapterId]"/>
-    <StudentChapter v-if="mainStore.role === ROLE.STUDENT" :data="data[mainStore.getChapterId]"/>
+    <TeacherChapter v-if="mainStore.role === ROLE.TEACHER"/>
+    <StudentChapter v-if="mainStore.role === ROLE.STUDENT"/>
   </div>
 </template>

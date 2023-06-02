@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, defineProps} from "vue";
+import {computed} from "vue";
 import {useGameStore} from "../../stores/gameStore";
 import {useMainStore} from "../../stores/mainStore";
 import {COlOR, SIZE, ROLE} from "../../common/Constants";
@@ -11,13 +11,11 @@ import Trophy from "./../../assets/svg/ico-trophy.svg?component";
 // TODO : Add ico-arrow.svg
 //import Arrow from "../../assets/svg/ico-arrow.svg?component";
 
-const props = defineProps(['data']);
-
 const mainStore = useMainStore();
 const gameStore = useGameStore();
 
 const currentSection = computed<any>(() => {
-  return props.data?.gameSequences[gameStore.currentSequence];
+  return gameStore.data?.gameSequences[gameStore.currentSequence];
 });
 
 const text = () => {
@@ -30,7 +28,7 @@ const text = () => {
           console.log('currentSequence', this.gameStore.currentSequence);
         }
 
-        return this.currentSection.gamemaster.instruction;
+    return currentSection?.gamemaster.instruction;
      */
   }
   return gameStore.data?.gameSequences[gameStore.currentSequence].congratulation?.text

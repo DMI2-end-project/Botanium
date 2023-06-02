@@ -20,10 +20,7 @@ import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
 import Gauge from './Gauge.vue';
 
 export default defineComponent({
-    name: "TeachcerGameView",
-    props: {
-        data: Object,
-    },
+    name: "TeacherGameView",
     data() {
         return {
             publicPath: window.location.origin,

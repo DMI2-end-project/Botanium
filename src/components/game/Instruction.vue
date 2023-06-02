@@ -27,9 +27,6 @@ import RoundButton from "../common/RoundButton.vue";
 export default defineComponent({
   name: 'InstructionComponent',
   components: {SignboardVue, RoundButton},
-  props: {
-    data: Object
-  },
   data() {
     return {
       mainStore: useMainStore(),
@@ -44,13 +41,11 @@ export default defineComponent({
       return ROLE
     },
     title() {
-      return this.$props.data?.introduction.title
+      return this.gameStore.data?.introduction.title
     },
     text() {
-      return this.$props.data?.introduction.text
+      return this.gameStore.data?.introduction.text
     }
-  },
-  mounted() {
   },
   methods: {
     next() {

@@ -1,9 +1,7 @@
 <template>
   <div class="w-full h-full">
-    <!--InGame v-show="gameStore.currentStep === GAMESTEP.PLAY" :data="$props.data" :teamId="gameStore.teamId"
-            @validated="validated"/-->
     <div v-show="gameStore.currentStep === GAMESTEP.PLAY">
-      <component v-bind:is="GameView" :data="$props.data" :teamId="gameStore.teamId" @validated="validated"/>
+      <component v-bind:is="GameView" :teamId="gameStore.teamId" @validated="validated"/>
     </div>
   </div>
 </template>
@@ -24,9 +22,6 @@ import Cursor from "./cursor/GameView.vue";
 
 export default defineComponent({
   name: 'StudentGame',
-  props: {
-    data: Object,
-  },
   data() {
     return {
       socket: getSocket(),
@@ -39,20 +34,22 @@ export default defineComponent({
       return GAME_STEP
     },
     GameView(): Component | undefined {
-      let currentPart = this.$props.data?.gameSequences[this.gameStore.currentSequence];
-      switch (currentPart.type) {
-        case GAME_TYPE.DRAG_DROP:
-          return DragDrop;
-        case GAME_TYPE.MCQ:
-          return MCQ;
-        case GAME_TYPE.RHYTHM:
-          return Rhythm;
-        case GAME_TYPE.SWIPE:
-          return Swipe;
-        case GAME_TYPE.CURSOR:
-          return Cursor;
-        default:
-        //return;
+      let currentPart = this.gameStore.data?.gameSequences[this.gameStore.currentSequence];
+      if (currentPart) {
+        switch (currentPart.type) {
+          case GAME_TYPE.DRAG_DROP:
+            return DragDrop;
+          case GAME_TYPE.MCQ:
+            return MCQ;
+          case GAME_TYPE.RHYTHM:
+            return Rhythm;
+          case GAME_TYPE.SWIPE:
+            return Swipe;
+          case GAME_TYPE.CURSOR:
+            return Cursor;
+          default:
+          //return;
+        }
       }
     }
   },

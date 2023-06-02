@@ -8,13 +8,13 @@ import {useGameStore} from "../../../../stores/gameStore";
 
 import ModalView from "../../../common/ModalView.vue";
 import RoundButton from "../../../common/RoundButton.vue";
+import {TeamManagerInstance} from "../../../../common/TeamManager";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
 
-const props = defineProps(['data']);
 const teamData = ref<any>(null);
-console.log('data', props.data, gameStore.data);
+console.log('data', gameStore.data);
 
 let canvas = ref<HTMLCanvasElement | null>(null);
 let width = 200;
@@ -67,57 +67,60 @@ const onPointerOver = (e: Event, sprite: Sprite) => {
   }, "<");
 };
 
+const next = () => {
+  gameStore.currentSequence += 1
+  TeamManagerInstance.nextSequence();
+}
+
 onMounted(() => {
-    if (canvas.value) {
-      let app = new Application({
-        resolution: window.devicePixelRatio,
-        width: width,
-        height: height,
-        autoStart: true,
-        view: canvas.value,
-        backgroundAlpha: 0,
-      });
+  if (canvas.value) {
+    let app = new Application({
+      resolution: window.devicePixelRatio,
+      width: width,
+      height: height,
+      autoStart: true,
+      view: canvas.value,
+      backgroundAlpha: 0,
+    });
 
-      if (gameStore.teamId !== undefined) {
-        teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
-        console.log('teamData', teamData.value)
-        let soilZone = new Polygon(teamData.value.points);
-        /*
-        let soilGraphic = new PIXI.Graphics();
-        soilGraphic.beginFill(0XFF0000, 0.5);
-        soilGraphic.drawPolygon(soilZone.points);
-        soilGraphic.endFill();
-        app.stage.addChild(soilGraphic);
-        */
+    if (gameStore.teamId !== undefined) {
+      teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
+      console.log('teamData', teamData.value)
+      let soilZone = new Polygon(teamData.value.points);
+      /*
+      let soilGraphic = new PIXI.Graphics();
+      soilGraphic.beginFill(0XFF0000, 0.5);
+      soilGraphic.drawPolygon(soilZone.points);
+      soilGraphic.endFill();
+      app.stage.addChild(soilGraphic);
+      */
 
-        for (let i = 0; i < 10; i++) {
-          let src = `/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.value.answers.sprite}`
-          let sprite = Sprite.from(src);
+      for (let i = 0; i < 10; i++) {
+        let src = `/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.value.answers.sprite}`
+        let sprite = Sprite.from(src);
 
-          app.stage.addChild(sprite);
-          sprites.value.push(sprite);
+        app.stage.addChild(sprite);
+        sprites.value.push(sprite);
 
-          sprite.anchor.set(0.5);
-          sprite.scale.set(0.3, 0.3);
+        sprite.anchor.set(0.5);
+        sprite.scale.set(0.3, 0.3);
 
-          let x = 0;
-          let y = 0;
+        let x = 0;
+        let y = 0;
 
-          while (!soilZone.contains(x, y)) {
-            x = Math.random() * width
-            y = Math.random() * height
-          }
-          sprite.position.set(x, y);
-
-          sprite.eventMode = 'dynamic';
-
-          sprite.addEventListener('pointerover', (e) => onPointerOver(e, sprite));
+        while (!soilZone.contains(x, y)) {
+          x = Math.random() * width
+          y = Math.random() * height
         }
+        sprite.position.set(x, y);
+
+        sprite.eventMode = 'dynamic';
+
+        sprite.addEventListener('pointerover', (e) => onPointerOver(e, sprite));
       }
     }
   }
-)
-;
+});
 </script>
 
 <template>
@@ -130,7 +133,7 @@ onMounted(() => {
     </div>
   </div>
   <ModalView>
-    <RoundButton @click="() => { gameStore.currentSequence += 1 }">
+    <RoundButton @click="next">
       Continuer
     </RoundButton>
   </ModalView>
