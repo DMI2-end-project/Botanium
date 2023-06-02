@@ -52,6 +52,7 @@ export enum GAME_TYPE {
   MCQ = 'multipleChoice',
   RHYTHM = "rhythm",
   SWIPE = 'swipe',
+  CURSOR = 'cursor',
 }
 
 /*  UI  */
@@ -59,7 +60,8 @@ export enum COlOR {
   PINK = 'pink',
   GREEN = 'green',
   YELLOW = 'yellow',
-  GREEN_MEDIUM = 'greenMedium'
+  GREEN_MEDIUM = 'greenMedium',
+  GREEN_MEDIUM_BEIGE = 'greenMediumBeige'
 }
 
 export enum SIZE {

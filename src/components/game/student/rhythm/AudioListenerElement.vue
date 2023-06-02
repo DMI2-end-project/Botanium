@@ -1,9 +1,13 @@
 <template>
   <Pulse ref="pulse" />
-  <p>Message : {{ feedbackMessage }}</p>
+  <div ref="feedback" class="feedback relatif text-purple uppercase text-xl font-title font-bold"></div>
+  <!-- <p>Message : {{ feedbackMessage }}</p>
   <p>En train de clapper : {{ isClapping }}</p>
-  <p>En rythme : {{ rhythm }}</p>
+  <p>En rythme : {{ rhythm }}</p> -->
   <!-- <div ref="labels"></div> -->
+  <!-- <div class="w-16 h-32 bg-white fixed  top-[45vh] left-[35vw]">
+    <div :style="'transform: scaleY(' + rhythm + ')'" class="absolute top-0 w-full bg-purple h-full origin-bottom" />
+  </div> -->
 </template>
 
 <script lang="ts">
@@ -37,7 +41,7 @@ export default defineComponent({
       mainStore: useMainStore(),
       pathModel: window.location.origin + "/tensorflow/m3/",
       frequencyData: {} as Uint8Array,
-      rhythmFreq: 1500 as number, // ms
+      rhythmFreq: 600 as number, // ms
       lastTime: 0 as number,
       lastFreq: 0 as number, // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
       rhythm: 0 as number, // value between -1 & 1, -1 il faut surtout pas clapper, 1 c'est le meilleur moment pour clapper
@@ -54,6 +58,30 @@ export default defineComponent({
       raf: 0 as number,
       raf2: 0 as number,
     };
+  },
+  watch: {
+    feedbackMessage() {
+      if (!this.$refs.feedback) {
+        return
+      }
+      console.log(this.feedbackMessage)
+      const para = document.createElement("p");
+      const node = document.createTextNode(this.feedbackMessage);
+      para.appendChild(node);
+      (this.$refs.feedback as HTMLElement).appendChild(para);
+      para.style.position = 'absolute'
+      para.style.top = 'calc(' + Math.random() * 60 + 20 + '% + 10px)'
+      para.style.left = 'calc(' + Math.random() * 60 + 20 + '% + 60px)'
+       para.style.transform = 'scale(1) translateY(0)'
+      para.style.opacity = '1'
+      para.style.transition = 'transform 1s cubic-bezier(0.36, 0, 0.66, -0.56), opacity 1s cubic-bezier(0.36, 0, 0.66, -0.56)'
+      setTimeout(() => {
+        para.style.transform = 'scale(0) translateY(0)'
+      }, 10)
+      setTimeout(() => {
+        // (this.$refs.feedback as HTMLElement).removeChild(para);
+      }, 2000)
+    }
   },
   mounted() {
     const waitTime = this.rhythmFreq - ((Date.now() + this.deltaTime) % this.rhythmFreq)
@@ -82,7 +110,7 @@ export default defineComponent({
       if (time < this.lastTime) {
         (this.$refs.pulse as typeof Pulse).startAnimation();
       }
-      this.lastTime = (Date.now() + this.deltaTime) % this.rhythmFreq
+      this.lastTime = time
       this.raf2 = requestAnimationFrame(this.loop);
     },
     listenLoop() {
@@ -90,11 +118,10 @@ export default defineComponent({
       this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
       this.analyser.getByteFrequencyData(this.frequencyData);
       this.detectClap(this.frequencyData);
-
       if (time < this.lastTime) {
         (this.$refs.pulse as typeof Pulse).startAnimation();
       }
-      this.lastTime = (Date.now() + this.deltaTime) % this.rhythmFreq
+      this.lastTime = time
       this.raf = requestAnimationFrame(this.listenLoop);
     },
     detectClap(frequencyData:Uint8Array) {
@@ -181,5 +208,8 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
+.feedback {
+  -webkit-text-stroke: 1px #fff;
+}
 </style>

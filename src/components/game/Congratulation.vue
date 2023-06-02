@@ -42,7 +42,7 @@ const next = () => {
 </script>
 
 <template>
-  <div class="relative flex flex-col items-center text-beige text-center my-20">
+  <div class="relative flex flex-col items-center text-beige text-center">
     <RoundItemVue :size="SIZE.LG" :color="COlOR.YELLOW" class="absolute translate-y-1/2">
       <Trophy class="w-14 aspect-square"/>
     </RoundItemVue>

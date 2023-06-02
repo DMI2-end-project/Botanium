@@ -291,87 +291,55 @@
     },
     "gameSequences": [
       {
-        "type": "dragDrop",
+        "type": "cursor",
         "teamsNeeded": true,
         "gamemaster": {
           "instruction": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol.",
           "answers": [
             {
-              "isValid": true,
-              "icon": "eye.svg",
-              "text": "Elle améliore la vision nocturne",
-              "isClicked": false,
-              "status": ""
+              "icon": "ico-cailloux.svg",
+              "isValid": false
             },
             {
-              "isValid": true,
-              "icon": "disease.svg",
-              "text": "Elle ralentit le vieillissement",
-              "isClicked": false,
-              "status": ""
+              "icon": "ico-soleil.svg",
+              "isValid": false
+            },
+            {
+              "icon": "ico-hauteur.svg",
+              "isValid": false
             }
           ]
         },
         "teams": [
           {
             "instruction": "Dose la bonne quantité de cailloux dans la terre pour faire pousser de belles carottes",
+            "element": "cailloux",
             "clue": "",
             "congratulation": {
               "text": "Il faut quelques cailloux pour que la carrote pousse bien",
               "icon": "eye.svg"
             },
-            "answers": [
-              {
-                "isValid": false,
-                "isSelected": false
-              },
-              {
-                "isValid": true,
-                "isSelected": false
-              },
-              {
-                "isValid": false,
-                "isSelected": false
-              },
-              {
-                "isValid": false,
-                "isSelected": false
-              },
-              {
-                "isValid": false,
-                "isSelected": false
-              }
-            ]
+            "answers": 1
           },
           {
             "instruction": "Dose la bonne quantité de soleil pour faire pousser de belles carottes",
             "clue": "",
+            "element": "soleil",
             "congratulation": {
               "text": "La carotte a besoin d'un ensoleillement moyen pour bien pousser",
               "icon": "disease.svg"
             },
-            "answers": [
-              {
-                "isValid": false,
-                "isSelected": false
-              },
-              {
-                "isValid": false,
-                "isSelected": false
-              },
-              {
-                "isValid": true,
-                "isSelected": false
-              },
-              {
-                "isValid": false,
-                "isSelected": false
-              },
-              {
-                "isValid": false,
-                "isSelected": false
-              }
-            ]
+            "answers": 2
+          },
+          {
+            "instruction": "Dose la bonne hauteur de terre pour faire pousser de belles carottes",
+            "clue": "",
+            "element": "hauteur",
+            "congratulation": {
+              "text": "La carotte d'un sol assez haut pour bien pousser",
+              "icon": "disease.svg"
+            },
+            "answers": 3
           }
         ],
         "congratulation": {
