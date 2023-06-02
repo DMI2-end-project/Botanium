@@ -4,11 +4,12 @@ import {pinia} from "./main";
 import {useMainStore} from "./stores/mainStore";
 import {useChapterStore} from "./stores/chapterStore";
 import {useGameStore} from "./stores/gameStore";
-import {EVENT, ROLE} from "./common/Constants";
+import {CHAPTER_STEP, EVENT, GAME_STEP, ROLE} from "./common/Constants";
 import {ChapterData, GameData} from "./common/Interfaces";
 
 import chapterDataJSON from "./assets/chapters-data/chapters-data.json";
 import gameDataJSON from "./assets/game-data/game-data-v2.json";
+import router from "./router";
 
 // TODO : for production
 // "undefined" means the URL will be computed from the `window.location` object
@@ -69,23 +70,23 @@ export const initClient = (pinia: Pinia) => {
     chapterData.data = chapterData[mainStore.getChapterId];
     gameStore.data = gameData[mainStore.getFullGameId];
     
-    /*
-    if (arg.teamsValidation && gameStore.teamId && arg.teamsValidation[gameStore.teamId]) {
-      gameStore.currentStep = GAMESTEP.WAIT
-    } else {
-      if (arg.step) {
-        gameStore.currentStep = arg.step
+    if (arg.teams && gameStore.teamId) {
+      let team = arg.teams.find((team: any) => team.teamId === gameStore.teamId)
+      if (team && arg.gameStep === GAME_STEP.PLAY && team.isValidated) {
+        gameStore.currentStep = GAME_STEP.WAIT
       }
     }
     
-     */
-    
-    /*
-    if (arg.isPlaying) {
-      router.push('/exercice/' + mainStore.getFullGameId);
+    // TODO Modal de redirection
+    if(mainStore.role === ROLE.STUDENT) {
+      if (arg.chapterStep !== CHAPTER_STEP.IDLE && router.currentRoute.value.name !== 'Chapter') {
+        //router.push(`/chapitre/${mainStore.getChapterId}`);
+      }
+      
+      if (arg.gameStep !== GAME_STEP.IDLE && router.currentRoute.value.name !== 'Game') {
+        //router.push(`/exercice/${mainStore.getFullGameId}`);
+      }
     }
-    
-     */
   });
   
   socket.on(EVENT.TOTAL_TEAMS, (arg) => {
