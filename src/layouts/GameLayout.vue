@@ -90,7 +90,7 @@ export default defineComponent({
                   :data="gameData[mainStore.getFullGameId]" :teamId="gameStore.teamId"/>
       <slot name="header"/>
     </header>
-    <main class="w-full h-full">
+    <main class="w-full h-full flex-1 flex flex-col justify-center">
       <slot></slot>
     </main>
   </div>

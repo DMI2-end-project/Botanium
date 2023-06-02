@@ -6,12 +6,12 @@
       <button @click="initAudioContext">Retester l'activiation du micro</button>
       <button @click="readyWithoutMicro">Faire l'activité sans le micro</button>
     </div>
-    <p>Delta time : {{ deltaTime }}</p>
+    <!-- <p>Delta time : {{ deltaTime }}</p>
     <p>Time : {{ Math.floor(currentTime / 100) }}</p>
     <p>T1 : {{ t1 }}</p>
     <p>T2 : {{ t2 }}</p>
     <p>Latence : {{ latency }}</p>
-    <p>Timer server : {{ Math.floor((currentTime  + deltaTime) / 100) }}</p>
+    <p>Timer server : {{ Math.floor((currentTime  + deltaTime) / 100) }}</p> -->
     <AudioListenerElement v-if="launchGame" :analyser="analyser" :microActive="microActive" :deltaTime="deltaTime" />
   </div>
 </template>

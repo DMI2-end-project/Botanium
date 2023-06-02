@@ -31,6 +31,7 @@ export default defineComponent({
   props: {
     data: Object
   },
+  emits: ['validated'],
   data() {
     return {
       publicPath: window.location.origin,
