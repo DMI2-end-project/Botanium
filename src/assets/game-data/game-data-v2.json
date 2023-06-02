@@ -297,15 +297,15 @@
           "instruction": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol.",
           "answers": [
             {
-              "icon": "ico-cailloux.svg",
+              "icon": "ico-rock.svg",
               "isValid": false
             },
             {
-              "icon": "ico-soleil.svg",
+              "icon": "ico-sun.svg",
               "isValid": false
             },
             {
-              "icon": "ico-hauteur.svg",
+              "icon": "ico-height.svg",
               "isValid": false
             }
           ]
@@ -313,7 +313,7 @@
         "teams": [
           {
             "instruction": "Dose la bonne quantité de cailloux dans la terre pour faire pousser de belles carottes",
-            "element": "cailloux",
+            "element": "rock",
             "clue": "",
             "congratulation": {
               "text": "Il faut quelques cailloux pour que la carrote pousse bien",
@@ -324,7 +324,7 @@
           {
             "instruction": "Dose la bonne quantité de soleil pour faire pousser de belles carottes",
             "clue": "",
-            "element": "soleil",
+            "element": "sun",
             "congratulation": {
               "text": "La carotte a besoin d'un ensoleillement moyen pour bien pousser",
               "icon": "disease.svg"
@@ -334,7 +334,7 @@
           {
             "instruction": "Dose la bonne hauteur de terre pour faire pousser de belles carottes",
             "clue": "",
-            "element": "hauteur",
+            "element": "height",
             "congratulation": {
               "text": "La carotte d'un sol assez haut pour bien pousser",
               "icon": "disease.svg"

@@ -1,6 +1,6 @@
 {"frames": {
 
-"animation_cailloux_00002.png":
+"animation_rock_00002.png":
 {
 	"frame": {"x":1024,"y":1,"w":1021,"h":377},
 	"rotated": false,
@@ -9,7 +9,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00003.png":
+"animation_rock_00003.png":
 {
 	"frame": {"x":1,"y":764,"w":1021,"h":377},
 	"rotated": false,
@@ -18,7 +18,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00004.png":
+"animation_rock_00004.png":
 {
 	"frame": {"x":1024,"y":380,"w":1021,"h":377},
 	"rotated": false,
@@ -27,7 +27,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00005.png":
+"animation_rock_00005.png":
 {
 	"frame": {"x":2047,"y":1,"w":1021,"h":377},
 	"rotated": false,
@@ -36,7 +36,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00006.png":
+"animation_rock_00006.png":
 {
 	"frame": {"x":1,"y":1143,"w":1021,"h":377},
 	"rotated": false,
@@ -45,7 +45,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00007.png":
+"animation_rock_00007.png":
 {
 	"frame": {"x":1024,"y":759,"w":1021,"h":377},
 	"rotated": false,
@@ -54,7 +54,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00008.png":
+"animation_rock_00008.png":
 {
 	"frame": {"x":2047,"y":380,"w":1021,"h":377},
 	"rotated": false,
@@ -63,7 +63,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00009.png":
+"animation_rock_00009.png":
 {
 	"frame": {"x":3070,"y":1,"w":1021,"h":377},
 	"rotated": false,
@@ -72,7 +72,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00010.png":
+"animation_rock_00010.png":
 {
 	"frame": {"x":1,"y":1522,"w":1021,"h":377},
 	"rotated": false,
@@ -81,7 +81,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00011.png":
+"animation_rock_00011.png":
 {
 	"frame": {"x":1024,"y":1138,"w":1021,"h":377},
 	"rotated": false,
@@ -90,7 +90,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00012.png":
+"animation_rock_00012.png":
 {
 	"frame": {"x":2047,"y":759,"w":1021,"h":377},
 	"rotated": false,
@@ -99,7 +99,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00013.png":
+"animation_rock_00013.png":
 {
 	"frame": {"x":3070,"y":380,"w":1021,"h":377},
 	"rotated": false,
@@ -108,7 +108,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00014.png":
+"animation_rock_00014.png":
 {
 	"frame": {"x":4093,"y":1,"w":1021,"h":377},
 	"rotated": false,
@@ -117,7 +117,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00015.png":
+"animation_rock_00015.png":
 {
 	"frame": {"x":1,"y":1901,"w":1021,"h":377},
 	"rotated": false,
@@ -126,7 +126,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00016.png":
+"animation_rock_00016.png":
 {
 	"frame": {"x":1024,"y":1517,"w":1021,"h":377},
 	"rotated": false,
@@ -135,7 +135,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00017.png":
+"animation_rock_00017.png":
 {
 	"frame": {"x":2047,"y":1138,"w":1021,"h":377},
 	"rotated": false,
@@ -144,7 +144,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00018.png":
+"animation_rock_00018.png":
 {
 	"frame": {"x":3070,"y":759,"w":1021,"h":377},
 	"rotated": false,
@@ -153,7 +153,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00019.png":
+"animation_rock_00019.png":
 {
 	"frame": {"x":4093,"y":380,"w":1021,"h":377},
 	"rotated": false,
@@ -162,7 +162,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00020.png":
+"animation_rock_00020.png":
 {
 	"frame": {"x":5116,"y":1,"w":1021,"h":377},
 	"rotated": false,
@@ -171,7 +171,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00021.png":
+"animation_rock_00021.png":
 {
 	"frame": {"x":1,"y":2280,"w":1021,"h":377},
 	"rotated": false,
@@ -180,7 +180,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00022.png":
+"animation_rock_00022.png":
 {
 	"frame": {"x":1024,"y":1896,"w":1021,"h":377},
 	"rotated": false,
@@ -189,7 +189,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00023.png":
+"animation_rock_00023.png":
 {
 	"frame": {"x":2047,"y":1517,"w":1021,"h":377},
 	"rotated": false,
@@ -198,7 +198,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00024.png":
+"animation_rock_00024.png":
 {
 	"frame": {"x":3070,"y":1138,"w":1021,"h":377},
 	"rotated": false,
@@ -207,7 +207,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00025.png":
+"animation_rock_00025.png":
 {
 	"frame": {"x":4093,"y":759,"w":1021,"h":377},
 	"rotated": false,
@@ -216,7 +216,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00026.png":
+"animation_rock_00026.png":
 {
 	"frame": {"x":5116,"y":380,"w":1021,"h":377},
 	"rotated": false,
@@ -225,7 +225,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00027.png":
+"animation_rock_00027.png":
 {
 	"frame": {"x":6139,"y":1,"w":1021,"h":377},
 	"rotated": false,
@@ -234,7 +234,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00028.png":
+"animation_rock_00028.png":
 {
 	"frame": {"x":1,"y":2659,"w":1021,"h":377},
 	"rotated": false,
@@ -243,7 +243,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00029.png":
+"animation_rock_00029.png":
 {
 	"frame": {"x":1024,"y":2275,"w":1021,"h":377},
 	"rotated": false,
@@ -252,7 +252,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00030.png":
+"animation_rock_00030.png":
 {
 	"frame": {"x":2047,"y":1896,"w":1021,"h":377},
 	"rotated": false,
@@ -261,7 +261,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00031.png":
+"animation_rock_00031.png":
 {
 	"frame": {"x":3070,"y":1517,"w":1021,"h":377},
 	"rotated": false,
@@ -270,7 +270,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00032.png":
+"animation_rock_00032.png":
 {
 	"frame": {"x":4093,"y":1138,"w":1021,"h":377},
 	"rotated": false,
@@ -279,7 +279,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00033.png":
+"animation_rock_00033.png":
 {
 	"frame": {"x":5116,"y":759,"w":1021,"h":377},
 	"rotated": false,
@@ -288,7 +288,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00034.png":
+"animation_rock_00034.png":
 {
 	"frame": {"x":6139,"y":380,"w":1021,"h":377},
 	"rotated": false,
@@ -297,7 +297,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00035.png":
+"animation_rock_00035.png":
 {
 	"frame": {"x":1,"y":3038,"w":1021,"h":377},
 	"rotated": false,
@@ -306,7 +306,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00036.png":
+"animation_rock_00036.png":
 {
 	"frame": {"x":1024,"y":2654,"w":1021,"h":377},
 	"rotated": false,
@@ -315,7 +315,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00037.png":
+"animation_rock_00037.png":
 {
 	"frame": {"x":2047,"y":2275,"w":1021,"h":377},
 	"rotated": false,
@@ -324,7 +324,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00038.png":
+"animation_rock_00038.png":
 {
 	"frame": {"x":3070,"y":1896,"w":1021,"h":377},
 	"rotated": false,
@@ -333,7 +333,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00039.png":
+"animation_rock_00039.png":
 {
 	"frame": {"x":4093,"y":1517,"w":1021,"h":377},
 	"rotated": false,
@@ -342,7 +342,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00040.png":
+"animation_rock_00040.png":
 {
 	"frame": {"x":5116,"y":1138,"w":1021,"h":377},
 	"rotated": false,
@@ -351,7 +351,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00041.png":
+"animation_rock_00041.png":
 {
 	"frame": {"x":6139,"y":759,"w":1021,"h":377},
 	"rotated": false,
@@ -360,7 +360,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00042.png":
+"animation_rock_00042.png":
 {
 	"frame": {"x":7162,"y":1,"w":1021,"h":377},
 	"rotated": true,
@@ -369,7 +369,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00043.png":
+"animation_rock_00043.png":
 {
 	"frame": {"x":7541,"y":1,"w":1021,"h":377},
 	"rotated": true,
@@ -378,7 +378,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00044.png":
+"animation_rock_00044.png":
 {
 	"frame": {"x":1,"y":3417,"w":1021,"h":377},
 	"rotated": false,
@@ -387,7 +387,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00045.png":
+"animation_rock_00045.png":
 {
 	"frame": {"x":1024,"y":3033,"w":1021,"h":377},
 	"rotated": false,
@@ -396,7 +396,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00046.png":
+"animation_rock_00046.png":
 {
 	"frame": {"x":2047,"y":2654,"w":1021,"h":377},
 	"rotated": false,
@@ -405,7 +405,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00047.png":
+"animation_rock_00047.png":
 {
 	"frame": {"x":3070,"y":2275,"w":1021,"h":377},
 	"rotated": false,
@@ -414,7 +414,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00048.png":
+"animation_rock_00048.png":
 {
 	"frame": {"x":4093,"y":1896,"w":1021,"h":377},
 	"rotated": false,
@@ -423,7 +423,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00049.png":
+"animation_rock_00049.png":
 {
 	"frame": {"x":5116,"y":1517,"w":1021,"h":377},
 	"rotated": false,
@@ -432,7 +432,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00050.png":
+"animation_rock_00050.png":
 {
 	"frame": {"x":6139,"y":1138,"w":1021,"h":377},
 	"rotated": false,
@@ -441,7 +441,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00051.png":
+"animation_rock_00051.png":
 {
 	"frame": {"x":1,"y":3796,"w":1021,"h":377},
 	"rotated": false,
@@ -450,7 +450,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00052.png":
+"animation_rock_00052.png":
 {
 	"frame": {"x":1024,"y":3412,"w":1021,"h":377},
 	"rotated": false,
@@ -459,7 +459,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00053.png":
+"animation_rock_00053.png":
 {
 	"frame": {"x":2047,"y":3033,"w":1021,"h":377},
 	"rotated": false,
@@ -468,7 +468,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00054.png":
+"animation_rock_00054.png":
 {
 	"frame": {"x":3070,"y":2654,"w":1021,"h":377},
 	"rotated": false,
@@ -477,7 +477,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00055.png":
+"animation_rock_00055.png":
 {
 	"frame": {"x":4093,"y":2275,"w":1021,"h":377},
 	"rotated": false,
@@ -486,7 +486,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00056.png":
+"animation_rock_00056.png":
 {
 	"frame": {"x":5116,"y":1896,"w":1021,"h":377},
 	"rotated": false,
@@ -495,7 +495,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00057.png":
+"animation_rock_00057.png":
 {
 	"frame": {"x":6139,"y":1517,"w":1021,"h":377},
 	"rotated": false,
@@ -504,7 +504,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00058.png":
+"animation_rock_00058.png":
 {
 	"frame": {"x":1,"y":4175,"w":1021,"h":377},
 	"rotated": false,
@@ -513,7 +513,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00059.png":
+"animation_rock_00059.png":
 {
 	"frame": {"x":1024,"y":3791,"w":1021,"h":377},
 	"rotated": false,
@@ -522,7 +522,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00060.png":
+"animation_rock_00060.png":
 {
 	"frame": {"x":2047,"y":3412,"w":1021,"h":377},
 	"rotated": false,
@@ -531,7 +531,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00061.png":
+"animation_rock_00061.png":
 {
 	"frame": {"x":3070,"y":3033,"w":1021,"h":377},
 	"rotated": false,
@@ -540,7 +540,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00062.png":
+"animation_rock_00062.png":
 {
 	"frame": {"x":4093,"y":2654,"w":1021,"h":377},
 	"rotated": false,
@@ -549,7 +549,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00063.png":
+"animation_rock_00063.png":
 {
 	"frame": {"x":5116,"y":2275,"w":1021,"h":377},
 	"rotated": false,
@@ -558,7 +558,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00064.png":
+"animation_rock_00064.png":
 {
 	"frame": {"x":6139,"y":1896,"w":1021,"h":377},
 	"rotated": false,
@@ -567,7 +567,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00065.png":
+"animation_rock_00065.png":
 {
 	"frame": {"x":7162,"y":1024,"w":1021,"h":377},
 	"rotated": true,
@@ -576,7 +576,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00066.png":
+"animation_rock_00066.png":
 {
 	"frame": {"x":7541,"y":1024,"w":1021,"h":377},
 	"rotated": true,
@@ -585,7 +585,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00067.png":
+"animation_rock_00067.png":
 {
 	"frame": {"x":1024,"y":4170,"w":1021,"h":377},
 	"rotated": false,
@@ -594,7 +594,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00068.png":
+"animation_rock_00068.png":
 {
 	"frame": {"x":1024,"y":4549,"w":1021,"h":377},
 	"rotated": false,
@@ -603,7 +603,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00069.png":
+"animation_rock_00069.png":
 {
 	"frame": {"x":2047,"y":3791,"w":1021,"h":377},
 	"rotated": false,
@@ -612,7 +612,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00070.png":
+"animation_rock_00070.png":
 {
 	"frame": {"x":3070,"y":3412,"w":1021,"h":377},
 	"rotated": false,
@@ -621,7 +621,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00071.png":
+"animation_rock_00071.png":
 {
 	"frame": {"x":4093,"y":3033,"w":1021,"h":377},
 	"rotated": false,
@@ -630,7 +630,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00072.png":
+"animation_rock_00072.png":
 {
 	"frame": {"x":5116,"y":2654,"w":1021,"h":377},
 	"rotated": false,
@@ -639,7 +639,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00073.png":
+"animation_rock_00073.png":
 {
 	"frame": {"x":6139,"y":2275,"w":1021,"h":377},
 	"rotated": false,
@@ -648,7 +648,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00074.png":
+"animation_rock_00074.png":
 {
 	"frame": {"x":1,"y":1,"w":1021,"h":380},
 	"rotated": false,
@@ -657,7 +657,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00075.png":
+"animation_rock_00075.png":
 {
 	"frame": {"x":1,"y":383,"w":1021,"h":379},
 	"rotated": false,
@@ -666,7 +666,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00076.png":
+"animation_rock_00076.png":
 {
 	"frame": {"x":2047,"y":4170,"w":1021,"h":377},
 	"rotated": false,
@@ -675,7 +675,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00077.png":
+"animation_rock_00077.png":
 {
 	"frame": {"x":2047,"y":4549,"w":1021,"h":377},
 	"rotated": false,
@@ -684,7 +684,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00078.png":
+"animation_rock_00078.png":
 {
 	"frame": {"x":3070,"y":3791,"w":1021,"h":377},
 	"rotated": false,
@@ -693,7 +693,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00079.png":
+"animation_rock_00079.png":
 {
 	"frame": {"x":4093,"y":3412,"w":1021,"h":377},
 	"rotated": false,
@@ -702,7 +702,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00080.png":
+"animation_rock_00080.png":
 {
 	"frame": {"x":5116,"y":3033,"w":1021,"h":377},
 	"rotated": false,
@@ -711,7 +711,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00081.png":
+"animation_rock_00081.png":
 {
 	"frame": {"x":6139,"y":2654,"w":1021,"h":377},
 	"rotated": false,
@@ -720,7 +720,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00082.png":
+"animation_rock_00082.png":
 {
 	"frame": {"x":3070,"y":4170,"w":1021,"h":377},
 	"rotated": false,
@@ -729,7 +729,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00083.png":
+"animation_rock_00083.png":
 {
 	"frame": {"x":3070,"y":4549,"w":1021,"h":377},
 	"rotated": false,
@@ -738,7 +738,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00084.png":
+"animation_rock_00084.png":
 {
 	"frame": {"x":4093,"y":3791,"w":1021,"h":377},
 	"rotated": false,
@@ -747,7 +747,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00085.png":
+"animation_rock_00085.png":
 {
 	"frame": {"x":5116,"y":3412,"w":1021,"h":377},
 	"rotated": false,
@@ -756,7 +756,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00086.png":
+"animation_rock_00086.png":
 {
 	"frame": {"x":6139,"y":3033,"w":1021,"h":377},
 	"rotated": false,
@@ -765,7 +765,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00087.png":
+"animation_rock_00087.png":
 {
 	"frame": {"x":7162,"y":2047,"w":1021,"h":377},
 	"rotated": true,
@@ -774,7 +774,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00088.png":
+"animation_rock_00088.png":
 {
 	"frame": {"x":7541,"y":2047,"w":1021,"h":377},
 	"rotated": true,
@@ -783,7 +783,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00089.png":
+"animation_rock_00089.png":
 {
 	"frame": {"x":4093,"y":4170,"w":1021,"h":377},
 	"rotated": false,
@@ -792,7 +792,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00090.png":
+"animation_rock_00090.png":
 {
 	"frame": {"x":4093,"y":4549,"w":1021,"h":377},
 	"rotated": false,
@@ -801,7 +801,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00091.png":
+"animation_rock_00091.png":
 {
 	"frame": {"x":5116,"y":3791,"w":1021,"h":377},
 	"rotated": false,
@@ -810,7 +810,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00092.png":
+"animation_rock_00092.png":
 {
 	"frame": {"x":6139,"y":3412,"w":1021,"h":377},
 	"rotated": false,
@@ -819,7 +819,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00093.png":
+"animation_rock_00093.png":
 {
 	"frame": {"x":5116,"y":4170,"w":1021,"h":377},
 	"rotated": false,
@@ -828,7 +828,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00094.png":
+"animation_rock_00094.png":
 {
 	"frame": {"x":5116,"y":4549,"w":1021,"h":377},
 	"rotated": false,
@@ -837,7 +837,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00095.png":
+"animation_rock_00095.png":
 {
 	"frame": {"x":6139,"y":3791,"w":1021,"h":377},
 	"rotated": false,
@@ -846,7 +846,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00096.png":
+"animation_rock_00096.png":
 {
 	"frame": {"x":7162,"y":3070,"w":1021,"h":377},
 	"rotated": true,
@@ -855,7 +855,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00097.png":
+"animation_rock_00097.png":
 {
 	"frame": {"x":7541,"y":3070,"w":1021,"h":377},
 	"rotated": true,
@@ -864,7 +864,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00098.png":
+"animation_rock_00098.png":
 {
 	"frame": {"x":6139,"y":4170,"w":1021,"h":377},
 	"rotated": false,
@@ -873,7 +873,7 @@
 	"sourceSize": {"w":1920,"h":1340},
 	"anchor": {"x":0,"y":0}
 },
-"animation_cailloux_00099.png":
+"animation_rock_00099.png":
 {
 	"frame": {"x":6139,"y":4549,"w":1021,"h":377},
 	"rotated": false,
@@ -883,12 +883,12 @@
 	"anchor": {"x":0,"y":0}
 }},
 "animations": {
-	"animation_cailloux": ["animation_cailloux_00002.png","animation_cailloux_00003.png","animation_cailloux_00004.png","animation_cailloux_00005.png","animation_cailloux_00006.png","animation_cailloux_00007.png","animation_cailloux_00008.png","animation_cailloux_00009.png","animation_cailloux_00010.png","animation_cailloux_00011.png","animation_cailloux_00012.png","animation_cailloux_00013.png","animation_cailloux_00014.png","animation_cailloux_00015.png","animation_cailloux_00016.png","animation_cailloux_00017.png","animation_cailloux_00018.png","animation_cailloux_00019.png","animation_cailloux_00020.png","animation_cailloux_00021.png","animation_cailloux_00022.png","animation_cailloux_00023.png","animation_cailloux_00024.png","animation_cailloux_00025.png","animation_cailloux_00026.png","animation_cailloux_00027.png","animation_cailloux_00028.png","animation_cailloux_00029.png","animation_cailloux_00030.png","animation_cailloux_00031.png","animation_cailloux_00032.png","animation_cailloux_00033.png","animation_cailloux_00034.png","animation_cailloux_00035.png","animation_cailloux_00036.png","animation_cailloux_00037.png","animation_cailloux_00038.png","animation_cailloux_00039.png","animation_cailloux_00040.png","animation_cailloux_00041.png","animation_cailloux_00042.png","animation_cailloux_00043.png","animation_cailloux_00044.png","animation_cailloux_00045.png","animation_cailloux_00046.png","animation_cailloux_00047.png","animation_cailloux_00048.png","animation_cailloux_00049.png","animation_cailloux_00050.png","animation_cailloux_00051.png","animation_cailloux_00052.png","animation_cailloux_00053.png","animation_cailloux_00054.png","animation_cailloux_00055.png","animation_cailloux_00056.png","animation_cailloux_00057.png","animation_cailloux_00058.png","animation_cailloux_00059.png","animation_cailloux_00060.png","animation_cailloux_00061.png","animation_cailloux_00062.png","animation_cailloux_00063.png","animation_cailloux_00064.png","animation_cailloux_00065.png","animation_cailloux_00066.png","animation_cailloux_00067.png","animation_cailloux_00068.png","animation_cailloux_00069.png","animation_cailloux_00070.png","animation_cailloux_00071.png","animation_cailloux_00072.png","animation_cailloux_00073.png","animation_cailloux_00074.png","animation_cailloux_00075.png","animation_cailloux_00076.png","animation_cailloux_00077.png","animation_cailloux_00078.png","animation_cailloux_00079.png","animation_cailloux_00080.png","animation_cailloux_00081.png","animation_cailloux_00082.png","animation_cailloux_00083.png","animation_cailloux_00084.png","animation_cailloux_00085.png","animation_cailloux_00086.png","animation_cailloux_00087.png","animation_cailloux_00088.png","animation_cailloux_00089.png","animation_cailloux_00090.png","animation_cailloux_00091.png","animation_cailloux_00092.png","animation_cailloux_00093.png","animation_cailloux_00094.png","animation_cailloux_00095.png","animation_cailloux_00096.png","animation_cailloux_00097.png","animation_cailloux_00098.png","animation_cailloux_00099.png"]
+	"animation_rock": ["animation_rock_00002.png","animation_rock_00003.png","animation_rock_00004.png","animation_rock_00005.png","animation_rock_00006.png","animation_rock_00007.png","animation_rock_00008.png","animation_rock_00009.png","animation_rock_00010.png","animation_rock_00011.png","animation_rock_00012.png","animation_rock_00013.png","animation_rock_00014.png","animation_rock_00015.png","animation_rock_00016.png","animation_rock_00017.png","animation_rock_00018.png","animation_rock_00019.png","animation_rock_00020.png","animation_rock_00021.png","animation_rock_00022.png","animation_rock_00023.png","animation_rock_00024.png","animation_rock_00025.png","animation_rock_00026.png","animation_rock_00027.png","animation_rock_00028.png","animation_rock_00029.png","animation_rock_00030.png","animation_rock_00031.png","animation_rock_00032.png","animation_rock_00033.png","animation_rock_00034.png","animation_rock_00035.png","animation_rock_00036.png","animation_rock_00037.png","animation_rock_00038.png","animation_rock_00039.png","animation_rock_00040.png","animation_rock_00041.png","animation_rock_00042.png","animation_rock_00043.png","animation_rock_00044.png","animation_rock_00045.png","animation_rock_00046.png","animation_rock_00047.png","animation_rock_00048.png","animation_rock_00049.png","animation_rock_00050.png","animation_rock_00051.png","animation_rock_00052.png","animation_rock_00053.png","animation_rock_00054.png","animation_rock_00055.png","animation_rock_00056.png","animation_rock_00057.png","animation_rock_00058.png","animation_rock_00059.png","animation_rock_00060.png","animation_rock_00061.png","animation_rock_00062.png","animation_rock_00063.png","animation_rock_00064.png","animation_rock_00065.png","animation_rock_00066.png","animation_rock_00067.png","animation_rock_00068.png","animation_rock_00069.png","animation_rock_00070.png","animation_rock_00071.png","animation_rock_00072.png","animation_rock_00073.png","animation_rock_00074.png","animation_rock_00075.png","animation_rock_00076.png","animation_rock_00077.png","animation_rock_00078.png","animation_rock_00079.png","animation_rock_00080.png","animation_rock_00081.png","animation_rock_00082.png","animation_rock_00083.png","animation_rock_00084.png","animation_rock_00085.png","animation_rock_00086.png","animation_rock_00087.png","animation_rock_00088.png","animation_rock_00089.png","animation_rock_00090.png","animation_rock_00091.png","animation_rock_00092.png","animation_rock_00093.png","animation_rock_00094.png","animation_rock_00095.png","animation_rock_00096.png","animation_rock_00097.png","animation_rock_00098.png","animation_rock_00099.png"]
 },
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
-	"image": "animation_cailloux.png",
+	"image": "animation_rock.png",
 	"format": "RGBA8888",
 	"size": {"w":7919,"h":4927},
 	"scale": "1",
