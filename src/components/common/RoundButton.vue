@@ -12,14 +12,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
-import {COlOR, SIZE} from "../../common/Constants";
+import { defineComponent } from 'vue'
+import { COLOR, SIZE } from "../../common/Constants";
 
 export default defineComponent({
   name: 'RoundButton',
   props: {
     color: {
-      default: COlOR.PINK,
+      default: COLOR.PINK,
       type: String
     },
     size: {
@@ -36,25 +36,29 @@ export default defineComponent({
   },
   mounted() {
     switch (this.color) {
-      case COlOR.PINK:
+      case COLOR.PINK:
         this.bgClass += ' bg-pink text-beige';
         this.textClass += ' text-beige';
         break;
-      case COlOR.GREEN:
+      case COLOR.GREEN:
         this.bgClass += ' bg-green text-beige';
         this.textClass += ' text-beige';
         break;
-      case COlOR.YELLOW:
+      case COLOR.YELLOW:
         this.bgClass += ' bg-yellow text-beige';
         this.textClass += ' text-beige';
         break;
-      case COlOR.GREEN_MEDIUM:
+      case COLOR.GREEN_MEDIUM:
         this.bgClass += ' bg-green-medium text-green';
         this.textClass += ' text-green';
         break;
-      case COlOR.GREEN_MEDIUM_BEIGE:
+      case COLOR.GREEN_MEDIUM_BEIGE:
         this.bgClass += ' bg-green-medium text-beige';
         this.textClass += ' text-beige';
+        break;
+      case COLOR.GREEN_LIGHT:
+        this.bgClass += ' bg-green-light text-green-medium';
+        this.textClass += ' text-green-medium';
         break;
       default:
         break
@@ -73,6 +77,10 @@ export default defineComponent({
         this.containerClass += ' w-20 h-20 RoundButton--md';
         this.bgClass += ' -outline-offset-[7px]';
         break;
+      case SIZE.LG:
+        this.containerClass += ' w-32 h-32 RoundButton--lg';
+        this.bgClass += ' -outline-offset-[10px]';
+        break;
       default:
         break
     }
@@ -82,6 +90,12 @@ export default defineComponent({
 </script>
 
 <style>
+.RoundButton--lg .RoundButton__icon > svg {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+}
+
 .RoundButton--md .RoundButton__icon > svg {
     width: 30px;
     height: 30px;

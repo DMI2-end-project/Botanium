@@ -8,7 +8,7 @@
       <span v-for="i in 5" v-bind="i" class="w-3 h-3 m-1 bg-purple rounded-full absolute pointer-events-none" :style="`left: calc(${(i - 1) * 100 / 4}% - ${(i - 1) * 5}px);`" />
     </div>
     <div class="absolute top-[45%] right-10">
-      <RoundButton :color="COlOR.GREEN_MEDIUM_BEIGE" @click="select" class="">
+      <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="select" class="">
       <Check />
     </RoundButton>
     </div>
@@ -20,7 +20,7 @@ import { defineComponent } from 'vue';
 import * as PIXI from "pixi.js";
 import RoundButton from '../../../common/RoundButton.vue';
 import Check from "../../../../assets/svg/ico-check.svg?component";
-import { COlOR } from '../../../../common/Constants';
+import { COLOR } from '../../../../common/Constants';
 
 export default defineComponent({
   components: {
@@ -32,8 +32,8 @@ export default defineComponent({
     element: String
   },
   computed: {
-    COlOR() {
-      return COlOR
+    COLOR() {
+      return COLOR
     },
   },
   data() {
@@ -68,9 +68,9 @@ export default defineComponent({
     },
     async loadSprite() {
       const app = this.app;
-      this.app.view.style.width = '100vh';
-      this.app.view.style.margin = 'auto';
-      (this.$refs.canvasContainer as HTMLElement).appendChild(app.view);
+      (app.view as HTMLCanvasElement).style.width = '100vh';
+      (app.view as HTMLCanvasElement).style.margin = 'auto';
+      (this.$refs.canvasContainer as HTMLElement).appendChild(app.view as HTMLCanvasElement);
 
       const textureData = await PIXI.Assets.load('/src/assets/game-data/animations/00103/animation_' + this.element + '.json');
       const animations = textureData.data.animations;

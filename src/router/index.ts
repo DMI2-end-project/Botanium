@@ -7,7 +7,6 @@ import Home from "../pages/Home.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import Game from "../pages/Game.vue";
 import LogBook from "../pages/LogBook.vue";
-import Dev from "../pages/Dev.vue";
 import Chapter from "../pages/Chapter.vue";
 import Chapters from "../pages/Chapters.vue";
 
@@ -70,14 +69,6 @@ const config: RouterOptions = {
         layout: 'LogBook',
       },
     },
-    {
-      name: 'Dev',
-      path: '/dev',
-      component: Dev,
-      meta: {
-        layout: 'Dev',
-      }
-    }
   ]
 }
 
@@ -85,12 +76,12 @@ const router = createRouter(config);
 
 router.beforeEach((to, from) => {
   const store = useMainStore();
-  
+
   // Need auth to acces pages, redirect the user to the login page
   if (!DatabaseManagerInstance.pb.authStore.isValid && to.name !== 'Login') {
     return {name: 'Login'}
   }
-  
+
   // TODO : not working, example : https://pinia.vuejs.org/core-concepts/outside-component-usage.html
   if (DatabaseManagerInstance.pb.authStore.isValid && to.name === 'Login') {
     let roles = DatabaseManagerInstance.roles;
@@ -104,9 +95,9 @@ router.beforeEach((to, from) => {
         return {name: 'Home'}
     }
   }
-  
+
   if (DatabaseManagerInstance.pb.authStore.isValid) {
-  
+
   }
 });
 

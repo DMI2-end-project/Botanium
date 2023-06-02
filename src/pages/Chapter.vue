@@ -11,7 +11,7 @@ import {useMainStore} from "../stores/mainStore";
 import {useChapterStore} from "../stores/chapterStore";
 import {ROLE} from "../common/Constants";
 
-import data from "../assets/chapters-data/chapters-data.json";
+import chaptersData from "../assets/chapters-data/chapters-data.json";
 
 import StudentChapter from "./../components/chapter/student/StudentChapter.vue";
 import TeacherChapter from "./../components/chapter/teacher/TeacherChapter.vue";
@@ -19,14 +19,15 @@ import TeacherChapter from "./../components/chapter/teacher/TeacherChapter.vue";
 const mainStore = useMainStore();
 const chapterStore = useChapterStore();
 
-const gameData: {
-  [key: string]: any
-} = data;
+interface ChaptersData {
+  [key: string]: any;
+}
 
 const socket = getSocket();
 
-//  @ts-ignore
-chapterStore.data = data[mainStore.getChapterId];
+const key = mainStore.getChapterId as string;
+const data: ChaptersData = chaptersData;
+chapterStore.data = data[key];
 
 onBeforeMount(async () => {
   await socket.connect();

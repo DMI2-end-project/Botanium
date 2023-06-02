@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { COlOR, SIZE } from "../../common/Constants";
+import { COLOR, SIZE } from "../../common/Constants";
 import RoundItem from "./RoundItem.vue";
 
 export default defineComponent({
@@ -22,7 +22,7 @@ export default defineComponent({
   },
   computed: {
     COLOR() {
-      return COlOR
+      return COLOR
     },
     SIZE() {
       return SIZE

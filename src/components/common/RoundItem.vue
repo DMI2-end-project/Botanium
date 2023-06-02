@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { COlOR, SIZE } from "./../../common/Constants"
+import { COLOR, SIZE } from "./../../common/Constants"
 import Enigma from "./../../assets/svg/text-enigma.svg?component"
 
 export default defineComponent({
@@ -19,7 +19,7 @@ export default defineComponent({
   },
   props: {
     color: {
-      default: COlOR.PINK,
+      default: COLOR.PINK,
       type: String
     },
     size: {
@@ -39,19 +39,19 @@ export default defineComponent({
   },
   mounted() {
     switch (this.color) {
-      case COlOR.PINK:
+      case COLOR.PINK:
         this.containerClass += ' bg-pink text-beige';
         this.textClass += ' text-beige';
         break;
-      case COlOR.GREEN:
+      case COLOR.GREEN:
         this.containerClass += ' bg-green text-beige';
         this.textClass += ' text-beige';
         break;
-      case COlOR.YELLOW:
+      case COLOR.YELLOW:
         this.containerClass += ' bg-yellow text-beige';
         this.textClass += ' text-beige';
         break;
-      case COlOR.GREEN_MEDIUM:
+      case COLOR.GREEN_MEDIUM:
         this.containerClass += ' bg-green-medium text-beige';
         this.textClass += ' text-beige';
         break;

@@ -1,12 +1,13 @@
 <template>
   <div class="bg-gray-100 flex p-6 text-black">
-    <div v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
-         class="bg-beige rounded-md p-6">
+    <div
+        v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
+        class="bg-beige rounded-md p-6">
       <h1>Chapitre {{ mainStore.chapterId }}</h1>
       <h2>Capucine Pinpin et les carottes</h2>
     </div>
     <Reading v-show="chapterStore.currentStep === CHAPTER_STEP.STORY"/>
-    <RoundButton :color="COlOR.PINK" @click="next"> ></RoundButton>
+    <RoundButton :color="COLOR.PINK" @click="next"> ></RoundButton>
 
     <!--div class="flex flex-col">
       <button>Projection</button>
@@ -20,7 +21,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {getSocket} from "../../../client";
-import {COlOR, CHAPTER_STEP} from "../../../common/Constants";
+import {CHAPTER_STEP, COLOR} from "../../../common/Constants";
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
 import Reading from "./Reading.vue";
@@ -42,8 +43,8 @@ export default defineComponent({
     }
   },
   computed: {
-    COlOR() {
-      return COlOR
+    COLOR() {
+      return COLOR
     },
     CHAPTER_STEP() {
       return CHAPTER_STEP

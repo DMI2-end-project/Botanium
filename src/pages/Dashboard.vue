@@ -21,9 +21,6 @@ const launchGame = (i: number) => {
         <router-link :to="{ name: 'LogBook'}" class="inline-block bg-beige p-4 rounded-md origin-left">
           <!--Book class="w-full h-full"/--> Carnet de bord
         </router-link>
-        <router-link :to="{ name: 'Dev'}" class="inline-block bg-beige p-4 rounded-md origin-left">
-          <!--Book class="w-full h-full"/--> Dev
-        </router-link>
         <div class=" bg-beige rounded-md flex flex-col gap-6 p-6">
           <span class="text-lg text-black">L'histoire </span>
           <router-link :to="{ name: 'Chapters'}"
