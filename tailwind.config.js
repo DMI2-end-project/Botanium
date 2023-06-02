@@ -30,6 +30,7 @@ module.exports = {
         blue: "#2BD885",
         beige: {
           DEFAULT: "#fefbe9",
+          light: "#F1EACF",
           medium: "#e5d9b6",
           dark: "#b8ae91",
         },

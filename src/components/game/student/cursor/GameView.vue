@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useGameStore } from "../../../../stores/gameStore";
-import {COlOR} from "../../../../common/Constants";
+import {COLOR} from "../../../../common/Constants";
 import SelectedVideoCopy from './SelectedVideo.vue';
 
 export default defineComponent({
@@ -22,8 +22,8 @@ export default defineComponent({
     }
   },
   computed: {
-    COlOR() {
-      return COlOR;
+    COLOR() {
+      return COLOR;
     },
     element() {
       if (this.gameStore.teamId !== undefined) {

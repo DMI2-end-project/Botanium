@@ -8,7 +8,7 @@
       <span v-for="i in 5" v-bind="i" class="w-3 h-3 m-1 bg-purple rounded-full absolute pointer-events-none" :style="`left: calc(${(i - 1) * 100 / 4}% - ${(i - 1) * 5}px);`" />
     </div>
     <div class="absolute top-[45%] right-10">
-      <RoundButton :color="COlOR.GREEN_MEDIUM_BEIGE" @click="select" class="">
+      <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="select" class="">
       <Check />
     </RoundButton>
     </div>
@@ -20,7 +20,7 @@ import { defineComponent } from 'vue';
 import * as PIXI from "pixi.js";
 import RoundButton from '../../../common/RoundButton.vue';
 import Check from "../../../../assets/svg/ico-check.svg?component";
-import { COlOR } from '../../../../common/Constants';
+import { COLOR } from '../../../../common/Constants';
 
 export default defineComponent({
   components: {
@@ -32,8 +32,8 @@ export default defineComponent({
     element: String
   },
   computed: {
-    COlOR() {
-      return COlOR
+    COLOR() {
+      return COLOR
     },
   },
   data() {
