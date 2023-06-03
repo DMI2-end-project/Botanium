@@ -97,7 +97,7 @@ export default defineComponent({
     <main class="w-screen h-screen flex-1 flex flex-col justify-center mt-16  z-10 " :class="isBreadcrumb ? 'px-[10%]' : 'px-[4%]'">
       <slot></slot>
     </main>
-    <footer class="fixed bottom-0 left-[2%]">
+    <footer class="fixed bottom-0 left-[2%] z-20 ">
       <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName" />
       <Connexion v-if="mainStore.role === ROLE.TEACHER" />
     </footer>

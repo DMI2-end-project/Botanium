@@ -9,6 +9,7 @@ import router from "../router";
 const store = useMainStore();
 
 const launchGame = (i: number) => {
+  GameMasterManagerInstance.launchChapter(1, '')
   GameMasterManagerInstance.launchGame(i)
 }
 

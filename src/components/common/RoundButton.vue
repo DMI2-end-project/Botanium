@@ -1,14 +1,16 @@
 <template>
-  <button
+  <div :class="isBg ? 'RoundButtonBg bg-beige-medium p-8 rounded-full' : ''">
+    <button
       class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
       :class="`${containerClass}`">
-    <div
-        class="RoundButton__bg absolute w-full h-full rounded-full outline outline-1 group-hover:outline-offset-[0px] group-hover:scale-75 transform"
-        :class="`${bgClass}`"/>
-    <div class="RoundButton__icon z-10" :class="`${textClass}`">
-      <slot/>
-    </div>
-  </button>
+      <div
+          class="RoundButton__bg absolute w-full h-full rounded-full outline outline-1 group-hover:outline-offset-[0px] group-hover:scale-75 transform"
+          :class="`${bgClass}`"/>
+      <div class="RoundButton__icon z-10" :class="`${textClass}`">
+        <slot/>
+      </div>
+    </button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -26,6 +28,10 @@ export default defineComponent({
       default: SIZE.MD, // md:80px sm:48px xs:28px
       type: String
     },
+    isBg: {
+      default: false,
+      type: Boolean
+    }
   },
   data() {
     return {

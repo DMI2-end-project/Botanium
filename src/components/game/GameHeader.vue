@@ -6,7 +6,7 @@
       </RoundItem>
     </div>
     <p class="col-start-3 col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">{{ text }}</p>
-    <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue !== ''" @click="openModal" class="col-start-12 ml-auto">?</RoundButton>
+    <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue && clue !== ''" @click="openModal" class="col-start-12 ml-auto">?</RoundButton>
   </div>
 
    <ModalView v-if="isModalOpen">

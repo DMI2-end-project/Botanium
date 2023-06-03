@@ -14,7 +14,8 @@
       </div>
       <h2 class="font-title font-bold text-xxl">Tablettes connectées</h2>
       <div class="flex flex-col items-center gap-3 my-8">
-        <div v-for="team in teamsConnected" :v-bind="team._socketId" class="bg-green-medium text-beige w-fit px-8 py-1 rounded-full">
+        <div v-for="team in gameStore.teams" :v-bind="team._socketId"
+        :class="team.isConnected ? 'bg-green-medium' : 'bg-red'" class="text-beige w-fit px-8 py-1 rounded-full">
           <p>{{ team._name }}</p>
         </div>
       </div>

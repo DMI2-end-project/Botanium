@@ -4,6 +4,9 @@ import {gsap} from "gsap";
 import {Draggable} from "gsap/Draggable";
 import {Flip} from "gsap/Flip";
 import {useGameStore} from "../../../../stores/gameStore";
+import RoundButton from "../../../common/RoundButton.vue";
+import { COLOR } from "../../../../common/Constants";
+import Check from "./../../../../assets/svg/ico-check.svg?component";
 
 gsap.registerPlugin(Draggable, Flip);
 
@@ -62,6 +65,7 @@ onMounted(async () => {
           if (miss) {
             if (draggable.value && container) {
               Flip.fit(draggable.value, container);
+              currentAnswer.value = null
             }
           }
         }
@@ -82,7 +86,7 @@ const itemValidated = () => {
 <template>
   <div>
     <div
-        class="w-full h-full flex-1 flex items-center bg-background grid grid-cols-12 gap-4 px-8 text-center gap-5">
+        class="w-full h-full flex-1 flex items-center grid grid-cols-12 gap-4 px-8 text-center gap-5">
       <div
           class="col-span-3 aspect-[3/5] flex justify-center items-center border border-dashed border-beige rounded-md p-7">
         <div id="container" class="relative w-full h-full aspect-[5/9]">
@@ -92,7 +96,7 @@ const itemValidated = () => {
           </div>
         </div>
       </div>
-      <div class="col-span-9 flex gap-9 rounded-md px-10 pt-9 pb-14 bg-beige-medium">
+      <div class="relative -z-10 col-span-9 flex gap-9 rounded-md px-10 pt-9 pb-14 bg-beige-medium">
         <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
              class="w-full flex flex-col justify-center items-center gap-6">
           <div ref="droppables"
@@ -104,9 +108,12 @@ const itemValidated = () => {
             {{ answer.molecule }}
           </h3>
         </div>
+        <div class="w-full flex justify-center absolute -bottom-20 left-0 right-0 mx-auto -z-10">
+          <Transition name="scaleButtonBg">
+            <RoundButton @click="itemValidated" :isBg="true" :color="COLOR.GREEN_MEDIUM_BEIGE" v-show="currentAnswer"><Check /></RoundButton>
+          </Transition>
+        </div>
       </div>
     </div>
-    <button @click="itemValidated">Valider</button>
   </div>
 </template>
-
