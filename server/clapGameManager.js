@@ -16,9 +16,9 @@ class ClapGameManager {
     if (ClapGameManager.exists) {
       return ClapGameManager.instance;
     }
-    this.totalTeams = 0;
-    this.totalTeamsReady = 0;
-    this.totalTeamsWithMicro = 0;
+    this.teams = 0;
+    this.teamsReady = 0;
+    this.teamsWithMicro = 0;
   }
 
   initListenners(io, socket) {
@@ -28,14 +28,14 @@ class ClapGameManager {
       });
 
     socket.on(CLAPEVENT.CLAP_READY, (arg) => {
-        this.totalTeamsReady += 1;
-        this.totalTeamsWithMicro += arg.microIsActive ? 1 : 0;
+        this.teamsReady += 1;
+        this.teamsWithMicro += arg.microIsActive ? 1 : 0;
         if (
-          this.totalTeamsWithMicro === 0 &&
-          this.totalTeamsReady >= this.totalTeams
+          this.teamsWithMicro === 0 &&
+          this.teamsReady >= this.teams
         ) {
           io.in(arg.roomId).emit(CLAPEVENT.CLAP_LAUNCH, false);
-        } else if (this.totalTeamsReady >= this.totalTeams) {
+        } else if (this.teamsReady >= this.teams) {
           io.in(arg.roomId).emit(CLAPEVENT.CLAP_LAUNCH, true);
         }
         io.in(arg.roomId).emit(CLAPEVENT.CLAP_READY, arg.microIsActive);
@@ -46,17 +46,17 @@ class ClapGameManager {
     });
   }
 
-  setTotalTeams(number) {
-    this.totalTeams = number;
+  setTeams(number) {
+    this.teams = number;
     // setInterval(() => {
     //   console.log(Math.floor(Date.now() / 100));
     // }, 100);
   }
 
   reset() {
-    this.totalTeams = 0;
-    this.totalTeamsReady = 0;
-    this.totalTeamsWithMicro = 0;
+    this.teams = 0;
+    this.teamsReady = 0;
+    this.teamsWithMicro = 0;
   }
 }
 

@@ -29,7 +29,6 @@ class GameMasterManager {
   private initEventsListenners() {
     this._socket.on(EVENT.TEAM_VALIDATION, (arg) => {
       this._gameStore.data.gameSequences[this._gameStore.currentSequence].gamemaster.answers[arg.teamId].status = 'valid';
-      this._gameStore.totalTeamsFinished += 1;
     });
     
     this._socket.on(EVENT.GAME_VALIDATION, (arg) => {

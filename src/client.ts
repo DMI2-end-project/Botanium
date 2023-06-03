@@ -66,6 +66,9 @@ export const initClient = (pinia: Pinia) => {
     if (arg.currentSequence) {
       gameStore.currentSequence = arg.currentSequence;
     }
+    if(arg.teams) {
+      gameStore.teams = arg.teams;
+    }
     
     chapterData.data = chapterData[mainStore.getChapterId];
     gameStore.data = gameData[mainStore.getFullGameId];
@@ -89,10 +92,6 @@ export const initClient = (pinia: Pinia) => {
     }
   });
   
-  socket.on(EVENT.TOTAL_TEAMS, (arg) => {
-    console.log('EVENT.TOTAL_TEAMS', arg)
-    gameStore.totalTeams = arg.totalTeams.length;
-  });
 }
 
 export const connectClient = async () => {
