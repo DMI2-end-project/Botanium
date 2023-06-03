@@ -1,5 +1,7 @@
 <template>
-  <component v-bind:is="GameView"/>
+  <div>
+    <component v-bind:is="GameView"/>
+  </div>
 </template>
 
 <script lang="ts">

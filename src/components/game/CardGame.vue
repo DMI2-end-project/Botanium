@@ -6,7 +6,6 @@ import Check from '../../assets/svg/ico-check-transparency.svg?component';
 const props = defineProps({
   cardState: {
     type: String,
-    required: true,
     default: 'show',
     validator(value: string) {
       // The value must match one of these strings
@@ -15,7 +14,6 @@ const props = defineProps({
   },
   answerState: {
     type: String,
-    required: true,
     default: 'none',
     validator(value: string) {
       // The value must match one of these strings
@@ -27,22 +25,34 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="w-full h-auto bg-beige rounded-md border-4 p-2"
+  <!-- BORDER ONLY FOR SELECTED - NO BACKGROUND -->
+  <div class="w-full h-auto rounded-lg border p-2"
        :class="{
-        'border-blue': props.answerState === 'valid',
-        'border-red': props.answerState === 'error',
-        'border-beige': props.answerState === 'none',
-        'bg-green-medium border-green-medium': props.cardState === 'validated'
+         'border-green-light' : props.answerState === 'selected',
+         'border-transparent' : props.answerState !== 'selected'
        }">
-    <div class="w-full h-full rounded-md border flex flex-col justify-center items-center"
+    <!-- BORDER ONLY FOR VALID/ERROR -->
+    <div class="w-full h-full rounded-lg border-[6px] p-2"
          :class="{
-          'border-green-dark text-green-dark': props.cardState === 'validated',
-          'border-beige-medium': props.cardState !== 'validated',
+           'bg-beige border-blue': props.answerState === 'valid',
+           'bg-beige border-red': props.answerState === 'error',
+           'bg-beige border-transparent': props.answerState === 'none',
+           'bg-green-light border-transparent text-green': props.cardState === 'validated',
+           'bg-green-light border-transparent text-green': props.answerState === 'selected',
          }">
-      <slot name="verso" v-if="props.cardState === 'hide'" class=""/>
-      <slot name="recto" v-if="props.cardState === 'show'" class=""/>
-      <div v-if="props.cardState === 'validated'">
-        <Check class="aspect-square w-16"/>
+      <!-- BORDER -->
+      <div class="w-full h-full flex flex-col justify-center items-center rounded-lg border p-2"
+           :class="{
+             'border-green-light text-green-light': props.cardState === 'validated',
+             '': props.cardState !== 'validated',
+             'border-transparent' : props.answerState === 'selected',
+             'border-beige-medium' : props.answerState !== 'selected',
+           }">
+        <slot name="verso" v-if="props.cardState === 'hide'" class=""/>
+        <slot name="recto" v-if="props.cardState === 'show'" class=""/>
+        <div v-show="props.cardState === 'validated'">
+          <Check class="aspect-square w-16"/>
+        </div>
       </div>
     </div>
   </div>
