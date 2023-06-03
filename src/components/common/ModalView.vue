@@ -12,7 +12,7 @@ onClickOutside(container, () => mainStore.isModalOpen = false);
 <template>
   <Teleport to="#modal">
     <div v-if="mainStore.isModalOpen"
-         class="absolute top-0 left-0 w-full h-full bg-green bg-opacity-80 flex justify-center items-center z-50">
+         class="fixed top-0 left-0 w-screen h-screen bg-green bg-opacity-80 flex justify-center items-center z-50">
       <div class="container mx-auto bg-beige flex flex-col gap-6 rounded-md p-6" ref="container">
         <slot/>
       </div>
