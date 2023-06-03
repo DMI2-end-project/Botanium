@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="openModal" class="fixed bottom-0 left-0 mx-8 my-6 text-lg font-bold text-green bg-beige flex items-center rounded-full p-2 group hover:bg-green hover:text-beige transition">
+    <button @click="openModal" class="text-lg font-bold text-green bg-beige flex items-center rounded-full p-2 group hover:bg-green hover:text-beige transition">
       <div class="rounded-full border border-green aspect-square w-10 h-10 p-2 flex flex-col items-center transition group-hover:border-beige"><Wifi /></div>
       <p class="text-sm px-3">Connexion</p>
     </button>

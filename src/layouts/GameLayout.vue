@@ -5,6 +5,7 @@ import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {GAME_STEP, ROLE} from "../common/Constants";
 
 import Breadcrumb from "../components/Breadcrumb.vue";
@@ -12,7 +13,8 @@ import GameHeader from "../components/game/GameHeader.vue";
 import TeamSignboard from "../components/common/TeamSignboard.vue";
 import Connexion from "../components/game/teacher/Connexion.vue";
 
-import gameData from "../assets/game-data/game-data-v2.json"; // {[key: string]: any}
+import gameData from "../assets/game-data/game-data-v2.json";
+ // {[key: string]: any}
 
 interface GameData {
   [key: string]: any;
@@ -20,6 +22,17 @@ interface GameData {
 
 export default defineComponent({
   name: 'GameLayout',
+  components: {GameHeader, Breadcrumb, TeamSignboard, Connexion},
+  data() {
+    return {
+      mainStore: useMainStore(),
+      gameStore: useGameStore(),
+      router: useRouter(),
+      socket: getSocket(),
+      pb: DatabaseManagerInstance.pb,
+      GMInstance: GameMasterManagerInstance
+    }
+  },
   computed: {
     gameData(): { [key: string]: any } {
       return gameData;
@@ -30,16 +43,6 @@ export default defineComponent({
     ROLE() {
       return ROLE
     },
-  },
-  components: {GameHeader, Breadcrumb, TeamSignboard, Connexion},
-  data() {
-    return {
-      mainStore: useMainStore(),
-      gameStore: useGameStore(),
-      router: useRouter(),
-      socket: getSocket(),
-      pb: DatabaseManagerInstance.pb,
-    }
   },
   created() {
     if (this.router) {
@@ -85,6 +88,7 @@ export default defineComponent({
           Socket state : {{ mainStore.connected }},
           RoomID : {{ mainStore.roomId }},
           TeamID : {{ gameStore.teamId }},
+          TeamName : {{ gameStore.teamName }},
           <!-- GameId : {{ mainStore.gameId }},
           Step : {{ gameStore.currentStep }}, -->
         </div>
@@ -94,12 +98,14 @@ export default defineComponent({
       <GameHeader v-if="!isBreadcrumb" :teamId="gameStore.teamId"/>
       <slot name="header"/>
     </header>
-    <main class="w-screen h-screen flex-1 flex flex-col justify-center mt-16  z-10 " :class="isBreadcrumb ? 'px-[10%]' : 'px-[4%]'">
+    <main class="w-screen h-screen flex-1 flex flex-col justify-center mt-16 z-10 "
+          :class="isBreadcrumb ? 'px-[10%]' : 'px-[4%]'">
       <slot></slot>
     </main>
-    <footer class="fixed bottom-0 left-[2%] z-20 ">
-      <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName" />
-      <Connexion v-if="mainStore.role === ROLE.TEACHER" />
+    <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">
+      <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName"/>
+      <Connexion v-if="mainStore.role === ROLE.TEACHER"/>
+      <button v-if="mainStore.role === ROLE.TEACHER" @click="GMInstance.killRoom()" class="my-4">Bye bye room</button>
     </footer>
   </div>
 </template>
