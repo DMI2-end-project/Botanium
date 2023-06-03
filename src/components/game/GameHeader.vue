@@ -1,14 +1,11 @@
 <template>
   <div class="relative grid grid-cols-12 gap-4 px-8">
-    <div class="absolute top-0 left-0 text-xl">
-      <div class="aspect-square w-20 text-beige bg-secondary rounded-full font-bold p-1.5">
-      <span
-          class="block w-full h-full flex justify-center items-center rounded-full border border-beige bg-secondary p-2">
+    <div class="absolute top-2 left-2 text-xl">
+      <RoundItem :color="COLOR.YELLOW" :isEnigma="true">
         {{ mainStore.gameId }}
-      </span>
-      </div>
+      </RoundItem>
     </div>
-    <p class="col-start-3 col-span-8 bg-green text-beige leading-tight py-7 px-8 rounded-md">{{ text }}</p>
+    <p class="col-start-3 col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">{{ text }}</p>
     <button v-show="mainStore.role === ROLE.STUDENT" class="absolute right-0 top-1/2 -translate-y-1/2">Mémo</button>
   </div>
 </template>
@@ -17,10 +14,14 @@
 import {defineComponent} from 'vue';
 import {useGameStore} from "../../stores/gameStore";
 import {useMainStore} from "../../stores/mainStore";
-import {ROLE} from "../../common/Constants";
+import { ROLE, COLOR, SIZE } from "../../common/Constants";
+import RoundItem from "../common/RoundItem.vue";
 
 export default defineComponent({
   name: 'GameHeader',
+  components: {
+    RoundItem
+  },
   data() {
     return {
       mainStore: useMainStore(),
@@ -31,6 +32,12 @@ export default defineComponent({
   computed: {
     ROLE() {
       return ROLE
+    },
+    COLOR() {
+      return COLOR
+    },
+    SIZE() {
+      return SIZE
     },
     currentSection() {
       return this.gameStore.data?.gameSequences[this.gameStore.currentSequence]
