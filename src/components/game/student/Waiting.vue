@@ -1,10 +1,12 @@
 <template>
   <div class="flex flex-col gap-24 items-center text-green">
-    <div class="w-full bg-green-light rounded-md flex gap-14 py-24 px-10">
-      <RoundItem :color="COLOR.GREEN_MEDIUM" :size="SIZE.XL">
-        <Loading/>
-      </RoundItem>
-      <div class=" flex flex-col gap-4 items-center">
+    <div class="w-full bg-green-light rounded-md grid grid-cols-3 py-24 px-10"> <!-- flex gap-14 -->
+      <div class="col-span-1 w-full h-full">
+        <RoundItem :color="COLOR.GREEN_MEDIUM">
+          <Loading/>
+        </RoundItem>
+      </div>
+      <div class="col-span-2 flex flex-col gap-4 items-center">
         <h1>Bravo !</h1>
         <p class="">{{ text }}</p>
       </div>
@@ -69,18 +71,18 @@ export default defineComponent({
 
 <style scoped>
 .loading {
-  animation-name: rotate;
-  animation-duration: 1s; /* Durée totale de l'animation */
-  animation-iteration-count: infinite; /* Boucle infinie */
-  animation-timing-function: steps(16); /* Pas de transition entre les étapes */
+    animation-name: rotate;
+    animation-duration: 1s; /* Durée totale de l'animation */
+    animation-iteration-count: infinite; /* Boucle infinie */
+    animation-timing-function: steps(16); /* Pas de transition entre les étapes */
 }
 
 @keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>

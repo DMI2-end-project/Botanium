@@ -1,15 +1,17 @@
 <template>
   <div class="relative grid grid-cols-12 gap-4 px-8">
-    <div class="col-start-2 col-span-10 grid grid-cols-2 auto-rows-fr gap-4">
-      <CardGame :answer-state="'none'" :card-state="cardState(answer, index)" v-for="(answer, index) in answers"
-                :v-bind="index">
+    <div class="col-start-2 col-span-10 grid grid-cols-1 lg:grid-cols-2 auto-rows-fr gap-4"><!-- flex flex-wrap -->
+      <CardGame v-for="(team, index) in playingTeams" :v-bind="index"
+                :answer-state="'none'" :card-state="cardState(answers[index])"
+      >
         <template v-slot:recto>
-          <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
-          <span class="text-md pointer-events-none">{{ answer.text }}</span>
+          <SvgIcon :name="answers[index].icon" class="w-16 aspect-square pointer-events-none"/>
+          <span class="text-md pointer-events-none">{{ answers[index].text }}</span>
         </template>
         <template v-slot:verso>
           <div class="bg-red-500">
-            <span class="text-2xl text-beige-medium font-bold">{{ index + 1 }}</span>
+            <!--span class="text-2xl text-beige-medium font-bold">{{ index + 1 }}</span-->
+            <span class="text-xl text-beige-medium font-bold">{{ team._name }}</span>
           </div>
         </template>
       </CardGame>
@@ -29,9 +31,9 @@
         </div>
       </div-->
     </div>
-    <button v-show="gameStore.currentStep === GAMESTEP.END" class="col-span-12 mx-auto my-5" @click="next">
-      Continuer
-    </button>
+    <RoundButton v-show="gameStore.currentStep === GAMESTEP.END" @click="next" class="col-span-12 mx-auto">
+      <Check/>
+    </RoundButton>
   </div>
 </template>
 
@@ -45,9 +47,11 @@ import {GameMasterManagerInstance} from "../../../../common/GameMasterManager"
 import CardGame from "../../CardGame.vue";
 import SvgIcon from "../../../common/SvgIcon.vue";
 
+import Check from "../../../../assets/svg/ico-check.svg?component";
+
 export default defineComponent({
   name: 'TeacherGameView',
-  components: {SvgIcon, CardGame},
+  components: {Check, CardGame, SvgIcon},
   data() {
     return {
       publicPath: window.location.origin,
@@ -63,12 +67,19 @@ export default defineComponent({
     answers() {
       return this.gameStore.data.gameSequences[this.gameStore.currentSequence].gamemaster.answers
     },
+    playingTeams() {
+      return this.gameStore.teams.filter((team: any) => team.isPlaying);
+    }
+  },
+  mounted() {
+    let playingTeams = this.gameStore.teams.filter((team: any) => team.isPlaying);
+    console.log('playingTeams', this.gameStore.teams, playingTeams)
   },
   methods: {
     next() {
       GameMasterManagerInstance.endGame()
     },
-    cardState(answer: any, index: number) {
+    cardState(answer: any) {
       if (this.gameStore.currentStep === GAME_STEP.END) {
         return 'show';
       } else {

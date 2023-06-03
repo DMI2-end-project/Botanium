@@ -26,7 +26,7 @@ const props = defineProps({
 
 <template>
   <!-- BORDER ONLY FOR SELECTED - NO BACKGROUND -->
-  <div class="w-full h-auto rounded-lg border p-2"
+  <div class="w-full h-auto rounded-lg border shrink-0 p-2"
        :class="{
          'border-green-light' : props.answerState === 'selected',
          'border-transparent' : props.answerState !== 'selected'
@@ -41,7 +41,7 @@ const props = defineProps({
            'bg-green-light border-transparent text-green': props.answerState === 'selected',
          }">
       <!-- BORDER -->
-      <div class="w-full h-full flex flex-col justify-center items-center rounded-lg border p-2"
+      <div class="w-full h-full flex flex-col justify-center items-center rounded-lg border"
            :class="{
              'border-green-light text-green-light': props.cardState === 'validated',
              '': props.cardState !== 'validated',
