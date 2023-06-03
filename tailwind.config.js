@@ -40,7 +40,8 @@ module.exports = {
       },
       backgroundImage: {
         'dotted': "url('/src/assets/dot.png')",
-        'signboard': "url('/src/assets/images/common/texture-signboard.png')"
+        'signboard': "url('/src/assets/images/common/texture-signboard.png')",
+        'texture': "url('/src/assets/images/common/texture-bg.png')",
       }
     },
   },

@@ -72,6 +72,7 @@ export default defineComponent({
 
 <template>
   <div class="bg-background flex flex-col w-full h-full min-h-screen">
+    <div class="bg-texture fixed w-screen h-screen mix-blend-soft-light bg-cover opacity-50 pointer-events-none"></div>
     <header class="fixed flex flex-col w-full max-w-full p-10 z-20" :class="isBreadcrumb ? 'px-[10%]' : 'px-[4%]'">
       <!-- DEV INFO -->
       <div class="flex justify-end items-center gap-6 fixed z-20 right-6 top-0">
@@ -93,7 +94,7 @@ export default defineComponent({
       <GameHeader v-if="!isBreadcrumb" :teamId="gameStore.teamId"/>
       <slot name="header"/>
     </header>
-    <main class="w-screen h-screen flex-1 flex flex-col justify-center mt-16" :class="isBreadcrumb ? 'px-[10%]' : 'px-[4%]'">
+    <main class="w-screen h-screen flex-1 flex flex-col justify-center mt-16  z-10 " :class="isBreadcrumb ? 'px-[10%]' : 'px-[4%]'">
       <slot></slot>
     </main>
     <footer class="fixed bottom-0 left-[2%]">
