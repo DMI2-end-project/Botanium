@@ -6,9 +6,9 @@
     </button>
   </div>
 
-  <ModalView>
+  <ModalView v-if="isModalOpen">
     <div class="relative flex flex-col items-center">
-      <div class="absolute right-2 top-2"><RoundButton @click="clossModal" :color="COLOR.RED" :size="SIZE.SM"><Cross /></RoundButton></div>
+      <div class="absolute right-2 top-2"><RoundButton @click="closeModal" :color="COLOR.RED" :size="SIZE.SM"><Cross /></RoundButton></div>
       <div class="bg-beige rounded-full aspect-square p-7 -mt-20 -mb-8">
         <p class="font-title font-bold text-xxl text-green-medium -mt-4">{{ teamsConnected.length }} / {{ gameStore.teams.length }}</p>
       </div>
@@ -47,6 +47,7 @@ export default defineComponent({
     return {
       gameStore: useGameStore(),
       mainStore: useMainStore(),
+      isModalOpen: false,
       status: [
         { text: "non connecté", bgClass: "bg-red" },
         { text: "connecté", bgClass: "bg-green-medium" },
@@ -68,9 +69,11 @@ export default defineComponent({
   methods: {
     openModal() {
       this.mainStore.isModalOpen = true;
+      this.isModalOpen = true
     },
-    clossModal() {
+    closeModal() {
       this.mainStore.isModalOpen = false;
+      this.isModalOpen = false
     }
   }
 });
