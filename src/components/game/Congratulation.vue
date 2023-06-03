@@ -40,8 +40,8 @@ const next = () => {
 </script>
 
 <template>
-  <div class="relative flex flex-col items-center text-beige text-center my-20">
-    <RoundItemVue :size="SIZE.LG" :color="COLOR.YELLOW" class="absolute translate-y-1/2">
+  <div class="relative flex flex-col items-center text-beige text-center">
+    <RoundItemVue :size="SIZE.LG" :color="COLOR.YELLOW" class="absolute translate-y-1/2 -mt-16">
       <Trophy class="w-14 aspect-square"/>
     </RoundItemVue>
     <div class="w-full bg-green rounded-md flex flex-col gap-4 items-center py-24 px-28">

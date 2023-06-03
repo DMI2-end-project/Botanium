@@ -1,5 +1,5 @@
 <template>
-  <div class="RoundItem relative rounded-full flex items-center justify-center m-0 p-0 border-0 " :class="`${containerClass}`" >
+  <div class="RoundItem relative aspect-square rounded-full flex items-center justify-center m-0 p-0 border-0 " :class="`${containerClass}`" >
     <div class="RoundItem__icon" :class="`${textClass}`"><slot></slot></div>
     <div v-if="isEnigma" class="enigma absolute w-[180%] h-[180%] text-beige">
       <Enigma class="w-full h-full object-contains" />

@@ -5,10 +5,11 @@ import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {GAME_STEP} from "../common/Constants";
+import {GAME_STEP, ROLE} from "../common/Constants";
 
 import Breadcrumb from "../components/Breadcrumb.vue";
 import GameHeader from "../components/game/GameHeader.vue";
+import TeamSignboard from "../components/common/TeamSignboard.vue";
 
 import gameData from "../assets/game-data/game-data-v2.json"; // {[key: string]: any}
 
@@ -19,14 +20,17 @@ interface GameData {
 export default defineComponent({
   name: 'GameLayout',
   computed: {
-    GAMESTEP() {
-      return GAME_STEP
-    },
     gameData(): { [key: string]: any } {
       return gameData;
-    }
+    },
+    isBreadcrumb(): boolean {
+      return this.gameStore.currentStep !== GAME_STEP.PLAY && this.gameData.currentStep !== GAME_STEP.WAIT
+    },
+    ROLE() {
+      return ROLE
+    },
   },
-  components: {GameHeader, Breadcrumb},
+  components: {GameHeader, Breadcrumb, TeamSignboard},
   data() {
     return {
       mainStore: useMainStore(),
@@ -67,29 +71,32 @@ export default defineComponent({
 
 <template>
   <div class="bg-background flex flex-col w-full h-full min-h-screen">
-    <header class="flex flex-col w-full h-full p-4 z-20">
+    <header class="fixed flex flex-col w-full max-w-full p-10 z-20" :class="isBreadcrumb ? 'px-[10%]' : 'px-[4%]'">
       <!-- DEV INFO -->
-      <div class="flex justify-between items-center gap-6">
-        <div>
+      <div class="flex justify-end items-center gap-6 fixed z-20 right-6 top-0">
+        <!-- <div>
           Path : {{ router.currentRoute?.path }},
           Auth state : {{ pb.authStore.isValid }},
           Role : {{ mainStore.role }}
-        </div>
-        <div>
+        </div> -->
+        <div class="ml-20">
           Socket state : {{ mainStore.connected }},
           RoomID : {{ mainStore.roomId }},
           TeamID : {{ gameStore.teamId }},
-          GameId : {{ mainStore.gameId }},
-          Step : {{ gameStore.currentStep }},
+          <!-- GameId : {{ mainStore.gameId }},
+          Step : {{ gameStore.currentStep }}, -->
         </div>
         <button @click="disconnect" class="ml-auto block">Déconnexion</button>
       </div>
-      <Breadcrumb v-if="gameStore.currentStep !== GAMESTEP.PLAY && gameData.currentStep !== GAMESTEP.WAIT" :teamId="gameStore.teamId"/>
-      <GameHeader v-if="gameStore.currentStep === GAMESTEP.PLAY || gameData.currentStep === GAMESTEP.WAIT" :teamId="gameStore.teamId"/>
+      <Breadcrumb v-if="isBreadcrumb" :teamId="gameStore.teamId"/>
+      <GameHeader v-if="!isBreadcrumb" :teamId="gameStore.teamId"/>
       <slot name="header"/>
     </header>
-    <main class="w-full h-full flex-1 flex flex-col justify-center">
+    <main class="w-screen h-screen flex-1 flex flex-col justify-center mt-16" :class="isBreadcrumb ? 'px-[10%]' : 'px-[4%]'">
       <slot></slot>
     </main>
+    <footer v-if="mainStore.role === ROLE.STUDENT" class="fixed bottom-0 left-[2%]">
+      <TeamSignboard :text="gameStore.teamName" />
+    </footer>
   </div>
 </template>

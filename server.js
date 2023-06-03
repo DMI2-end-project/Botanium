@@ -10,8 +10,8 @@ const app = express();
 const http = createServer(app);
 const io = new Server(http, {
   cors: {
-    //origins: [`http://localhost:${port}`]
-    origins: [`http://172.28.59.22:${port}`]
+    origins: [`http://localhost:${port}`]
+    // origins: [`http://172.28.59.22:${port}`]
   }
 });
 

@@ -1,8 +1,6 @@
 <template>
-  <div class="w-full h-full">
-    <div v-show="gameStore.currentStep === GAMESTEP.PLAY">
-      <component v-bind:is="GameView" :teamId="gameStore.teamId" @validated="validated"/>
-    </div>
+  <div v-show="gameStore.currentStep === GAMESTEP.PLAY">
+    <component v-bind:is="GameView" :teamId="gameStore.teamId" @validated="validated"/>
   </div>
 </template>
 

@@ -46,7 +46,7 @@ const getNumberComponent = (number: number) => {
 </script>
 
 <template>
-  <div class="relative w-full flex items-center justify-between my-4">
+  <div class="relative w-full flex items-center justify-between">
     <div class="absolute flex w-full mx-auto bg-dotted bg-repeat-x	bg-contain h-2">
       <div class="bg-yellow w-full h-full origin-left transition-transform"
            :style="{transform: 'scaleX('+ (mainStore.gameId - 1) / (totalGames - 1) +')'}"/>
