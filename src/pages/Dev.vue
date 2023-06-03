@@ -4,7 +4,7 @@ import CardGame from "../components/game/CardGame.vue";
 
 <template>
   <div class="w-full h-full flex-1 grid grid-cols-2 items-start gap-8">
-    <CardGame state="validated">
+    <CardGame card-state="validated" answer-state="selected">
       <template v-slot:recto>
         <!-- content for the header slot -->
         Test 1

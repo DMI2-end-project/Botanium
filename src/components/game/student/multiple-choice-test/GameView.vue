@@ -1,6 +1,17 @@
 <template>
   <div class="relative grid grid-cols-12 gap-4 px-8">
     <div class="col-start-2 col-span-10 grid grid-cols-2 gap-4">
+      <CardGame v-for="(answer, index) in answers" :v-bind="index" :data-id="index"
+                card-state="show" :answer-state="answer.status">
+        <template v-slot:recto>
+          <!-- content for the header slot -->
+          <div @click="itemSelected" class="flex flex-col justify-center items-center gap-5">
+            <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
+                 class="w-16 aspect-square pointer-events-none">
+            <span class="text-md pointer-events-none">{{ answer.text }}</span>
+          </div>
+        </template>
+      </CardGame>
       <div v-for="(answer, index) in answers" :v-bind="index" class="w-full border rounded-md p-3.5"
            :class="answer.isClicked ? 'border-green-light' : 'border-transparent'">
         <button @click="itemSelected" :data-id="index"
@@ -50,26 +61,28 @@ export default defineComponent({
   mounted() {
     if (this.answers) {
       this.answers.forEach((answer: any) => {
-        answer.isClicked = false;
-        answer.status = "";
+        //answer.isClicked = false;
+        answer.status = "none";
       })
     }
   },
   methods: {
     itemSelected(e: Event) {
       this.answers.forEach((answer: any) => {
-        answer.isClicked = false;
-        answer.status = "";
+        //answer.isClicked = false;
+        //answer.status = "";
+        answer.status = "none";
       });
       const target = e.target as HTMLElement;
       if (target.dataset?.id != null) {
-        this.answers[target.dataset.id].isClicked = true;
+        //this.answers[target.dataset.id].isClicked = true;
+        this.answers[target.dataset.id].status = 'selected';
         this.currentAnswer = this.answers[target.dataset.id];
       }
     },
     itemValidated() {
       this.currentAnswer.status = this.currentAnswer.isValid ? 'valid' : 'error';
-      this.currentAnswer.isClicked = false;
+      //this.currentAnswer.isClicked = false;
       if (this.currentAnswer.status === 'valid') {
         setTimeout(() => {
           this.$emit('validated');
@@ -81,4 +94,5 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
+import CardGame from "../../CardGame.vue";
 </script>
