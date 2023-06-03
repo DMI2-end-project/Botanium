@@ -31,7 +31,7 @@
         "teams": [
           {
             "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
-            "clue": "",
+            "clue": "Les lapins se repèrent très bien dans les terriers sombres.",
             "congratulation": {
               "text": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
               "icon": "eye.svg"
@@ -69,7 +69,7 @@
           },
           {
             "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
-            "clue": "",
+            "clue": "Les papis et les mamies mangent beaucoup de carottes !",
             "congratulation": {
               "text": "La carotte possède ... qui ralenti le vieillissement",
               "icon": "disease.svg"

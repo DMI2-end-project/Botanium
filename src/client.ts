@@ -23,31 +23,31 @@ export const initClient = (pinia: Pinia) => {
   const mainStore = useMainStore(pinia);
   const chapterStore = useChapterStore(pinia);
   const gameStore = useGameStore(pinia);
-  
+
   const chapterData: ChapterData = chapterDataJSON;
   const gameData: GameData = gameDataJSON;
-  
+
   socket = io(URL, {
     autoConnect: false,
     rejectUnauthorized: false // WARN: please do not do this in production
   });
-  
+
   socket.on("connect", () => {
     mainStore.connected = true;
   });
-  
+
   socket.on("disconnect", () => {
     mainStore.connected = false;
   });
-  
+
   socket.on("join", () => {
     console.log("join", mainStore.roomId);
   });
-  
+
   // TODO
   socket.on(EVENT.ROOM_STATUS, (arg) => {
     console.log('EVENT.ROOM_STATUS', arg);
-    
+
     if (arg.chapterId) {
       mainStore.chapterId = arg.chapterId
     }
@@ -66,39 +66,39 @@ export const initClient = (pinia: Pinia) => {
     if (arg.currentSequence) {
       gameStore.currentSequence = arg.currentSequence;
     }
-    
+    if(arg._teams) {
+      gameStore.teams = arg._teams;
+
+    }
+
     chapterData.data = chapterData[mainStore.getChapterId];
     gameStore.data = gameData[mainStore.getFullGameId];
-    
+
     if (arg.teams && gameStore.teamId) {
       let team = arg.teams.find((team: any) => team.teamId === gameStore.teamId)
       if (team && arg.gameStep === GAME_STEP.PLAY && team.isValidated) {
         gameStore.currentStep = GAME_STEP.WAIT
       }
     }
-    
+
     // TODO Modal de redirection
     if(mainStore.role === ROLE.STUDENT) {
       if (arg.chapterStep !== CHAPTER_STEP.IDLE && router.currentRoute.value.name !== 'Chapter') {
         //router.push(`/chapitre/${mainStore.getChapterId}`);
       }
-      
+
       if (arg.gameStep !== GAME_STEP.IDLE && router.currentRoute.value.name !== 'Game') {
         //router.push(`/exercice/${mainStore.getFullGameId}`);
       }
     }
   });
-  
-  socket.on(EVENT.TOTAL_TEAMS, (arg) => {
-    console.log('EVENT.TOTAL_TEAMS', arg)
-    gameStore.totalTeams = arg.totalTeams.length;
-  });
+
 }
 
 export const connectClient = async () => {
   const mainStore = useMainStore(pinia);
   const gameStore = useGameStore(pinia);
-  
+
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,

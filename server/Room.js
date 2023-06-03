@@ -1,4 +1,27 @@
-let names = ['les papillons', 'les escargots', 'les graines', 'les tulipes', 'les arrosoirs', 'les oiseaux'];
+import Team from './Team.js';
+import {create} from "@tensorflow-models/speech-commands";
+
+let names = [
+  {
+    name: 'Les papillons',
+    isTaken: false
+  }, {
+    name: 'Les escargots',
+    isTaken: false
+  }, {
+    name: 'Les graines',
+    isTaken: false
+  }, {
+    name: 'Les tulipes',
+    isTaken: false
+  }, {
+    name: 'Les arrosoirs',
+    isTaken: false
+  }, {
+    name: 'Les oiseaux',
+    isTaken: false
+  }
+];
 
 const shuffle = (array) => {
   let currentIndex = array.length, randomIndex;
@@ -17,51 +40,7 @@ const shuffle = (array) => {
   return array;
 }
 
-class Team {
-  _socketId = undefined;
-  _teamId = undefined; // number : gameData.gameSequences.teams[0]
-  _name = undefined;
-  isPlaying = false;
-  isConnected = true;
-  isValidated = false;
-  currentSequence = 0;
-
-  constructor(id) {
-    this._socketId = id;
-  }
-
-  set socketId(id) {
-    this._socketId = id;
-  }
-
-  get socketId() {
-    return this._socketId;
-  }
-
-  set teamId(id) {
-    this._teamId = id;
-  }
-
-  get teamId() {
-    return this._teamId;
-  }
-
-  get name() {
-    return this._name;
-  }
-
-  set name(name) {
-    this._name = name;
-  }
-
-  reset() {
-    this.isPlaying = false;
-    this.isValidated = false;
-    this.currentSequence = 0;
-  }
-}
-
-class Room {
+export default class Room {
   _id = undefined;
   _teams = [];
   gamemaster = undefined;
@@ -103,16 +82,37 @@ class Room {
   }
 
   addTeam(socketId, teamName) {
-    let team = this._teams.find(t => t.name === teamName || t.socketId === socketId);
+    let teamWId = this._teams.find(t => t.socketId === socketId);
+    let teamWName = this._teams.find(t => t.name === teamName);
 
-    if (team) {
-      team.socketId = socketId;
-      team.isConnected = true;
-    } else {
-      team = new Team(socketId);
-      team.name = names[0];
-      this._teams.push(team);
+    console.log('team', teamWId, teamWName, teamWName === teamWId);
+
+    if (!teamWId && !teamWName) {
+      this.createTeam(socketId);
     }
+
+    if (teamWId) {
+
+    } else if (teamWName) {
+      if (teamWName && !teamWName.isConnected) {
+        teamWName.socketId = socketId;
+        teamWName.isConnected = true;
+      } else {
+        this.createTeam(socketId);
+      }
+    }
+
+  }
+
+  createTeam(socketId) {
+    let team = new Team(socketId);
+    let i = 0;
+    while (names[i].isTaken) {
+      i++;
+    }
+    team.name = names[i].name;
+    names[i].isTaken = true;
+    this._teams.push(team);
   }
 
   removeTeam(socketId) {
@@ -141,5 +141,3 @@ class Room {
     this._teams = shuffle(this._teams);
   }
 }
-
-export {Room, Team};

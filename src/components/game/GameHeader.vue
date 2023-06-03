@@ -6,8 +6,16 @@
       </RoundItem>
     </div>
     <p class="col-start-3 col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">{{ text }}</p>
-    <button v-show="mainStore.role === ROLE.STUDENT" class="absolute right-0 top-1/2 -translate-y-1/2">Mémo</button>
+    <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue !== ''" @click="openModal" class="col-start-12 ml-auto">?</RoundButton>
   </div>
+
+   <ModalView v-if="isModalOpen">
+    <div class="relative my-2 flex flex-col items-center">
+      <h1 class="mt-8">Indice :</h1>
+      <p class="my-8">{{ clue }}</p>
+      <RoundButton @click="closeModal" :color="COLOR.GREEN_MEDIUM_BEIGE"><Check /></RoundButton>
+    </div>
+  </ModalView>
 </template>
 
 <script lang="ts">
@@ -16,17 +24,24 @@ import {useGameStore} from "../../stores/gameStore";
 import {useMainStore} from "../../stores/mainStore";
 import { ROLE, COLOR, SIZE } from "../../common/Constants";
 import RoundItem from "../common/RoundItem.vue";
+import RoundButton from "../common/RoundButton.vue";
+import ModalView from "../common/ModalView.vue";
+import Check from "./../../assets/svg/ico-check.svg?component";
 
 export default defineComponent({
   name: 'GameHeader',
   components: {
-    RoundItem
+    RoundItem,
+    RoundButton,
+    ModalView,
+    Check
   },
   data() {
     return {
       mainStore: useMainStore(),
       gameStore: useGameStore(),
       publicPath: window.location.origin,
+      isModalOpen: false,
     }
   },
   computed: {
@@ -49,6 +64,19 @@ export default defineComponent({
       } else {
         return this.currentSection.gamemaster?.instruction;
       }
+    },
+    clue() {
+      return this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].clue
+    }
+  },
+  methods: {
+    openModal() {
+      this.mainStore.isModalOpen = true;
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.mainStore.isModalOpen = false;
+      this.isModalOpen = false;
     }
   }
 });

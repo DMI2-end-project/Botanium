@@ -2,7 +2,7 @@ import express from "express";
 import {createServer} from "http";
 import {Server} from "socket.io";
 import {ClapGameManagerInstance} from "./server/clapGameManager.js";
-import {Room} from "./server/Room.js";
+import Room from "./server/Room.js";
 import {CHAPTER_STEP, EVENT, GAME_STEP, ROLE} from "./server/constants.js";
 
 const port = 8080;
@@ -104,9 +104,6 @@ io.on('connection', (socket) => {
       room.chapterId = arg.chapterId;
       room.chapterStep = CHAPTER_STEP.INTRODUCTION;
 
-      io.in(arg.roomId).emit(EVENT.TOTAL_TEAMS, {
-        totalTeams: room.teams
-      });
       io.to(arg.roomId).emit(EVENT.LAUNCH_CHAPTER, {
         chapterId: arg.chapterId
       });
@@ -187,11 +184,7 @@ io.on('connection', (socket) => {
       room.gameStep = GAME_STEP.PLAY;
 
       ClapGameManagerInstance.reset();
-      ClapGameManagerInstance.setTotalTeams(room.playingTeams.length);
-
-      io.to(room.gamemaster).emit(EVENT.TOTAL_TEAMS, {
-        totalTeams: room.playingTeams
-      })
+      ClapGameManagerInstance.setTeams(room.playingTeams.length);
 
       room.playingTeams.map((team, index) => {
         console.log('playing teams', team, team.socketId, index, team.name);
@@ -200,7 +193,7 @@ io.on('connection', (socket) => {
           //gameId: arg.gameId,
           teamId: index,
           teamName: team.name,
-          totalTeams: room.playingTeams
+          teams: room.playingTeams
         });
       });
 
@@ -300,6 +293,12 @@ io.on('connection', (socket) => {
 
       io.in(arg.roomId).emit(EVENT.ROOM_STATUS, room);
     }
+  });
+
+  socket.on('killRoom', (arg) => {
+    io.to(arg.roomId).emit('killRoom');
+
+    rooms = rooms.filter(room => room.id !== arg.roomId);
   });
 
   ClapGameManagerInstance.initListenners(io, socket);

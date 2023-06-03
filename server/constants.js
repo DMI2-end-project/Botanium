@@ -6,7 +6,6 @@ export const ROLE = {
 
 export const EVENT = {
   ROOM_STATUS: 'roomStatus',
-  TOTAL_TEAMS: 'totalTeams',  // TODO ; change event
   LAUNCH_CHAPTER: 'launchChapter',
   START_CHAPTER: 'startChapter',
   NEXT_PARAGRAPH: 'nextParagraph',

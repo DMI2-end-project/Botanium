@@ -59,22 +59,28 @@ class TeamManager {
     
     this._socket.on(EVENT.GAME_VALIDATION, () => {
       this._gameStore.currentStep = GAME_STEP.END;
-    })
+    });
     
     this._socket.on(EVENT.END_GAME, () => {
       this._gameStore.currentStep = GAME_STEP.CONGRATS;
       localStorage.removeItem('teamId');
-    })
+    });
     
     this._socket.on(EVENT.BACK_CHAPTER, async () => {
       await this._router.push('/chapitre/' + this._mainStore.getChapterId);
-    })
+    });
     
     this._socket.on(EVENT.END_CHAPTER, async () => {
       if (this._mainStore.role === ROLE.STUDENT) {
         await this._router.push('/accueil');
       }
-    })
+    });
+    
+    this._socket.on('killRoom', async () => {
+      if (this._mainStore.role === ROLE.STUDENT) {
+        await this._router.push('/accueil');
+      }
+    });
   }
   
   public teamValidation() {

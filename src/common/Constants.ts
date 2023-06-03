@@ -7,7 +7,6 @@ export enum ROLE {
 
 export enum EVENT {
   ROOM_STATUS = 'roomStatus',
-  TOTAL_TEAMS = 'totalTeams',
   LAUNCH_CHAPTER = 'launchChapter',
   START_CHAPTER = 'startChapter',
   NEXT_PARAGRAPH = 'nextParagraph',
@@ -67,7 +66,8 @@ export enum COLOR {
   YELLOW = 'yellow',
   GREEN_MEDIUM = 'greenMedium',
   GREEN_MEDIUM_BEIGE = 'greenMediumBeige',
-  GREEN_LIGHT = 'greenLight'
+  GREEN_LIGHT = 'greenLight',
+  RED = 'red'
 }
 
 export enum SIZE {
