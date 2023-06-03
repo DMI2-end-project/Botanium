@@ -10,6 +10,7 @@ import {GAME_STEP, ROLE} from "../common/Constants";
 import Breadcrumb from "../components/Breadcrumb.vue";
 import GameHeader from "../components/game/GameHeader.vue";
 import TeamSignboard from "../components/common/TeamSignboard.vue";
+import Connexion from "../components/game/teacher/Connexion.vue";
 
 import gameData from "../assets/game-data/game-data-v2.json"; // {[key: string]: any}
 
@@ -30,7 +31,7 @@ export default defineComponent({
       return ROLE
     },
   },
-  components: {GameHeader, Breadcrumb, TeamSignboard},
+  components: {GameHeader, Breadcrumb, TeamSignboard, Connexion},
   data() {
     return {
       mainStore: useMainStore(),
@@ -95,8 +96,9 @@ export default defineComponent({
     <main class="w-screen h-screen flex-1 flex flex-col justify-center mt-16" :class="isBreadcrumb ? 'px-[10%]' : 'px-[4%]'">
       <slot></slot>
     </main>
-    <footer v-if="mainStore.role === ROLE.STUDENT" class="fixed bottom-0 left-[2%]">
-      <TeamSignboard :text="gameStore.teamName" />
+    <footer class="fixed bottom-0 left-[2%]">
+      <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName" />
+      <Connexion v-if="mainStore.role === ROLE.TEACHER" />
     </footer>
   </div>
 </template>

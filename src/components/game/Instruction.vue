@@ -18,9 +18,8 @@ import {defineComponent} from 'vue';
 import {useMainStore} from "../../stores/mainStore";
 import {useGameStore} from "../../stores/gameStore";
 import { COLOR, ROLE } from "../../common/Constants";
-import { GameMasterManagerInstance } from "../../common/GameMasterManager"
+import { GameMasterManagerInstance } from "../../common/GameMasterManager";
 
-import gameData from "./../../assets/game-data/game-data-v2.json";
 import SignboardVue from "../common/Signboard.vue";
 import RoundButton from "../common/RoundButton.vue";
 
@@ -50,11 +49,10 @@ export default defineComponent({
   methods: {
     next() {
       GameMasterManagerInstance.startGame()
+    },
+    openModal() {
+      console.log('yooo')
     }
   }
 });
 </script>
-
-<style lang="scss" scoped>
-
-</style>

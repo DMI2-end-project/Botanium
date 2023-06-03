@@ -66,7 +66,8 @@ export enum COLOR {
   YELLOW = 'yellow',
   GREEN_MEDIUM = 'greenMedium',
   GREEN_MEDIUM_BEIGE = 'greenMediumBeige',
-  GREEN_LIGHT = 'greenLight'
+  GREEN_LIGHT = 'greenLight',
+  RED = 'red'
 }
 
 export enum SIZE {
