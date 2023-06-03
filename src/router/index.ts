@@ -9,10 +9,19 @@ import Game from "../pages/Game.vue";
 import LogBook from "../pages/LogBook.vue";
 import Chapter from "../pages/Chapter.vue";
 import Chapters from "../pages/Chapters.vue";
+import Dev from "../pages/Dev.vue";
 
 const config: RouterOptions = {
   history: createWebHistory(),
   routes: [
+    {
+      name: 'Dev',
+      path: '/dev',
+      component: Dev,
+      meta: {
+        layout: 'Dev',
+      },
+    },
     {
       name: 'Home',
       path: '/accueil',

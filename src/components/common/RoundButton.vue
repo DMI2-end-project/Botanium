@@ -63,8 +63,8 @@ export default defineComponent({
         this.textClass += ' text-beige';
         break;
       case COLOR.GREEN_LIGHT:
-        this.bgClass += ' bg-green-light text-green-medium';
-        this.textClass += ' text-green-medium';
+        this.bgClass += ' bg-green-light text-green';
+        this.textClass += ' text-green';
         break;
       case COLOR.RED:
         this.bgClass += ' bg-red text-beige';
