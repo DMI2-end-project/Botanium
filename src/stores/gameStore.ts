@@ -5,7 +5,7 @@ export type StoreState = {
   data: any | undefined,
   teamId: number | undefined,
   teamName: string | undefined,
-  teams: []
+  teams: any[],
   currentStep: GAME_STEP,
   currentSequence: number
 };
@@ -26,4 +26,5 @@ export const useGameStore = defineStore('game', {
       this.currentSequence = 0;
     },
   }
-})
+});
+

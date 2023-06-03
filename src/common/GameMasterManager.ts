@@ -7,6 +7,7 @@ import {leading} from "../common/Lib";
 import {CHAPTER_STATUS, EVENT, GAME_STEP} from "./Constants";
 import gameData from "../assets/game-data/game-data-v2.json";
 import {DatabaseManagerInstance} from "./DatabaseManager";
+import router from "../router";
 
 class GameMasterManager {
   private static _instance: GameMasterManager;
@@ -137,6 +138,13 @@ class GameMasterManager {
       roomId: this._mainStore.roomId,
     })
     await this._router.push('/chapitres');
+  }
+  
+  public async killRoom() {
+    await this._socket.emit('killRoom', {
+      roomId: this._mainStore.roomId,
+    });
+    await router.push({name: 'Dashboard'});
   }
 }
 

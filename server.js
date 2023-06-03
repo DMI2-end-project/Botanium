@@ -2,7 +2,7 @@ import express from "express";
 import {createServer} from "http";
 import {Server} from "socket.io";
 import {ClapGameManagerInstance} from "./server/clapGameManager.js";
-import {Room} from "./server/Room.js";
+import Room from "./server/Room.js";
 import {CHAPTER_STEP, EVENT, GAME_STEP, ROLE} from "./server/constants.js";
 
 const port = 8080;
@@ -293,6 +293,12 @@ io.on('connection', (socket) => {
 
       io.in(arg.roomId).emit(EVENT.ROOM_STATUS, room);
     }
+  });
+
+  socket.on('killRoom', (arg) => {
+    io.to(arg.roomId).emit('killRoom');
+
+    rooms = rooms.filter(room => room.id !== arg.roomId);
   });
 
   ClapGameManagerInstance.initListenners(io, socket);
