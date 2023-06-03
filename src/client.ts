@@ -13,7 +13,7 @@ import router from "./router";
 
 // TODO : for production
 // "undefined" means the URL will be computed from the `window.location` object
-const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-server.fly.dev/" : "http://172.28.59.22:8080";
+const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-server.fly.dev/" : "http://192.168.0.21:8080";
 
 let socket: Socket;
 export const getSocket = () => socket;
