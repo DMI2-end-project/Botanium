@@ -11,7 +11,7 @@ const http = createServer(app);
 const io = new Server(http, {
   cors: {
     // origins: [`http://localhost:${port}`],
-    origins: [`http://192.168.0.13:${port}`]
+    origins: [`http://192.168.0.21:${port}`]
   },
 });
 
@@ -41,10 +41,11 @@ const joinRoom = (socket, arg) => {
   if (arg.role === ROLE.TEACHER) {
     room.gamemaster = socket.id;
   } else if (arg.role === ROLE.STUDENT) {
-    room.addTeam(socket.id, arg.teamName);
+    let team = room.addTeam(socket.id, arg.teamName);
+    io.to(socket.id).emit(EVENT.TEAM_STATUS, team);
   }
 
-  io.to(socket.id).emit(EVENT.ROOM_STATUS, room);
+  io.to(room.id).emit(EVENT.ROOM_STATUS, room);
   //  io.sockets.adapter.rooms.get(arg.roomId)
 }
 
@@ -54,8 +55,12 @@ const cleanRoom = (socket) => {
     // Remove user from room
     if (room.gamemaster === socket.id) {
       room.gamemaster = undefined;
+      io.in(room.id).emit(EVENT.ROOM_STATUS, room);
     } else {
-      room.removeTeam(socket.id);
+      let team = room.removeTeam(socket.id);
+      if (team) {
+        io.in(room.id).emit(EVENT.ROOM_STATUS, room);
+      }
     }
 
     // Remove empty rooms
@@ -91,9 +96,8 @@ io.on('connection', (socket) => {
     }
   })
 
-  socket.on('disconnect', () => {
+  socket.on('disconnect', (arg) => {
     //console.log('a user disconnected', socket.id);
-
     cleanRoom(socket);
   });
 
@@ -127,7 +131,6 @@ io.on('connection', (socket) => {
           teamId: index,
           teamName: team.name
         });
-        console.log('team', team, index);
       });
 
       io.in(arg.roomId).emit(EVENT.ROOM_STATUS, room);
@@ -185,7 +188,6 @@ io.on('connection', (socket) => {
       room.gameStep = GAME_STEP.PLAY;
 
       room.playingTeams.map((team, index) => {
-        console.log('playing teams', team, team.socketId, index, team.name);
         team.teamId = index;
         io.to(team.socketId).emit(EVENT.START_GAME, {
           //gameId: arg.gameId,
@@ -214,7 +216,6 @@ io.on('connection', (socket) => {
 
     if (room) {
       let team = room.teams.find(team => team.teamId === arg.teamId);
-      console.log('team', team)
 
       if (team) {
         team.currentSequence = arg.currentSequence;
@@ -271,7 +272,10 @@ io.on('connection', (socket) => {
     if (room) {
       room.gameStep = GAME_STEP.IDLE;
       room.currentSequence = 0;
-      room.teams.map(team => team.currentSequence = 0);
+      room.teams.map(team => {
+        team.currentSequence = 0
+        team.isValidated = false;
+      });
 
       room.chapterStep = CHAPTER_STEP.STORY;
 

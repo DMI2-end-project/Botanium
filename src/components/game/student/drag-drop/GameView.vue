@@ -20,8 +20,6 @@ const draggable = ref<HTMLDivElement>();
 const droppables = ref<HTMLDivElement[]>([]);
 const currentAnswer = ref<any>(null);
 
-console.log('data', gameStore.data);
-
 onMounted(async () => {
   await nextTick();
   //const droppables = document.querySelectorAll<HTMLDivElement>('.droppable');
@@ -29,7 +27,6 @@ onMounted(async () => {
 
   if (gameStore.teamId !== undefined) {
     teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
-    console.log('teamData', teamData.value);
 
     if (draggable.value) {
       Draggable.create(draggable.value, {

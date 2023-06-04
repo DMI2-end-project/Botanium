@@ -79,7 +79,7 @@ export default class Room {
 
   isClapReady() {
     return this.playingTeams.filter((t) => t.hasMicro === null).length > 0 ? null :
-    (this.playingTeams.filter((t) => t.hasMicro).length >= 1 ? true : false);
+      (this.playingTeams.filter((t) => t.hasMicro).length >= 1 ? true : false);
   }
 
   isGameFinished() {
@@ -87,26 +87,25 @@ export default class Room {
   }
 
   addTeam(socketId, teamName) {
-    let teamWId = this._teams.find(t => t.socketId === socketId);
-    let teamWName = this._teams.find(t => t.name === teamName);
+    /*  With router.push we keep our socketId from page to page */
+    let team = this._teams.find(t => t.socketId === socketId);
 
-    console.log('team', teamWId, teamWName, teamWName === teamWId);
-
-    if (!teamWId && !teamWName) {
-      this.createTeam(socketId);
-    }
-
-    if (teamWId) {
-
-    } else if (teamWName) {
-      if (teamWName && !teamWName.isConnected) {
-        teamWName.socketId = socketId;
-        teamWName.isConnected = true;
+    if (!team) {
+      /*  When we loose the connection or reload page socketId is changing */
+      team = this._teams.find(t => t.name === teamName);
+      if (!team) {
+        team = this.createTeam(socketId);
       } else {
-        this.createTeam(socketId);
+        if (!team.isConnected) {
+          team.socketId = socketId;
+          team.isConnected = true;
+        } else {
+          team = this.createTeam(socketId);
+        }
       }
     }
 
+    return team;
   }
 
   createTeam(socketId) {
@@ -115,9 +114,15 @@ export default class Room {
     while (names[i].isTaken && i < names.length - 1) {
       i++;
     }
-    team.name = names[i].name;
-    names[i].isTaken = true;
+    if (names[i].isTaken) {
+      // Debug
+      team.name = 'random' + Math.round(Math.random() * 100);
+    } else {
+      team.name = names[i].name;
+      names[i].isTaken = true;
+    }
     this._teams.push(team);
+    return team;
   }
 
   removeTeam(socketId) {
@@ -125,8 +130,8 @@ export default class Room {
 
     if (teamIndex > -1) {
       this._teams[teamIndex].isConnected = false;
+      return this._teams[teamIndex];
     }
-    console.log(this, this._teams, this._teams[teamIndex]);
   }
 
   reset = () => {

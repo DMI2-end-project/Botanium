@@ -13,7 +13,7 @@ import router from "./router";
 
 // TODO : for production
 // "undefined" means the URL will be computed from the `window.location` object
-const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-server.fly.dev/" : "http://192.168.0.13:8080";
+const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-server.fly.dev/" : "http://192.168.0.21:8080";
 
 let socket: Socket;
 export const getSocket = () => socket;
@@ -41,12 +41,11 @@ export const initClient = (pinia: Pinia) => {
   });
 
   socket.on("join", () => {
-    console.log("join", mainStore.roomId);
   });
 
   // TODO
   socket.on(EVENT.ROOM_STATUS, (arg) => {
-    console.log('EVENT.ROOM_STATUS', arg);
+    console.log('Client EVENT.ROOM_STATUS', arg);
 
     if (arg.chapterId) {
       mainStore.chapterId = arg.chapterId
@@ -81,7 +80,7 @@ export const initClient = (pinia: Pinia) => {
       }
     }
 
-    // TODO Modal de redirection
+    // TODO : Modal de redirection
     if(mainStore.role === ROLE.STUDENT) {
       if (arg.chapterStep !== CHAPTER_STEP.IDLE && router.currentRoute.value.name !== 'Chapter') {
         //router.push(`/chapitre/${mainStore.getChapterId}`);

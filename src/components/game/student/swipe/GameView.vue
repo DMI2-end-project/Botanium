@@ -14,7 +14,6 @@ const mainStore = useMainStore();
 const gameStore = useGameStore();
 
 const teamData = ref<any>(null);
-console.log('data', gameStore.data);
 
 let canvas = ref<HTMLCanvasElement | null>(null);
 let width = 200;
@@ -85,7 +84,6 @@ onMounted(() => {
 
     if (gameStore.teamId !== undefined) {
       teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
-      console.log('teamData', teamData.value)
       let soilZone = new Polygon(teamData.value.points);
       let soilGraphic = new Graphics();
       soilGraphic.beginFill(0XFF0000, 0.5);

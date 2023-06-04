@@ -6,6 +6,7 @@ export const ROLE = {
 
 export const EVENT = {
   ROOM_STATUS: 'roomStatus',
+  TEAM_STATUS: 'teamStatus',
   LAUNCH_CHAPTER: 'launchChapter',
   START_CHAPTER: 'startChapter',
   NEXT_PARAGRAPH: 'nextParagraph',

@@ -10,6 +10,7 @@ import {connectClient} from "./client";
 import AppLayout from "./layouts/AppLayout.vue";
 import DevLayout from "./layouts/DevLayout.vue";
 import GameLayout from "./layouts/GameLayout.vue";
+
 import chapterData from "./assets/chapters-data/chapters-data.json";
 import gameData from "./assets/game-data/game-data-v2.json";
 
@@ -41,7 +42,7 @@ export default defineComponent({
   methods: {
     async connectSocket() {
       let classRoom = undefined;
-      localStorage.removeItem('teamName');
+      //localStorage.removeItem('teamName');
 
       switch (this.mainStore.role) {
         case ROLE.TEACHER:
@@ -54,13 +55,8 @@ export default defineComponent({
           this.mainStore.roomId = classRoom?.id;
           let teamId = localStorage.getItem('teamId');
           let teamName = localStorage.getItem('teamName');
-          let currentSequence = localStorage.getItem('currentSequence');
-          let currentParagraph = localStorage.getItem('currentParagraph');
-          console.log('teamId', teamId, teamName);
           this.gameStore.teamId = teamId ? +teamId : undefined;
           this.gameStore.teamName = teamName ? teamName : undefined;
-          this.gameStore.currentSequence = currentSequence ? +currentSequence : 0;
-          this.chapterStore.currentParagraph = currentParagraph ? +currentParagraph : 0;
           await connectClient();
           break;
       }
