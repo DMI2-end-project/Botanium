@@ -26,7 +26,7 @@ class AudioManager {
       this.analyser = this.context.createAnalyser();
 
       source.connect(this.analyser);
-      this.analyser.connect(this.context.destination);
+      // this.analyser.connect(this.context.destination);
 
       this.analyser.fftSize = 2048;
       this.analyser.smoothingTimeConstant = 0.8;
@@ -60,7 +60,6 @@ class AudioManager {
       this.context.close();
       this.context = null;
     }
-    console.log('AudioManager pause micro 2 ', this.stream, this.context)
   }
 
   public unPauseMicrophone() {
@@ -73,24 +72,17 @@ class AudioManager {
     let t1 = 0;
     let t2 = 0;
     let deltaTime = 0;
-    for (let i = 0; i < 10; i++) {
-      await setTimeout(() => {
-        const dateEmit = Date.now()
-        this.socket.emit(AUDIO_EVENT.AUDIO_SYNCHRO, {
-          roomId: this.mainStore.roomId,
-        }, (response: number) => {
-          const end = Date.now();
-          latency = end - dateEmit;
-          t1 = response - dateEmit - (latency / 2)
-          t2 = response - end + (latency / 2)
-          deltaTime += (t1 + t2) / 2
-          if (i === 9) {
-            deltaTime = deltaTime / 10
-            return deltaTime;
-          }
-        });
-      }, 10 * i)
-    }
+    const dateEmit = Date.now()
+    await this.socket.emit(AUDIO_EVENT.AUDIO_SYNCHRO, {
+      roomId: this.mainStore.roomId,
+    }, (response: number) => {
+      const end = Date.now();
+      latency = end - dateEmit;
+      t1 = response - dateEmit - (latency / 2)
+      t2 = response - end + (latency / 2)
+      deltaTime += (t1 + t2) / 2
+      return deltaTime;
+    });
     return deltaTime;
   }
 }

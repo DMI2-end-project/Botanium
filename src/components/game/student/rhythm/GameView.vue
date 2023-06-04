@@ -1,6 +1,11 @@
 <template>
   <Pulse ref="pulse" :color="feedbackMessage === 'Excellent' || feedbackMessage === 'Bien' ? 'green' : (feedbackMessage === 'Très mauvais' || feedbackMessage === 'Mauvais' ? 'red' : 'purple')" />
   <div ref="feedback" class="feedback relatif text-purple uppercase text-xl font-title font-bold"></div>
+  <p>deltaTimeWithServer : {{ delta }}</p>
+  <p>En rythme : {{ rhythm }}</p>
+  <div class="w-16 h-32 bg-white fixed  top-[45vh] left-[35vw]">
+    <div :style="'transform: scaleY(' + rhythm + ')'" class="absolute top-0 w-full bg-purple h-full origin-bottom" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -36,7 +41,8 @@ export default defineComponent({
       ],
       feedbackMessage: "",
       raf: 0 as number,
-      lastClap: 0 as number
+      lastClap: 0 as number,
+      delta: AudioManagerInstance.deltaTimeWithServer as number
     };
   },
   mounted() {
@@ -58,7 +64,7 @@ export default defineComponent({
       cancelAnimationFrame(this.raf)
     },
     async play() {
-      if (this.hasMicro()) {
+      if (this.hasMicro() && !AudioManagerInstance.stream) {
         AudioManagerInstance.unPauseMicrophone()
       }
       const waitTime = this.rhythmFreq - ((Date.now() + AudioManagerInstance.deltaTimeWithServer) % this.rhythmFreq)
@@ -77,9 +83,10 @@ export default defineComponent({
     },
     loop() {
       const time = (Date.now() + AudioManagerInstance.deltaTimeWithServer) % this.rhythmFreq
+      this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
 
       if (this.lastClap + (this.rhythmFreq / 2) < Date.now() + AudioManagerInstance.deltaTimeWithServer && AudioManagerInstance.analyser && AudioManagerInstance.stream && this.frequencyData) {
-        this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
+
         this.feedbackMessage = ''
         AudioManagerInstance.analyser.getByteFrequencyData(this.frequencyData);
         this.detectClap(this.frequencyData);
