@@ -9,6 +9,7 @@
       {
         "type": "multipleChoice",
         "teamsNeeded": true,
+        "microNeeded": false,
         "gamemaster": {
           "instruction": "Chaque groupe doit retrouver un bienfait pour ensuite les communiquer tous ensemble à Capucine !",
           "answers": [
@@ -122,6 +123,7 @@
       {
         "type": "swipe",
         "teamsNeeded": true,
+        "microNeeded": false,
         "teams": [
           {
             "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
@@ -180,6 +182,7 @@
       {
         "type": "dragDrop",
         "teamsNeeded": true,
+        "microNeeded": false,
         "gamemaster": {
           "instruction": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées.",
           "answers": [
@@ -296,6 +299,7 @@
       {
         "type": "cursor",
         "teamsNeeded": true,
+        "microNeeded": false,
         "gamemaster": {
           "instruction": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol.",
           "answers": [
@@ -361,12 +365,16 @@
       {
         "type": "rhythm",
         "teamsNeeded": false,
+        "microNeeded": true,
         "gamemaster": {
           "instruction": "Capucine a besoin de ton aide pour déterrer la carotte. Frappe dans tes mains avec tes camarades pour lui donner le rythme."
         },
         "teams": [
           {
-            "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette."
+            "instruction": ""
+          },
+          {
+            "instruction": ""
           }
         ],
         "congratulation": {

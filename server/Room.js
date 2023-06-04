@@ -74,7 +74,12 @@ export default class Room {
   }
 
   get validatedTeams() {
-    return this.playingTeams.filter(t => t.isValidated)
+    return this.playingTeams.filter((t) => t.isValidated);
+  }
+
+  isClapReady() {
+    return this.playingTeams.filter((t) => t.hasMicro === null).length > 0 ? null :
+    (this.playingTeams.filter((t) => t.hasMicro).length >= 1 ? true : false);
   }
 
   isGameFinished() {

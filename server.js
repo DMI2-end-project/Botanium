@@ -10,9 +10,9 @@ const app = express();
 const http = createServer(app);
 const io = new Server(http, {
   cors: {
-    origins: [`http://localhost:${port}`]
-    // origins: [`http://192.168.0.21:${port}`]
-  }
+    // origins: [`http://localhost:${port}`],
+    origins: [`http://192.168.0.13:${port}`]
+  },
 });
 
 http.listen(port, () => {
@@ -32,6 +32,7 @@ const joinRoom = (socket, arg) => {
   if (roomIndex === -1) {
     room = new Room(arg.roomId);
     rooms.push(room);
+    ClapGameManagerInstance.updateRooms(rooms)
   } else {
     room = rooms[roomIndex];
   }
@@ -182,9 +183,6 @@ io.on('connection', (socket) => {
       });
 
       room.gameStep = GAME_STEP.PLAY;
-
-      ClapGameManagerInstance.reset();
-      ClapGameManagerInstance.setTeams(room.playingTeams.length);
 
       room.playingTeams.map((team, index) => {
         console.log('playing teams', team, team.socketId, index, team.name);

@@ -1,9 +1,6 @@
 <template>
   <div>
-    <button @click="openModal" class="text-lg font-bold text-green bg-beige flex items-center rounded-full p-2 group hover:bg-green hover:text-beige transition">
-      <div class="rounded-full border border-green aspect-square w-10 h-10 p-2 flex flex-col items-center transition group-hover:border-beige"><Wifi /></div>
-      <p class="text-sm px-3">Connexion</p>
-    </button>
+    <CircleButton @click="openModal" text="Connexion"><Wifi /></CircleButton>
   </div>
 
   <ModalView v-if="isModalOpen">
@@ -15,8 +12,13 @@
       <h2 class="font-title font-bold text-2xl">Tablettes connectées</h2>
       <div class="flex flex-col items-center gap-3 my-8">
         <div v-for="team in gameStore.teams" :v-bind="team._socketId"
-        :class="team.isConnected ? 'bg-green-medium' : 'bg-red'" class="text-beige w-fit px-8 py-1 rounded-full">
-          <p>{{ team._name }}</p>
+        :class="team.isConnected ? (microNeeded && !team.hasMicro ? 'bg-yellow' : 'bg-green-medium') : 'bg-red'" class="text-beige w-fit pl-4 pr-8 py-1 rounded-full flex items-center">
+          <div v-if="microNeeded">
+            <Loading v-if="team.hasMicro === null" class="h-6 mr-4" />
+            <MicroOn v-else-if="team.hasMicro" class="h-6 mr-4" />
+            <MicroOff v-else-if="!team.hasMicro" class="h-6 mr-4" />
+          </div>
+          <p class="pl-4">{{ team._name }}</p>
         </div>
       </div>
 
@@ -36,14 +38,18 @@ import {useGameStore} from "../../../stores/gameStore";
 import {useMainStore} from "../../../stores/mainStore";
 import Wifi from "./../../../assets/svg/ico-wifi.svg?component";
 import Cross from "./../../../assets/svg/ico-cross.svg?component";
+import MicroOn from "./../../../assets/svg/ico-micro-on.svg?component";
+import MicroOff from "./../../../assets/svg/ico-micro-off.svg?component";
+import Loading from "./../../../assets/svg/ico-loading.svg?component";
 import ModalView from "../../common/ModalView.vue";
 import RoundButton from "../../common/RoundButton.vue";
+import CircleButton from "../../common/CircleButton.vue";
 import { leading } from '../../../common/Lib';
 import { COLOR, SIZE } from '../../../common/Constants';
 
 export default defineComponent({
   name: 'InstructionComponent',
-  components: {Wifi, ModalView, RoundButton, Cross},
+  components: {Wifi, ModalView, RoundButton, CircleButton, Cross, MicroOn, MicroOff, Loading},
   data() {
     return {
       gameStore: useGameStore(),
@@ -59,6 +65,9 @@ export default defineComponent({
   computed: {
     teamsConnected() {
       return this.gameStore.teams.filter(team => team.isConnected)
+    },
+    microNeeded() {
+      return this.gameStore.data.gameSequences[this.gameStore.currentSequence].microNeeded
     },
     COLOR() {
       return COLOR

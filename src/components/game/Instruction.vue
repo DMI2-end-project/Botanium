@@ -10,31 +10,46 @@
     <RoundButton v-if="mainStore.role === ROLE.TEACHER" @click="next" :color="COLOR.PINK" class="mt-8 text-lg font-bold">
       >
     </RoundButton>
+    <CircleButton v-if="mainStore.role === ROLE.STUDENT && microNeeded" @click="startMicrophone" class="mt-10" text="Allume ton micro" :color="COLOR.PURPLE" :size="SIZE.MD" :colorReverse="true"><MicroOn /></CircleButton>
   </div>
+  <!-- <ModalView v-if="isModalOpen">
+    <div class="relative my-2 flex flex-col items-center">
+      <h1 class="mt-8">Indice :</h1>
+    </div>
+  </ModalView> -->
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';
 import {useMainStore} from "../../stores/mainStore";
 import {useGameStore} from "../../stores/gameStore";
-import { COLOR, ROLE } from "../../common/Constants";
+import { COLOR, ROLE, SIZE } from "../../common/Constants";
 import { GameMasterManagerInstance } from "../../common/GameMasterManager";
 
 import SignboardVue from "../common/Signboard.vue";
 import RoundButton from "../common/RoundButton.vue";
+import CircleButton from "../common/CircleButton.vue";
+import ModalView from "../common/ModalView.vue";
+
+import MicroOn from "./../../assets/svg/ico-micro-on.svg?component";
 
 export default defineComponent({
   name: 'InstructionComponent',
-  components: {SignboardVue, RoundButton},
+  components: {SignboardVue, RoundButton, CircleButton, ModalView, MicroOn},
   data() {
     return {
       mainStore: useMainStore(),
       gameStore: useGameStore(),
+      streamAudio: null as MediaStream | null,
+      isModalOpen: false,
     }
   },
   computed: {
     COLOR() {
       return COLOR
+    },
+    SIZE() {
+      return SIZE
     },
     ROLE() {
       return ROLE
@@ -44,14 +59,29 @@ export default defineComponent({
     },
     text() {
       return this.gameStore.data?.introduction.text
+    },
+    microNeeded() {
+      return this.gameStore.data.gameSequences[this.gameStore.currentSequence].microNeeded
     }
   },
   methods: {
     next() {
       GameMasterManagerInstance.startGame()
     },
+    async startMicrophone() {
+      try {
+          this.streamAudio = await navigator.mediaDevices.getUserMedia({ audio: true });
+        } catch (err) {
+
+        }
+    },
     openModal() {
-      console.log('yooo')
+      this.mainStore.isModalOpen = true;
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.mainStore.isModalOpen = false;
+      this.isModalOpen = false;
     }
   }
 });

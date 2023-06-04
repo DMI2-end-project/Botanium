@@ -4,7 +4,7 @@ import {useGameStore} from "../stores/gameStore";
 import {useChapterStore} from "../stores/chapterStore";
 import {getSocket} from "./../client";
 import {leading} from "../common/Lib";
-import {CHAPTER_STATUS, EVENT, GAME_STEP} from "./Constants";
+import { CHAPTER_STATUS, EVENT, GAME_STEP, CLAP_EVENT } from "./Constants";
 import gameData from "../assets/game-data/game-data-v2.json";
 import {DatabaseManagerInstance} from "./DatabaseManager";
 import router from "../router";
@@ -34,6 +34,10 @@ class GameMasterManager {
 
     this._socket.on(EVENT.GAME_VALIDATION, (arg) => {
       this._gameStore.currentStep = GAME_STEP.END;
+    });
+
+    this._socket.on(CLAP_EVENT.CLAP_READY, (arg) => {
+      this._gameStore.teams = arg._teams;
     });
   }
 
@@ -139,7 +143,7 @@ class GameMasterManager {
     })
     await this._router.push('/chapitres');
   }
-  
+
   public async killRoom() {
     await this._socket.emit('killRoom', {
       roomId: this._mainStore.roomId,
