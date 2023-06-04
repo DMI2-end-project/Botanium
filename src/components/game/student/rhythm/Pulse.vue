@@ -1,19 +1,7 @@
 <template>
   <div class="flex justify-center items-center relative">
-    <div ref="canvasContainer" class="w-full -my-20"></div>
-    <!-- <div class="animate-circle rounded-full relative">
-      <div :style="pulse ?
-      'transform: scale(1); opacity: 1;' :
-      'transform: scale(1.4); opacity: 0.6;'
-      " class="h-60 w-60 rounded-full bg-white absolute inset-0 m-auto"></div>
-      <div :style="pulse ?
-      'transform: scale(1)' :
-      'transform: scale(1);'
-      " class="h-60 w-60 rounded-full bg-purple inset-0 m-auto"></div>
-    </div>
-    <p :style="pulse ? 'transform: scale(1); opacity: 1;' : 'transform: scale(0.9); opacity: 0;'" class=" animate-text absolute text-white text-xl">
-      Clap !
-    </p> -->
+    <div ref="canvasContainer" class="canvas w-full -my-20" :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" ></div>
+    <!-- :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" -->
   </div>
 </template>
 
@@ -26,6 +14,11 @@ export default defineComponent({
   data() {
     return {
       pulse: false,
+      colors: {
+        'purple' : 0,
+        'red' : 100,
+        'green' : -100,
+      },
       app: new PIXI.Application({
         autoStart: true,
         width: 850,
@@ -35,9 +28,10 @@ export default defineComponent({
       animation: {} as PIXI.AnimatedSprite,
     };
   },
-  watch: {
-    pulse() {
-      // console.log(this.pulse)
+  props: {
+    color: {
+      default: 'purple', // purple red green
+      type: String
     }
   },
   mounted() {
@@ -46,8 +40,7 @@ export default defineComponent({
   methods: {
     startAnimation() {
       if (this.animation.isSprite) {
-        console.log(0, this.animation.currentFrame)
-        this.animation.gotoAndPlay(0)
+        this.animation.gotoAndPlay(4)
       }
     },
     async loadSprite() {
@@ -61,7 +54,7 @@ export default defineComponent({
 
       const animation = await PIXI.AnimatedSprite.fromFrames(animations["animation_clap"]);
 
-      animation.animationSpeed = 0.51;
+      animation.animationSpeed = 0.35;
       animation.width = app.view.width;
       animation.height = app.view.height;
       animation.anchor.set(0.5);
@@ -70,22 +63,13 @@ export default defineComponent({
       app.stage.addChild(animation);
 
       this.animation = animation
-
-      // this.app.ticker.add(this.update)
     },
   }
 });
 </script>
 
 <style scoped>
-
-.animate-circle > div {
-  transition: transform 0.3s ease-in, opacity 0.3s ease-in-out;;
-}
-
-.animate-text {
-  transform: scale(0.9);
-  opacity: 0;
-  transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+.canvas {
+  transition: filter 0.15s ease-out;
 }
 </style>

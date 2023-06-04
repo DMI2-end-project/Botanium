@@ -5,6 +5,7 @@ export default class Team {
   isPlaying = false;
   isConnected = true;
   isValidated = false;
+  hasMicro = null; // boolean
   currentSequence = 0;
 
   constructor(id) {
@@ -38,6 +39,7 @@ export default class Team {
   reset() {
     this.isPlaying = false;
     this.isValidated = false;
+    this.hasMicro = null;
     this.currentSequence = 0;
   }
 }

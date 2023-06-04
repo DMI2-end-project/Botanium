@@ -1,9 +1,9 @@
 <template>
   <div class="relative">
-    <button @click="initAudioContext" v-if="!isReady && microActive">Je suis prêt(e)</button>
+    <button class="mt-10" @click="startMicrophone" v-if="!isReady && microActive">Je suis prêt(e)</button>
     <div v-if="!microActive && !isReady">
       <p>Le micro est désactiver, l'équipe ne peut pas participer au jeu. Pour activer le micro, il faut accéder aux paramètre de cette page web.</p>
-      <button @click="initAudioContext">Retester l'activiation du micro</button>
+      <button @click="startMicrophone">Retester l'activiation du micro</button>
       <button @click="readyWithoutMicro">Faire l'activité sans le micro</button>
     </div>
     <!-- <p>Delta time : {{ deltaTime }}</p>
@@ -23,11 +23,14 @@ import { useMainStore } from "../../../../stores/mainStore";
 import { getSocket } from "../../../../client";
 import AudioListenerElement from './AudioListenerElement.vue';
 import { CLAP_EVENT } from "../../../../common/Constants";
+import { TeamManagerInstance } from '../../../../common/TeamManager';
 
 export default defineComponent({
     name: "StudentGameView",
     data() {
-        return {
+      return {
+            stream: null as MediaStream | null,
+            context: null as AudioContext | null,
             publicPath: window.location.origin,
             mainStore: useMainStore(),
             gameStore: useGameStore(),
@@ -38,7 +41,7 @@ export default defineComponent({
             launchGame: false,
             deltaTime: 0,
             deltaTimes: [],
-            currentTime: Date.now(),
+            // currentTime: Date.now(),
             t1: 0,
             t2: 0,
             latency: 0
@@ -50,20 +53,22 @@ export default defineComponent({
       this.socket.on(CLAP_EVENT.CLAP_LAUNCH, (arg) => {
         this.launchGame= arg
       });
-      setInterval(() => {
-      this.currentTime = Date.now();
-    }, 100);
+    //   setInterval(() => {
+    //   this.currentTime = Date.now();
+    // }, 100);
+      window.addEventListener("blur", this.stopMicrophone);
+      window.addEventListener("focus", this.startMicrophone);
     },
     methods: {
-        async initAudioContext() {
+        async startMicrophone() {
         try {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          const context = new AudioContext();
-          const source = context.createMediaStreamSource(stream);
-          this.analyser = context.createAnalyser();
+          this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          this.context = new AudioContext();
+          const source = this.context.createMediaStreamSource(this.stream);
+          this.analyser = this.context.createAnalyser();
 
           source.connect(this.analyser);
-          this.analyser.connect(context.destination);
+          this.analyser.connect(this.context.destination);
 
           this.analyser.fftSize = 2048;
           this.analyser.smoothingTimeConstant = 0.8;
@@ -72,10 +77,21 @@ export default defineComponent({
           this.microActive = false
         }
       },
+      stopMicrophone() {
+        if (this.stream) {
+          this.stream.getTracks().forEach((track) => track.stop());
+          this.stream = null;
+        }
+
+        if (this.context) {
+          this.context.close();
+          this.context = null;
+        }
+      },
       readyWithoutMicro() {
         this.sendReady(false)
       },
-      sendReady(microIsActive: Boolean) {
+      sendReady(hasMicro: Boolean) {
         for (let i = 0; i < 10; i++) {
           setTimeout(() => {
             const dateEmit = Date.now()
@@ -89,10 +105,7 @@ export default defineComponent({
                 this.deltaTime += (this.t1 + this.t2) / 2
                 if (i === 9) {
                   this.deltaTime = this.deltaTime / 10
-                  this.socket.emit(CLAP_EVENT.CLAP_READY, {
-                    roomId: this.mainStore.roomId,
-                    microIsActive: true,
-                  });
+                  TeamManagerInstance.clapReady(hasMicro);
                 }
             });
           }, 10 * i)

@@ -2,7 +2,7 @@ const CLAPEVENT = {
   CLAP_SCORE: "clapScore",
   CLAP_READY: "clapReady",
   CLAP_LAUNCH: "clapLaunch",
-  CLAP_SYNCHRO: 'clapSynchro',
+  CLAP_SYNCHRO: "clapSynchro",
 };
 
 class ClapGameManager {
@@ -16,29 +16,34 @@ class ClapGameManager {
     if (ClapGameManager.exists) {
       return ClapGameManager.instance;
     }
-    this.teams = 0;
-    this.teamsReady = 0;
-    this.teamsWithMicro = 0;
+    this.rooms = []
   }
 
   initListenners(io, socket) {
-      socket.on(CLAPEVENT.CLAP_SCORE, (arg) => {
-        console.log("CLAPEVENT.CLAP_SCORE", arg);
-        io.in(arg.roomId).emit(CLAPEVENT.CLAP_SCORE, arg.clapScore);
-      });
+    socket.on(CLAPEVENT.CLAP_SCORE, (arg) => {
+      console.log("CLAPEVENT.CLAP_SCORE", arg);
+      io.in(arg.roomId).emit(CLAPEVENT.CLAP_SCORE, arg.clapScore);
+    });
 
     socket.on(CLAPEVENT.CLAP_READY, (arg) => {
-        this.teamsReady += 1;
-        this.teamsWithMicro += arg.microIsActive ? 1 : 0;
-        if (
-          this.teamsWithMicro === 0 &&
-          this.teamsReady >= this.teams
-        ) {
-          io.in(arg.roomId).emit(CLAPEVENT.CLAP_LAUNCH, false);
-        } else if (this.teamsReady >= this.teams) {
-          io.in(arg.roomId).emit(CLAPEVENT.CLAP_LAUNCH, true);
+      console.log("CLAPEVENT.CLAP_READY", arg);
+      let room = this.rooms.find((room) => room.id === arg.roomId);
+      if (room) {
+        let team = room.teams.find((team) => team.teamId === arg.teamId);
+
+        if (team) {
+          team.hasMicro = arg.hasMicro;
         }
-        io.in(arg.roomId).emit(CLAPEVENT.CLAP_READY, arg.microIsActive);
+
+        const isReady = room.isClapReady();
+
+
+        if (isReady !== null) {
+          io.in(arg.roomId).emit(CLAPEVENT.CLAP_LAUNCH, isReady);
+        }
+
+        io.in(arg.roomId).emit(CLAPEVENT.CLAP_READY, room);
+      }
     });
 
     socket.on(CLAPEVENT.CLAP_SYNCHRO, (arg, callback) => {
@@ -46,17 +51,8 @@ class ClapGameManager {
     });
   }
 
-  setTeams(number) {
-    this.teams = number;
-    // setInterval(() => {
-    //   console.log(Math.floor(Date.now() / 100));
-    // }, 100);
-  }
-
-  reset() {
-    this.teams = 0;
-    this.teamsReady = 0;
-    this.teamsWithMicro = 0;
+  updateRooms(rooms) {
+    this.rooms = rooms;
   }
 }
 

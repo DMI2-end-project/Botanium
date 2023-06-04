@@ -66,15 +66,20 @@ export default class Room {
   }
 
   get connectedTeams() {
-    return this._teams.filter(t => t.isConnected);
+    return this._teams.filter((t) => t.isConnected);
   }
 
   get playingTeams() {
-    return this._teams.filter(t => t.isPlaying);
+    return this._teams.filter((t) => t.isPlaying);
   }
 
   get validatedTeams() {
-    return this.playingTeams.filter(t => t.isValidated)
+    return this.playingTeams.filter((t) => t.isValidated);
+  }
+
+  isClapReady() {
+    return this.playingTeams.filter((t) => t.hasMicro === null).length > 0 ? null :
+    (this.playingTeams.filter((t) => t.hasMicro).length >= 1 ? true : false);
   }
 
   isGameFinished() {
@@ -82,17 +87,16 @@ export default class Room {
   }
 
   addTeam(socketId, teamName) {
-    let teamWId = this._teams.find(t => t.socketId === socketId);
-    let teamWName = this._teams.find(t => t.name === teamName);
+    let teamWId = this._teams.find((t) => t.socketId === socketId);
+    let teamWName = this._teams.find((t) => t.name === teamName);
 
-    console.log('team', teamWId, teamWName, teamWName === teamWId);
+    console.log("team", teamWId, teamWName, teamWName === teamWId);
 
     if (!teamWId && !teamWName) {
       this.createTeam(socketId);
     }
 
     if (teamWId) {
-
     } else if (teamWName) {
       if (teamWName && !teamWName.isConnected) {
         teamWName.socketId = socketId;
@@ -101,13 +105,12 @@ export default class Room {
         this.createTeam(socketId);
       }
     }
-
   }
 
   createTeam(socketId) {
     let team = new Team(socketId);
     let i = 0;
-    while (names[i].isTaken) {
+    while (names[i].isTaken) { // TODO index out of range
       i++;
     }
     team.name = names[i].name;
@@ -116,7 +119,7 @@ export default class Room {
   }
 
   removeTeam(socketId) {
-    let teamIndex = this._teams.findIndex(t => t.socketId === socketId);
+    let teamIndex = this._teams.findIndex((t) => t.socketId === socketId);
 
     if (teamIndex > -1) {
       this._teams[teamIndex].isConnected = false;
@@ -134,8 +137,8 @@ export default class Room {
     this.gameId = 0;
     this.gameStep = 0;
 
-    this._teams.map(team => team.reset());
-  }
+    this._teams.map((team) => team.reset());
+  };
 
   shuffleTeams() {
     this._teams = shuffle(this._teams);
