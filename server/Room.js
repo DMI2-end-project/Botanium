@@ -31,26 +31,33 @@ export default class Room {
   gameId = 0;
   gameStep = 0;
 
+  clapGameScore = 0;
+
   _names = [
     {
-      name: 'Les papillons',
-      isTaken: false
-    }, {
-      name: 'Les escargots',
-      isTaken: false
-    }, {
-      name: 'Les graines',
-      isTaken: false
-    }, {
-      name: 'Les tulipes',
-      isTaken: false
-    }, {
-      name: 'Les arrosoirs',
-      isTaken: false
-    }, {
-      name: 'Les oiseaux',
-      isTaken: false
-    }
+      name: "Les papillons",
+      isTaken: false,
+    },
+    {
+      name: "Les escargots",
+      isTaken: false,
+    },
+    {
+      name: "Les graines",
+      isTaken: false,
+    },
+    {
+      name: "Les tulipes",
+      isTaken: false,
+    },
+    {
+      name: "Les arrosoirs",
+      isTaken: false,
+    },
+    {
+      name: "Les oiseaux",
+      isTaken: false,
+    },
   ];
 
   constructor(id) {
@@ -66,20 +73,25 @@ export default class Room {
   }
 
   get connectedTeams() {
-    return this._teams.filter(t => t.isConnected);
+    return this._teams.filter((t) => t.isConnected);
   }
 
   get playingTeams() {
-    return this._teams.filter(t => t.isPlaying);
+    return this._teams.filter((t) => t.isPlaying);
   }
 
   get validatedTeams() {
     return this.playingTeams.filter((t) => t.isValidated);
   }
 
-  isMircoReady() {
-    return this.playingTeams.filter((t) => t.hasMicro === null).length > 0 ? null :
-      (this.playingTeams.filter((t) => t.hasMicro).length >= 1);
+  get microOnTeams() {
+    return this.connectedTeams.filter((t) => t.hasMicro);
+  }
+
+  isRoomAudioReady() {
+    return this.connectedTeams.filter((t) => t.hasMicro === null).length > 0
+      ? null
+      : this.connectedTeams.filter((t) => t.hasMicro).length >= 1;
   }
 
   isGameFinished() {
@@ -88,11 +100,11 @@ export default class Room {
 
   addTeam(socketId, teamName) {
     /*  With router.push we keep our socketId from page to page */
-    let team = this._teams.find(t => t.socketId === socketId);
+    let team = this._teams.find((t) => t.socketId === socketId);
 
     if (!team) {
       /*  When we loose the connection or reload page socketId is changing */
-      team = this._teams.find(t => t.name === teamName);
+      team = this._teams.find((t) => t.name === teamName);
       if (!team) {
         team = this.createTeam(socketId);
       } else {
@@ -116,7 +128,7 @@ export default class Room {
     }
     if (this._names[i].isTaken) {
       // Debug
-      team.name = 'random' + Math.round(Math.random() * 100);
+      team.name = "random" + Math.round(Math.random() * 100);
     } else {
       team.name = this._names[i].name;
       this._names[i].isTaken = true;
@@ -126,7 +138,7 @@ export default class Room {
   }
 
   removeTeam(socketId) {
-    let teamIndex = this._teams.findIndex(t => t.socketId === socketId);
+    let teamIndex = this._teams.findIndex((t) => t.socketId === socketId);
 
     if (teamIndex > -1) {
       this._teams[teamIndex].isConnected = false;
@@ -144,8 +156,8 @@ export default class Room {
     this.gameId = 0;
     this.gameStep = 0;
 
-    this._teams.map(team => team.reset());
-  }
+    this._teams.map((team) => team.reset());
+  };
 
   shuffleTeams() {
     this._teams = shuffle(this._teams);

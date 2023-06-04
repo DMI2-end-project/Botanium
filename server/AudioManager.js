@@ -35,12 +35,6 @@ class AudioManager {
           team.hasMicro = arg.hasMicro;
         }
 
-        // const isReady = room.isMircoReady();
-
-        // if (isReady !== null) {
-        //   io.in(arg.roomId).emit(AUDIO_EVENT.AUDIO_GAME_READY, isReady);
-        // }
-
         io.in(arg.roomId).emit(AUDIO_EVENT.MICRO_READY, room);
       }
     });
@@ -48,7 +42,7 @@ class AudioManager {
     socket.on(AUDIO_EVENT.AUDIO_GAME_READY, (arg, callback) => {
       let room = this.rooms.find((room) => room.id === arg.roomId);
       if (room) {
-        const isReady = room.isMircoReady();
+        const isReady = room.isRoomAudioReady();
         callback(isReady);
       }
     });
