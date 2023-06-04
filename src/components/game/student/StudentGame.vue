@@ -1,5 +1,5 @@
 <template>
-  <div v-show="gameStore.currentStep === GAMESTEP.PLAY">
+  <div v-if="gameStore.currentStep === GAMESTEP.PLAY">
     <component v-bind:is="GameView" @validated="validated"/>
   </div>
 </template>
