@@ -14,7 +14,7 @@
         <div v-for="team in gameStore.teams" :v-bind="team._socketId"
         :class="team.isConnected ? (microNeeded && !team.hasMicro ? 'bg-yellow' : 'bg-green-medium') : 'bg-red'" class="text-beige w-fit pl-4 pr-8 py-1 rounded-full flex items-center">
           <div v-if="microNeeded">
-            <Loading v-if="team.hasMicro === null" class="h-6 mr-4" />
+            <Loading v-if="team.hasMicro === null" class="loading-animation h-6 mr-4" />
             <MicroOn v-else-if="team.hasMicro" class="h-6 mr-4" />
             <MicroOff v-else-if="!team.hasMicro" class="h-6 mr-4" />
           </div>

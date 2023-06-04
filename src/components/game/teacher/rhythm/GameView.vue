@@ -1,9 +1,6 @@
 <template>
   <div class="relative">
-    <Gauge v-if="isPlaying" :content="score" />
-    <p v-if="cantPlay">Aucun micro n'est activé. L'enigme ne peut pas être résolue. Passez à la suite</p>
-    <p>student ready : {{ studentReady }}</p>
-    <p>student with micro : {{ studentWithMicro }}</p>
+    <Gauge :content="score" />
     <button class="col-span-12 mx-auto my-5" @click="next">
       Exercice reussi
     </button>
@@ -15,7 +12,7 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import {EVENT, GAME_STEP, CLAP_EVENT} from "../../../../common/Constants";
+import {EVENT, GAME_STEP, AUDIO_EVENT} from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
 import Gauge from './Gauge.vue';
 
@@ -28,24 +25,17 @@ export default defineComponent({
             gameStore: useGameStore(),
             socket: getSocket(),
             score: 0 as number,
-            studentReady: 0,
-            studentWithMicro: 0,
-            isPlaying: false,
-            cantPlay: false,
         };
     },
     mounted() {
         this.updateScore = this.updateScore.bind(this)
-        this.socket.on(CLAP_EVENT.CLAP_SCORE, this.updateScore);
-        this.socket.on(CLAP_EVENT.CLAP_READY, (arg) => {
-            this.studentReady += 1
-            if (arg) {
-                this.studentWithMicro += 1
-            }
-        });
-        this.socket.on(CLAP_EVENT.CLAP_LAUNCH, (arg) => {
-            this.isPlaying = arg
-            this.cantPlay = !arg
+        this.socket.on(AUDIO_EVENT.CLAP_SCORE, this.updateScore);
+        this.socket.emit(AUDIO_EVENT.AUDIO_GAME_READY, {
+          roomId: this.mainStore.roomId,
+        }, (response: number) => {
+            if (!response) {
+            this.next()
+          }
         });
     },
     computed: {

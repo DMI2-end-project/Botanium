@@ -22,11 +22,11 @@ export enum EVENT {
   END_CHAPTER = 'endChapter',
 }
 
-export enum CLAP_EVENT {
-  CLAP_LAUNCH = 'clapLaunch',
-  CLAP_READY = 'clapReady',
+export enum AUDIO_EVENT {
+  AUDIO_GAME_READY = 'audioGameReady',
+  MICRO_READY = 'mircoReady',
+  AUDIO_SYNCHRO = 'audioSynchro',
   CLAP_SCORE = 'clapScore',
-  CLAP_SYNCHRO = 'clapSynchro',
 }
 
 export enum CHAPTER_STATUS {

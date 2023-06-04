@@ -171,6 +171,26 @@ button:focus-visible {
     min-height: 100vh;
 }
 
+.loading-animation {
+    animation-name: rotate;
+    animation-duration: 1s;
+    /* Durée totale de l'animation */
+    animation-iteration-count: infinite;
+    /* Boucle infinie */
+    animation-timing-function: steps(16);
+    /* Pas de transition entre les étapes */
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .scaleButtonBg-enter-from,
 .scaleButtonBg-leave-to {
     transform: scale(0) translateY(-100%);

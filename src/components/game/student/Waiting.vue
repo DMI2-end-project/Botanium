@@ -12,7 +12,7 @@
       </div>
     </div>
     <Info v-show="gameStore.currentStep === GAMESTEP.WAIT" text="Patiente un peu, tes camarades réfléchissent encore">
-      <Loading class="loading w-8 aspect-square"/>
+      <Loading class="loading-animation w-8 aspect-square"/>
     </Info>
   </div>
 </template>
@@ -68,21 +68,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style scoped>
-.loading {
-    animation-name: rotate;
-    animation-duration: 1s; /* Durée totale de l'animation */
-    animation-iteration-count: infinite; /* Boucle infinie */
-    animation-timing-function: steps(16); /* Pas de transition entre les étapes */
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-</style>

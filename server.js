@@ -1,7 +1,7 @@
 import express from "express";
 import {createServer} from "http";
 import {Server} from "socket.io";
-import {ClapGameManagerInstance} from "./server/clapGameManager.js";
+import {AudioManagerInstance} from "./server/AudioManager.js";
 import Room from "./server/Room.js";
 import {CHAPTER_STEP, EVENT, GAME_STEP, ROLE} from "./server/constants.js";
 
@@ -10,8 +10,8 @@ const app = express();
 const http = createServer(app);
 const io = new Server(http, {
   cors: {
-    // origins: [`http://localhost:${port}`],
-    origins: [`http://192.168.0.21:${port}`]
+    origins: [`http://localhost:${port}`],
+    // origins: [`http://192.168.0.21:${port}`]
   },
 });
 
@@ -32,7 +32,7 @@ const joinRoom = (socket, arg) => {
   if (roomIndex === -1) {
     room = new Room(arg.roomId);
     rooms.push(room);
-    ClapGameManagerInstance.updateRooms(rooms)
+    AudioManagerInstance.updateRooms(rooms)
   } else {
     room = rooms[roomIndex];
   }
@@ -303,5 +303,5 @@ io.on('connection', (socket) => {
     rooms = rooms.filter(room => room.id !== arg.roomId);
   });
 
-  ClapGameManagerInstance.initListenners(io, socket);
+  AudioManagerInstance.initListenners(io, socket);
 });

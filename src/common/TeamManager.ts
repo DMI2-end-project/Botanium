@@ -3,7 +3,7 @@ import {useMainStore} from "../stores/mainStore";
 import {useChapterStore} from "../stores/chapterStore";
 import {useGameStore} from "../stores/gameStore";
 import {getSocket} from "./../client";
-import {EVENT, GAME_STEP, ROLE, CLAP_EVENT} from "./Constants";
+import {EVENT, GAME_STEP, ROLE, AUDIO_EVENT} from "./Constants";
 import gameData from "../assets/game-data/game-data-v2.json";
 
 class TeamManager {
@@ -13,38 +13,38 @@ class TeamManager {
   private _gameStore = useGameStore();
   public _router: Router = useRouter();
   private _socket = getSocket();
-  
+
   private constructor() {
     this.initEventsListenners()
   }
-  
+
   public static get Instance() {
     // Do you need arguments? Make it a regular static method instead.
     return this._instance || (this._instance = new this());
   }
-  
+
   private initEventsListenners() {
     this._socket.on(EVENT.LAUNCH_CHAPTER, async (arg) => {
       this._mainStore.chapterId = arg.chapterId;
       this._gameStore.data = gameData;
-      
+
       await this._router.push('/chapitre/' + this._mainStore.getChapterId);
     });
-    
+
     this._socket.on(EVENT.TEAM_STATUS, async (arg) => {
       console.log('TeamManager EVENT.TEAM_STATUS :', arg);
-      
+
       if (arg._name) {
         this._gameStore.teamName = arg._name;
         localStorage.setItem('teamName', arg._name);
       }
-      
+
       if(arg._teamId) {
         this._gameStore.teamId = arg._teamId;
         localStorage.setItem('teamId', arg._teamId);
       }
     });
-    
+
     this._socket.on(EVENT.START_CHAPTER, async (arg) => {
       console.log('TeamManager EVENT.START_CHAPTER : ', arg)
       this._gameStore.teamId = arg.teamId;
@@ -52,16 +52,16 @@ class TeamManager {
       localStorage.setItem('teamId', arg.teamId);
       localStorage.setItem('teamName', arg.teamName);
     })
-    
+
     this._socket.on(EVENT.LAUNCH_GAME, async (arg) => {
       console.log('TeamManager EVENT.LAUNCH_GAME : ', arg)
       await this._gameStore.reset();
       this._chapterStore.currentParagraph = 0;
       this._mainStore.gameId = arg.gameId;
-      
+
       await this._router.push('/exercice/' + this._mainStore.getFullGameId);
     });
-    
+
     this._socket.on(EVENT.START_GAME, async (arg) => {
       console.log('TeamManager EVENT.START_GAME : ', arg)
       this._gameStore.currentStep = GAME_STEP.PLAY;
@@ -70,33 +70,33 @@ class TeamManager {
       localStorage.setItem('teamId', arg.teamId);
       localStorage.setItem('teamName', arg.teamName);
     });
-    
+
     this._socket.on(EVENT.GAME_VALIDATION, () => {
       this._gameStore.currentStep = GAME_STEP.END;
     });
-    
+
     this._socket.on(EVENT.END_GAME, () => {
       this._gameStore.currentStep = GAME_STEP.CONGRATS;
       localStorage.removeItem('teamId');
     });
-    
+
     this._socket.on(EVENT.BACK_CHAPTER, async () => {
       await this._router.push('/chapitre/' + this._mainStore.getChapterId);
     });
-    
+
     this._socket.on(EVENT.END_CHAPTER, async () => {
       if (this._mainStore.role === ROLE.STUDENT) {
         await this._router.push('/accueil');
       }
     });
-    
+
     this._socket.on('killRoom', async () => {
       if (this._mainStore.role === ROLE.STUDENT) {
         await this._router.push('/accueil');
       }
     });
   }
-  
+
   public teamValidation() {
     this._gameStore.currentStep = GAME_STEP.WAIT;
     this._socket.emit(EVENT.TEAM_VALIDATION, {
@@ -104,23 +104,23 @@ class TeamManager {
       teamId: this._gameStore.teamId
     });
   }
-  
+
   public async nextSequence() {
     console.log("TeamManager TEAM_NEXT_SEQUENCE");
-    
+
     await this._socket.emit(EVENT.TEAM_NEXT_SEQUENCE, {
       roomId: this._mainStore.roomId,
       teamId: this._gameStore.teamId,
       currentSequence: this._gameStore.currentSequence
     });
   }
-  
-  public async clapReady(hasMicro: boolean) {
-    console.log("TeamManager CLAP_READY");
-    
-    await this._socket.emit(CLAP_EVENT.CLAP_READY, {
+
+  public async mircoReady(hasMicro: boolean) {
+    console.log("TeamManager MICRO_READY");
+
+    await this._socket.emit(AUDIO_EVENT.MICRO_READY, {
       roomId: this._mainStore.roomId,
-      teamId: this._gameStore.teamId,
+      teamName: this._gameStore.teamName,
       hasMicro
     });
   }

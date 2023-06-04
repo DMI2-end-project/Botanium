@@ -7,16 +7,13 @@
     <div class="w-full flex flex-col items-center gap-6 bg-green rounded-md p-28 -mt-6">
       <h3 class="text-beige">{{ text }}</h3>
     </div>
-    <RoundButton v-if="mainStore.role === ROLE.TEACHER" @click="next" :color="COLOR.PINK" class="mt-8 text-lg font-bold">
+    <p v-if="mainStore.role === ROLE.TEACHER && microNeeded && !hasMicroOn && !hasMicroWaiting" class="mt-6">Attention : Aucune équipe n'a activé son micro, l'exercice ne pourra donc pas être réalisé.</p>
+    <RoundButton v-if="(mainStore.role === ROLE.TEACHER && !microNeeded) || (mainStore.role === ROLE.TEACHER && microNeeded && !hasMicroWaiting)" @click="next" :color="COLOR.PINK" class="mt-8 text-lg font-bold">
       >
     </RoundButton>
-    <CircleButton v-if="mainStore.role === ROLE.STUDENT && microNeeded" @click="startMicrophone" class="mt-10" text="Allume ton micro" :color="COLOR.PURPLE" :size="SIZE.MD" :colorReverse="true"><MicroOn /></CircleButton>
+    <CircleButton v-if="mainStore.role === ROLE.STUDENT && microNeeded && !hasMicro" @click="getMicrophone" class="mt-10" text="Allume ton micro" :color="COLOR.PURPLE" :size="SIZE.MD" :colorReverse="true"><MicroOn /></CircleButton>
+    <RoundItem v-else-if="mainStore.role === ROLE.STUDENT && microNeeded && hasMicro" @click="getMicrophone" class="-mt-10" :color="COLOR.GREEN_MEDIUM"><Check /></RoundItem>
   </div>
-  <!-- <ModalView v-if="isModalOpen">
-    <div class="relative my-2 flex flex-col items-center">
-      <h1 class="mt-8">Indice :</h1>
-    </div>
-  </ModalView> -->
 </template>
 
 <script lang="ts">
@@ -29,19 +26,19 @@ import { GameMasterManagerInstance } from "../../common/GameMasterManager";
 import SignboardVue from "../common/Signboard.vue";
 import RoundButton from "../common/RoundButton.vue";
 import CircleButton from "../common/CircleButton.vue";
-import ModalView from "../common/ModalView.vue";
+import RoundItem from "../common/RoundItem.vue";
 
 import MicroOn from "./../../assets/svg/ico-micro-on.svg?component";
+import Check from "./../../assets/svg/ico-check.svg?component";
 
 export default defineComponent({
   name: 'InstructionComponent',
-  components: {SignboardVue, RoundButton, CircleButton, ModalView, MicroOn},
+  components: { SignboardVue, RoundButton, CircleButton, RoundItem, MicroOn, Check },
+  emits: ['getMicrophone'],
   data() {
     return {
       mainStore: useMainStore(),
       gameStore: useGameStore(),
-      streamAudio: null as MediaStream | null,
-      isModalOpen: false,
     }
   },
   computed: {
@@ -62,26 +59,38 @@ export default defineComponent({
     },
     microNeeded() {
       return this.gameStore.data.gameSequences[this.gameStore.currentSequence].microNeeded
+    },
+    hasMicro() {
+      const team = this.gameStore.teams.find(team => team._name === this.gameStore.teamName)
+      if (team) {
+        return team?.hasMicro
+      } else {
+        return false
+      }
+    },
+    hasMicroWaiting() {
+      const teams = this.gameStore.teams.filter(team => team.hasMicro === null)
+      if (teams) {
+        return teams.length >= 1
+      } else {
+        return true
+      }
+    },
+    hasMicroOn() {
+      const teams = this.gameStore.teams.filter(team => team.hasMicro)
+      if (teams) {
+        return teams.length >= 1
+      } else {
+        return false
+      }
     }
   },
   methods: {
     next() {
       GameMasterManagerInstance.startGame()
     },
-    async startMicrophone() {
-      try {
-          this.streamAudio = await navigator.mediaDevices.getUserMedia({ audio: true });
-        } catch (err) {
-
-        }
-    },
-    openModal() {
-      this.mainStore.isModalOpen = true;
-      this.isModalOpen = true;
-    },
-    closeModal() {
-      this.mainStore.isModalOpen = false;
-      this.isModalOpen = false;
+    getMicrophone() {
+      this.$emit('getMicrophone');
     }
   }
 });

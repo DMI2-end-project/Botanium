@@ -4,7 +4,7 @@ import {useGameStore} from "../stores/gameStore";
 import {useChapterStore} from "../stores/chapterStore";
 import {getSocket} from "./../client";
 import {leading} from "../common/Lib";
-import { CHAPTER_STATUS, EVENT, GAME_STEP, CLAP_EVENT } from "./Constants";
+import { CHAPTER_STATUS, EVENT, GAME_STEP, AUDIO_EVENT } from "./Constants";
 import gameData from "../assets/game-data/game-data-v2.json";
 import {DatabaseManagerInstance} from "./DatabaseManager";
 import router from "../router";
@@ -36,7 +36,8 @@ class GameMasterManager {
       this._gameStore.currentStep = GAME_STEP.END;
     });
 
-    this._socket.on(CLAP_EVENT.CLAP_READY, (arg) => {
+    this._socket.on(AUDIO_EVENT.MICRO_READY, (arg) => {
+      console.log('GameMasterManager MICRO_READY : ', arg)
       this._gameStore.teams = arg._teams;
     });
   }
