@@ -10,15 +10,12 @@ import {useGameStore} from "../stores/gameStore";
 import { useMainStore } from "../stores/mainStore";
 import type {Ref} from 'vue';
 
-
 import StudentGame from "../components/game/student/StudentGame.vue";
 import TeacherGame from "../components/game/teacher/TeacherGame.vue";
 import Instruction from "../components/game/Instruction.vue";
 import Congratulation from "../components/game/Congratulation.vue";
 import Waiting from "../components/game/student/Waiting.vue";
 import ModalView from "../components/common/ModalView.vue";
-
-import gameData from "../assets/game-data/game-data-v2.json";
 
 const pb = DatabaseManagerInstance.pb;
 
@@ -40,7 +37,7 @@ mainStore.$subscribe((mutation, state) => {
   }
 });
 
-gameStore.$subscribe((mutation, state) => {
+gameStore.$subscribe((_, state) => {
   if (state.data) {
     document.documentElement.style.setProperty('--color-background', gameStore.data.color);
 
@@ -52,7 +49,6 @@ gameStore.$subscribe((mutation, state) => {
   }
 });
 
-// TODO : localStorage.setItem('currentSequence', ???)
 onBeforeMount(async () => {
   if (gameStore.data) {
     document.documentElement.style.setProperty('--color-background', gameStore.data.color);
@@ -101,11 +97,9 @@ const readyWithoutMicro = () => {
         class="col-span-12"/>
     <StudentGame
         v-if="(mainStore.role === ROLE.STUDENT && gameStore.currentStep !== GAME_STEP.INSTRUCTION) || (mainStore.role === ROLE.STUDENT && gameStore.currentStep !== GAME_STEP.CONGRATS)"
-        :teamId="gameStore.teamId"
         class="col-span-12"/>
     <Waiting
         v-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
-        :teamId="gameStore.teamId"
         class="col-start-3 col-span-8"/>
     <Congratulation v-if="gameStore.currentStep === GAME_STEP.CONGRATS"
                     class="col-start-3 col-span-8"/>

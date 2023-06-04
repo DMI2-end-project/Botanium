@@ -16,13 +16,13 @@ export const useGameStore = defineStore('game', {
     teamId: undefined,
     teamName: undefined,
     teams: [],
-    currentStep: GAME_STEP.INSTRUCTION,
+    currentStep: GAME_STEP.IDLE,
     currentSequence: 0
   }),
   actions: {
     reset() {
       this.teams = [];
-      this.currentStep = GAME_STEP.INSTRUCTION;
+      this.currentStep = GAME_STEP.IDLE;
       this.currentSequence = 0;
     },
   }

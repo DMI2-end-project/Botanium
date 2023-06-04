@@ -4,8 +4,9 @@ import {gsap} from "gsap";
 import {Draggable} from "gsap/Draggable";
 import {Flip} from "gsap/Flip";
 import {useGameStore} from "../../../../stores/gameStore";
-import RoundButton from "../../../common/RoundButton.vue";
 import { COLOR } from "../../../../common/Constants";
+import RoundButton from "../../../common/RoundButton.vue";
+
 import Check from "./../../../../assets/svg/ico-check.svg?component";
 
 gsap.registerPlugin(Draggable, Flip);
@@ -34,6 +35,7 @@ onMounted(async () => {
         edgeResistance: 0.65,
         inertia: true,
         onDrag: function (e) {
+          console.log('onDrag')
           droppables.value.forEach(droppable => {
             if (this.hitTest(droppable, "50%")) {
               droppable.classList.add('bg-green-light');

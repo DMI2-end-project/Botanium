@@ -19,7 +19,7 @@ class GameMasterManager {
   private _socket = getSocket();
 
   private constructor() {
-    this.initEventsListenners()
+    this.initEventsListeners()
   }
 
   public static get Instance() {
@@ -27,7 +27,7 @@ class GameMasterManager {
     return this._instance || (this._instance = new this());
   }
 
-  private initEventsListenners() {
+  private initEventsListeners() {
     this._socket.on(EVENT.TEAM_VALIDATION, (arg) => {
       this._gameStore.data.gameSequences[this._gameStore.currentSequence].gamemaster.answers[arg.teamId].status = 'valid';
     });
@@ -46,10 +46,10 @@ class GameMasterManager {
     console.log("GameMasterManager LAUNCH_CHAPTER : ", chapterId, dbChapterId);
 
     this._mainStore.chapterId = chapterId;
-    this._mainStore.realChapterId = dbChapterId;
+    this._mainStore.dbChapterId = dbChapterId;
     // await this._dbInstance.updateChapterStatus(dbChapterId, CHAPTER_STATUS.IN_PROGRESS); // TODO uncomment
 
-    //this._mainStore.gameId = 0  // TODO :await this._dbInstance.getPreviousGameId(realId);
+    // await this._dbInstance.getPreviousGameId(realId); // TODO uncomment
     this._gameStore.data = gameData;
 
     await this._socket.emit(EVENT.LAUNCH_CHAPTER, {
@@ -109,10 +109,10 @@ class GameMasterManager {
   }
 
   public async endGame() {
-    console.log("GameMasterManager END_GAME", this._mainStore.realChapterId);
+    console.log("GameMasterManager END_GAME", this._mainStore.dbChapterId);
 
-    if (this._mainStore.realChapterId) {
-      await this._dbInstance.updatePreviousGameId(this._mainStore.realChapterId, this._mainStore.gameId);
+    if (this._mainStore.dbChapterId) {
+      await this._dbInstance.updatePreviousGameId(this._mainStore.dbChapterId, this._mainStore.gameId);
     }
 
     this._gameStore.currentStep = GAME_STEP.CONGRATS;
@@ -136,8 +136,8 @@ class GameMasterManager {
   }
 
   public async endChapter() {
-    if (this._mainStore.realChapterId) {
-      await this._dbInstance.updateChapterStatus(this._mainStore.realChapterId, CHAPTER_STATUS.DONE);
+    if (this._mainStore.dbChapterId) {
+      await this._dbInstance.updateChapterStatus(this._mainStore.dbChapterId, CHAPTER_STATUS.DONE);
     }
     await this._socket.emit(EVENT.END_CHAPTER, {
       roomId: this._mainStore.roomId,

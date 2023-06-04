@@ -29,10 +29,10 @@ const init = async () => {
 
   registerLayouts(app);
 
-  app.mount('#app');
-
   mountGameMasterManagerInstance(router);
   mountTeamManagerInstance(router);
   mountAudioManagerInstance();
+
+  app.mount('#app');
 }
 init();

@@ -1,6 +1,6 @@
 <template>
   <div v-show="gameStore.currentStep === GAMESTEP.PLAY">
-    <component v-bind:is="GameView" :teamId="gameStore.teamId" @validated="validated"/>
+    <component v-bind:is="GameView" @validated="validated"/>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ import {Component, defineComponent} from 'vue';
 import {getSocket} from "../../../client";
 import {useGameStore} from "../../../stores/gameStore";
 import {useMainStore} from "../../../stores/mainStore";
-import {GAME_TYPE, GAME_STEP} from "../../../common/Constants";
+import {GAME_STEP, GAME_TYPE} from "../../../common/Constants";
 import {TeamManagerInstance} from "../../../common/TeamManager";
 
 import DragDrop from "./drag-drop/GameView.vue";
@@ -27,6 +27,7 @@ export default defineComponent({
       gameStore: useGameStore(),
     }
   },
+  emits: ["validated"],
   computed: {
     GAMESTEP() {
       return GAME_STEP
@@ -52,9 +53,10 @@ export default defineComponent({
     }
   },
   methods: {
-    validated() {
+    async validated() {
       this.$emit('validated');
-      TeamManagerInstance.teamValidation();
+      this.gameStore.currentStep = GAME_STEP.WAIT;
+      await TeamManagerInstance.teamValidation();
     }
   }
 });

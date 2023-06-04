@@ -14,7 +14,6 @@ import TeamSignboard from "../components/common/TeamSignboard.vue";
 import Connexion from "../components/game/teacher/Connexion.vue";
 
 import gameData from "../assets/game-data/game-data-v2.json";
- // {[key: string]: any}
 
 interface GameData {
   [key: string]: any;
@@ -45,10 +44,6 @@ export default defineComponent({
     },
   },
   created() {
-    if (this.router) {
-      // TODO : à quoi ça sert ?
-      //this.mainStore.gameId = Number(this.$route.params.id);
-    }
     if (this.mainStore.getFullGameId) {
       const key = this.mainStore.getFullGameId as string;
       const data: GameData = gameData;
@@ -74,8 +69,10 @@ export default defineComponent({
 
 
 <template>
-  <div class="bg-background flex flex-col w-full h-full min-h-screen">
-    <div class="bg-texture fixed w-screen h-screen mix-blend-soft-light bg-cover opacity-50 pointer-events-none"></div>
+  <div class="bg-background fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden"/>
+  <div
+      class="bg-texture bg-cover fixed top-0 left-0 w-screen h-screen mix-blend-soft-light opacity-50 pointer-events-none overflow-hidden"/>
+  <div class="flex flex-col w-full h-full min-h-screen">
     <header class="fixed flex flex-col w-full max-w-full p-10 z-20">
       <!-- DEV INFO -->
       <div class="flex justify-end items-center gap-6 fixed z-20 right-6 top-0">
@@ -94,8 +91,8 @@ export default defineComponent({
         </div>
         <button @click="disconnect" class="ml-auto block">Déconnexion</button>
       </div>
-      <Breadcrumb v-if="isBreadcrumb" :teamId="gameStore.teamId"/>
-      <GameHeader v-if="!isBreadcrumb" :teamId="gameStore.teamId"/>
+      <Breadcrumb v-if="isBreadcrumb"/>
+      <GameHeader v-if="!isBreadcrumb"/>
       <slot name="header"/>
     </header>
     <main class="w-screen h-screen flex-1 flex flex-col justify-center mt-16 z-10">
@@ -104,7 +101,6 @@ export default defineComponent({
     <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">
       <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName"/>
       <Connexion v-if="mainStore.role === ROLE.TEACHER"/>
-      <button v-if="mainStore.role === ROLE.TEACHER" @click="GMInstance.killRoom()" class="my-4">Bye bye room</button>
     </footer>
   </div>
 </template>

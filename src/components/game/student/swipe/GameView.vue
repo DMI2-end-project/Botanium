@@ -21,6 +21,8 @@ let height = 390;
 
 const sprites = ref<Sprite[]>([]);
 
+const isModalOpen = ref<boolean>(false);
+
 const onPointerOver = (e: Event, sprite: Sprite) => {
   e.stopPropagation();
   sprite.removeEventListener('pointerover', (e) => onPointerOver(e, sprite));
@@ -34,6 +36,7 @@ const onPointerOver = (e: Event, sprite: Sprite) => {
       sprite.removeFromParent();
       //sprite.destroy();
       if (sprites.value.length === 0) {
+        isModalOpen.value = true;
         mainStore.isModalOpen = true;
       }
     }
@@ -67,7 +70,9 @@ const onPointerOver = (e: Event, sprite: Sprite) => {
 };
 
 const next = () => {
-  gameStore.currentSequence += 1
+  gameStore.currentSequence += 1;
+  isModalOpen.value = false;
+  mainStore.isModalOpen = false;
   TeamManagerInstance.nextSequence();
 }
 
@@ -126,11 +131,11 @@ onMounted(() => {
       {{ gameStore.teamId }}
       <img v-if="teamData"
            :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.answers.background}`"
-           class="w-full h-full object-contain -rotate-[8.09deg]"/>
+           class="w-full h-full object-contain"/>
       <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
     </div>
   </div>
-  <ModalView>
+  <ModalView v-if="isModalOpen">
     <RoundButton @click="next">
       Continuer
     </RoundButton>

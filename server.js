@@ -59,6 +59,7 @@ const cleanRoom = (socket) => {
     } else {
       let team = room.removeTeam(socket.id);
       if (team) {
+        console.log('team', team);
         io.in(room.id).emit(EVENT.ROOM_STATUS, room);
       }
     }
@@ -162,8 +163,6 @@ io.on('connection', (socket) => {
         gameId: arg.gameId
       });
 
-      room.gameId = arg.gameId
-
       io.in(arg.roomId).emit(EVENT.ROOM_STATUS, room);
     }
   });
@@ -177,7 +176,6 @@ io.on('connection', (socket) => {
       room.shuffleTeams();
 
       room.teams.map(team => {
-        console.log('START', team.isConnected)
         if (team.isConnected) {
           team.isPlaying = team.isConnected;
         } else {
