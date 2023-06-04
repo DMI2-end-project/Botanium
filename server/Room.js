@@ -1,28 +1,6 @@
 import Team from './Team.js';
 import {create} from "@tensorflow-models/speech-commands";
 
-let names = [
-  {
-    name: 'Les papillons',
-    isTaken: false
-  }, {
-    name: 'Les escargots',
-    isTaken: false
-  }, {
-    name: 'Les graines',
-    isTaken: false
-  }, {
-    name: 'Les tulipes',
-    isTaken: false
-  }, {
-    name: 'Les arrosoirs',
-    isTaken: false
-  }, {
-    name: 'Les oiseaux',
-    isTaken: false
-  }
-];
-
 const shuffle = (array) => {
   let currentIndex = array.length, randomIndex;
 
@@ -52,6 +30,28 @@ export default class Room {
 
   gameId = 0;
   gameStep = 0;
+
+  _names = [
+    {
+      name: 'Les papillons',
+      isTaken: false
+    }, {
+      name: 'Les escargots',
+      isTaken: false
+    }, {
+      name: 'Les graines',
+      isTaken: false
+    }, {
+      name: 'Les tulipes',
+      isTaken: false
+    }, {
+      name: 'Les arrosoirs',
+      isTaken: false
+    }, {
+      name: 'Les oiseaux',
+      isTaken: false
+    }
+  ];
 
   constructor(id) {
     this._id = id;
@@ -111,15 +111,15 @@ export default class Room {
   createTeam(socketId) {
     let team = new Team(socketId);
     let i = 0;
-    while (names[i].isTaken && i < names.length - 1) {
+    while (this._names[i].isTaken && i < this._names.length - 1) {
       i++;
     }
-    if (names[i].isTaken) {
+    if (this._names[i].isTaken) {
       // Debug
       team.name = 'random' + Math.round(Math.random() * 100);
     } else {
-      team.name = names[i].name;
-      names[i].isTaken = true;
+      team.name = this._names[i].name;
+      this._names[i].isTaken = true;
     }
     this._teams.push(team);
     return team;

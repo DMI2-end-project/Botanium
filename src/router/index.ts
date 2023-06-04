@@ -2,6 +2,7 @@ import {createRouter, createWebHistory, RouterOptions} from "vue-router";
 import {useMainStore} from "../stores/mainStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {ROLE} from "../common/Constants";
+
 import Login from "../pages/Login.vue";
 import Home from "../pages/Home.vue";
 import Dashboard from "../pages/Dashboard.vue";

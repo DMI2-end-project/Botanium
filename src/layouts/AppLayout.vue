@@ -3,13 +3,15 @@
 import {computed, defineComponent} from 'vue';
 import {useRoute} from 'vue-router';
 import {useMainStore} from "../stores/mainStore";
+import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {ROLE} from "../common/Constants";
 
 export default defineComponent({
   name: 'AppLayout',
   data() {
     return {
-      mainStore: useMainStore()
+      mainStore: useMainStore(),
+      GMInstance: GameMasterManagerInstance
     }
   },
   computed: {
@@ -34,14 +36,22 @@ export default defineComponent({
       layout,
     };
   },
+  methods: {
+    killRoom() {
+      this.GMInstance?.killRoom();
+    }
+  }
 });
 </script>
 
 <template>
-  <router-link class="fixed bg-green p-2 rounded-md z-50"
-               :to="mainStore.role === ROLE.STUDENT ? '/accueil' : '/tableau-de-bord'">
-    Home
-  </router-link>
+  <div class="fixed flex items-center gap-4 z-50">
+    <router-link class=" bg-green p-2 rounded-md"
+                 :to="mainStore.role === ROLE.STUDENT ? '/accueil' : '/tableau-de-bord'">
+      Home
+    </router-link>
+    <button v-if="mainStore.role === ROLE.TEACHER" @click="killRoom">Bye bye room</button>
+  </div>
   <component :is="layout">
     <slot/>
   </component>

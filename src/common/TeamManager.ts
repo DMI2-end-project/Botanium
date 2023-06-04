@@ -15,7 +15,7 @@ class TeamManager {
   private _socket = getSocket();
   
   private constructor() {
-    this.initEventsListenners()
+    this.initEventsListeners()
   }
   
   public static get Instance() {
@@ -23,7 +23,7 @@ class TeamManager {
     return this._instance || (this._instance = new this());
   }
   
-  private initEventsListenners() {
+  private initEventsListeners() {
     this._socket.on(EVENT.LAUNCH_CHAPTER, async (arg) => {
       this._mainStore.chapterId = arg.chapterId;
       this._gameStore.data = gameData;
@@ -39,7 +39,7 @@ class TeamManager {
         localStorage.setItem('teamName', arg._name);
       }
       
-      if(arg._teamId) {
+      if (arg._teamId) {
         this._gameStore.teamId = arg._teamId;
         localStorage.setItem('teamId', arg._teamId);
       }
@@ -59,6 +59,7 @@ class TeamManager {
       this._chapterStore.currentParagraph = 0;
       this._mainStore.gameId = arg.gameId;
       
+      console.log('TeamManager EVENT.LAUNCH_GAME', this._mainStore.getFullGameId);
       await this._router.push('/exercice/' + this._mainStore.getFullGameId);
     });
     

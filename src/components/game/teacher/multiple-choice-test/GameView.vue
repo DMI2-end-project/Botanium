@@ -2,7 +2,7 @@
   <div class="relative grid grid-cols-12 gap-4 px-8">
     <div class="col-start-2 col-span-10 grid grid-cols-1 lg:grid-cols-2 auto-rows-fr gap-4"><!-- flex flex-wrap -->
       <CardGame v-for="(team, index) in playingTeams" :v-bind="index"
-                :answer-state="'none'" :card-state="cardState(answers[index])"
+                :answer-state="'none'" :card-state="cardState(index)"
       >
         <template v-slot:recto>
           <SvgIcon :name="answers[index].icon" class="w-16 aspect-square pointer-events-none"/>
@@ -74,19 +74,15 @@ export default defineComponent({
       return this.gameStore.teams.filter((team: any) => team.isPlaying);
     }
   },
-  mounted() {
-    let playingTeams = this.gameStore.teams.filter((team: any) => team.isPlaying);
-    console.log('playingTeams', this.gameStore.teams, playingTeams)
-  },
   methods: {
     next() {
       GameMasterManagerInstance.endGame()
     },
-    cardState(answer: any) {
+    cardState(index: number) {
       if (this.gameStore.currentStep === GAME_STEP.END) {
         return 'show';
       } else {
-        if (answer.status === 'valid') {
+        if(this.playingTeams[index].isValidated) {
           return 'validated';
         } else {
           return 'hide';

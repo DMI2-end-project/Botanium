@@ -32,21 +32,20 @@ const props = defineProps({
          'border-transparent' : props.answerState !== 'selected'
        }">
     <!-- BORDER ONLY FOR VALID/ERROR -->
-    <div class="w-full h-full rounded-lg border-[6px] p-2"
+    <div class="w-full h-full bg-beige border-transparent rounded-lg border-[6px] p-2"
          :class="{
            'bg-beige border-blue': props.answerState === 'valid',
            'bg-beige border-red': props.answerState === 'error',
            'bg-beige border-transparent': props.answerState === 'none',
-           'bg-green-light border-transparent text-green': props.cardState === 'validated',
-           'bg-green-light border-transparent text-green': props.answerState === 'selected',
+           'bg-green-light border-transparent text-green': props.cardState === 'validated' || props.answerState === 'selected',
          }">
       <!-- BORDER -->
       <div class="w-full h-full flex flex-col justify-center items-center rounded-lg border"
            :class="{
-             'border-green-light text-green-light': props.cardState === 'validated',
              '': props.cardState !== 'validated',
              'border-transparent' : props.answerState === 'selected',
              'border-beige-medium' : props.answerState !== 'selected',
+             'bg-green-light border-transparent': props.cardState === 'validated',
            }">
         <slot name="verso" v-if="props.cardState === 'hide'" class=""/>
         <slot name="recto" v-if="props.cardState === 'show'" class=""/>

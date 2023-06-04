@@ -43,7 +43,6 @@ export const initClient = (pinia: Pinia) => {
   socket.on("join", () => {
   });
   
-  // TODO
   socket.on(EVENT.ROOM_STATUS, (arg) => {
     console.log('Client EVENT.ROOM_STATUS', arg);
     
@@ -72,8 +71,8 @@ export const initClient = (pinia: Pinia) => {
     chapterData.data = chapterData[mainStore.getChapterId];
     gameStore.data = gameData[mainStore.getFullGameId];
     
-    if (arg.teams && gameStore.teamId) {
-      let team = arg.teams.find((team: any) => team.teamId === gameStore.teamId)
+    if (arg._teams && gameStore.teamId !== undefined) {
+      let team = arg._teams.find((team: any) => team._teamId === gameStore.teamId);
       if (team && arg.gameStep === GAME_STEP.PLAY && team.isValidated) {
         gameStore.currentStep = GAME_STEP.WAIT
       }
@@ -85,7 +84,6 @@ export const initClient = (pinia: Pinia) => {
       }
     }
   });
-  
 }
 
 export const connectClient = async () => {
