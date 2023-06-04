@@ -68,22 +68,31 @@ class AudioManager {
   }
 
   private async getDeltaTimeWithServer(): Promise<number> {
-    let latency = 0;
-    let t1 = 0;
-    let t2 = 0;
-    let deltaTime = 0;
-    const dateEmit = Date.now()
-    await this.socket.emit(AUDIO_EVENT.AUDIO_SYNCHRO, {
-      roomId: this.mainStore.roomId,
-    }, (response: number) => {
-      const end = Date.now();
-      latency = end - dateEmit;
-      t1 = response - dateEmit - (latency / 2)
-      t2 = response - end + (latency / 2)
-      deltaTime += (t1 + t2) / 2
-      return deltaTime;
+    return new Promise<number>((resolve, reject) => {
+      let latency = 0;
+      let t1 = 0;
+      let t2 = 0;
+      let deltaTime = 0;
+      const dateEmit = Date.now();
+      console.log("AUDIO_SYNCHRO dateEmit : ", dateEmit);
+
+      this.socket.emit(
+        AUDIO_EVENT.AUDIO_SYNCHRO,
+        {
+          roomId: this.mainStore.roomId,
+        },
+        (response: number) => {
+          const end = Date.now();
+
+          latency = end - dateEmit;
+          t1 = response - dateEmit - latency / 2;
+          t2 = response - end + latency / 2;
+          deltaTime = (t1 + t2) / 2;
+          console.log("AUDIO_SYNCHRO dateReceive : ", dateEmit, response, end, latency, deltaTime);
+          resolve(deltaTime);
+        }
+      );
     });
-    return deltaTime;
   }
 }
 
