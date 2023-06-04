@@ -5,23 +5,25 @@ import {leading} from "../common/Lib";
 
 export type StoreState = {
   isModalOpen: boolean,
+  askForRedirection: boolean,
   connected: boolean,
   roomId: string | undefined,
   roleId: string | undefined,
   roles: Record[],
-  realChapterId: string | undefined,
+  dbChapterId: string | undefined,
   chapterId: number
   gameId: number,
 };
 
 export const useMainStore = defineStore('main', {
   state: (): StoreState => ({
-    isModalOpen: false,
+    isModalOpen: true,
+    askForRedirection: false,
     connected: false,
     roomId: undefined,
     roleId: undefined,
     roles: [],
-    realChapterId: undefined,
+    dbChapterId: undefined,
     chapterId: 0, // TODO ?
     gameId: 0,
   }),
@@ -43,6 +45,8 @@ export const useMainStore = defineStore('main', {
   },
   actions: {
     reset() {
+      this.isModalOpen = false,
+      this.askForRedirection = false,
       this.connected = false;
       this.roomId = undefined;
       this.roleId = undefined;

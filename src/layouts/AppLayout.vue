@@ -39,7 +39,8 @@ export default defineComponent({
 
 <template>
   <router-link class="fixed bg-green p-2 rounded-md z-50"
-               :to="mainStore.role === ROLE.STUDENT ? '/accueil' : '/tableau-de-bord'">Home
+               :to="mainStore.role === ROLE.STUDENT ? '/accueil' : '/tableau-de-bord'">
+    Home
   </router-link>
   <component :is="layout">
     <slot/>

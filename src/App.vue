@@ -1,5 +1,5 @@
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, nextTick} from "vue";
 import {useRouter} from "vue-router";
 import {useMainStore} from "./stores/mainStore";
 import {useChapterStore} from "./stores/chapterStore";
@@ -19,11 +19,6 @@ import RoundButton from "./components/common/RoundButton.vue";
 
 export default defineComponent({
   name: 'App',
-  computed: {
-    COLOR() {
-      return COLOR
-    }
-  },
   components: {RoundButton, ModalView, AppLayout, DevLayout, GameLayout},
   data() {
     return {
@@ -31,7 +26,12 @@ export default defineComponent({
       mainStore: useMainStore(),
       chapterStore: useChapterStore(),
       gameStore: useGameStore(),
-      isModal: false
+      isModalOpen: false
+    }
+  },
+  computed: {
+    COLOR() {
+      return COLOR
     }
   },
   beforeCreate() {
@@ -41,6 +41,13 @@ export default defineComponent({
     // STORES are available
     this.chapterStore.data = chapterData;
     this.gameStore.data = gameData;
+
+    this.mainStore.$subscribe((mutation, state) => {
+      if (state.askForRedirection) {
+        this.isModalOpen = true;
+        this.mainStore.isModalOpen = true;
+      }
+    });
   },
   mounted() {
     this.mainStore.roleId = DatabaseManagerInstance.pb.authStore.model?.role;
@@ -67,47 +74,39 @@ export default defineComponent({
           this.gameStore.teamId = teamId ? +teamId : undefined;
           this.gameStore.teamName = teamName ? teamName : undefined;
           await connectClient();
-
-          if (this.chapterStore.currentStep !== CHAPTER_STEP.IDLE && this.router.currentRoute.name !== 'Chapter') {
-            this.isModal = true;
-            this.mainStore.isModalOpen = true;
-
-          }
-
-          if (this.gameStore.currentStep !== GAME_STEP.IDLE && this.router.currentRoute.name !== 'Game') {
-            this.isModal = true;
-            this.mainStore.isModalOpen = true;
-          }
           break;
       }
     },
     async joinOthers() {
       if (this.chapterStore.currentStep !== CHAPTER_STEP.IDLE && this.router.currentRoute.name !== 'Chapter') {
-        this.closeModal()
+        await this.closeModal()
         await this.router.push(`/chapitre/${this.mainStore.getChapterId}`);
       }
 
       if (this.gameStore.currentStep !== GAME_STEP.IDLE && this.router.currentRoute.name !== 'Game') {
-        this.closeModal()
+        await this.closeModal()
         await this.router.push(`/exercice/${this.mainStore.getFullGameId}`);
       }
     },
     closeModal() {
-      this.isModal = false;
+      this.isModalOpen = false;
       this.mainStore.isModalOpen = false;
+      this.mainStore.askForRedirection = false;
     }
   }
-});
+})
+;
 </script>
 
 <template>
   <AppLayout>
     <router-view/>
-    <ModalView v-if="isModal">
+    <ModalView v-if="isModalOpen">
       <div>
+        {{ isModalOpen }}
         Voulez vous rejoindre la partie en cours ?
-        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="joinOthers"/>
-        <RoundButton :color="COLOR.RED" @click="closeModal"/>
+        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="()=>joinOthers()"/>
+        <RoundButton :color="COLOR.RED" @click="()=>closeModal()"/>
       </div>
     </ModalView>
   </AppLayout>

@@ -11,14 +11,14 @@ export type StoreState = {
 export const useChapterStore = defineStore('chapter', {
   state: (): StoreState => ({
     data: undefined,
-    currentStep: CHAPTER_STEP.INTRODUCTION,
+    currentStep: CHAPTER_STEP.IDLE,
     // currentSection: 0,
     currentParagraph: 0
   }),
   getters: {},
   actions: {
     reset() {
-      this.currentStep = CHAPTER_STEP.INTRODUCTION;
+      this.currentStep = CHAPTER_STEP.IDLE;
     },
   }
 })
