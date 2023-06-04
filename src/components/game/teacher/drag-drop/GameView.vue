@@ -1,9 +1,9 @@
 <template>
-  <div class="w-full h-full flex-1 flex items-center bg-background grid grid-cols-12 gap-4 px-8 text-center gap-5">
-    <div class="col-span-9 flex gap-9 rounded-md px-10 pt-9 pb-14 bg-beige-medium">
+  <div class="w-full relative grid grid-cols-12 gap-4 text-center px-8"><!-- w-full h-full flex-1 flex items-center  -->
+    <div class="col-span-10 col-start-2 w-full flex gap-9 rounded-md px-10 pt-9 pb-14 bg-beige-medium">
       <div v-if="answers" v-for="(answer, index) in answers" :v-bind="index"
            class="w-full flex flex-col justify-center items-center gap-6">
-        <div class=" w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center">
+        <div class=" w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl">
           {{ answer.label }}...
         </div>
         <h3 class="w-full bg-green text-beige rounded-md">

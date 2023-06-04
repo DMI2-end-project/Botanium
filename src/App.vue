@@ -41,6 +41,7 @@ export default defineComponent({
   methods: {
     async connectSocket() {
       let classRoom = undefined;
+      localStorage.removeItem('teamName');
 
       switch (this.mainStore.role) {
         case ROLE.TEACHER:

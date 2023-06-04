@@ -61,16 +61,16 @@ export default defineComponent({
 
     switch (this.size) {
       case SIZE.SM:
-        this.containerClass += ' w-14 h-14 RoundItem--sm';
+        this.containerClass += ' w-14 aspect-square RoundItem--sm';
         break;
       case SIZE.MD:
-        this.containerClass += ' w-20 h-20 RoundItem--md';
+        this.containerClass += ' w-20 aspect-square RoundItem--md';
         break;
       case SIZE.LG:
-        this.containerClass += ' w-32 h-32 RoundItem--lg';
+        this.containerClass += ' w-32 aspect-square RoundItem--lg';
         break;
       case SIZE.XL:
-        this.containerClass += ' w-52 h-52 RoundItem--xl';
+        this.containerClass += ' w-52 aspect-square RoundItem--xl';
         break;
       default:
         break

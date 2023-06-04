@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex flex-col items-center">
+  <div class="relative flex flex-col items-center text-center">
     <div class="flex flex-col items-center">
       <SignboardVue :text="'Enigme n°' + mainStore.gameId" class="z-10" />
       <SignboardVue :text="title" :is-rotate="true" class="text-purple min-w-[25vw] -mt-3" />

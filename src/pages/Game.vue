@@ -70,7 +70,7 @@ onMounted(() => {
 
 <template>
   <div v-if="gameStore.data"
-       class="w-full h-full grid grid-cols-12 gap-4 px-8 text-center">
+       class="w-full h-full grid grid-cols-12 gap-4 px-8">
     <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION"
                  class="col-start-3 col-span-8"/>
     <TeacherGame

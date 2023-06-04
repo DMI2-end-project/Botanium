@@ -222,7 +222,7 @@ button:focus-visible {
     }
 
     h1 {
-        @apply text-xxl font-title font-bold leading-none;
+        @apply text-2xl font-title font-bold leading-none;
     }
 
     h2 {

@@ -107,7 +107,7 @@ export default class Room {
   createTeam(socketId) {
     let team = new Team(socketId);
     let i = 0;
-    while (names[i].isTaken) {
+    while (names[i].isTaken && i < names.length - 1) {
       i++;
     }
     team.name = names[i].name;

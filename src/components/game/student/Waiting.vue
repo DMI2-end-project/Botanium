@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-col gap-24 items-center text-green">
-    <div class="w-full bg-green-light rounded-md grid grid-cols-3 py-24 px-10"> <!-- flex gap-14 -->
+    <div class="w-full bg-green-light rounded-md grid grid-cols-3 gap-8 lg:gap-14 py-24 px-10"> <!-- flex -->
       <div class="col-span-1 w-full h-full">
-        <RoundItem :color="COLOR.GREEN_MEDIUM">
+        <RoundItem class="w-full aspect-square" :color="COLOR.GREEN_MEDIUM">
           <Loading/>
         </RoundItem>
       </div>
-      <div class="col-span-2 flex flex-col gap-4 items-center">
+      <div class="col-span-2 flex flex-col gap-4">
         <h1>Bravo !</h1>
         <p class="">{{ text }}</p>
       </div>

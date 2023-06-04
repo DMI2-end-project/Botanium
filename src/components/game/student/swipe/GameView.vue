@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {onMounted, ref} from "vue";
-import {Application, Polygon, Sprite} from "pixi.js";
+import {Application, Graphics, Polygon, Sprite} from "pixi.js";
 import {gsap} from "gsap";
 
 import {useMainStore} from "../../../../stores/mainStore";
@@ -87,15 +87,13 @@ onMounted(() => {
       teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
       console.log('teamData', teamData.value)
       let soilZone = new Polygon(teamData.value.points);
-      /*
-      let soilGraphic = new PIXI.Graphics();
+      let soilGraphic = new Graphics();
       soilGraphic.beginFill(0XFF0000, 0.5);
       soilGraphic.drawPolygon(soilZone.points);
       soilGraphic.endFill();
       app.stage.addChild(soilGraphic);
-      */
 
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 30; i++) {
         let src = `/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.value.answers.sprite}`
         let sprite = Sprite.from(src);
 
@@ -103,7 +101,7 @@ onMounted(() => {
         sprites.value.push(sprite);
 
         sprite.anchor.set(0.5);
-        sprite.scale.set(0.3, 0.3);
+        sprite.scale.set(0.2, 0.2);
 
         let x = 0;
         let y = 0;
@@ -124,12 +122,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full h-full bg-background grid grid-cols-12 gap-4 px-8 text-center gap-5">
-    <div class="relative aspect-[5/9] col-span-4 col-start-5">
+  <div class="relative w-full h-full grid grid-cols-12 gap-4 px-8 justify-center items-center text-center gap-5">
+    <div class="w-full aspect-square bg-white rounded-full col-span-6 col-start-4 absolute"/>
+    <div class="relative aspect-[5/9] col-span-6 col-start-4">
+      {{ gameStore.teamId }}
       <img v-if="teamData"
            :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.answers.background}`"
-           class="w-full h-full object-contain"/>
-      <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full border-4 border-pink"/>
+           class="w-full h-full object-contain -rotate-[8.09deg]"/>
+      <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
     </div>
   </div>
   <ModalView>

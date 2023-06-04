@@ -10,7 +10,6 @@
         </template>
         <template v-slot:verso>
           <div class="bg-red-500">
-            <!--span class="text-2xl text-beige-medium font-bold">{{ index + 1 }}</span-->
             <span class="text-xl text-beige-medium font-bold">{{ team._name }}</span>
           </div>
         </template>
@@ -19,7 +18,7 @@
         <div :data-id="index" class="w-full h-full bg-beige rounded-md shadow-md w-max-content py-14 px-10"
              :class="answer.status === 'valid' && gameStore.currentStep === GAMESTEP.PLAY ? 'bg-green-light' : 'bg-beige'">
           <div v-show="gameStore.currentStep === GAMESTEP.PLAY">
-            <span v-show="answer.status !== 'valid'" class="text-2xl text-beige-medium font-bold">{{ index + 1 }}</span>
+            <span v-show="answer.status !== 'valid'" class="text-3xl text-beige-medium font-bold">{{ index + 1 }}</span>
             <Check v-show="answer.status === 'valid'" class="w-16"/>
           </div>
           <div v-show="gameStore.currentStep === GAMESTEP.END"
@@ -31,7 +30,7 @@
         </div>
       </div-->
     </div>
-    <RoundButton v-show="gameStore.currentStep === GAMESTEP.END" @click="next" class="col-span-12 mx-auto">
+    <RoundButton v-if="gameStore.currentStep === GAMESTEP.END" @click="next" :color="COLOR.GREEN_LIGHT" class="col-span-12 mx-auto my-5">
       <Check/>
     </RoundButton>
   </div>
@@ -42,16 +41,17 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import {GAME_STEP} from "../../../../common/Constants";
+import {COLOR, GAME_STEP} from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager"
 import CardGame from "../../CardGame.vue";
+import RoundButton from "../../../common/RoundButton.vue";
 import SvgIcon from "../../../common/SvgIcon.vue";
 
 import Check from "../../../../assets/svg/ico-check.svg?component";
 
 export default defineComponent({
   name: 'TeacherGameView',
-  components: {Check, CardGame, SvgIcon},
+  components: {Check, CardGame, RoundButton, SvgIcon},
   data() {
     return {
       publicPath: window.location.origin,
@@ -61,6 +61,9 @@ export default defineComponent({
     }
   },
   computed: {
+    COLOR() {
+      return COLOR
+    },
     GAMESTEP() {
       return GAME_STEP
     },

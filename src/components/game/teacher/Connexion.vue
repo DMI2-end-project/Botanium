@@ -10,9 +10,9 @@
     <div class="relative flex flex-col items-center">
       <div class="absolute right-2 top-2"><RoundButton @click="closeModal" :color="COLOR.RED" :size="SIZE.SM"><Cross /></RoundButton></div>
       <div class="bg-beige rounded-full aspect-square p-7 -mt-20 -mb-8">
-        <p class="font-title font-bold text-xxl text-green-medium -mt-4">{{ teamsConnected.length }} / {{ gameStore.teams.length }}</p>
+        <p class="font-title font-bold text-2xl text-green-medium -mt-4">{{ teamsConnected.length }} / {{ gameStore.teams.length }}</p>
       </div>
-      <h2 class="font-title font-bold text-xxl">Tablettes connectées</h2>
+      <h2 class="font-title font-bold text-2xl">Tablettes connectées</h2>
       <div class="flex flex-col items-center gap-3 my-8">
         <div v-for="team in gameStore.teams" :v-bind="team._socketId"
         :class="team.isConnected ? 'bg-green-medium' : 'bg-red'" class="text-beige w-fit px-8 py-1 rounded-full">
