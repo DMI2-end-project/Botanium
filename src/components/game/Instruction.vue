@@ -8,7 +8,7 @@
       <h3 class="text-beige">{{ text }}</h3>
     </div>
     <p v-if="mainStore.role === ROLE.TEACHER && microNeeded && !hasMicroOn && !hasMicroWaiting" class="mt-6">Attention : Aucune équipe n'a activé son micro, l'exercice ne pourra donc pas être réalisé.</p>
-    <RoundButton v-if="(mainStore.role === ROLE.TEACHER && !microNeeded) || (mainStore.role === ROLE.TEACHER && microNeeded && !hasMicroWaiting)" @click="next" :color="COLOR.PINK" class="mt-8 text-lg font-bold">
+    <RoundButton v-if="mainStore.role === ROLE.TEACHER" @click="next" :color="COLOR.PINK" class="mt-8 text-lg font-bold" :is-active="mainStore.role === ROLE.TEACHER && ((microNeeded && !hasMicroWaiting) || !microNeeded)">
       >
     </RoundButton>
     <CircleButton v-if="mainStore.role === ROLE.STUDENT && microNeeded && !hasMicro" @click="getMicrophone" class="mt-10" text="Allume ton micro" :color="COLOR.PURPLE" :size="SIZE.MD" :colorReverse="true"><MicroOn /></CircleButton>

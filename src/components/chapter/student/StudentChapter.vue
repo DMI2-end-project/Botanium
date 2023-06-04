@@ -11,6 +11,7 @@ import {EVENT} from "../../../common/Constants";
 
 export default defineComponent({
   name: 'InGame',
+  emits: ['validated'],
   data() {
     return {
       socket: getSocket(),

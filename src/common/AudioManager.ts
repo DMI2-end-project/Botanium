@@ -60,6 +60,7 @@ class AudioManager {
       this.context.close();
       this.context = null;
     }
+    console.log('AudioManager pause micro 2 ', this.stream, this.context)
   }
 
   public unPauseMicrophone() {

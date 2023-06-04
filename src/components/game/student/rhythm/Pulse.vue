@@ -9,6 +9,10 @@
 import { defineComponent } from 'vue';
 import * as PIXI from "pixi.js";
 
+interface Colors {
+  [key: string]: any;
+}
+
 export default defineComponent({
   name: "PulseElement",
   data() {
@@ -18,7 +22,7 @@ export default defineComponent({
         'purple' : 0,
         'red' : 100,
         'green' : -100,
-      },
+      } as Colors,
       app: new PIXI.Application({
         autoStart: true,
         width: 850,

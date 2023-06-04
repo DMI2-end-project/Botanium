@@ -41,7 +41,10 @@ gameStore.$subscribe((_, state) => {
   if (state.data) {
     document.documentElement.style.setProperty('--color-background', gameStore.data.color);
 
-    let currentSection = gameStore.data?.gameSequences[gameStore.currentSequence];
+    let currentSection
+    if (gameStore.data && gameStore.currentSequence) {
+      currentSection = gameStore.data?.gameSequences[gameStore.currentSequence];
+    }
     while (mainStore.role === ROLE.TEACHER && currentSection && !currentSection.gamemaster && gameStore.currentSequence < gameStore.data?.gameSequences.length - 1) {
       gameStore.currentSequence += 1;
       GameMasterManagerInstance.nextSequence();

@@ -1,38 +1,32 @@
 <template>
   <Pulse ref="pulse" :color="feedbackMessage === 'Excellent' || feedbackMessage === 'Bien' ? 'green' : (feedbackMessage === 'Très mauvais' || feedbackMessage === 'Mauvais' ? 'red' : 'purple')" />
   <div ref="feedback" class="feedback relatif text-purple uppercase text-xl font-title font-bold"></div>
-  <!-- <p>Message : {{ feedbackMessage }}</p>
-  <p>En train de clapper : {{ isClapping }}</p>
-  <p>En rythme : {{ rhythm }}</p> -->
-  <!-- <div ref="labels"></div> -->
-  <div class="w-16 h-32 bg-white fixed  top-[45vh] left-[35vw]">
-    <div :style="'transform: scaleY(' + rhythm + ')'" class="absolute top-0 w-full bg-purple h-full origin-bottom" />
-  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { getSocket } from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
-import * as tf from "@tensorflow/tfjs";
-import * as speechCommands from "@tensorflow-models/speech-commands";
+import {useGameStore} from "../../../../stores/gameStore";
 import { AUDIO_EVENT } from "../../../../common/Constants";
 import { AudioManagerInstance } from "../../../../common/AudioManager";
 import Pulse from './Pulse.vue';
 
 export default defineComponent({
   components: { Pulse },
+  emits: ['validated'],
   data() {
     return {
       socket: getSocket(),
       mainStore: useMainStore(),
+      gameStore: useGameStore(),
       pathModel: window.location.origin + "/tensorflow/m3/",
-      frequencyData: {} as Uint8Array,
+      frequencyData: null as Uint8Array | null,
       rhythmFreq: 800 as number, // ms
       lastTime: 0 as number,
       lastFreq: 0 as number, // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
       rhythm: 0 as number, // value between -1 & 1, -1 il faut surtout pas clapper, 1 c'est le meilleur moment pour clapper
-      isClapping: 0 as number, // value between 0 & 1 => Probability is clapping
+      isClapping: 1 as number, // value between 0 & 1 => Probability is clapping
       sensibilityVolume: 2 as number, // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
       feedbackRythm: [
         "Excellent",
@@ -41,9 +35,7 @@ export default defineComponent({
         "Très mauvais",
       ],
       feedbackMessage: "",
-      recognizer: {} as speechCommands.SpeechCommandRecognizer,
       raf: 0 as number,
-      raf2: 0 as number,
       lastClap: 0 as number
     };
   },
@@ -53,21 +45,26 @@ export default defineComponent({
     window.addEventListener("focus", this.play);
   },
   methods: {
+    hasMicro() {
+      const team = this.gameStore.teams.find(team => team._name === this.gameStore.teamName)
+      if (team) {
+        return team?.hasMicro
+      } else {
+        return false
+      }
+    },
     async stop() {
       AudioManagerInstance.pauseMicrophone()
       cancelAnimationFrame(this.raf)
-      cancelAnimationFrame(this.raf2)
-      // if (this.recognizer.isListening()) {
-      //   this.recognizer.stopListening()
-      // }
     },
     async play() {
-      AudioManagerInstance.unPauseMicrophone()
+      if (this.hasMicro()) {
+        AudioManagerInstance.unPauseMicrophone()
+      }
       const waitTime = this.rhythmFreq - ((Date.now() + AudioManagerInstance.deltaTimeWithServer) % this.rhythmFreq)
       setTimeout(() => {
         if (AudioManagerInstance.stream && AudioManagerInstance.analyser) {
           this.frequencyData = new Uint8Array(AudioManagerInstance.analyser.frequencyBinCount);
-          this.initClapRecognition()
         }
         this.startListen()
       }, waitTime)
@@ -75,26 +72,14 @@ export default defineComponent({
     startListen() {
       (this.$refs.pulse as typeof Pulse).startAnimation();
       this.lastTime = 0
-      if (AudioManagerInstance.stream) {
-        cancelAnimationFrame(this.raf)
-        this.raf = requestAnimationFrame(this.listenLoop);
-      } else {
-        cancelAnimationFrame(this.raf2)
-        this.raf2 = requestAnimationFrame(this.loop);
-      }
+      cancelAnimationFrame(this.raf)
+      this.raf = requestAnimationFrame(this.loop);
     },
     loop() {
       const time = (Date.now() + AudioManagerInstance.deltaTimeWithServer) % this.rhythmFreq
-      if (time < this.lastTime) {
-        (this.$refs.pulse as typeof Pulse).startAnimation();
-      }
-      this.lastTime = time
-      this.raf2 = requestAnimationFrame(this.loop);
-    },
-    listenLoop() {
-      const time = (Date.now() + AudioManagerInstance.deltaTimeWithServer) % this.rhythmFreq
-      this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
-      if (this.lastClap + (this.rhythmFreq / 2) < Date.now() + AudioManagerInstance.deltaTimeWithServer && AudioManagerInstance.analyser) {
+
+      if (this.lastClap + (this.rhythmFreq / 2) < Date.now() + AudioManagerInstance.deltaTimeWithServer && AudioManagerInstance.analyser && AudioManagerInstance.stream && this.frequencyData) {
+        this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
         this.feedbackMessage = ''
         AudioManagerInstance.analyser.getByteFrequencyData(this.frequencyData);
         this.detectClap(this.frequencyData);
@@ -104,7 +89,7 @@ export default defineComponent({
         (this.$refs.pulse as typeof Pulse).startAnimation();
       }
       this.lastTime = time
-      this.raf = requestAnimationFrame(this.listenLoop);
+      this.raf = requestAnimationFrame(this.loop);
     },
     detectClap(frequencyData:Uint8Array) {
       // Trouvez le pic le plus haut de la fréquence
@@ -131,7 +116,7 @@ export default defineComponent({
       this.lastClap = Date.now() + AudioManagerInstance.deltaTimeWithServer
       this.socket.emit(AUDIO_EVENT.CLAP_SCORE, {
         roomId: this.mainStore.roomId,
-        clapScore: this.rhythm
+        rhythm: this.rhythm
       });
       this.feedbackMessage = this.feedbackRythm[this.rhythm > 0.8 ? 0 : (this.rhythm > 0 ? 1 : (this.rhythm > -0.5 ? 2 : 3))]
       this.addFeedbackMessage()
@@ -154,63 +139,16 @@ export default defineComponent({
         para.style.transform = 'scale(0) translateY(0)'
       }, 10)
       setTimeout(() => {
-        (this.$refs.feedback as HTMLElement).removeChild(para);
-      }, 2000)
-    },
-    async createModel():Promise<speechCommands.SpeechCommandRecognizer> {
-        const checkpointURL = this.pathModel + "model.json"; // model topology
-        const metadataURL = this.pathModel + "metadata.json"; // model metadata
-
-        const recognizer = speechCommands.create(
-            "BROWSER_FFT", // fourier transform type, not useful to change
-            undefined, // speech commands vocabulary feature, not useful for your models
-            checkpointURL,
-            metadataURL);
-
-        // check that model and metadata are loaded via HTTPS requests.
-        await recognizer.ensureModelLoaded();
-
-        return recognizer;
-    },
-    async initClapRecognition() {
-      tf.setBackend('webgl');
-      this.recognizer = await this.createModel();
-        // const classLabels = this.recognizer.wordLabels(); // get class labels
-        // const labelContainer:HTMLElement = this.$refs.labels as HTMLElement;
-        // for (let i = 0; i < classLabels.length; i++) {
-        //     labelContainer.appendChild(document.createElement("div"));
-        // }
-
-      this.recognizer.listen(async (result: speechCommands.SpeechCommandRecognizerResult) => {
-        const scores: Float32Array | Float32Array[] = Array.isArray(result.scores) ? result.scores[0] : result.scores;
-        if (scores[0] > 0.75) {
-          this.isClapping -= (100/this.rhythmFreq) * scores[0];
-        } else if (scores[1] > 0.75) {
-          this.isClapping += 0.6 * scores[1];
+        if (this.$refs.feedback) {
+          (this.$refs.feedback as HTMLElement).removeChild(para);
         }
-
-        this.isClapping += 1
-
-        this.isClapping = Math.min(Math.max(this.isClapping, 0), 1);
-
-        // for (let i = 0; i < classLabels.length; i++) {
-        //     const classPrediction = classLabels[i] + ": " + scores[i].toFixed(2);
-        //     (labelContainer.childNodes[i] as HTMLElement).innerHTML = classPrediction;
-        // }
-      }, {
-          includeSpectrogram: true, // in case listen should return result.spectrogram
-          probabilityThreshold: 0.75,
-          invokeCallbackOnNoiseAndUnknown: true,
-          overlapFactor: 0.75 // probably want between 0.5 and 0.75. More info in README
-      });
+      }, 2000)
     },
   },
   beforeUnmount() {
-    // if (this.recognizer.isListening()) {
-    //   this.recognizer.stopListening()
-    // }
-    cancelAnimationFrame(this.raf)
-    cancelAnimationFrame(this.raf2)
+    window.removeEventListener("blur", this.stop);
+    window.removeEventListener("focus", this.play);
+    this.stop()
   }
 });
 </script>
