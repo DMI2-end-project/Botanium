@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240.29 240.29">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-width: 11px;
+      }
+
+      .cls-2 {
+        stroke-linejoin: round;
+      }
+
+      .cls-3 {
+        fill: #eebe57;
+      }
+    </style>
+  </defs>
+  <g id="Object">
+    <g>
+      <circle class="cls-3" cx="120.15" cy="120.15" r="120.15"/>
+      <g>
+        <g>
+          <polyline class="cls-2" points="83.68 94.83 99.67 110.82 83.68 126.82"/>
+          <polyline class="cls-2" points="156.62 126.82 140.62 110.82 156.62 94.83"/>
+        </g>
+        <line class="cls-1" x1="76.14" y1="166.85" x2="164.16" y2="166.85"/>
+      </g>
+    </g>
+  </g>
+</svg>

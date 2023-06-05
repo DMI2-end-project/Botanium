@@ -4,6 +4,7 @@ import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import { GameMasterManagerInstance } from "../common/GameMasterManager";
+import { TeamManagerInstance } from '../common/TeamManager';
 import { AudioManagerInstance } from "../common/AudioManager";
 import {ROLE, GAME_STEP} from "../common/Constants";
 import {useGameStore} from "../stores/gameStore";
@@ -75,7 +76,7 @@ const getMicro = async () => {
   if (hasMicro) {
     isModalOpen.value = false
     mainStore.isModalOpen = false
-    AudioManagerInstance.startMicrophone()
+    TeamManagerInstance.mircoReady(true);
   } else {
     isModalOpen.value = true
     mainStore.isModalOpen = true
@@ -85,7 +86,7 @@ const getMicro = async () => {
 const readyWithoutMicro = () => {
   isModalOpen.value = false
   mainStore.isModalOpen = false
-  AudioManagerInstance.startWithoutMicrophone()
+  TeamManagerInstance.mircoReady(false);
 }
 
 </script>

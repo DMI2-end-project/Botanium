@@ -1,11 +1,7 @@
 <template>
-  <Pulse ref="pulse" :color="feedbackMessage === 'Excellent' || feedbackMessage === 'Bien' ? 'green' : (feedbackMessage === 'Très mauvais' || feedbackMessage === 'Mauvais' ? 'red' : 'purple')" />
-  <div ref="feedback" class="feedback relatif text-purple uppercase text-xl font-title font-bold"></div>
-  <p>deltaTimeWithServer : {{ delta }}</p>
-  <p>En rythme : {{ rhythm }}</p>
-  <div class="w-16 h-32 bg-white fixed  top-[45vh] left-[35vw]">
-    <div :style="'transform: scaleY(' + rhythm + ')'" class="absolute top-0 w-full bg-purple h-full origin-bottom" />
-  </div>
+  <Pulse ref="pulse" :color="feedbackMessage.number === 0 || feedbackMessage.number === 1 ? 'green' : (feedbackMessage.number === 2 || feedbackMessage.number === 3 ? 'red' : 'purple')" />
+  <div ref="feedback" class="feedback relatif text-purple uppercase text-2xl font-sans font-black"></div>
+  <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p>
 </template>
 
 <script lang="ts">
@@ -17,6 +13,11 @@ import { AUDIO_EVENT } from "../../../../common/Constants";
 import { AudioManagerInstance } from "../../../../common/AudioManager";
 import Pulse from './Pulse.vue';
 
+interface Feedback {
+  number: number,
+  text: string
+}
+
 export default defineComponent({
   components: { Pulse },
   emits: ['validated'],
@@ -25,27 +26,23 @@ export default defineComponent({
       socket: getSocket(),
       mainStore: useMainStore(),
       gameStore: useGameStore(),
-      pathModel: window.location.origin + "/tensorflow/m3/",
-      frequencyData: null as Uint8Array | null,
       rhythmFreq: 800 as number, // ms
       lastTime: 0 as number,
-      lastFreq: 0 as number, // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
       rhythm: 0 as number, // value between -1 & 1, -1 il faut surtout pas clapper, 1 c'est le meilleur moment pour clapper
-      isClapping: 1 as number, // value between 0 & 1 => Probability is clapping
-      sensibilityVolume: 2 as number, // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
       feedbackRythm: [
-        "Excellent",
-        "Bien",
-        "Mauvais",
-        "Très mauvais",
+        {number: 0, text: "Parfait"},
+        {number: 1, text: "Bien"},
+        {number: 2, text: "Moyen"},
+        {number: 3, text: "Mauvais"},
       ],
-      feedbackMessage: "",
+      feedbackMessage: {number: -1, text: ''} as Feedback,
+      deltaTimeWithServer: 0 as number,
       raf: 0 as number,
       lastClap: 0 as number,
-      delta: AudioManagerInstance.deltaTimeWithServer as number
     };
   },
-  mounted() {
+  async mounted() {
+    this.deltaTimeWithServer = await AudioManagerInstance.getDeltaTimeWithServer()
     this.play()
     window.addEventListener("blur", this.stop);
     window.addEventListener("focus", this.play);
@@ -64,14 +61,11 @@ export default defineComponent({
       cancelAnimationFrame(this.raf)
     },
     async play() {
-      if (this.hasMicro() && !AudioManagerInstance.stream) {
+      if (this.hasMicro()) {
         AudioManagerInstance.unPauseMicrophone()
       }
-      const waitTime = this.rhythmFreq - ((Date.now() + AudioManagerInstance.deltaTimeWithServer) % this.rhythmFreq)
+      const waitTime = this.rhythmFreq - ((Date.now() + this.deltaTimeWithServer) % this.rhythmFreq)
       setTimeout(() => {
-        if (AudioManagerInstance.stream && AudioManagerInstance.analyser) {
-          this.frequencyData = new Uint8Array(AudioManagerInstance.analyser.frequencyBinCount);
-        }
         this.startListen()
       }, waitTime)
     },
@@ -82,14 +76,15 @@ export default defineComponent({
       this.raf = requestAnimationFrame(this.loop);
     },
     loop() {
-      const time = (Date.now() + AudioManagerInstance.deltaTimeWithServer) % this.rhythmFreq
+      const time = (Date.now() + this.deltaTimeWithServer) % this.rhythmFreq
       this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
 
-      if (this.lastClap + (this.rhythmFreq / 2) < Date.now() + AudioManagerInstance.deltaTimeWithServer && AudioManagerInstance.analyser && AudioManagerInstance.stream && this.frequencyData) {
+      if (this.lastClap + (this.rhythmFreq / 2) < Date.now() + this.hasMicro()) {
 
-        this.feedbackMessage = ''
-        AudioManagerInstance.analyser.getByteFrequencyData(this.frequencyData);
-        this.detectClap(this.frequencyData);
+        this.feedbackMessage = {number: -1, text: ''}
+        if (AudioManagerInstance.isClapping()) {
+          this.onClap()
+        }
       }
 
       if (time < this.lastTime) {
@@ -98,29 +93,8 @@ export default defineComponent({
       this.lastTime = time
       this.raf = requestAnimationFrame(this.loop);
     },
-    detectClap(frequencyData:Uint8Array) {
-      // Trouvez le pic le plus haut de la fréquence
-      var maxIndex = 0; // correspond à la hauteur avec le volume le plus haut
-      for (var i = 0; i < frequencyData.length; i++) {
-        if (frequencyData[i] > frequencyData[maxIndex]) {
-          maxIndex = i;
-        }
-      }
-
-      const currentFreq: number = frequencyData[maxIndex];
-
-      if (
-        currentFreq > 100 &&
-        currentFreq - this.lastFreq > 40 * (1 / this.sensibilityVolume) &&
-        this.isClapping > 0.5
-      ) {
-        this.onClap()
-      }
-
-      this.lastFreq = currentFreq;
-    },
     onClap() {
-      this.lastClap = Date.now() + AudioManagerInstance.deltaTimeWithServer
+      this.lastClap = Date.now() + this.deltaTimeWithServer
       this.socket.emit(AUDIO_EVENT.CLAP_SCORE, {
         roomId: this.mainStore.roomId,
         rhythm: this.rhythm
@@ -132,22 +106,37 @@ export default defineComponent({
       if (!this.$refs.feedback) {
         return
       }
-      const para = document.createElement("p");
-      const node = document.createTextNode(this.feedbackMessage);
-      para.appendChild(node);
-      (this.$refs.feedback as HTMLElement).appendChild(para);
-      para.style.position = 'absolute'
-      para.style.top = 'calc(' + (Math.random() * 10 + 40) + '% + 10px)'
-      para.style.left = 'calc(' + (Math.random() * 10 + 40) + '% + 60px)'
-      para.style.transform = 'scale(1) translateY(0)'
-      para.style.opacity = '1'
-      para.style.transition = 'transform 1s cubic-bezier(0.36, 0, 0.66, -0.56), opacity 1s cubic-bezier(0.36, 0, 0.66, -0.56)'
+      const div = document.createElement("div");
+      const p = document.createElement("p");
+      const img = document.createElement("img") as HTMLImageElement;
+      img.src = window.location.origin + `/src/assets/game-data/icons/00104/clap-${this.feedbackMessage.number}.svg`;
+      const node = document.createTextNode(this.feedbackMessage.text);
+      p.appendChild(node);
+      p.style.textAlign = 'center'
+      div.appendChild(img);
+      div.appendChild(p);
+      (this.$refs.feedback as HTMLElement).appendChild(div);
+      div.style.position = 'absolute'
+      div.style.width = '120px'
+      div.style.height = '120px'
+      div.style.top = 'calc(' + (Math.random() * 20 + 40) + '%)'
+      div.style.left = 'calc(' + (Math.random() * 20 + 40) + '%)'
+      div.style.transform = 'scale(0) translate(-50%, -50%)'
+      div.style.transformOrigin = 'top left'
+      // div.style.opacity = '0'
       setTimeout(() => {
-        para.style.transform = 'scale(0) translateY(0)'
+        div.style.transform = 'scale(0.8) translate(-50%, -50%)'
+        div.style.opacity = '1'
+        div.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)'
       }, 10)
       setTimeout(() => {
+        div.style.transition = 'transform 1s cubic-bezier(0.5, 0, 0.75, 0), opacity 0.8s cubic-bezier(0.5, 0, 0.75, 0)'
+        div.style.opacity = '0'
+        div.style.transform = 'scale(0) translate(-50%, -50%)'
+      }, 300)
+      setTimeout(() => {
         if (this.$refs.feedback) {
-          (this.$refs.feedback as HTMLElement).removeChild(para);
+          (this.$refs.feedback as HTMLElement).removeChild(div);
         }
       }, 2000)
     },
