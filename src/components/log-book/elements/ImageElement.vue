@@ -2,7 +2,7 @@
   <button class="image-element h-full p-0 text-beige-dark outline outline-8 transition-all duration-400" :class="classProperty + ' ' + (photoData.id ? 'bg-transparent' : 'bg-beige-medium/50') + ' ' + (onModify ? 'outline-yellow' : 'outline-transparent')" @click="modify">
     <div v-if="photoData.id" class="relative flex justify-center max-w-full max-h-full" :style="'transform: rotate(' + rotate + 'deg)'">
       <div :class="color" class="w-16 h-4 opacity-70 absolute -top-2 z-10"></div>
-      <img :src="photoUrl(photoData)" class="image max-h-full max-w-full object-contain bg-white border-4 border-white drop-shadow-lg">
+      <img alt="" :src="photoUrl(photoData)" class="image max-h-full max-w-full object-contain bg-white border-4 border-white drop-shadow-lg">
     </div>
     <p v-if="!photoData.id">image</p>
   </button>
@@ -14,7 +14,7 @@
             <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
               <div v-for="photo in photos" :v-bind="photo" class="w-48 h-48 flex justify-center items-center">
                 <button @click="changeImage(photo)" class="p-0 overflow-hidden">
-                  <img :src="photoUrl(photo)" class="object-contain w-full h-full pointer-events-none">
+                  <img alt="" :src="photoUrl(photo)" class="object-contain w-full h-full pointer-events-none">
                 </button>
               </div>
             </div>

@@ -71,11 +71,11 @@ export default defineComponent({
 <template>
   <div class="bg-background fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden"/>
   <div
-      class="bg-texture bg-cover fixed top-0 left-0 w-screen h-screen mix-blend-soft-light opacity-50 pointer-events-none overflow-hidden"/>
+      class="bg-texture bg-cover fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden mix-blend-soft-light opacity-50"/>
   <div class="flex flex-col w-full h-full min-h-screen">
-    <header class="fixed flex flex-col w-full max-w-full p-10 z-20">
+    <header class="fixed top-0 left-0 w-full z-20">
       <!-- DEV INFO -->
-      <div class="flex justify-end items-center gap-6 fixed z-20 right-6 top-0">
+      <div class="col-span-12 flex justify-end items-center gap-6 z-20">
         <!-- <div>
           Path : {{ router.currentRoute?.path }},
           Auth state : {{ pb.authStore.isValid }},

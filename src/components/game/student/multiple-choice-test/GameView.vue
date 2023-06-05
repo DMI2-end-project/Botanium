@@ -1,28 +1,24 @@
 <template>
-  <div class="relative grid grid-cols-12 gap-4 px-8">
-    <div class="col-start-2 col-span-10 grid grid-cols-1 lg:grid-cols-2 auto-rows-fr gap-4"> <!-- flex flex-wrap -->
-      <CardGame v-for="(answer, index) in answers" :v-bind="index" @click.native="() => itemSelected(index)"
-                card-state="show" :answer-state="answer.status"
-                class=" aspect-[9/4]">
-        <template v-slot:recto>
-          <div class="flex flex-col justify-center items-center text-center text-green-dark gap-5 w-full">
-            <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
-            <span class="text-md pointer-events-none">{{ answer.text }}</span>
-          </div>
-        </template>
-      </CardGame>
-      <!--div v-for="(answer, index) in answers" :v-bind="index" class="w-full border rounded-md p-3.5"
-           :class="answer.isClicked ? 'border-green-light' : 'border-transparent'">
-        <button @click="itemSelected" :data-id="index"
-                class="w-full h-full rounded-md shadow-md w-max-content flex flex-col items-center gap-5 text-center py-14 px-10 focus:outline-none "
-                :class="answer.status === 'error' ? '!bg-red text-white' : (answer.status === 'valid' ? '!bg-blue text-white' : (answer.isClicked ? '!bg-green-light text-green' : '!bg-beige text-green'))">
-          <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
-               class="w-16 aspect-square pointer-events-none">
-          <span class="text-md pointer-events-none">{{ answer.text }}</span>
-        </button>
-      </div-->
-    </div>
-    <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-12 mx-auto my-5"
+  <div class="relative grid grid-cols-2 auto-rows-fr gap-4 px-8">
+    <CardGame v-for="(answer, index) in answers" :v-bind="index" @click.native="() => itemSelected(index)"
+              card-state="show" :answer-state="answer.status"
+              class="aspect-[9/4]">
+      <template v-slot:recto>
+        <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
+        <span class="text-md pointer-events-none">{{ answer.text }}</span>
+      </template>
+    </CardGame>
+    <!--div v-for="(answer, index) in answers" :v-bind="index" class="w-full border rounded-md p-3.5"
+         :class="answer.isClicked ? 'border-green-light' : 'border-transparent'">
+      <button @click="itemSelected" :data-id="index"
+              class="w-full h-full rounded-md shadow-md w-max-content flex flex-col items-center gap-5 text-center py-14 px-10 focus:outline-none "
+              :class="answer.status === 'error' ? '!bg-red text-white' : (answer.status === 'valid' ? '!bg-blue text-white' : (answer.isClicked ? '!bg-green-light text-green' : '!bg-beige text-green'))">
+        <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
+             class="w-16 aspect-square pointer-events-none">
+        <span class="text-md pointer-events-none">{{ answer.text }}</span>
+      </button>
+    </div-->
+    <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-2 mx-auto my-5"
                  :class="{'opacity-100': currentAnswer, 'opacity-30': !currentAnswer}">
       <Check/>
     </RoundButton>
