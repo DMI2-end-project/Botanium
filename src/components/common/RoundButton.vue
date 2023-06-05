@@ -1,5 +1,5 @@
 <template>
-  <div :class="isBg ? 'RoundButtonBg bg-beige-medium p-8 rounded-full' : ''">
+  <div :class="(isBg ? 'RoundButtonBg bg-beige-medium p-8 rounded-full' : '') + (isActive ? '' : ' opacity-50 pointer-events-none')">
     <button
       class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
       :class="`${containerClass}`">
@@ -30,6 +30,10 @@ export default defineComponent({
     },
     isBg: {
       default: false,
+      type: Boolean
+    },
+    isActive: {
+      default: true,
       type: Boolean
     }
   },

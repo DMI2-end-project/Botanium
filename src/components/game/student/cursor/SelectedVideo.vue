@@ -72,7 +72,7 @@ export default defineComponent({
       (app.view as HTMLCanvasElement).style.margin = 'auto';
       (this.$refs.canvasContainer as HTMLElement).appendChild(app.view as HTMLCanvasElement);
 
-      const textureData = await PIXI.Assets.load('/src/assets/game-data/animations/00103/animation_' + this.element + '.json');
+      const textureData = await PIXI.Assets.load('/game/animations/00103/animation_' + this.element + '.json');
       const animations = textureData.data.animations;
 
       const animation = PIXI.AnimatedSprite.fromFrames(animations["animation_" + this.element]);

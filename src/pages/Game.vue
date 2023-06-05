@@ -4,6 +4,7 @@ import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import { GameMasterManagerInstance } from "../common/GameMasterManager";
+import { TeamManagerInstance } from '../common/TeamManager';
 import { AudioManagerInstance } from "../common/AudioManager";
 import {ROLE, GAME_STEP} from "../common/Constants";
 import {useGameStore} from "../stores/gameStore";
@@ -41,7 +42,10 @@ gameStore.$subscribe((_, state) => {
   if (state.data) {
     document.documentElement.style.setProperty('--color-background', gameStore.data.color);
 
-    let currentSection = gameStore.data?.gameSequences[gameStore.currentSequence];
+    let currentSection
+    if (gameStore.data && gameStore.currentSequence) {
+      currentSection = gameStore.data?.gameSequences[gameStore.currentSequence];
+    }
     while (mainStore.role === ROLE.TEACHER && currentSection && !currentSection.gamemaster && gameStore.currentSequence < gameStore.data?.gameSequences.length - 1) {
       gameStore.currentSequence += 1;
       GameMasterManagerInstance.nextSequence();
@@ -72,7 +76,7 @@ const getMicro = async () => {
   if (hasMicro) {
     isModalOpen.value = false
     mainStore.isModalOpen = false
-    AudioManagerInstance.startMicrophone()
+    TeamManagerInstance.mircoReady(true);
   } else {
     isModalOpen.value = true
     mainStore.isModalOpen = true
@@ -82,7 +86,7 @@ const getMicro = async () => {
 const readyWithoutMicro = () => {
   isModalOpen.value = false
   mainStore.isModalOpen = false
-  AudioManagerInstance.startWithoutMicrophone()
+  TeamManagerInstance.mircoReady(false);
 }
 
 </script>

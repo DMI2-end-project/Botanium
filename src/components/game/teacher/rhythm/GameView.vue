@@ -44,13 +44,15 @@ export default defineComponent({
         },
     },
     methods: {
-        next() {
-            GameMasterManagerInstance.endGame()
-        },
-        updateScore(clapScore: number) {
-            this.score += Number(clapScore) * 5
-            this.score = Math.min(Math.max(this.score, 0), 100);
-        }
+    next() {
+        GameMasterManagerInstance.endGame()
+    },
+    updateScore(score: number) {
+      this.score = score;
+      if (this.score > 80) {
+        this.next()
+      }
+    }
     },
     components: { Gauge }
 });

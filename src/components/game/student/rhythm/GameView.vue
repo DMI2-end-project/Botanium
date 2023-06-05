@@ -1,137 +1,103 @@
 <template>
-  <Pulse ref="pulse" :color="feedbackMessage === 'Excellent' || feedbackMessage === 'Bien' ? 'green' : (feedbackMessage === 'Très mauvais' || feedbackMessage === 'Mauvais' ? 'red' : 'purple')" />
-  <div ref="feedback" class="feedback relatif text-purple uppercase text-xl font-title font-bold"></div>
-  <!-- <p>Message : {{ feedbackMessage }}</p>
-  <p>En train de clapper : {{ isClapping }}</p>
-  <p>En rythme : {{ rhythm }}</p> -->
-  <!-- <div ref="labels"></div> -->
-  <div class="w-16 h-32 bg-white fixed  top-[45vh] left-[35vw]">
-    <div :style="'transform: scaleY(' + rhythm + ')'" class="absolute top-0 w-full bg-purple h-full origin-bottom" />
-  </div>
+  <Pulse ref="pulse" :color="feedbackMessage.number === 0 || feedbackMessage.number === 1 ? 'green' : (feedbackMessage.number === 2 || feedbackMessage.number === 3 ? 'red' : 'purple')" />
+  <div ref="feedback" class="feedback relatif text-purple uppercase text-2xl font-sans font-black"></div>
+  <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { getSocket } from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
-import * as tf from "@tensorflow/tfjs";
-import * as speechCommands from "@tensorflow-models/speech-commands";
+import {useGameStore} from "../../../../stores/gameStore";
 import { AUDIO_EVENT } from "../../../../common/Constants";
 import { AudioManagerInstance } from "../../../../common/AudioManager";
 import Pulse from './Pulse.vue';
 
+interface Feedback {
+  number: number,
+  text: string
+}
+
 export default defineComponent({
   components: { Pulse },
+  emits: ['validated'],
   data() {
     return {
       socket: getSocket(),
       mainStore: useMainStore(),
-      pathModel: window.location.origin + "/tensorflow/m3/",
-      frequencyData: {} as Uint8Array,
+      gameStore: useGameStore(),
       rhythmFreq: 800 as number, // ms
       lastTime: 0 as number,
-      lastFreq: 0 as number, // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
       rhythm: 0 as number, // value between -1 & 1, -1 il faut surtout pas clapper, 1 c'est le meilleur moment pour clapper
-      isClapping: 0 as number, // value between 0 & 1 => Probability is clapping
-      sensibilityVolume: 2 as number, // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
       feedbackRythm: [
-        "Excellent",
-        "Bien",
-        "Mauvais",
-        "Très mauvais",
+        {number: 0, text: "Parfait"},
+        {number: 1, text: "Bien"},
+        {number: 2, text: "Moyen"},
+        {number: 3, text: "Mauvais"},
       ],
-      feedbackMessage: "",
-      recognizer: {} as speechCommands.SpeechCommandRecognizer,
+      feedbackMessage: {number: -1, text: ''} as Feedback,
+      deltaTimeWithServer: 0 as number,
       raf: 0 as number,
-      raf2: 0 as number,
-      lastClap: 0 as number
+      lastClap: 0 as number,
     };
   },
-  mounted() {
+  async mounted() {
+    this.deltaTimeWithServer = await AudioManagerInstance.getDeltaTimeWithServer()
     this.play()
     window.addEventListener("blur", this.stop);
     window.addEventListener("focus", this.play);
   },
   methods: {
+    hasMicro() {
+      const team = this.gameStore.teams.find(team => team._name === this.gameStore.teamName)
+      if (team) {
+        return team?.hasMicro
+      } else {
+        return false
+      }
+    },
     async stop() {
       AudioManagerInstance.pauseMicrophone()
       cancelAnimationFrame(this.raf)
-      cancelAnimationFrame(this.raf2)
-      // if (this.recognizer.isListening()) {
-      //   this.recognizer.stopListening()
-      // }
     },
     async play() {
-      AudioManagerInstance.unPauseMicrophone()
-      const waitTime = this.rhythmFreq - ((Date.now() + AudioManagerInstance.deltaTimeWithServer) % this.rhythmFreq)
+      if (this.hasMicro()) {
+        AudioManagerInstance.unPauseMicrophone()
+      }
+      const waitTime = this.rhythmFreq - ((Date.now() + this.deltaTimeWithServer) % this.rhythmFreq)
       setTimeout(() => {
-        if (AudioManagerInstance.stream && AudioManagerInstance.analyser) {
-          this.frequencyData = new Uint8Array(AudioManagerInstance.analyser.frequencyBinCount);
-          this.initClapRecognition()
-        }
         this.startListen()
       }, waitTime)
     },
     startListen() {
       (this.$refs.pulse as typeof Pulse).startAnimation();
       this.lastTime = 0
-      if (AudioManagerInstance.stream) {
-        cancelAnimationFrame(this.raf)
-        this.raf = requestAnimationFrame(this.listenLoop);
-      } else {
-        cancelAnimationFrame(this.raf2)
-        this.raf2 = requestAnimationFrame(this.loop);
-      }
+      cancelAnimationFrame(this.raf)
+      this.raf = requestAnimationFrame(this.loop);
     },
     loop() {
-      const time = (Date.now() + AudioManagerInstance.deltaTimeWithServer) % this.rhythmFreq
-      if (time < this.lastTime) {
-        (this.$refs.pulse as typeof Pulse).startAnimation();
-      }
-      this.lastTime = time
-      this.raf2 = requestAnimationFrame(this.loop);
-    },
-    listenLoop() {
-      const time = (Date.now() + AudioManagerInstance.deltaTimeWithServer) % this.rhythmFreq
+      const time = (Date.now() + this.deltaTimeWithServer) % this.rhythmFreq
       this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
-      if (this.lastClap + (this.rhythmFreq / 2) < Date.now() + AudioManagerInstance.deltaTimeWithServer && AudioManagerInstance.analyser) {
-        this.feedbackMessage = ''
-        AudioManagerInstance.analyser.getByteFrequencyData(this.frequencyData);
-        this.detectClap(this.frequencyData);
-      }
 
-      if (time < this.lastTime) {
-        (this.$refs.pulse as typeof Pulse).startAnimation();
-      }
-      this.lastTime = time
-      this.raf = requestAnimationFrame(this.listenLoop);
-    },
-    detectClap(frequencyData:Uint8Array) {
-      // Trouvez le pic le plus haut de la fréquence
-      var maxIndex = 0; // correspond à la hauteur avec le volume le plus haut
-      for (var i = 0; i < frequencyData.length; i++) {
-        if (frequencyData[i] > frequencyData[maxIndex]) {
-          maxIndex = i;
+      if (this.lastClap + (this.rhythmFreq / 2) < Date.now() + this.hasMicro()) {
+
+        this.feedbackMessage = {number: -1, text: ''}
+        if (AudioManagerInstance.isClapping()) {
+          this.onClap()
         }
       }
 
-      const currentFreq: number = frequencyData[maxIndex];
-
-      if (
-        currentFreq > 100 &&
-        currentFreq - this.lastFreq > 40 * (1 / this.sensibilityVolume) &&
-        this.isClapping > 0.5
-      ) {
-        this.onClap()
+      if (time < this.lastTime) {
+        (this.$refs.pulse as typeof Pulse).startAnimation();
       }
-
-      this.lastFreq = currentFreq;
+      this.lastTime = time
+      this.raf = requestAnimationFrame(this.loop);
     },
     onClap() {
-      this.lastClap = Date.now() + AudioManagerInstance.deltaTimeWithServer
+      this.lastClap = Date.now() + this.deltaTimeWithServer
       this.socket.emit(AUDIO_EVENT.CLAP_SCORE, {
         roomId: this.mainStore.roomId,
-        clapScore: this.rhythm
+        rhythm: this.rhythm
       });
       this.feedbackMessage = this.feedbackRythm[this.rhythm > 0.8 ? 0 : (this.rhythm > 0 ? 1 : (this.rhythm > -0.5 ? 2 : 3))]
       this.addFeedbackMessage()
@@ -140,77 +106,45 @@ export default defineComponent({
       if (!this.$refs.feedback) {
         return
       }
-      const para = document.createElement("p");
-      const node = document.createTextNode(this.feedbackMessage);
-      para.appendChild(node);
-      (this.$refs.feedback as HTMLElement).appendChild(para);
-      para.style.position = 'absolute'
-      para.style.top = 'calc(' + (Math.random() * 10 + 40) + '% + 10px)'
-      para.style.left = 'calc(' + (Math.random() * 10 + 40) + '% + 60px)'
-      para.style.transform = 'scale(1) translateY(0)'
-      para.style.opacity = '1'
-      para.style.transition = 'transform 1s cubic-bezier(0.36, 0, 0.66, -0.56), opacity 1s cubic-bezier(0.36, 0, 0.66, -0.56)'
+      const div = document.createElement("div");
+      const p = document.createElement("p");
+      const img = document.createElement("img") as HTMLImageElement;
+      img.src = window.location.origin + `/src/assets/game-data/icons/00104/clap-${this.feedbackMessage.number}.svg`;
+      const node = document.createTextNode(this.feedbackMessage.text);
+      p.appendChild(node);
+      p.style.textAlign = 'center'
+      div.appendChild(img);
+      div.appendChild(p);
+      (this.$refs.feedback as HTMLElement).appendChild(div);
+      div.style.position = 'absolute'
+      div.style.width = '120px'
+      div.style.height = '120px'
+      div.style.top = 'calc(' + (Math.random() * 20 + 40) + '%)'
+      div.style.left = 'calc(' + (Math.random() * 20 + 40) + '%)'
+      div.style.transform = 'scale(0) translate(-50%, -50%)'
+      div.style.transformOrigin = 'top left'
+      // div.style.opacity = '0'
       setTimeout(() => {
-        para.style.transform = 'scale(0) translateY(0)'
+        div.style.transform = 'scale(0.8) translate(-50%, -50%)'
+        div.style.opacity = '1'
+        div.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)'
       }, 10)
       setTimeout(() => {
-        (this.$refs.feedback as HTMLElement).removeChild(para);
-      }, 2000)
-    },
-    async createModel():Promise<speechCommands.SpeechCommandRecognizer> {
-        const checkpointURL = this.pathModel + "model.json"; // model topology
-        const metadataURL = this.pathModel + "metadata.json"; // model metadata
-
-        const recognizer = speechCommands.create(
-            "BROWSER_FFT", // fourier transform type, not useful to change
-            undefined, // speech commands vocabulary feature, not useful for your models
-            checkpointURL,
-            metadataURL);
-
-        // check that model and metadata are loaded via HTTPS requests.
-        await recognizer.ensureModelLoaded();
-
-        return recognizer;
-    },
-    async initClapRecognition() {
-      tf.setBackend('webgl');
-      this.recognizer = await this.createModel();
-        // const classLabels = this.recognizer.wordLabels(); // get class labels
-        // const labelContainer:HTMLElement = this.$refs.labels as HTMLElement;
-        // for (let i = 0; i < classLabels.length; i++) {
-        //     labelContainer.appendChild(document.createElement("div"));
-        // }
-
-      this.recognizer.listen(async (result: speechCommands.SpeechCommandRecognizerResult) => {
-        const scores: Float32Array | Float32Array[] = Array.isArray(result.scores) ? result.scores[0] : result.scores;
-        if (scores[0] > 0.75) {
-          this.isClapping -= (100/this.rhythmFreq) * scores[0];
-        } else if (scores[1] > 0.75) {
-          this.isClapping += 0.6 * scores[1];
+        div.style.transition = 'transform 1s cubic-bezier(0.5, 0, 0.75, 0), opacity 0.8s cubic-bezier(0.5, 0, 0.75, 0)'
+        div.style.opacity = '0'
+        div.style.transform = 'scale(0) translate(-50%, -50%)'
+      }, 300)
+      setTimeout(() => {
+        if (this.$refs.feedback) {
+          (this.$refs.feedback as HTMLElement).removeChild(div);
         }
-
-        this.isClapping += 1
-
-        this.isClapping = Math.min(Math.max(this.isClapping, 0), 1);
-
-        // for (let i = 0; i < classLabels.length; i++) {
-        //     const classPrediction = classLabels[i] + ": " + scores[i].toFixed(2);
-        //     (labelContainer.childNodes[i] as HTMLElement).innerHTML = classPrediction;
-        // }
-      }, {
-          includeSpectrogram: true, // in case listen should return result.spectrogram
-          probabilityThreshold: 0.75,
-          invokeCallbackOnNoiseAndUnknown: true,
-          overlapFactor: 0.75 // probably want between 0.5 and 0.75. More info in README
-      });
+      }, 2000)
     },
   },
   beforeUnmount() {
-    // if (this.recognizer.isListening()) {
-    //   this.recognizer.stopListening()
-    // }
-    cancelAnimationFrame(this.raf)
-    cancelAnimationFrame(this.raf2)
+    window.removeEventListener("blur", this.stop);
+    window.removeEventListener("focus", this.play);
+    this.stop()
   }
 });
 </script>
