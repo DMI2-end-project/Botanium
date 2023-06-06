@@ -12,6 +12,7 @@ const io = new Server(http, {
   cors: {
     origins: [`http://localhost:${port}`],
     // origins: [`http://192.168.0.13:${port}`],
+    //origins: [`http://192.168.0.21:${port}`]
   },
 });
 

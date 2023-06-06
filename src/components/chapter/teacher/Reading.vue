@@ -8,6 +8,6 @@ const chapterStore = useChapterStore();
 
 <template>
   <div class="w-full h-full flex flex-col items-center justify-center"
-       v-html="chapterStore.data?.sections[mainStore.gameId][chapterStore.currentParagraph].text">
+       v-html="chapterStore.data?.sections[mainStore.gameId][chapterStore.currentParagraph]?.text">
   </div>
 </template>

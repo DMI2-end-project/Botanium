@@ -40,7 +40,7 @@ const props = defineProps({
            'bg-green-light border-transparent text-green': props.cardState === 'validated' || props.answerState === 'selected',
          }">
       <!-- BORDER -->
-      <div class="w-full h-full flex flex-col justify-center items-center rounded-lg border"
+      <div class="w-full h-full flex flex-col justify-center items-center gap-1.5 p-2 rounded-lg border"
            :class="{
              '': props.cardState !== 'validated',
              'border-transparent' : props.answerState === 'selected',

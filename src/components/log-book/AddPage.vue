@@ -3,7 +3,7 @@
     <div class="bg-beige p-8">
       <div>
         <button v-for="template in numberTemplate" :v-bind="template" @click="templateId = template" class="m-5 border-0 p-0 overflow-hidden drop-shadow-lg outline outline-8 transition-all duration-400" :class="templateId === template ? 'outline-yellow' : 'outline-transparent'">
-          <img :src="'./templates/' + template + '.svg'">
+          <img alt="" :src="'./templates/' + template + '.svg'">
         </button>
       </div>
       <button v-if="templateId !== -1" @click="validate" class="mx-auto block">Valider</button>

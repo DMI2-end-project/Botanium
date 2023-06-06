@@ -6,7 +6,7 @@
       <p class="text-right mt-4 font-hand-written text-xs text-green">{{ textData.signature }}</p>
     </div>
     <div v-if="drawData.id" class="flex flex-col justify-between h-full relative">
-      <div class="w-full h-full"><img :src="drawUrl" class="w-full h-full object-contain my-auto"></div>
+      <div class="w-full h-full"><img alt="" :src="drawUrl" class="w-full h-full object-contain my-auto"></div>
       <p class="text-right font-hand-written text-xs text-green p-1 pt-2 absolute bottom-0 right-0 bg-beige m-2">{{ drawData.signature }}</p>
     </div>
   </button>

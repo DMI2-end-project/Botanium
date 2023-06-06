@@ -2,13 +2,16 @@
   <div class="flex flex-col gap-24 items-center text-green">
     <div class="w-full bg-green-light rounded-md grid grid-cols-3 gap-8 lg:gap-14 py-24 px-10"> <!-- flex -->
       <div class="col-span-1 w-full h-full">
-        <RoundItem class="w-full aspect-square" :color="COLOR.GREEN_MEDIUM">
-          <Loading/>
+        <RoundItem v-if="congratulation?.icon" class="w-full aspect-square" :color="COLOR.GREEN_MEDIUM">
+          <SvgIcon :name="`/src/assets/game-data/images/${mainStore.getFullGameId}/${congratulation.icon}`"/>
         </RoundItem>
+        <div v-if="congratulation?.image">
+          <img :src="congratulation.image"/>
+        </div>
       </div>
       <div class="col-span-2 flex flex-col gap-4">
-        <h1>Bravo !</h1>
-        <p class="">{{ text }}</p>
+        <h1>{{ congratulation?.title }}</h1>
+        <p class="">{{ congratulation?.text }}</p>
       </div>
     </div>
     <Info v-show="gameStore.currentStep === GAMESTEP.WAIT" text="Patiente un peu, tes camarades réfléchissent encore">
@@ -25,10 +28,12 @@ import {GAME_STEP, SIZE, COLOR} from "../../../common/Constants";
 import Loading from "../../../assets/svg/ico-loading.svg?component";
 import Info from "../../common/Info.vue";
 import RoundItem from "../../common/RoundItem.vue";
+import SvgIcon from "../../common/SvgIcon.vue";
 
 export default defineComponent({
   name: 'WaitingComponent',
   components: {
+    SvgIcon,
     Info, Loading, RoundItem
   },
   data() {
@@ -54,11 +59,8 @@ export default defineComponent({
     currentSection() {
       return this.gameStore.data?.gameSequences[this.gameStore.currentSequence]
     },
-    text() {
-      return this.currentSection.teams[this.currentSection.teamsNeeded ? this.tID : 0].congratulation?.text;
-    },
-    icon() {
-      return this.currentSection.teams[this.currentSection.teamsNeeded ? this.tID : 0].congratulation.icon;
+    congratulation() {
+      return this.currentSection.teams[this.currentSection.teamsNeeded ? this.tID : 0].congratulation
     },
     waitingMessage() {
       return this.gameStore.data ? this.gameStore.data.waitingMessage : "Patiente un peu, tes camarades réfléchissent encore...";

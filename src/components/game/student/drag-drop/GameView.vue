@@ -3,14 +3,17 @@ import {onMounted, ref, defineEmits, defineProps, nextTick} from "vue";
 import {gsap} from "gsap";
 import {Draggable} from "gsap/Draggable";
 import {Flip} from "gsap/Flip";
+import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import { COLOR } from "../../../../common/Constants";
+import {COLOR} from "../../../../common/Constants";
 import RoundButton from "../../../common/RoundButton.vue";
 
 import Check from "./../../../../assets/svg/ico-check.svg?component";
+import CardGame from "../../CardGame.vue";
 
 gsap.registerPlugin(Draggable, Flip);
 
+const mainStore = useMainStore();
 const gameStore = useGameStore();
 
 const emit = defineEmits(['validated']);
@@ -25,6 +28,8 @@ onMounted(async () => {
   await nextTick();
   //const droppables = document.querySelectorAll<HTMLDivElement>('.droppable');
   const container = document.querySelector('#container');
+
+  console.log('teamId', gameStore.teamId, gameStore.currentSequence)
 
   if (gameStore.teamId !== undefined) {
     teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
@@ -87,12 +92,22 @@ const itemValidated = () => {
     <div
         class="w-full h-full flex-1 flex items-center grid grid-cols-12 gap-4 px-8 text-center gap-5">
       <div
-          class="col-span-3 aspect-[3/5] flex justify-center items-center border border-dashed border-beige rounded-md p-7">
+          class="col-span-3 aspect-[3/5] flex justify-center items-center border border-dashed border-beige rounded-md p-2">
         <div id="container" class="relative w-full h-full aspect-[5/9]">
-          <div ref="draggable" class="w-full h-full bg-beige rounded-md">
-            <img src="/src/assets/game-data/images/00102/amfine.png"
-                 class="object-contain object-center"/>
+          <div ref="draggable" class="w-full h-full">
+            <CardGame class="h-full">
+              <template v-slot:recto>
+                <img v-if="teamData" alt=""
+                     :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.background}`"
+                     class="object-contain object-center"/>
+              </template>
+            </CardGame>
           </div>
+          <!--div ref="draggable" class="w-full h-full bg-beige rounded-md">
+            <img v-if="teamData"
+                 :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.background}`"
+                 class="object-contain object-center"/>
+          </div-->
         </div>
       </div>
       <div class="relative -z-10 col-span-9 flex gap-9 rounded-md px-10 pt-9 pb-14 bg-beige-medium">
@@ -109,7 +124,9 @@ const itemValidated = () => {
         </div>
         <div class="w-full flex justify-center absolute -bottom-20 left-0 right-0 mx-auto -z-10">
           <Transition name="scaleButtonBg">
-            <RoundButton @click="itemValidated" :isBg="true" :color="COLOR.GREEN_MEDIUM_BEIGE" v-show="currentAnswer"><Check /></RoundButton>
+            <RoundButton @click="itemValidated" :isBg="true" :color="COLOR.GREEN_MEDIUM_BEIGE" v-show="currentAnswer">
+              <Check/>
+            </RoundButton>
           </Transition>
         </div>
       </div>

@@ -3,8 +3,8 @@
     <div ref="canvasContainer" class="w-full -my-20"></div>
     <div class="relative w-4/5 mx-auto">
       <input ref="range" type="range" v-model="selectedValue.current" min="0" max="4" step="0.001" class="w-full"/>
-      <img :src="'/src/assets/game-data/images/00103/' + element + '-0.png'" class="absolute -top-24 left-0 w-14 -ml-5">
-      <img :src="'/src/assets/game-data/images/00103/' + element + '-1.png'" class="absolute -top-24 right-0 w-14 -mr-5">
+      <img alt="" :src="'/src/assets/game-data/images/00103/' + element + '-0.png'" class="absolute -top-24 left-0 w-14 -ml-5">
+      <img alt="" :src="'/src/assets/game-data/images/00103/' + element + '-1.png'" class="absolute -top-24 right-0 w-14 -mr-5">
       <span v-for="i in 5" v-bind="i" class="w-3 h-3 m-1 bg-purple rounded-full absolute pointer-events-none" :style="`left: calc(${(i - 1) * 100 / 4}% - ${(i - 1) * 5}px);`" />
     </div>
     <div class="absolute top-[45%] right-10">

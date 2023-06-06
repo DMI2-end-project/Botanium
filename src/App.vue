@@ -1,5 +1,5 @@
 <script lang="ts">
-import {defineComponent, nextTick} from "vue";
+import {defineComponent} from "vue";
 import {useRouter} from "vue-router";
 import {useMainStore} from "./stores/mainStore";
 import {useChapterStore} from "./stores/chapterStore";
@@ -12,14 +12,18 @@ import AppLayout from "./layouts/AppLayout.vue";
 import DevLayout from "./layouts/DevLayout.vue";
 import GameLayout from "./layouts/GameLayout.vue";
 import ModalView from "./components/common/ModalView.vue";
+import RoundButton from "./components/common/RoundButton.vue";
 
 import chapterData from "./assets/chapters-data/chapters-data.json";
 import gameData from "./assets/game-data/game-data-v2.json";
-import RoundButton from "./components/common/RoundButton.vue";
+
+import Check from "./assets/svg/ico-check.svg?component";
+import Cross from "./assets/svg/ico-cross.svg?component";
+
 
 export default defineComponent({
   name: 'App',
-  components: {RoundButton, ModalView, AppLayout, DevLayout, GameLayout},
+  components: {RoundButton, ModalView, AppLayout, DevLayout, GameLayout, Check, Cross},
   data() {
     return {
       router: useRouter(),
@@ -102,11 +106,15 @@ export default defineComponent({
   <AppLayout>
     <router-view/>
     <ModalView v-if="isModalOpen">
-      <div>
-        {{ isModalOpen }}
-        Voulez vous rejoindre la partie en cours ?
-        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="()=>joinOthers()"/>
-        <RoundButton :color="COLOR.RED" @click="()=>closeModal()"/>
+      <h1>Attention !</h1>
+      <p>Il y a une partie en cours, est-ce que tu veux la rejoindre ?</p>
+      <div class="flex justify-center items-center gap-6">
+        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="()=>joinOthers()">
+          <Check/>
+        </RoundButton>
+        <RoundButton :color="COLOR.RED" @click="()=>closeModal()">
+          <Cross/>
+        </RoundButton>
       </div>
     </ModalView>
   </AppLayout>

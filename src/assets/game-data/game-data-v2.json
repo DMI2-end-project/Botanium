@@ -14,18 +14,19 @@
           "instruction": "Chaque groupe doit retrouver un bienfait pour ensuite les communiquer tous ensemble à Capucine !",
           "answers": [
             {
-              "isValid": true,
               "icon": "eye.svg",
               "text": "Elle améliore la vision nocturne",
-              "isClicked": false,
-              "status": ""
+              "status": "none"
             },
             {
-              "isValid": true,
-              "icon": "disease.svg",
+              "icon": "",
               "text": "Elle ralentit le vieillissement",
-              "isClicked": false,
-              "status": ""
+              "status": "none"
+            },
+            {
+              "icon": "",
+              "text": "",
+              "status": "none"
             }
           ]
         },
@@ -35,36 +36,32 @@
             "clue": "Les lapins se repèrent très bien dans les terriers sombres.",
             "congratulation": {
               "text": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
-              "icon": "eye.svg"
+              "icon": "ico-eye.svg"
             },
             "answers": [
               {
                 "isValid": true,
-                "icon": "eye.svg",
+                "icon": "ico-eye.svg",
                 "text": "Elle améliore la vision nocturne",
-                "isClicked": false,
-                "status": ""
+                "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "muscle.svg",
+                "icon": "ico-arm.svg",
                 "text": "Elle donne des muscles",
-                "isClicked": false,
-                "status": ""
+                "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "tooth.svg",
+                "icon": "ico-tooth.svg",
                 "text": "Elle blanchit les dents",
-                "isClicked": false,
-                "status": ""
+                "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "bone.svg",
+                "icon": "ico-bone.svg",
                 "text": "Elle renforce les os",
-                "isClicked": false,
-                "status": ""
+                "status": "none"
               }
             ]
           },
@@ -73,36 +70,32 @@
             "clue": "Les papis et les mamies mangent beaucoup de carottes !",
             "congratulation": {
               "text": "La carotte possède ... qui ralenti le vieillissement",
-              "icon": "disease.svg"
+              "icon": ""
             },
             "answers": [
               {
                 "isValid": true,
-                "icon": "disease.svg",
+                "icon": "",
                 "text": "Elle ralentit le vieillissement",
-                "isClicked": false,
-                "status": ""
+                "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "muscle.svg",
+                "icon": "ico-arm.svg",
                 "text": "Elle donne des muscles",
-                "isClicked": false,
-                "status": ""
+                "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "tooth.svg",
+                "icon": "ico-tooth.svg",
                 "text": "Elle blanchit les dents",
-                "isClicked": false,
-                "status": ""
+                "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "bone.svg",
+                "icon": "ico-bone.svg",
                 "text": "Elle renforce les os",
-                "isClicked": false,
-                "status": ""
+                "status": "none"
               }
             ]
           }
@@ -127,10 +120,8 @@
         "teams": [
           {
             "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
-            "answers": {
-              "sprite": "soil-v2.png",
-              "background": "amfine.png"
-            },
+            "sprite": "soil-v2.png",
+            "background": "amfine.png",
             "points": [
               70,
               160,
@@ -149,16 +140,13 @@
             ],
             "congratulation": {
               "title": "Bravo !",
-              "text": "Tu as découvert la carotte Amfine !",
-              "image": "amfine.png"
+              "text": "Tu as découvert la carotte Amfine. On peut passer à la prochaine étape pour résoudre l’énigme de papi lapin !"
             }
           },
           {
             "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
-            "answers": {
-              "sprite": "soil-v2.png",
-              "background": "lubiana.png"
-            },
+            "sprite": "soil-v2.png",
+            "background": "lubiana.png",
             "points": [
               70,
               160,
@@ -177,16 +165,13 @@
             ],
             "congratulation": {
               "title": "Bravo !",
-              "text": "Tu as découvert la carotte Lubiana !",
-              "image": "lubiana.png"
+              "text": "Tu as découvert la carotte Lubiana. On peut passer à la prochaine étape pour résoudre l’énigme de papi lapin ! "
             }
           },
           {
             "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
-            "answers": {
-              "sprite": "soil-v2.png",
-              "background": "cosmic.png"
-            },
+            "sprite": "soil-v2.png",
+            "background": "cosmic.png",
             "points": [
               80,
               175,
@@ -205,7 +190,7 @@
             ],
             "congratulation": {
               "title": "Bravo !",
-              "text": "Tu as découvert la carotte Cosmic !",
+              "text": "Tu as découvert la carotte Cosmic. On peut passer à la prochaine étape pour résoudre l’énigme de papi lapin !",
               "image": "cosmic.png"
             }
           }
@@ -238,7 +223,8 @@
         "teams": [
           {
             "instruction": "Range ta carotte orange au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
-            "clue": "",
+            "clue": "Le carotène est un pigment orange",
+            "background": "amfine.png",
             "answers": [
               {
                 "isValid": true,
@@ -260,13 +246,15 @@
               }
             ],
             "congratulation": {
-              "text": "",
-              "icon": ""
+              "title": "Bravo !",
+              "text": "<p>La carotte Amfine est le nom donné à la carotte orange.</p><p>Elle possède un pigment appelé la carotène : c’est lui le responsable de la couleur orange !</p><p>Y’aurait-il d’autres couleurs... ?</p>",
+              "image": "amfine.png"
             }
           },
           {
             "instruction": "Range ta carotte jaune au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
-            "clue": "",
+            "clue": "La lutéine donne une couleur jaune",
+            "background": "lubiana.png",
             "answers": [
               {
                 "isValid": false,
@@ -285,13 +273,15 @@
               }
             ],
             "congratulation": {
-              "text": "",
-              "icon": ""
+              "title": "Bravo !",
+              "text": "<p>La carotte Lubiana est le nom donné à la carotte jaune.</p><p>Elle possède un pigment appelé la lutéine : c’est lui le responsable de la couleur jaune !</p><p>Y’aurait-il d’autres couleurs... ?</p>",
+              "image": "lubiana.png"
             }
           },
           {
             "instruction": "Range ta carotte violette au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
-            "clue": "",
+            "clue": "Les anthocyanes sont des colorants d'origine naturelle de couleur rouge ou bleue.",
+            "background": "cosmic.png",
             "answers": [
               {
                 "isValid": false,
@@ -310,8 +300,9 @@
               }
             ],
             "congratulation": {
-              "text": "",
-              "icon": ""
+              "title": "Bravo !",
+              "text": "<p>La carotte Cosmic est le nom donné à la carotte violette.</p><p>Elle possède un pigment appelé l’anthocyane : c’est lui le responsable de la couleur violette !</p><p>Y’aurait-il d’autres couleurs... ?</p>",
+              "image": "amfine.png"
             }
           }
         ],

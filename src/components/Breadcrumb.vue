@@ -46,19 +46,23 @@ const getNumberComponent = (number: number) => {
 </script>
 
 <template>
-  <div class="relative w-full flex items-center justify-between">
-    <div class="absolute flex w-full mx-auto bg-dotted bg-repeat-x	bg-contain h-2">
-      <div class="bg-yellow w-full h-full origin-left transition-transform"
-           :style="{transform: 'scaleX('+ (mainStore.gameId - 1) / (totalGames - 1) +')'}"/>
-    </div>
-    <!-- border-t-8 border-dotted border-secondary -->
-    <div v-for="(_, i) in totalGames"
-         class="relative flex justify-center items-center aspect-square w-14 rounded-full font-bold p-4"
-         :class="i + 1 <= mainStore.gameId ? 'bg-beige text-secondary' : 'bg-secondary text-beige'">
-      <component :is="getNumberComponent(i + 1)"/>
-      <div class="absolute top-0 right-0 -translate-y-1/5 translate-x-1/4 bg-green aspect-square w-6 rounded-full p-1.5"
-           :class="(i + 1 < mainStore.gameId) || (i + 1 === mainStore.gameId && gameStore.currentStep === GAME_STEP.CONGRATS) ? '':'hidden'">
-        <Check class="text-white w-full aspect-square"/>
+  <div class="grid grid-cols-12">
+    <div class="col-start-2 col-span-10 relative w-full flex items-center justify-between">
+
+      <div class="absolute flex w-full mx-auto bg-dotted bg-repeat-x	bg-contain h-2">
+        <div class="bg-yellow w-full h-full origin-left transition-transform"
+             :style="{transform: 'scaleX('+ (mainStore.gameId - 1) / (totalGames - 1) +')'}"/>
+      </div>
+      <!-- border-t-8 border-dotted border-secondary -->
+      <div v-for="(_, i) in totalGames"
+           class="relative flex justify-center items-center aspect-square w-14 rounded-full font-bold p-4"
+           :class="i + 1 <= mainStore.gameId ? 'bg-beige text-secondary' : 'bg-secondary text-beige'">
+        <component :is="getNumberComponent(i + 1)"/>
+        <div
+            class="absolute top-0 right-0 -translate-y-1/5 translate-x-1/4 bg-green aspect-square w-6 rounded-full p-1.5"
+            :class="(i + 1 < mainStore.gameId) || (i + 1 === mainStore.gameId && gameStore.currentStep === GAME_STEP.CONGRATS) ? '':'hidden'">
+          <Check class="text-white w-full aspect-square"/>
+        </div>
       </div>
     </div>
   </div>

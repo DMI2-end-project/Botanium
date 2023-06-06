@@ -9,7 +9,7 @@
     </div>
     <p v-if="mainStore.role === ROLE.TEACHER && microNeeded && !hasMicroOn && !hasMicroWaiting" class="mt-6">Attention : Aucune équipe n'a activé son micro, l'exercice ne pourra donc pas être réalisé.</p>
     <RoundButton v-if="mainStore.role === ROLE.TEACHER" @click="next" :color="COLOR.PINK" class="mt-8 text-lg font-bold" :is-active="mainStore.role === ROLE.TEACHER && ((microNeeded && !hasMicroWaiting) || !microNeeded)">
-      >
+      <Arrow class="rotate-180"/>
     </RoundButton>
     <CircleButton v-if="mainStore.role === ROLE.STUDENT && microNeeded && !hasMicro" @click="getMicrophone" class="mt-10" text="Allume ton micro" :color="COLOR.PURPLE" :size="SIZE.MD" :colorReverse="true"><MicroOn /></CircleButton>
     <RoundItem v-else-if="mainStore.role === ROLE.STUDENT && microNeeded && hasMicro" @click="getMicrophone" class="-mt-10" :color="COLOR.GREEN_MEDIUM"><Check /></RoundItem>
@@ -30,10 +30,11 @@ import RoundItem from "../common/RoundItem.vue";
 
 import MicroOn from "./../../assets/svg/ico-micro-on.svg?component";
 import Check from "./../../assets/svg/ico-check.svg?component";
+import Arrow from "./../../assets/svg/ico-arrow.svg?component";
 
 export default defineComponent({
   name: 'InstructionComponent',
-  components: { SignboardVue, RoundButton, CircleButton, RoundItem, MicroOn, Check },
+  components: {SignboardVue, RoundButton, CircleButton, RoundItem, MicroOn, Check, Arrow},
   emits: ['getMicrophone'],
   data() {
     return {

@@ -109,13 +109,11 @@ const readyWithoutMicro = () => {
                     class="col-start-3 col-span-8"/>
   </div>
   <ModalView v-if="isModalOpen">
-      <div class="relative my-2 flex flex-col items-center">
-        <h3 class="mt-8 text-center">Appelle ton enseignant pour qu’il active le son</h3>
-        <p class="text-center mt-8">Rendez vous dans les réglages du navigateur pour activer le micro ou continuer l’activité sans : la synchronisation du son ne prendra pas en compte le micro de cette tabalette</p>
+        <h1>Appelle ton enseignant pour qu’il active le son</h1>
+        <p>Rendez vous dans les réglages du navigateur pour activer le micro ou continuer l’activité sans : la synchronisation du son ne prendra pas en compte le micro de cette tabalette</p>
         <div class="flex justify-center items-center gap-6">
           <button @click="getMicro">Retester l'activiation du micro</button>
           <button @click="readyWithoutMicro">Faire l'activité sans le micro</button>
         </div>
-      </div>
     </ModalView>
 </template>

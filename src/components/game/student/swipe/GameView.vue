@@ -1,41 +1,50 @@
 <script lang="ts" setup>
-import {onMounted, ref} from "vue";
+import {defineEmits, onMounted, ref} from "vue";
 import {Application, Graphics, Polygon, Sprite} from "pixi.js";
 import {gsap} from "gsap";
 
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
+import {TeamManagerInstance} from "../../../../common/TeamManager";
 
 import ModalView from "../../../common/ModalView.vue";
 import RoundButton from "../../../common/RoundButton.vue";
-import {TeamManagerInstance} from "../../../../common/TeamManager";
+
+import Check from "../../../../assets/svg/ico-check.svg?component";
+import {COLOR} from "../../../../common/Constants";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
 
-const teamData = ref<any>(null);
+interface TeamData {
+  instruction: string,
+  answers: any,
+  points: number[],
+  congratulation: any
+}
 
-let canvas = ref<HTMLCanvasElement | null>(null);
+const teamData = ref<any>();
+
+let canvas = ref<HTMLCanvasElement>();
 let width = 200;
 let height = 390;
 
-const sprites = ref<Sprite[]>([]);
-
 const isModalOpen = ref<boolean>(false);
 
-const onPointerOver = (e: Event, sprite: Sprite) => {
+const emits = defineEmits(['validated']);
+
+const onPointerOver = (e: Event, app: Application, sprite: Sprite) => {
   e.stopPropagation();
-  sprite.removeEventListener('pointerover', (e) => onPointerOver(e, sprite));
+  sprite.removeEventListener('pointerover', (e) => onPointerOver(e, app, sprite));
 
   let scale = {x: sprite.scale.x, y: sprite.scale.y};
   let pos = {x: sprite.position.x, y: sprite.position.y};
 
   let tl = gsap.timeline({
     onComplete: () => {
-      sprites.value.pop();
       sprite.removeFromParent();
       //sprite.destroy();
-      if (sprites.value.length === 0) {
+      if (app.stage.children.length === 0) {
         isModalOpen.value = true;
         mainStore.isModalOpen = true;
       }
@@ -89,19 +98,21 @@ onMounted(() => {
 
     if (gameStore.teamId !== undefined) {
       teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
+
       let soilZone = new Polygon(teamData.value.points);
+      /*
       let soilGraphic = new Graphics();
       soilGraphic.beginFill(0XFF0000, 0.5);
       soilGraphic.drawPolygon(soilZone.points);
       soilGraphic.endFill();
       app.stage.addChild(soilGraphic);
+       */
 
       for (let i = 0; i < 30; i++) {
-        let src = `/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.value.answers.sprite}`
+        let src = `/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.value.sprite}`
         let sprite = Sprite.from(src);
 
         app.stage.addChild(sprite);
-        sprites.value.push(sprite);
 
         sprite.anchor.set(0.5);
         sprite.scale.set(0.2, 0.2);
@@ -117,7 +128,7 @@ onMounted(() => {
 
         sprite.eventMode = 'dynamic';
 
-        sprite.addEventListener('pointerover', (e) => onPointerOver(e, sprite));
+        sprite.addEventListener('pointerover', (e) => onPointerOver(e, app, sprite));
       }
     }
   }
@@ -127,17 +138,18 @@ onMounted(() => {
 <template>
   <div class="relative w-full h-full grid grid-cols-12 gap-4 px-8 justify-center items-center text-center gap-5">
     <div class="w-full aspect-square bg-white rounded-full col-span-6 col-start-4 absolute"/>
-    <div class="relative aspect-[5/9] col-span-6 col-start-4">
-      {{ gameStore.teamId }}
-      <img v-if="teamData"
-           :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.answers.background}`"
+    <div class="relative aspect-[5/9] col-span-6 col-start-3">
+      <img v-if="teamData" alt=""
+           :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.background}`"
            class="w-full h-full object-contain"/>
       <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
     </div>
   </div>
   <ModalView v-if="isModalOpen">
-    <RoundButton @click="next">
-      Continuer
+    <h1>{{ teamData.congratulation?.title }}</h1>
+    <p>{{ teamData.congratulation?.text }}</p>
+    <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="next">
+      <Check/>
     </RoundButton>
   </ModalView>
 </template>

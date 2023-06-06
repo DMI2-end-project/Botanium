@@ -146,7 +146,7 @@ onMounted(() => {
       class="relative bg-purple w-full h-full grid grid-cols-12 gap-4 px-8 justify-center items-center text-center gap-5">
     <div class="w-full aspect-square bg-white rounded-full col-span-6 col-start-4 absolute"/>
     <div class="relative aspect-[5/9] col-span-6 col-start-4">
-      <img :src="`/src/assets/game-data/images/00102/cosmic.png`"
+      <img alt="" :src="`/src/assets/game-data/images/00102/cosmic.png`"
            class="w-full h-full object-contain"/>
       <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full border-4 border-pink"/>
     </div>
