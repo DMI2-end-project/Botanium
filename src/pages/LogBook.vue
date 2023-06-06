@@ -13,11 +13,6 @@ export default defineComponent({
   components: {
     Book
   },
-  data () {
-    return {
-
-    }
-  },
 });
 </script>
 
