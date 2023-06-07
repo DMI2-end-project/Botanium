@@ -28,6 +28,7 @@
 <script lang="ts">
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import type { PhotoData } from './../../../common/Interfaces'
+import { useMainStore } from '../../../stores/mainStore';
 
 export default {
   name: "ImageElementComponent",
@@ -52,6 +53,7 @@ export default {
   emits: ['onModify'],
   data: () => {
     return {
+      mainStore: useMainStore(),
       photoData: {} as PhotoData,
       photoDataLast: {} as PhotoData,
       onModify: false as Boolean,
@@ -78,7 +80,7 @@ export default {
     },
     async modify() {
       this.onModify = true
-      this.photos = await DatabaseManagerInstance.fetchPhotos('page = ""')
+      this.photos = await DatabaseManagerInstance.fetchPhotos('page="" && classroom="' + this.mainStore.roomId + '"')
     },
     changeImage(photo: PhotoData) {
       this.photoData = photo
