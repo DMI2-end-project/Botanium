@@ -79,6 +79,7 @@ export default defineComponent({
   watch: {
     'mainStore.roomId': {
       async handler() {
+        if (!this.mainStore.roomId) return
         this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
         this.lastPage = this.page = this.pagesContent.length + 1
       },
@@ -130,6 +131,7 @@ export default defineComponent({
     },
     async onCloseAddPage(n:number) {
       this.onPageAdd = false
+      if (!this.mainStore.roomId) return
       await DatabaseManagerInstance.createPage(this.lastPage, n, this.mainStore.roomId);
       this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
       this.lastPage = this.pagesContent.length + 1

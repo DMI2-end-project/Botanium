@@ -28,8 +28,8 @@ export default {
   data() {
     return {
       mainStore: useMainStore(),
-      stream: null,
-      video: null,
+      stream: null as MediaStream | null,
+      video: null as HTMLVideoElement | null,
       photoData: {} as PhotoData,
       photos: [] as string[],
       isPhotosOpen: false,
@@ -41,7 +41,9 @@ export default {
     }
   },
   mounted() {
-    this.video = this.$refs.video;
+    this.video = this.$refs.video as HTMLVideoElement;
+
+    if (!this.video) { return }
 
     navigator.mediaDevices.getUserMedia({
       video: {
@@ -50,6 +52,7 @@ export default {
       },
     })
       .then(stream => {
+        if (!this.video) { return }
         this.stream = stream;
         this.video.srcObject = stream;
       })
@@ -59,8 +62,12 @@ export default {
   },
   methods: {
     async takePhoto() {
+      if (!this.video) { return }
+
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
+
+      if (!context) { return }
 
       canvas.width = this.video.videoWidth;
       canvas.height = this.video.videoHeight;
@@ -69,10 +76,12 @@ export default {
 
       const photoDataUrl = canvas.toDataURL('image/jpeg');
 
-      this.photoData.classroom = this.mainStore.roomId;
-      this.photoData.file = base64ToFile(photoDataUrl);
-      const data = await DatabaseManagerInstance.createPhoto(this.photoData)
-      this.photos.push(DatabaseManagerInstance.getImageUrl(data))
+      if (this.mainStore.roomId) {
+        this.photoData.classroom = this.mainStore.roomId;
+        this.photoData.file = base64ToFile(photoDataUrl);
+        const data = await DatabaseManagerInstance.createPhoto(this.photoData)
+        this.photos.push(DatabaseManagerInstance.getImageUrl(data))
+      }
     },
   },
   beforeDestroy() {
