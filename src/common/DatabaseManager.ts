@@ -10,7 +10,8 @@ import {
   getPhotoData,
   getDefaultPhotoData,
   getStickerData,
-  getDefaultStickerData
+  getDefaultStickerData,
+  getPhotoFormData
 } from './Lib';
 import {CHAPTER_STATUS, ROLE} from "./Constants";
 import {connectClient} from "../client";
@@ -186,6 +187,13 @@ class DatabaseManager {
 
   async updatePhoto(data: PhotoData): Promise<PhotoData> {
     const record = await this._pocketbase.collection('photo').update(data.id, data);
+    return getPhotoData(record);
+  }
+
+  async createPhoto(data: PhotoData): Promise<PhotoData> {
+    console.log(data, getPhotoFormData(data))
+    const record = await this._pocketbase.collection('photo').create(getPhotoFormData(data));
+    console.log(record)
     return getPhotoData(record);
   }
 
