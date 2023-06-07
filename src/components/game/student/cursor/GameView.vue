@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SelectedVideoCopy @select="isValid" :element="element" />
+    <SelectedVideoCopy @select="isValid" :element="element" :isError="isError" />
   </div>
 </template>
 
@@ -19,6 +19,7 @@ export default defineComponent({
   data() {
     return {
       gameStore: useGameStore(),
+      isError: false
     }
   },
   computed: {
@@ -36,6 +37,11 @@ export default defineComponent({
       if (this.gameStore.teamId !== undefined) {
         if (value === this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers) {
           this.$emit('validated');
+        } else {
+          this.isError = true
+          setTimeout(() => {
+            this.isError = false
+          }, 600)
         }
       }
     }

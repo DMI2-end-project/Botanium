@@ -5,8 +5,8 @@
         <RoundItem v-if="congratulation?.icon" class="w-full aspect-square" :color="COLOR.GREEN_MEDIUM">
           <SvgIcon :name="`/src/assets/game-data/images/${mainStore.getFullGameId}/${congratulation.icon}`"/>
         </RoundItem>
-        <div v-if="congratulation?.image">
-          <img :src="congratulation.image"/>
+        <div v-if="congratulation?.image" :class="congratulation?.isCircle ? 'bg-beige rounded-full p-8' : ''">
+          <img :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${congratulation.image}`"/>
         </div>
       </div>
       <div class="col-span-2 flex flex-col gap-4">
