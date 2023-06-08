@@ -43,8 +43,8 @@ export default defineComponent({
   },
   created() {
     // STORES are available
-    this.chapterStore.data = chapterData;
-    this.gameStore.data = gameData;
+    this.chapterStore.data = this.mainStore.chapterData[this.mainStore.getChapterId];
+    this.gameStore.data = this.mainStore.gameData[this.mainStore.getFullGameId];
 
     this.mainStore.$subscribe((mutation, state) => {
       if (state.askForRedirection) {

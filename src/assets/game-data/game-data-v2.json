@@ -14,18 +14,23 @@
           "instruction": "Chaque groupe doit retrouver un bienfait pour ensuite les communiquer tous ensemble à Capucine !",
           "answers": [
             {
-              "icon": "eye.svg",
+              "icon": "ico-eye",
               "text": "Elle améliore la vision nocturne",
               "status": "none"
             },
             {
-              "icon": "",
+              "icon": "ico-sun",
+              "text": "La carotte prépare ta peau au soleil",
+              "status": "none"
+            },
+            {
+              "icon": "ico-health",
               "text": "Elle ralentit le vieillissement",
               "status": "none"
             },
             {
-              "icon": "",
-              "text": "",
+              "icon": "ico-health",
+              "text": "La carotte prévient des maladies ",
               "status": "none"
             }
           ]
@@ -35,31 +40,67 @@
             "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
             "clue": "Les lapins se repèrent très bien dans les terriers sombres.",
             "congratulation": {
+              "title": "Bravo !",
               "text": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
-              "icon": "ico-eye.svg"
+              "icon": "ico-eye"
             },
             "answers": [
               {
                 "isValid": true,
-                "icon": "ico-eye.svg",
+                "icon": "ico-eye",
                 "text": "Elle améliore la vision nocturne",
                 "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "ico-arm.svg",
+                "icon": "ico-arm",
                 "text": "Elle donne des muscles",
                 "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "ico-tooth.svg",
+                "icon": "ico-tooth",
                 "text": "Elle blanchit les dents",
                 "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "ico-bone.svg",
+                "icon": "ico-bone",
+                "text": "Elle renforce les os",
+                "status": "none"
+              }
+            ]
+          },
+          {
+            "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
+            "clue": "Grâce à la carotte, tu auras une belle peau bronzée...",
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "Le béta-carotène présent dans la carotte enclenche la production de mélanine. La mélanine permet à ta peau de se protéger du soleil, cela te donne un beau bronzage !",
+              "icon": "ico-sun"
+            },
+            "answers": [
+              {
+                "isValid": true,
+                "icon": "ico-sun",
+                "text": "Elle ralentit le vieillissement",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-arm",
+                "text": "Elle donne des muscles",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-tooth",
+                "text": "Elle blanchit les dents",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-bone",
                 "text": "Elle renforce les os",
                 "status": "none"
               }
@@ -69,31 +110,67 @@
             "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
             "clue": "Les papis et les mamies mangent beaucoup de carottes !",
             "congratulation": {
-              "text": "La carotte possède ... qui ralenti le vieillissement",
-              "icon": ""
+              "title": "Bravo !",
+              "text": "La carotte possède beaucoup de vitamines A et C, elles sont très riches en antioxydants. Un antioxydant permet de préserver l’élasticité de la peau et donc de prévenir les rides !",
+              "icon": "ico-health"
             },
             "answers": [
               {
                 "isValid": true,
-                "icon": "",
-                "text": "Elle ralentit le vieillissement",
+                "icon": "ico-health",
+                "text": "La carotte prépare ta peau au soleil",
                 "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "ico-arm.svg",
+                "icon": "ico-arm",
                 "text": "Elle donne des muscles",
                 "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "ico-tooth.svg",
+                "icon": "ico-tooth",
                 "text": "Elle blanchit les dents",
                 "status": "none"
               },
               {
                 "isValid": false,
-                "icon": "ico-bone.svg",
+                "icon": "ico-bone",
+                "text": "Elle renforce les os",
+                "status": "none"
+              }
+            ]
+          },
+          {
+            "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
+            "clue": "En mangeant des carottes, tu as moins de chances de tomber malade.",
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "",
+              "icon": "ico-health"
+            },
+            "answers": [
+              {
+                "isValid": true,
+                "icon": "ico-health",
+                "text": "La carotte prévient des maladies",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-arm",
+                "text": "Elle donne des muscles",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-tooth",
+                "text": "Elle blanchit les dents",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-bone",
                 "text": "Elle renforce les os",
                 "status": "none"
               }
@@ -327,15 +404,15 @@
           "instruction": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol.",
           "answers": [
             {
-              "icon": "ico-rock.svg",
+              "icon": "ico-rock",
               "isValid": false
             },
             {
-              "icon": "ico-sun.svg",
+              "icon": "ico-sun",
               "isValid": false
             },
             {
-              "icon": "ico-height.svg",
+              "icon": "ico-height",
               "isValid": false
             }
           ]
@@ -347,7 +424,7 @@
             "clue": "",
             "congratulation": {
               "text": "Il faut quelques cailloux pour que la carrote pousse bien",
-              "icon": "eye.svg"
+              "icon": "eye"
             },
             "answers": 1
           },
@@ -357,7 +434,7 @@
             "element": "sun",
             "congratulation": {
               "text": "La carotte a besoin d'un ensoleillement moyen pour bien pousser",
-              "icon": "disease.svg"
+              "icon": "disease"
             },
             "answers": 2
           },
@@ -367,7 +444,7 @@
             "element": "height",
             "congratulation": {
               "text": "La carotte d'un sol assez haut pour bien pousser",
-              "icon": "disease.svg"
+              "icon": "disease"
             },
             "answers": 3
           }

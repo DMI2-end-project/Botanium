@@ -76,19 +76,28 @@ export default defineComponent({
       return SIZE
     },
     currentSection() {
-      return this.gameStore.data?.gameSequences[this.gameStore.currentSequence];
+      if (this.gameStore.data) {
+        let index = this.gameStore.currentSequence ? this.gameStore.currentSequence : 0
+        return this.gameStore.data?.gameSequences[index];
+      }
     },
     text() {
-      if (this.gameStore.teamId !== undefined) {
-        let index = this.currentSection.teamsNeeded ? this.gameStore.teamId : 0;
-        return this.currentSection.teams[index].instruction;
-      } else {
-        return this.currentSection.gamemaster?.instruction;
+      if (this.currentSection) {
+        if (this.gameStore.teamId !== undefined) {
+          let index = this.currentSection.teamsNeeded ? this.gameStore.teamId : 0;
+          return this.currentSection.teams[index].instruction;
+        } else {
+          return this.currentSection.gamemaster?.instruction;
+        }
       }
+      return '';
     },
     clue() {
       let index = this.gameStore.teamId ? this.gameStore.teamId : 0
-      return this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams[index].clue;
+      if (this.gameStore.data && this.gameStore.currentSequence && this.gameStore.currentSequence.teams) {
+        return this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams[index].clue;
+
+      }
     }
   },
   methods: {

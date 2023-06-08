@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 const dynamicComponent = computed<any>(() => {
-  return defineAsyncComponent(() => import(`../../assets/game-data/icons/${useMainStore().getFullGameId}/${props.name}`));
+  return defineAsyncComponent(() => import(`../../assets/game-data/icons/${useMainStore().getFullGameId}/${props.name}.svg`));
 });
 </script>
 

@@ -50,7 +50,7 @@ class GameMasterManager {
     // await this._dbInstance.updateChapterStatus(dbChapterId, CHAPTER_STATUS.IN_PROGRESS); // TODO uncomment
 
     // await this._dbInstance.getPreviousGameId(realId); // TODO uncomment
-    this._gameStore.data = gameData;
+    //this._gameStore.data = gameData;
 
     await this._socket.emit(EVENT.LAUNCH_CHAPTER, {
       roomId: this._mainStore.roomId,

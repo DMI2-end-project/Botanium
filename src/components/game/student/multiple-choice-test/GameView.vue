@@ -19,9 +19,16 @@
       </button>
     </div-->
     <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-2 mx-auto my-5"
-                 :class="{'opacity-100': currentAnswer, 'opacity-30': !currentAnswer}">
+                 :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">
       <Check/>
     </RoundButton>
+    <ModalView v-if="isModalOpen">
+      <h1>{{ teamData.congratulation?.title }}</h1>
+      <p>{{ teamData.congratulation?.text }}</p>
+      <RoundButton :color="COLOR.YELLOW" @click="close">
+        <Replay/>
+      </RoundButton>
+    </ModalView>
   </div>
 </template>
 
@@ -30,15 +37,24 @@ import {defineComponent} from 'vue'
 import {useGameStore} from "../../../../stores/gameStore";
 import {useMainStore} from "../../../../stores/mainStore";
 import {COLOR} from "../../../../common/Constants";
+
+import CardGame from "../../CardGame.vue";
+import SvgIcon from "../../../common/SvgIcon.vue";
+import ModalView from "../../../common/ModalView.vue";
 import RoundButton from "../../../common/RoundButton.vue";
 
 import Check from "../../../../assets/svg/ico-check.svg?component";
+import Replay from "../../../../assets/svg/ico-replay.svg?component";
 
 export default defineComponent({
   name: 'StudentGameView',
   components: {
+    CardGame,
     Check,
-    RoundButton
+    ModalView,
+    Replay,
+    RoundButton,
+    SvgIcon
   },
   emits: ['validated'],
   data() {
@@ -47,6 +63,8 @@ export default defineComponent({
       mainStore: useMainStore(),
       gameStore: useGameStore(),
       currentAnswer: undefined as any,
+      currentIndex: -1,
+      isModalOpen: false
     }
   },
   computed: {
@@ -72,23 +90,24 @@ export default defineComponent({
         answer.status = "none";
       });
       this.answers[index].status = 'selected';
-      this.currentAnswer = this.answers[index];
+      this.currentIndex = index;
     },
     itemValidated() {
-      if (this.currentAnswer) {
-        this.currentAnswer.status = this.currentAnswer.isValid ? 'valid' : 'error';
-        if (this.currentAnswer.status === 'valid') {
+      if (this.currentIndex !== -1) {
+        this.answers[this.currentIndex].status = this.answers[this.currentIndex].isValid ? 'valid' : 'error';
+        if (this.answers[this.currentIndex].status === 'valid') {
           setTimeout(() => {
             this.$emit('validated');
           }, 500);
         }
       }
+    },
+    closeModal() {
+      this.isModalOpen = false;
+      this.mainStore.isModalOpen = false;
     }
   }
 });
 </script>
 
-<script setup lang="ts">
-import CardGame from "../../CardGame.vue";
-import SvgIcon from "../../../common/SvgIcon.vue";
-</script>
+

@@ -3,12 +3,12 @@ import {onBeforeMount, onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import { GameMasterManagerInstance } from "../common/GameMasterManager";
-import { TeamManagerInstance } from '../common/TeamManager';
-import { AudioManagerInstance } from "../common/AudioManager";
+import {GameMasterManagerInstance} from "../common/GameMasterManager";
+import {TeamManagerInstance} from '../common/TeamManager';
+import {AudioManagerInstance} from "../common/AudioManager";
 import {ROLE, GAME_STEP} from "../common/Constants";
 import {useGameStore} from "../stores/gameStore";
-import { useMainStore } from "../stores/mainStore";
+import {useMainStore} from "../stores/mainStore";
 import type {Ref} from 'vue';
 
 import StudentGame from "../components/game/student/StudentGame.vue";
@@ -26,36 +26,42 @@ const socket = getSocket();
 const router = useRouter();
 const route = useRoute();
 
+const setSequence = () => {
+  let currentSequence = gameStore.data.gameSequences[gameStore.currentSequence];
+
+  if (currentSequence) {
+    switch (mainStore.role) {
+      case ROLE.TEACHER:
+        while (!currentSequence.gameStore && gameStore.currentSequence < gameStore.data.gameSequences.length - 1) {
+          gameStore.currentSequence += 1;
+          GameMasterManagerInstance.nextSequence();
+        }
+        break;
+      case ROLE.STUDENT:
+        break;
+    }
+  }
+}
+
 mainStore.$subscribe((mutation, state) => {
   if (gameStore.data) {
     document.documentElement.style.setProperty('--color-background', gameStore.data.color);
 
-    let currentSection = gameStore.data?.gameSequences[gameStore.currentSequence];
-    while (mainStore.role === ROLE.TEACHER && currentSection && !currentSection.gamemaster && gameStore.currentSequence < gameStore.data?.gameSequences.length - 1) {
-      gameStore.currentSequence += 1;
-      GameMasterManagerInstance.nextSequence();
-    }
+    setSequence();
   }
 });
 
 gameStore.$subscribe((_, state) => {
   if (state.data) {
     document.documentElement.style.setProperty('--color-background', gameStore.data.color);
-
-    let currentSection
-    if (gameStore.data && gameStore.currentSequence) {
-      currentSection = gameStore.data?.gameSequences[gameStore.currentSequence];
-    }
-    while (mainStore.role === ROLE.TEACHER && currentSection && !currentSection.gamemaster && gameStore.currentSequence < gameStore.data?.gameSequences.length - 1) {
-      gameStore.currentSequence += 1;
-      GameMasterManagerInstance.nextSequence();
-    }
+    setSequence();
   }
 });
 
 onBeforeMount(async () => {
   if (gameStore.data) {
     document.documentElement.style.setProperty('--color-background', gameStore.data.color);
+    setSequence();
   }
 
   await socket.connect();
@@ -64,10 +70,6 @@ onBeforeMount(async () => {
     roomId: mainStore.roomId
   });
 });
-
-onMounted(() => {
-
-})
 
 let isModalOpen: Ref<Boolean> = ref(false);
 
@@ -109,11 +111,12 @@ const readyWithoutMicro = () => {
                     class="col-start-3 col-span-8"/>
   </div>
   <ModalView v-if="isModalOpen">
-        <h1>Appelle ton enseignant pour qu’il active le son</h1>
-        <p>Rendez vous dans les réglages du navigateur pour activer le micro ou continuer l’activité sans : la synchronisation du son ne prendra pas en compte le micro de cette tabalette</p>
-        <div class="flex justify-center items-center gap-6">
-          <button @click="getMicro">Retester l'activiation du micro</button>
-          <button @click="readyWithoutMicro">Faire l'activité sans le micro</button>
-        </div>
-    </ModalView>
+    <h1>Appelle ton enseignant pour qu’il active le son</h1>
+    <p>Rendez vous dans les réglages du navigateur pour activer le micro ou continuer l’activité sans : la
+      synchronisation du son ne prendra pas en compte le micro de cette tabalette</p>
+    <div class="flex justify-center items-center gap-6">
+      <button @click="getMicro">Retester l'activiation du micro</button>
+      <button @click="readyWithoutMicro">Faire l'activité sans le micro</button>
+    </div>
+  </ModalView>
 </template>

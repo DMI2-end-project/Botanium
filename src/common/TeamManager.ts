@@ -26,7 +26,7 @@ class TeamManager {
   private initEventsListeners() {
     this._socket.on(EVENT.LAUNCH_CHAPTER, async (arg) => {
       this._mainStore.chapterId = arg.chapterId;
-      this._gameStore.data = gameData;
+      //this._gameStore.data = gameData;
 
       await this._router.push('/chapitre/' + this._mainStore.getChapterId);
     });

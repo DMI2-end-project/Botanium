@@ -38,9 +38,6 @@ export default defineComponent({
       return this.gameStore.data.gameSequences[this.gameStore.currentSequence].gamemaster.answers
     }
   },
-  mounted() {
-    console.log('answers', this.answers);
-  },
   methods: {
     next() {
       GameMasterManagerInstance.endGame()

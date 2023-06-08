@@ -16,8 +16,6 @@ import MCQ from "./multiple-choice-test/GameView.vue";
 import Rhythm from "./rhythm/GameView.vue";
 import Cursor from "./cursor/GameView.vue";
 
-// TODO : localStorage.setItem('currentParagraph', ???)
-
 export default defineComponent({
   name: 'TeacherGame',
   data() {
@@ -28,20 +26,26 @@ export default defineComponent({
     }
   },
   computed: {
+    currentPart() {
+      if (this.gameStore.data && this.gameStore.currentSequence !== -1) {
+        return this.gameStore.data?.gameSequences[this.gameStore.currentSequence]
+      }
+    },
     GameView(): Component | undefined {
-      let currentPart = this.gameStore.data?.gameSequences[this.gameStore.currentSequence]
-      console.log('TEACHER GAME GameView', currentPart)
-      switch (currentPart.type) {
-        case GAME_TYPE.DRAG_DROP:
-          return DragDrop;
-        case GAME_TYPE.MCQ:
-          return MCQ;
-        case GAME_TYPE.RHYTHM:
-          return Rhythm;
-        case GAME_TYPE.CURSOR:
-          return Cursor;
-        default:
-          return;
+      if (this.currentPart) {
+
+        switch (this.currentPart.type) {
+          case GAME_TYPE.DRAG_DROP:
+            return DragDrop;
+          case GAME_TYPE.MCQ:
+            return MCQ;
+          case GAME_TYPE.RHYTHM:
+            return Rhythm;
+          case GAME_TYPE.CURSOR:
+            return Cursor;
+          default:
+            return;
+        }
       }
     }
   }

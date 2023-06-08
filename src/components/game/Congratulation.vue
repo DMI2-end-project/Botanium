@@ -8,8 +8,7 @@ import RoundButton from "../common/RoundButton.vue";
 import RoundItemVue from "../common/RoundItem.vue";
 
 import Trophy from "./../../assets/svg/ico-trophy.svg?component";
-// TODO : Add ico-arrow.svg
-//import Arrow from "../../assets/svg/ico-arrow.svg?component";
+import Arrow from "./../../assets/svg/ico-arrow.svg?component";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
@@ -19,9 +18,8 @@ const currentSection = computed<any>(() => {
 });
 
 const text = () => {
-  if (!currentSection.value.congratulation && gameStore.currentSequence + 1 < gameStore.data?.gameSequences.length) {
-    // TODO TODO
-    //gameStore.currentSequence += 1;
+  if (!currentSection.value.congratulation && gameStore.currentSequence < gameStore.data?.gameSequences.length - 1) {
+    gameStore.currentSequence += 1;
     /*
     while (!this.currentSection.gamemaster && this.gameStore.currentSequence < this.data?.gameSequences.length && this.mainStore.role === ROLE.TEACHER) {
           this.gameStore.currentSequence += 1;
@@ -49,7 +47,7 @@ const next = () => {
       <p>{{ text() }}</p>
     </div>
     <RoundButton v-if="mainStore.role === ROLE.TEACHER" @click="next" class="mt-8 text-lg font-bold">
-      >
+      <Arrow class="rotate-180"/>
     </RoundButton>
   </div>
 </template>

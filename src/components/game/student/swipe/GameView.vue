@@ -7,12 +7,6 @@ import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
 import {TeamManagerInstance} from "../../../../common/TeamManager";
 
-import ModalView from "../../../common/ModalView.vue";
-import RoundButton from "../../../common/RoundButton.vue";
-
-import Check from "../../../../assets/svg/ico-check.svg?component";
-import {COLOR} from "../../../../common/Constants";
-
 const mainStore = useMainStore();
 const gameStore = useGameStore();
 
@@ -31,7 +25,7 @@ let height = 390;
 
 const isModalOpen = ref<boolean>(false);
 
-const emits = defineEmits(['validated']);
+const emits = defineEmits(['validated', 'openModal']);
 
 const onPointerOver = (e: Event, app: Application, sprite: Sprite) => {
   e.stopPropagation();
@@ -47,6 +41,12 @@ const onPointerOver = (e: Event, app: Application, sprite: Sprite) => {
       if (app.stage.children.length === 0) {
         isModalOpen.value = true;
         mainStore.isModalOpen = true;
+        //gameStore.currentSequence += 1;
+        //TeamManagerInstance.nextSequence();
+        emits('openModal');
+
+        //console.log('complete & empty', gameStore.currentSequence, gameStore.data.gameSequences.length)
+        //emits("validated");
       }
     }
   });
@@ -77,13 +77,6 @@ const onPointerOver = (e: Event, app: Application, sprite: Sprite) => {
     alpha: 0
   }, "<");
 };
-
-const next = () => {
-  gameStore.currentSequence += 1;
-  isModalOpen.value = false;
-  mainStore.isModalOpen = false;
-  TeamManagerInstance.nextSequence();
-}
 
 onMounted(() => {
   if (canvas.value) {
@@ -145,11 +138,4 @@ onMounted(() => {
       <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
     </div>
   </div>
-  <ModalView v-if="isModalOpen">
-    <h1>{{ teamData.congratulation?.title }}</h1>
-    <p>{{ teamData.congratulation?.text }}</p>
-    <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="next">
-      <Check/>
-    </RoundButton>
-  </ModalView>
 </template>

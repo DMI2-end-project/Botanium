@@ -3,15 +3,19 @@
     <div class="w-full bg-green-light rounded-md grid grid-cols-3 gap-8 lg:gap-14 py-24 px-10"> <!-- flex -->
       <div class="col-span-1 w-full h-full">
         <RoundItem v-if="congratulation?.icon" class="w-full aspect-square" :color="COLOR.GREEN_MEDIUM">
-          <SvgIcon :name="`/src/assets/game-data/images/${mainStore.getFullGameId}/${congratulation.icon}`"/>
+          <SvgIcon :name="congratulation.icon"/>
         </RoundItem>
         <div v-if="congratulation?.image">
-          <img :src="congratulation.image"/>
+          <CardGame>
+            <template v-slot:recto>
+              <img :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${congratulation.image}`"/>
+            </template>
+          </CardGame>
         </div>
       </div>
       <div class="col-span-2 flex flex-col gap-4">
-        <h1>{{ congratulation?.title }}</h1>
-        <p class="">{{ congratulation?.text }}</p>
+        <h1 v-if="congratulation?.title">{{ congratulation.title }}</h1>
+        <p v-if="congratulation?.text" class="">{{ congratulation.text }}</p>
       </div>
     </div>
     <Info v-show="gameStore.currentStep === GAMESTEP.WAIT" text="Patiente un peu, tes camarades réfléchissent encore">
@@ -29,10 +33,12 @@ import Loading from "../../../assets/svg/ico-loading.svg?component";
 import Info from "../../common/Info.vue";
 import RoundItem from "../../common/RoundItem.vue";
 import SvgIcon from "../../common/SvgIcon.vue";
+import CardGame from "../CardGame.vue";
 
 export default defineComponent({
   name: 'WaitingComponent',
   components: {
+    CardGame,
     SvgIcon,
     Info, Loading, RoundItem
   },
