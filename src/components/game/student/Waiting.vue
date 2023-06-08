@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-24 items-center text-green">
     <div class="w-full bg-green-light rounded-md grid grid-cols-3 gap-8 lg:gap-14 py-24 px-10"> <!-- flex -->
       <div class="col-span-1 w-full h-full">
-        <RoundItem v-if="congratulation?.icon" class="w-full aspect-square" :color="COLOR.GREEN_MEDIUM">
+        <RoundItem v-if="congratulation?.icon" class="w-full aspect-square" :color="COLOR.WHITE">
           <SvgIcon :name="congratulation.icon"/>
         </RoundItem>
         <div v-if="congratulation?.image" :class="congratulation?.isCircle ? 'bg-beige rounded-full p-8' : ''">
@@ -11,6 +11,7 @@
               <img :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${congratulation.image}`"/>
             </template>
           </CardGame>
+        </div>
       </div>
       <div class="col-span-2 flex flex-col gap-4">
         <h1 v-if="congratulation?.title">{{ congratulation.title }}</h1>

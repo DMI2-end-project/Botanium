@@ -2,6 +2,7 @@
 import {defineProps} from 'vue';
 
 import Check from '../../assets/svg/ico-check-transparency.svg?component';
+import Deco from '../../assets/svg/card-corner.svg?component';
 
 const props = defineProps({
   cardState: {
@@ -26,13 +27,13 @@ const props = defineProps({
 
 <template>
   <!-- BORDER ONLY FOR SELECTED - NO BACKGROUND -->
-  <div class="w-full h-auto rounded-lg border shrink-0 text-center p-2"
+  <div class=" w-full h-auto rounded-lg border shrink-0 text-center p-2"
        :class="{
          'border-green-light' : props.answerState === 'selected',
          'border-transparent' : props.answerState !== 'selected'
        }">
     <!-- BORDER ONLY FOR VALID/ERROR -->
-    <div class="w-full h-full bg-beige border-transparent rounded-lg border-[6px] p-2"
+    <div class="w-full h-full bg-beige border-transparent rounded-lg border-[6px] p-1.5"
          :class="{
            'bg-beige !border-blue': props.answerState === 'valid',
            'bg-beige !border-red': props.answerState === 'error',
@@ -40,17 +41,21 @@ const props = defineProps({
            'bg-green-light border-transparent text-green': props.cardState === 'validated' || props.answerState === 'selected',
          }">
       <!-- BORDER -->
-      <div class="w-full h-full flex flex-col justify-center items-center gap-1.5 p-2 rounded-lg border"
+      <div class="relative w-full h-full flex flex-col justify-center items-center gap-1.5 p-2 rounded-lg border"
            :class="{
              '': props.cardState !== 'validated',
              'border-transparent' : props.answerState === 'selected',
              'border-beige-medium' : props.answerState !== 'selected',
-             'bg-green-light border-transparent': props.cardState === 'validated',
+             'bg-green-light border-green-medium text-green-medium': props.cardState === 'validated',
            }">
         <slot name="verso" v-if="props.cardState === 'hide'" class=""/>
         <slot name="recto" v-if="props.cardState === 'show'" class=""/>
         <div v-show="props.cardState === 'validated'">
-          <Check class="aspect-square w-16"/>
+          <Deco class="absolute h-[45%] aspect-square top-1 left-1 "/>
+          <Deco class="absolute h-[45%] aspect-square top-1 right-1 -scale-x-100"/>
+          <Deco class="absolute h-[45%] aspect-square bottom-1 left-1 -scale-y-100"/>
+          <Deco class="absolute h-[45%] aspect-square bottom-1 right-1 -scale-100"/>
+          <Check class="text-green aspect-square w-16"/>
         </div>
       </div>
     </div>

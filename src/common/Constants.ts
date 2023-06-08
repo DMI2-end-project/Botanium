@@ -62,6 +62,7 @@ export enum GAME_TYPE {
 
 /*  UI  */
 export enum COLOR {
+  WHITE='white',
   PINK = 'pink',
   GREEN = 'green',
   YELLOW = 'yellow',

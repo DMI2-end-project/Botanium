@@ -95,15 +95,15 @@ const readyWithoutMicro = () => {
 
 <template>
   <div v-if="gameStore.data"
-       class="w-full h-full grid grid-cols-12 gap-4 px-8">
+       class="w-full h-full grid grid-cols-12 items-center justify-center gap-4 px-8">
     <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION" @get-microphone="getMicro"
                  class="col-start-3 col-span-8"/>
     <TeacherGame
         v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
         class="col-span-12"/>
     <StudentGame
-        v-if="(mainStore.role === ROLE.STUDENT && gameStore.currentStep !== GAME_STEP.INSTRUCTION) || (mainStore.role === ROLE.STUDENT && gameStore.currentStep !== GAME_STEP.CONGRATS)"
-        class="col-span-12"/>
+        v-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
+        class="col-span-12 my-auto"/>
     <Waiting
         v-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
         class="col-start-3 col-span-8"/>

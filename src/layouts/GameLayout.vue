@@ -95,7 +95,7 @@ export default defineComponent({
       <GameHeader v-if="!isBreadcrumb"/>
       <slot name="header"/>
     </header>
-    <main class="w-screen h-screen flex-1 flex flex-col justify-center mt-16 z-10">
+    <main class="w-screen h-screen flex-1 flex flex-col justify-center pt-16 z-10">
       <slot></slot>
     </main>
     <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">
