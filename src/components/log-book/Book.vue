@@ -31,7 +31,8 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent } from 'vue'
+import {useMainStore} from "./../../stores/mainStore";
 import PageContent from './PageContent.vue';
 import AddPage from './AddPage.vue';
 import {DatabaseManagerInstance} from "./../../common/DatabaseManager";
@@ -49,6 +50,7 @@ export default defineComponent({
   },
   data: () => {
     return {
+      mainStore: useMainStore(),
       lastPage: 1 as number,
       page: 1 as number,
       isBookOpen: false as Boolean,
@@ -72,6 +74,15 @@ export default defineComponent({
     },
     SIZE() {
       return SIZE
+    },
+  },
+  watch: {
+    'mainStore.roomId': {
+      async handler() {
+        if (!this.mainStore.roomId) return
+        this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
+        this.lastPage = this.page = this.pagesContent.length + 1
+      },
     }
   },
   async mounted() {
@@ -82,8 +93,6 @@ export default defineComponent({
     this.pageLeft = this.$refs.pageLeft as HTMLElement;
     this.pageRight = this.$refs.pageRight as HTMLElement;
     this.openVideo?.pause();
-    this.pagesContent = await DatabaseManagerInstance.fetchPages();
-    this.lastPage = this.page = this.pagesContent.length + 1
   },
   methods: {
     openTheBook () {
@@ -122,8 +131,9 @@ export default defineComponent({
     },
     async onCloseAddPage(n:number) {
       this.onPageAdd = false
-      await DatabaseManagerInstance.createPage(this.lastPage, n);
-      this.pagesContent = await DatabaseManagerInstance.fetchPages();
+      if (!this.mainStore.roomId) return
+      await DatabaseManagerInstance.createPage(this.lastPage, n, this.mainStore.roomId);
+      this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
       this.lastPage = this.pagesContent.length + 1
     }
   },

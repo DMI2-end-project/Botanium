@@ -24,7 +24,8 @@ export const getPageData = (record: Record): PageData => {
     collectionId: record.collectionId,
     file: record.file,
     pageNumber: record.pageNumber,
-    template: record.template
+    template: record.template,
+    classroom: record.classroom,
   };
 }
 
@@ -94,18 +95,27 @@ export const getPhotoData = (record: Record): PhotoData => {
     slot: record.slot,
     page: record.page,
     collectionId: record.collectionId,
-    file: record.file
+    file: record.file,
+    classroom: record.classroom,
   };
 }
 
-export const getDefaultPhotoData = (pageId: string = '', slot: number = -1): PhotoData => {
+export const getDefaultPhotoData = (pageId: string = '', slot: number = -1, classroom: string = ''): PhotoData => {
   return {
     id: '',
     collectionId: '',
     file: {} as File,
     slot: slot,
-    page: pageId
+    page: pageId,
+    classroom: classroom
   };
+}
+
+export const getPhotoFormData = (data: PhotoData): FormData => {
+  const formData: FormData = new FormData();
+  formData.append('file', data.file);
+  formData.append('classroom', data.classroom);
+  return formData
 }
 
 export const getDrawFormData = (data: DrawData): FormData => {

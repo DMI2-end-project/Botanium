@@ -5,13 +5,12 @@
         <RoundItem v-if="congratulation?.icon" class="w-full aspect-square" :color="COLOR.GREEN_MEDIUM">
           <SvgIcon :name="congratulation.icon"/>
         </RoundItem>
-        <div v-if="congratulation?.image">
+        <div v-if="congratulation?.image" :class="congratulation?.isCircle ? 'bg-beige rounded-full p-8' : ''">
           <CardGame>
             <template v-slot:recto>
               <img :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${congratulation.image}`"/>
             </template>
           </CardGame>
-        </div>
       </div>
       <div class="col-span-2 flex flex-col gap-4">
         <h1 v-if="congratulation?.title">{{ congratulation.title }}</h1>
@@ -39,8 +38,10 @@ export default defineComponent({
   name: 'WaitingComponent',
   components: {
     CardGame,
+    Info,
+    Loading,
+    RoundItem,
     SvgIcon,
-    Info, Loading, RoundItem
   },
   data() {
     return {

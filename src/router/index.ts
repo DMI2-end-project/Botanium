@@ -10,6 +10,7 @@ import Game from "../pages/Game.vue";
 import LogBook from "../pages/LogBook.vue";
 import Chapter from "../pages/Chapter.vue";
 import Chapters from "../pages/Chapters.vue";
+import PhotoTaking from "../pages/PhotoTaking.vue";
 import Dev from "../pages/Dev.vue";
 
 const config: RouterOptions = {
@@ -77,6 +78,14 @@ const config: RouterOptions = {
       component: LogBook,
       meta: {
         layout: 'LogBook',
+      },
+    },
+    {
+      name: 'PhotoTaking',
+      path: '/prise-de-photo',
+      component: PhotoTaking,
+      meta: {
+        layout: 'Dev',
       },
     },
   ]

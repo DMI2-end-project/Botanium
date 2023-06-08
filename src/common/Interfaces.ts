@@ -6,6 +6,7 @@ interface PageData {
   file: File;
   pageNumber: number;
   template: number;
+  classroom: string;
 }
 
 interface TextData {
@@ -38,6 +39,7 @@ interface PhotoData {
   file: File;
   slot: number;
   page: string;
+  classroom: string;
 }
 
 interface ChapterData {

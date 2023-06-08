@@ -404,16 +404,13 @@
           "instruction": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol.",
           "answers": [
             {
-              "icon": "ico-rock",
-              "isValid": false
+              "image": "rock.png"
             },
             {
-              "icon": "ico-sun",
-              "isValid": false
+              "image": "sun.png"
             },
             {
-              "icon": "ico-height",
-              "isValid": false
+              "image": "height.png"
             }
           ]
         },
@@ -423,8 +420,10 @@
             "element": "rock",
             "clue": "",
             "congratulation": {
-              "text": "Il faut quelques cailloux pour que la carrote pousse bien",
-              "icon": "eye"
+              "title": "Bravo !",
+              "text": "La carotte a besoin d’un sol léger et sableux, avec peu de cailloux pour pousser.",
+              "image": "rock.png",
+              "isCircle": true
             },
             "answers": 1
           },
@@ -433,8 +432,10 @@
             "clue": "",
             "element": "sun",
             "congratulation": {
-              "text": "La carotte a besoin d'un ensoleillement moyen pour bien pousser",
-              "icon": "disease"
+              "title": "Bravo !",
+              "text": "La carotte a besoin d’un sol très ensoleillé pour se développer.",
+              "image": "sun.png",
+              "isCircle": true
             },
             "answers": 2
           },
@@ -443,8 +444,10 @@
             "clue": "",
             "element": "height",
             "congratulation": {
-              "text": "La carotte d'un sol assez haut pour bien pousser",
-              "icon": "disease"
+              "title": "Bravo !",
+              "text": "La carotte a besoin d’un sol de profondeur moyenne mais suffisante puisque les carottes poussent immergées.",
+              "image": "height.png",
+              "isCircle": true
             },
             "answers": 3
           }

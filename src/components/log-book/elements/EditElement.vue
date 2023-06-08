@@ -10,9 +10,9 @@
       <p class="text-right font-hand-written text-xs text-green p-1 pt-2 absolute bottom-0 right-0 bg-beige m-2">{{ drawData.signature }}</p>
     </div>
   </button>
-  <div v-if="onModify" class="fixed z-40 w-screen h-screen bg-black/25 flex justify-center items-center top-0 left-0 pt-24">
-    <div v-if="!onSignature" class="bg-beige h-[90%] w-full p-8 m-12">
-      <div v-if="!onWrite && !onDraw" class="h-full w-full flex gap-8">
+  <div v-if="onModify" class="fixed z-40 w-screen h-screen bg-green/80 flex justify-center items-center top-0 left-0 pt-24">
+    <div v-if="!onSignature" class="h-[90%] w-full m-12 rounded-xl" :class="!onDraw ? 'bg-beige p-8' : ''">
+      <div v-if="!onWrite && !onDraw" class="edit-corner h-full w-full flex gap-12 p-12">
         <button @click="onWrite = true" class="bg-beige-light relative flex-1 max-h-full p-16 text-green text-xl font-bold">
           <span class="w-[96%] h-[96%] block absolute top-[2%] left-[2%] border border-beige-dark rounded-lg" />
           <WriteIcon class="mx-auto h-1/3 w-auto object-contain" />
@@ -24,37 +24,49 @@
           <p class="mt-16">Faire un dessin</p>
         </button>
       </div>
-      <div v-if="onWrite" class="w-full h-full p-12 flex flex-col items-end">
-        <textarea v-model="textData.content" autofocus class="w-full h-full text-xl p-4">
+      <div v-if="onWrite" class="edit-corner w-full h-full p-6 flex flex-col items-end">
+        <textarea v-model="textData.content" autofocus class="w-full h-full resize-none text-xl p-12 font-bold bg-transparent border-none outline-none">
         </textarea>
-        <button @click="onSignature = true" class="mt-10">Valider</button>
+        <RoundButton @click="saveText" class="mt-10 min-h-[80px]" :color="COLOR.GREEN_MEDIUM_BEIGE"><CheckIcon /></RoundButton>
       </div>
       <div v-if="onDraw" class="w-full h-full p-0 flex flex-col items-end">
         <Draw @save="saveDraw" :lastDrawUrl="drawUrl" :ratio="ratio" />
       </div>
     </div>
-    <div v-if="onSignature" class="bg-beige p-8 flex flex-col items-center">
-      <p>Note le ou les prénoms des élèves qui ont vécu  ce souvenir au jardin :</p>
-      <input type="text" v-model="signature" class="mt-5">
-      <button v-if="signature != ''" @click="saveData" class="mt-5">Valider</button>
-    </div>
   </div>
+  <ModalView v-if="onSignature">
+    <div class="relative my-2 flex flex-col items-center">
+      <h3 class="mt-8">Note le ou les prénoms des élèves qui ont vécu  ce souvenir au jardin :</h3>
+      <input type="text" v-model="signature" class="mt-6 px-6 py-4 rounded-lg min-w-[400px]" placeholder="Ecris ici le ou les prénoms ">
+      <RoundButton :isActive="signature != ''" @click="saveData" :color="COLOR.GREEN_MEDIUM_BEIGE" class="mt-12">
+        <CheckIcon/>
+      </RoundButton>
+    </div>
+  </ModalView>
 </template>
 
 <script lang="ts">
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
+import {useMainStore} from "./../../../stores/mainStore";
 import Draw from "./../Draw.vue"
 import type { TextData, DrawData } from './../../../common/Interfaces'
 import { base64ToFile } from './../../../common/Lib';
+import { COLOR } from './../../../common/Constants';
+import RoundButton from "./../../common/RoundButton.vue"
+import ModalView from "./../../common/ModalView.vue";
 import WriteIcon from "./../../../assets/svg/ico-write.svg?component"
 import DrawIcon from "./../../../assets/svg/ico-draw.svg?component"
+import CheckIcon from "./../../../assets/svg/ico-check.svg?component"
 
 export default {
   name: "EditElementComponent",
   components: {
     Draw,
+    RoundButton,
+    ModalView,
     WriteIcon,
-    DrawIcon
+    DrawIcon,
+    CheckIcon
   },
   props: {
     pageId: {
@@ -73,6 +85,7 @@ export default {
   emits: ['onModify'],
   data: () => {
     return {
+      mainStore: useMainStore(),
       onModify: false as Boolean,
       onWrite: false as Boolean,
       onDraw: false as Boolean,
@@ -86,6 +99,9 @@ export default {
   computed: {
     drawUrl():string {
       return DatabaseManagerInstance.getImageUrl(this.drawData)
+    },
+    COLOR() {
+      return COLOR
     }
   },
   watch: {
@@ -132,15 +148,35 @@ export default {
       this.onDraw = false;
       this.onModify = false;
       this.onSignature = false;
+      this.mainStore.isModalOpen = false;
     },
     saveDraw(data:string) {
       this.onSignature = true
+      this.mainStore.isModalOpen = true;
 
       this.drawData.file = base64ToFile(data);
+    },
+    saveText() {
+      this.onSignature = true
+      this.mainStore.isModalOpen = true;
     }
   }
 };
 </script>
 
 <style scoped>
+.edit-corner {
+  background:
+    linear-gradient(to right, #E5D9B6 8px, transparent 8px) 0 0,
+    linear-gradient(to right, #E5D9B6 8px, transparent 8px) 0 100%,
+    linear-gradient(to left, #E5D9B6 8px, transparent 8px) 100% 0,
+    linear-gradient(to left, #E5D9B6 8px, transparent 8px) 100% 100%,
+    linear-gradient(to bottom, #E5D9B6 8px, transparent 8px) 0 0,
+    linear-gradient(to bottom, #E5D9B6 8px, transparent 8px) 100% 0,
+    linear-gradient(to top, #E5D9B6 8px, transparent 8px) 0 100%,
+    linear-gradient(to top, #E5D9B6 8px, transparent 8px) 100% 100%;
+
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+}
 </style>

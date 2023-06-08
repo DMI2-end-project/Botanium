@@ -1,5 +1,5 @@
 <template>
-  <div :class="(isBg ? 'RoundButtonBg bg-beige-medium p-8 rounded-full' : '') + (isActive ? '' : ' opacity-50 pointer-events-none')">
+  <div v-if="isBg" :class="isActive ? '' : ' opacity-50 pointer-events-none'" class="RoundButtonBg bg-beige-medium p-8 rounded-full">
     <button
       class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
       :class="`${containerClass}`">
@@ -11,6 +11,17 @@
       </div>
     </button>
   </div>
+  <button
+      v-else
+      class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
+      :class="`${containerClass}` + (isActive ? '' : ' opacity-50 pointer-events-none')">
+      <div
+          class="RoundButton__bg absolute w-full h-full rounded-full outline outline-1 group-hover:outline-offset-[0px] group-hover:scale-75 transform"
+          :class="`${bgClass}`"/>
+      <div class="RoundButton__icon z-10" :class="`${textClass}`">
+        <slot/>
+      </div>
+    </button>
 </template>
 
 <script lang="ts">

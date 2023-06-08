@@ -1,11 +1,11 @@
 <template>
   <div class="w-full h-full px-10 relative flex flex-col justify-between">
-    <div ref="canvasContainer" class="w-full -my-20"></div>
+    <div ref="canvasContainer" class="w-full -my-20" :class="isError ? 'shake-animation' : ''"></div>
     <div class="relative w-4/5 mx-auto">
-      <input ref="range" type="range" v-model="selectedValue.current" min="0" max="4" step="0.001" class="w-full"/>
-      <img alt="" :src="'/src/assets/game-data/images/00103/' + element + '-0.png'" class="absolute -top-24 left-0 w-14 -ml-5">
-      <img alt="" :src="'/src/assets/game-data/images/00103/' + element + '-1.png'" class="absolute -top-24 right-0 w-14 -mr-5">
-      <span v-for="i in 5" v-bind="i" class="w-3 h-3 m-1 bg-purple rounded-full absolute pointer-events-none" :style="`left: calc(${(i - 1) * 100 / 4}% - ${(i - 1) * 5}px);`" />
+      <input ref="range" type="range" v-model="selectedValue.current" min="0" max="4" step="0.001" class="w-full" :class="isError ? 'error' : ''"/>
+      <Empty class="absolute -top-24 left-0 -ml-5 bg-green-light w-14 h-14 text-green rounded-full p-4"/>
+      <img alt="" :src="'/src/assets/game-data/images/00103/' + element + '.png'" class="absolute -top-24 right-0 -mr-5 bg-green-light w-14 h-14 text-green rounded-full p-2">
+      <span v-for="i in 5" v-bind="i" class="w-3 h-3 m-1 rounded-full absolute pointer-events-none transition" :style="`left: calc(${(i - 1) * 100 / 4}% - ${(i - 1) * 5}px);`" :class="isError ? 'bg-red' : 'bg-purple'" />
     </div>
     <div class="absolute top-[45%] right-10">
       <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="select" class="">
@@ -20,16 +20,19 @@ import { defineComponent } from 'vue';
 import * as PIXI from "pixi.js";
 import RoundButton from '../../../common/RoundButton.vue';
 import Check from "../../../../assets/svg/ico-check.svg?component";
+import Empty from "../../../../assets/svg/ico-empty.svg?component";
 import { COLOR } from '../../../../common/Constants';
 
 export default defineComponent({
   components: {
     RoundButton,
-    Check
+    Check,
+    Empty
   },
   emits: ['select'],
   props: {
-    element: String
+    element: String,
+    isError: Boolean
   },
   computed: {
     COLOR() {
@@ -129,6 +132,20 @@ export default defineComponent({
   height: 100%;
 }
 
+@keyframes shake {
+  0% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake-animation {
+  animation-name: shake;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 3;
+}
+
 /*********** Baseline, reset styles ***********/
 input[type="range"] {
   -webkit-appearance: none;
@@ -154,14 +171,23 @@ input[type="range"]::-webkit-slider-runnable-track {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
-  margin-top: -21px; /* Centers thumb on the track */
   background-color: #9B85FF;
   height: 16px;
   width: 16px;
   border-radius: 50%;
   border: 1.5px solid #FFF;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  transform-origin: center;
   transform: scale(3.75);
+  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.error::-webkit-slider-thumb {
+  background-color: #FB6F4A !important;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  cursor: grab;
 }
 
 /*********** Firefox styles ***********/
@@ -181,6 +207,17 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
   border: 1.5px solid #FFF;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  transform-origin: center;
   transform: scale(3.75);
+  transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+}
+
+.error::-moz-range-thumb {
+  background-color: #FB6F4A !important;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  cursor: grab;
 }
 </style>
