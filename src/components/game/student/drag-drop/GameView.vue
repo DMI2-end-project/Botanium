@@ -23,7 +23,8 @@ const teamData = ref<any>(null);
 
 const draggable = ref<HTMLDivElement>();
 const droppables = ref<HTMLDivElement[]>([]);
-const currentAnswer = ref<boolean | undefined>(undefined);
+const currentAnswer = ref<any | undefined>(undefined);
+const currentIndex = ref<number>(-1);
 
 onMounted(async () => {
   await nextTick();
@@ -49,7 +50,7 @@ onMounted(async () => {
         },
         onDragEnd: function (e) {
           let miss = true;
-          droppables.value.forEach(droppable => {
+          droppables.value.forEach((droppable, index) => {
             if (this.hitTest(droppable, "50%")) {
               miss = false;
               if (draggable.value) {
@@ -57,10 +58,12 @@ onMounted(async () => {
                   scale: true
                 });
                 droppable.classList.add('selected');
-                currentAnswer.value = droppable.dataset.isValid ? JSON.parse(droppable.dataset.isValid) : null;
+                currentIndex.value = index;
+                //currentAnswer.value = droppable.dataset.isValid ? JSON.parse(droppable.dataset.isValid) : null;
               }
             } else {
               droppable.classList.remove('selected');
+              teamData.value.answers[index].status = "none";
             }
           });
 
@@ -77,11 +80,22 @@ onMounted(async () => {
 });
 
 const itemValidated = () => {
+  if (currentIndex.value !== -1) {
+    teamData.value.answers[currentIndex.value].status = teamData.value.answers[currentIndex.value].isValid ? 'valid' : 'error';
+    if (teamData.value.answers[currentIndex.value].status === 'valid') {
+      setTimeout(() => {
+        emit('validated');
+      }, 500);
+    }
+  }
+
+  /*
   if (currentAnswer.value === true) {
     setTimeout(() => {
       emit('validated');
     }, 500)
   }
+   */
 }
 </script>
 
@@ -92,10 +106,12 @@ const itemValidated = () => {
         class="col-span-3 flex justify-center items-center border border-dashed border-beige rounded-md p-2">
       <div id="container" class="relative w-full h-full aspect-[5/9]">
         <div ref="draggable" class="relative w-full h-full">
-          <CardGame class="h-full">
+          <CardGame v-if="teamData" mode="vertical"
+                    :answer-state="currentIndex === -1 ? 'none' : teamData.answers[currentIndex].status"
+                    class="h-full">
             <template v-slot:recto>
               <img v-if="teamData" alt=""
-                   :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.background}`"
+                   :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.image}`"
                    class="object-contain object-center"/>
             </template>
           </CardGame>
@@ -111,7 +127,7 @@ const itemValidated = () => {
       <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
            class="w-full flex flex-col justify-center items-center gap-6">
         <div ref="droppables"
-             class="droppable w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center"
+             class="droppable w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
              :data-is-valid="answer.isValid">
           {{ answer.label }}...
         </div>
@@ -121,8 +137,8 @@ const itemValidated = () => {
       </div>
       <div class="w-full flex justify-center absolute -bottom-20 left-0 right-0 mx-auto -z-10">
         <Transition name="scaleButtonBg">
-          <RoundButton @click="itemValidated" :isBg="COLOR.BEIGE_MEDIUM" :color="COLOR.GREEN_MEDIUM_BEIGE"
-                       v-show="currentAnswer !== undefined">
+          <RoundButton @click="itemValidated" :isBg="true" :color="COLOR.GREEN_MEDIUM_BEIGE"
+                       v-show="currentIndex !== -1">
             <Check/>
           </RoundButton>
         </Transition>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="gameStore.currentStep === GAMESTEP.PLAY">
+  <div>
     <component v-bind:is="GameView" @validated="validated" @openModal="open"/>
     <ModalView v-if="isModalOpen">
       <h1>{{ teamData.congratulation?.title }}</h1>

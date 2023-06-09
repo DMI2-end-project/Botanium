@@ -72,7 +72,7 @@ export default defineComponent({
   <div class="bg-background fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden"/>
   <div
       class="bg-texture bg-cover fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden mix-blend-soft-light opacity-50"/>
-  <div class="flex flex-col w-full h-full min-h-screen">
+  <div class="flex flex-col w-full h-full min-h-screen max-h-screen">
     <header class="fixed top-0 left-0 w-full z-20">
       <!-- DEV INFO -->
       <div class="col-span-12 flex justify-end items-center gap-6 z-20">
@@ -95,7 +95,7 @@ export default defineComponent({
       <GameHeader v-if="!isBreadcrumb"/>
       <slot name="header"/>
     </header>
-    <main class="w-screen h-screen flex-1 flex flex-col justify-center mt-16 z-10">
+    <main class="w-screen h-screen flex-1 flex flex-col justify-center pt-16 z-10">
       <slot></slot>
     </main>
     <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">

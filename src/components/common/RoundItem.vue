@@ -39,6 +39,10 @@ export default defineComponent({
   },
   mounted() {
     switch (this.color) {
+      case COLOR.WHITE:
+        this.containerClass += ' bg-white text-green';
+        this.textClass += ' text-green';
+        break;
       case COLOR.PINK:
         this.containerClass += ' bg-pink text-beige';
         this.textClass += ' text-beige';

@@ -283,17 +283,20 @@
             {
               "label": "Am",
               "name": "Amfine",
-              "molecule": "Carotène"
+              "molecule": "Carotène",
+              "image": "amfine.png"
             },
             {
               "label": "Lu",
               "name": "Lubiana",
-              "molecule": "Lutéine"
+              "molecule": "Lutéine",
+              "image": "lubiana.png"
             },
             {
               "label": "Co",
               "name": "Cosmic",
-              "molecule": "Anthocyane"
+              "molecule": "Anthocyane",
+              "image": "cosmic.png"
             }
           ]
         },
@@ -301,24 +304,24 @@
           {
             "instruction": "Range ta carotte orange au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
             "clue": "Le carotène est un pigment orange",
-            "background": "amfine.png",
+            "image": "amfine.png",
             "answers": [
               {
                 "isValid": true,
+                "status": "none",
                 "label": "Am",
-                "name": "Amfine",
                 "molecule": "Carotène"
               },
               {
                 "isValid": false,
+                "status": "none",
                 "label": "Lu",
-                "name": "Lubiana",
                 "molecule": "Lutéine"
               },
               {
                 "isValid": false,
+                "status": "none",
                 "label": "Co",
-                "name": "Cosmic",
                 "molecule": "Anthocyane"
               }
             ],
@@ -331,20 +334,23 @@
           {
             "instruction": "Range ta carotte jaune au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
             "clue": "La lutéine donne une couleur jaune",
-            "background": "lubiana.png",
+            "image": "lubiana.png",
             "answers": [
               {
                 "isValid": false,
+                "status": "none",
                 "label": "Am",
                 "molecule": "Carotène"
               },
               {
                 "isValid": true,
+                "status": "none",
                 "label": "Lu",
                 "molecule": "Lutéine"
               },
               {
                 "isValid": false,
+                "status": "none",
                 "label": "Co",
                 "molecule": "Anthocyane"
               }
@@ -358,20 +364,23 @@
           {
             "instruction": "Range ta carotte violette au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
             "clue": "Les anthocyanes sont des colorants d'origine naturelle de couleur rouge ou bleue.",
-            "background": "cosmic.png",
+            "image": "cosmic.png",
             "answers": [
               {
                 "isValid": false,
+                "status": "none",
                 "label": "Am",
                 "molecule": "Carotène"
               },
               {
                 "isValid": false,
+                "status": "none",
                 "label": "Lu",
                 "molecule": "Lutéine"
               },
               {
                 "isValid": true,
+                "status": "none",
                 "label": "Co",
                 "molecule": "Anthocyane"
               }
@@ -379,7 +388,7 @@
             "congratulation": {
               "title": "Bravo !",
               "text": "<p>La carotte Cosmic est le nom donné à la carotte violette.</p><p>Elle possède un pigment appelé l’anthocyane : c’est lui le responsable de la couleur violette !</p><p>Y’aurait-il d’autres couleurs... ?</p>",
-              "image": "amfine.png"
+              "image": "cosmic.png"
             }
           }
         ],

@@ -42,7 +42,7 @@ const next = () => {
     <RoundItemVue :size="SIZE.LG" :color="COLOR.YELLOW" class="absolute translate-y-1/2 -mt-16">
       <Trophy class="w-14 aspect-square"/>
     </RoundItemVue>
-    <div class="w-full bg-green rounded-md flex flex-col gap-4 items-center py-24 px-28">
+    <div class="w-full bg-green rounded-md flex flex-col gap-4 items-center p10">
       <h1>Incroyable !</h1>
       <p>{{ text() }}</p>
     </div>

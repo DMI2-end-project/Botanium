@@ -3,7 +3,7 @@
     <CircleButton @click="openModal" text="Connexion"><Wifi /></CircleButton>
   </div>
 
-  <ModalView v-if="isModalOpen" close>
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true">
     <div class="relative flex flex-col items-center">
       <div class="bg-beige rounded-full aspect-square p-7 -mt-20 -mb-8">
         <p class="font-title font-bold text-2xl text-green-medium -mt-4">{{ teamsConnected.length }} / {{ gameStore.teams.length }}</p>

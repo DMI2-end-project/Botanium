@@ -5,7 +5,6 @@ import {gsap} from "gsap";
 
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import {TeamManagerInstance} from "../../../../common/TeamManager";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
@@ -130,12 +129,16 @@ onMounted(() => {
 
 <template>
   <div class="relative w-full h-full grid grid-cols-12 gap-4 px-8 justify-center items-center text-center gap-5">
-    <div class="w-full aspect-square bg-white rounded-full col-span-6 col-start-4 absolute"/>
-    <div class="relative aspect-[5/9] col-span-6 col-start-3">
-      <img v-if="teamData" alt=""
-           :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.background}`"
-           class="w-full h-full object-contain"/>
-      <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
+    <div class="col-span-4 col-start-5 w-full mx-auto aspect-square bg-white rounded-full absolute"/>
+    <div class="col-span-3 col-start-5 h-full flex justify-center items-center">
+      <div class="h-full mx-auto flex justify-center items-center">
+        <div class="relative aspect-[5/9] h-full">
+          <img v-if="teamData" alt=""
+               :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.background}`"
+               class="w-full h-full object-contain"/>
+          <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
+        </div>
+      </div>
     </div>
   </div>
 </template>
