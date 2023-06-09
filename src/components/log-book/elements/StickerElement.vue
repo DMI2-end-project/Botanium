@@ -10,9 +10,9 @@
           <!-- <button v-if="stickerData.idSticker !== stickerDataLast.idSticker" @click="saveData" class="absolute z-10 h-24 w-24 rounded-full top-0 bottom-0 my-auto h-fit" :class="isPageLeft ? '-left-12' : '-right-12'">Valider</button> -->
 
           <Transition name="scaleButtonBg">
-            <RoundButton @click="saveData" :is-bg="COLOR.BEIGE" :color="COLOR.GREEN_MEDIUM_BEIGE" class="absolute top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Check /></RoundButton>
+            <RoundButton @click="saveData" :color-bg="COLOR.BEIGE" :color="COLOR.GREEN_MEDIUM_BEIGE" class="absolute top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Check /></RoundButton>
           </Transition>
-          <!-- <RoundButton v-if="stickerData.idSticker === stickerDataLast.idSticker" @click="close" :is-bg="COLOR.BEIGE" :color="COLOR.RED" class="absolute z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Cross /></RoundButton> -->
+          <!-- <RoundButton v-if="stickerData.idSticker === stickerDataLast.idSticker" @click="close" :color-bg="COLOR.BEIGE" :color="COLOR.RED" class="absolute z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Cross /></RoundButton> -->
 
 
           <div class="bg-beige p-8 h-full" :class="isPageLeft ? '' : 'scroll-left'">
