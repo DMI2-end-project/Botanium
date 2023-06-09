@@ -71,6 +71,8 @@ export enum COLOR {
   GREEN_LIGHT = 'greenLight',
   RED = 'red',
   PURPLE = 'purple',
+  BEIGE_MEDIUM = 'beigeMedium',
+  BEIGE = 'beige',
 }
 
 export enum SIZE {

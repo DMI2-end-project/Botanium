@@ -13,18 +13,24 @@
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
         <div ref="pageLeft" class="page page-left flex">
           <!-- <p class="absolute -bottom-6">page {{ pageNumber - 1 }}</p> -->
-          <RoundButton v-if="lastPage === pageNumber - 1" class="m-auto" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM">+</RoundButton>
+          <div v-if="lastPage === pageNumber - 1" class="m-auto">
+            <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/common/plus.png" class="p-6"></RoundButton>
+            <p class="font-bold mt-2">Ajouter une page</p>
+          </div>
           <PageContent v-else-if="pagesContent[pageNumber - 2]" :content="pagesContent[pageNumber - 2]" @onModify="onModify = $event" />
         </div>
         <div ref="pageRight" class="page page-right flex">
           <!-- <p class="absolute -bottom-6">page {{ pageNumber }}</p> -->
-          <RoundButton v-if="lastPage === pageNumber" class="m-auto" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM">+</RoundButton>
+          <div v-if="lastPage === pageNumber" class="m-auto">
+            <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/common/plus.png" class="p-6"></RoundButton>
+            <p class="font-bold mt-2">Ajouter une page</p>
+          </div>
           <PageContent v-else-if="pagesContent[pageNumber - 1]" :content="pagesContent[pageNumber - 1]" @onModify="onModify = $event" />
         </div>
       </div>
       <RoundButton class="open" ref="buttonOpen" @click="openTheBook">Ouvrir le livre</RoundButton>
-      <RoundButton v-if="(pageNumber < lastPage) && isBookOpen" class="next" ref="buttonNext" @click="nextPage" :size="SIZE.SM" :color="COLOR.GREEN_LIGHT">></RoundButton>
-      <RoundButton v-if="(page > 2) && isBookOpen" class="previous" ref="buttonPrevious" @click="previousPage" :size="SIZE.SM" :color="COLOR.GREEN_LIGHT">&lt;</RoundButton>
+      <RoundButton v-if="(pageNumber < lastPage) && isBookOpen" class="next" ref="buttonNext" @click="nextPage" :size="SIZE.SM" :color="COLOR.GREEN_LIGHT"><Arrow class="rotate-180" /></RoundButton>
+      <RoundButton v-if="(page > 2) && isBookOpen" class="previous" ref="buttonPrevious" @click="previousPage" :size="SIZE.SM" :color="COLOR.GREEN_LIGHT"><Arrow /></RoundButton>
       <AddPage v-if="onPageAdd" :page:="lastPage" @close="onCloseAddPage" />
     </div>
   </div>
@@ -40,13 +46,15 @@ import type { PageData } from './../../common/Interfaces'
 import RoundButton from './../common/RoundButton.vue'
 import { CreateComponentPublicInstance } from 'vue';
 import { COLOR, SIZE } from "./../../common/Constants";
+import Arrow from "./../../assets/svg/ico-chevron.svg?component";
 
 export default defineComponent({
   name: "BookComponent",
   components: {
     PageContent,
     AddPage,
-    RoundButton
+    RoundButton,
+    Arrow
   },
   data: () => {
     return {
