@@ -5,6 +5,14 @@ import Check from '../../assets/svg/ico-check-transparency.svg?component';
 import Deco from '../../assets/svg/card-corner.svg?component';
 
 const props = defineProps({
+  mode: {
+    type: String,
+    required: true,
+    validator(value: string) {
+      // The value must match one of these strings
+      return ['horizontal', 'vertical'].includes(value);
+    }
+  },
   cardState: {
     type: String,
     default: 'show',
@@ -27,6 +35,7 @@ const props = defineProps({
 
 <template>
   <!-- BORDER ONLY FOR SELECTED - NO BACKGROUND -->
+  <!-- TODO : DO OUTLINE -->
   <div class=" w-full h-auto rounded-lg border shrink-0 text-center p-2"
        :class="{
          'border-green-light' : props.answerState === 'selected',
@@ -51,10 +60,14 @@ const props = defineProps({
         <slot name="verso" v-if="props.cardState === 'hide'" class=""/>
         <slot name="recto" v-if="props.cardState === 'show'" class=""/>
         <div v-show="props.cardState === 'validated'">
-          <Deco class="absolute h-[45%] aspect-square top-1 left-1 "/>
-          <Deco class="absolute h-[45%] aspect-square top-1 right-1 -scale-x-100"/>
-          <Deco class="absolute h-[45%] aspect-square bottom-1 left-1 -scale-y-100"/>
-          <Deco class="absolute h-[45%] aspect-square bottom-1 right-1 -scale-100"/>
+          <Deco :class="{'w-[45%] ':mode === 'vertical', 'h-[45%] ': mode === 'horizontal'}"
+                class="absolute aspect-square top-1 left-1 "/>
+          <Deco :class="{'w-[45%] ':mode === 'vertical', 'h-[45%] ': mode === 'horizontal'}"
+                class="absolute aspect-square top-1 right-1 -scale-x-100"/>
+          <Deco :class="{'w-[45%] ':mode === 'vertical', 'h-[45%] ': mode === 'horizontal'}"
+                class="absolute aspect-square bottom-1 left-1 -scale-y-100"/>
+          <Deco :class="{'w-[45%] ':mode === 'vertical', 'h-[45%] ': mode === 'horizontal'}"
+                class="absolute aspect-square bottom-1 right-1 -scale-100"/>
           <Check class="text-green aspect-square w-16"/>
         </div>
       </div>

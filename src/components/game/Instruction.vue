@@ -4,7 +4,7 @@
       <SignboardVue :text="'Enigme n°' + mainStore.gameId" class="z-10" />
       <SignboardVue :text="title" :is-rotate="true" class="text-purple min-w-[25vw] -mt-3" />
     </div>
-    <div class="w-full flex flex-col items-center gap-6 bg-green rounded-md p-28 -mt-6">
+    <div class="w-full flex flex-col items-center gap-6 bg-green rounded-md p-10 -mt-6">
       <h3 class="text-beige">{{ text }}</h3>
     </div>
     <p v-if="mainStore.role === ROLE.TEACHER && microNeeded && !hasMicroOn && !hasMicroWaiting" class="mt-6">Attention : Aucune équipe n'a activé son micro, l'exercice ne pourra donc pas être réalisé.</p>

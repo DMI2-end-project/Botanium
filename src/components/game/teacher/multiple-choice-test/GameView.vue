@@ -1,6 +1,7 @@
 <template>
   <div class="relative grid grid-cols-2 auto-rows-fr gap-4 px-8">
     <CardGame v-for="(team, index) in playingTeams" :v-bind="index"
+              mode="horizontal"
               :answer-state="'none'" :card-state="cardState(index)"
               class="aspect-[9/4]">
       <template v-slot:recto>

@@ -1,6 +1,7 @@
 <template>
   <div class="relative grid grid-cols-2 auto-rows-fr gap-4 px-8 my-auto">
     <CardGame v-for="(answer, index) in answers" :v-bind="index" @click.native="() => itemSelected(index)"
+              mode="horizontal"
               card-state="show" :answer-state="answer.status"
               class="aspect-[9/4]">
       <template v-slot:recto>

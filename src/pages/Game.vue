@@ -100,10 +100,10 @@ const readyWithoutMicro = () => {
                  class="col-start-3 col-span-8"/>
     <TeacherGame
         v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
-        class="col-span-12"/>
+        class="col-span-12 h-full my-auto"/>
     <StudentGame
         v-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
-        class="col-span-12 my-auto"/>
+        class="col-span-12 h-full my-auto"/>
     <Waiting
         v-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
         class="col-start-3 col-span-8"/>
