@@ -15,7 +15,7 @@ import ModalView from "./components/common/ModalView.vue";
 import RoundButton from "./components/common/RoundButton.vue";
 
 import chapterData from "./assets/chapters-data/chapters-data.json";
-import gameData from "./assets/game-data/game-data-v2.json";
+import gameData from "./assets/game-data/game-data.json";
 
 import Check from "./assets/svg/ico-check.svg?component";
 import Cross from "./assets/svg/ico-cross.svg?component";
@@ -105,7 +105,7 @@ export default defineComponent({
 <template>
   <AppLayout>
     <router-view/>
-    <ModalView v-if="isModalOpen">
+    <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
       <h1>Attention !</h1>
       <p>Il y a une partie en cours, est-ce que tu veux la rejoindre ?</p>
       <div class="flex justify-center items-center gap-6">

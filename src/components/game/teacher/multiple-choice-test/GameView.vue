@@ -21,7 +21,7 @@
         </div>
         <div v-show="gameStore.currentStep === GAMESTEP.END"
              class="flex flex-col items-center text-center text-green gap-5">
-          <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
+          <img :src="'/game/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
                class="w-16 pointer-events-none aspect-square">
           <span class="text-md pointer-events-none">{{ answer.text }}</span>
         </div>
@@ -52,7 +52,6 @@ export default defineComponent({
   components: {Check, CardGame, RoundButton, SvgIcon},
   data() {
     return {
-      publicPath: window.location.origin,
       mainStore: useMainStore(),
       gameStore: useGameStore(),
       socket: getSocket(),

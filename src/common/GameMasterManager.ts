@@ -5,7 +5,7 @@ import {useChapterStore} from "../stores/chapterStore";
 import {getSocket} from "./../client";
 import {leading} from "../common/Lib";
 import { CHAPTER_STATUS, EVENT, GAME_STEP, AUDIO_EVENT } from "./Constants";
-import gameData from "../assets/game-data/game-data-v2.json";
+import gameData from "../assets/game-data/game-data.json";
 import {DatabaseManagerInstance} from "./DatabaseManager";
 import router from "../router";
 

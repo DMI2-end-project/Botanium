@@ -14,7 +14,7 @@
       <button @click="itemSelected" :data-id="index"
               class="w-full h-full rounded-md shadow-md w-max-content flex flex-col items-center gap-5 text-center py-14 px-10 focus:outline-none "
               :class="answer.status === 'error' ? '!bg-red text-white' : (answer.status === 'valid' ? '!bg-blue text-white' : (answer.isClicked ? '!bg-green-light text-green' : '!bg-beige text-green'))">
-        <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
+        <img :src="'/game/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
              class="w-16 aspect-square pointer-events-none">
         <span class="text-md pointer-events-none">{{ answer.text }}</span>
       </button>
@@ -23,7 +23,7 @@
                  :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">
       <Check/>
     </RoundButton>
-    <ModalView v-if="isModalOpen">
+    <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
       <h1>{{ congratTitle }}</h1>
       <p>{{ congratText }}</p>
       <RoundButton :color="COLOR.YELLOW" @click="closeModal">
@@ -60,7 +60,6 @@ export default defineComponent({
   emits: ['validated'],
   data() {
     return {
-      publicPath: window.location.origin,
       mainStore: useMainStore(),
       gameStore: useGameStore(),
       currentAnswer: undefined as any,

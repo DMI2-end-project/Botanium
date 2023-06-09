@@ -91,6 +91,11 @@ const readyWithoutMicro = () => {
   TeamManagerInstance.mircoReady(false);
 }
 
+const closeModal = () => {
+  isModalOpen.value = false
+  mainStore.isModalOpen = false
+}
+
 </script>
 
 <template>
@@ -110,7 +115,7 @@ const readyWithoutMicro = () => {
     <Congratulation v-if="gameStore.currentStep === GAME_STEP.CONGRATS"
                     class="col-start-3 col-span-8"/>
   </div>
-  <ModalView v-if="isModalOpen">
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
     <h1>Appelle ton enseignant pour qu’il active le son</h1>
     <p>Rendez vous dans les réglages du navigateur pour activer le micro ou continuer l’activité sans : la
       synchronisation du son ne prendra pas en compte le micro de cette tabalette</p>

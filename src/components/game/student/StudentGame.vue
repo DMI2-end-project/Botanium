@@ -1,7 +1,7 @@
 <template>
   <div>
     <component v-bind:is="GameView" @validated="validated" @openModal="open"/>
-    <ModalView v-if="isModalOpen">
+    <ModalView v-if="isModalOpen" @close="close" :close="false" :click-outside="true">
       <h1>{{ teamData.congratulation?.title }}</h1>
       <p>{{ teamData.congratulation?.text }}</p>
       <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="close">

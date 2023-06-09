@@ -12,7 +12,7 @@
     </RoundButton>
   </div>
 
-  <ModalView v-if="isModalOpen">
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
     <h1>Indice :</h1>
     <p>{{ clue }}</p>
     <RoundButton @click="closeModal" :color="COLOR.GREEN_MEDIUM_BEIGE">

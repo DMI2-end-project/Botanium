@@ -13,7 +13,7 @@ import GameHeader from "../components/game/GameHeader.vue";
 import TeamSignboard from "../components/common/TeamSignboard.vue";
 import Connexion from "../components/game/teacher/Connexion.vue";
 
-import gameData from "../assets/game-data/game-data-v2.json";
+import gameData from "../assets/game-data/game-data.json";
 
 interface GameData {
   [key: string]: any;

@@ -3,7 +3,7 @@ import {useRouter} from "vue-router";
 import {useMainStore} from "../stores/mainStore";
 import {useGameStore} from "../stores/gameStore";
 import {leading} from "../common/Lib";
-import gameData from "../assets/game-data/game-data-v2.json";
+import gameData from "../assets/game-data/game-data.json";
 import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {Record} from "pocketbase";

@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-  <ModalView v-if="onSignature">
+  <ModalView v-if="onSignature" :close="false" :click-outside="false">
     <div class="relative my-2 flex flex-col items-center">
       <h3 class="mt-8">Note le ou les prénoms des élèves qui ont vécu  ce souvenir au jardin :</h3>
       <input type="text" v-model="signature" class="mt-6 px-6 py-4 rounded-lg min-w-[400px]" placeholder="Ecris ici le ou les prénoms ">

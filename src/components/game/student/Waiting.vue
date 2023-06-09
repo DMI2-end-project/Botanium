@@ -8,7 +8,7 @@
         <div v-if="congratulation?.image" :class="congratulation?.isCircle ? 'bg-beige rounded-full p-8' : ''">
           <CardGame mode="vertical">
             <template v-slot:recto>
-              <img :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${congratulation.image}`"/>
+              <img :src="`/game/images/${mainStore.getFullGameId}/${congratulation.image}`"/>
             </template>
           </CardGame>
         </div>

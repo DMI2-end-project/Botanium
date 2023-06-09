@@ -109,7 +109,7 @@ export default defineComponent({
       const div = document.createElement("div");
       const p = document.createElement("p");
       const img = document.createElement("img") as HTMLImageElement;
-      img.src = window.location.origin + `/src/assets/game-data/icons/00104/clap-${this.feedbackMessage.number}.svg`;
+      img.src = `/game/icons/00104/clap-${this.feedbackMessage.number}.svg`;
       const node = document.createTextNode(this.feedbackMessage.text);
       p.appendChild(node);
       p.style.textAlign = 'center'

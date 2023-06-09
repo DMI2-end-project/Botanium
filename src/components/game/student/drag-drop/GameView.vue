@@ -111,14 +111,14 @@ const itemValidated = () => {
                     class="h-full">
             <template v-slot:recto>
               <img v-if="teamData" alt=""
-                   :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.image}`"
+                   :src="`/game/images/${mainStore.getFullGameId}/${teamData.image}`"
                    class="object-contain object-center"/>
             </template>
           </CardGame>
         </div>
         <!--div ref="draggable" class="w-full h-full bg-beige rounded-md">
           <img v-if="teamData"
-               :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.background}`"
+               :src="`/game/images/${mainStore.getFullGameId}/${teamData.background}`"
                class="object-contain object-center"/>
         </div-->
       </div>

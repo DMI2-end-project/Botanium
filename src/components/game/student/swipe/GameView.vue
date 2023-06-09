@@ -101,7 +101,7 @@ onMounted(() => {
        */
 
       for (let i = 0; i < 30; i++) {
-        let src = `/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.value.sprite}`
+        let src = `/game/images/${mainStore.getFullGameId}/${teamData.value.sprite}`
         let sprite = Sprite.from(src);
 
         app.stage.addChild(sprite);
@@ -134,7 +134,7 @@ onMounted(() => {
       <div class="h-full mx-auto flex justify-center items-center">
         <div class="relative aspect-[5/9] h-full">
           <img v-if="teamData" alt=""
-               :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.background}`"
+               :src="`/game/images/${mainStore.getFullGameId}/${teamData.background}`"
                class="w-full h-full object-contain"/>
           <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
         </div>

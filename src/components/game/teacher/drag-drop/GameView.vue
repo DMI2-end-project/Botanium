@@ -7,7 +7,7 @@
                   class="w-full aspect-[5/9]">
           <template v-slot:recto>
             <img v-if="answers[index].image" alt=""
-                 :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${answers[index].image}`"
+                 :src="`/game/images/${mainStore.getFullGameId}/${answers[index].image}`"
                  class="object-contain object-center"/>
           </template>
           <template v-slot:verso>
