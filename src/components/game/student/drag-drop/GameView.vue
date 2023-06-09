@@ -137,7 +137,7 @@ const itemValidated = () => {
       </div>
       <div class="w-full flex justify-center absolute -bottom-20 left-0 right-0 mx-auto -z-10">
         <Transition name="scaleButtonBg">
-          <RoundButton @click="itemValidated" :isBg="true" :color="COLOR.GREEN_MEDIUM_BEIGE"
+          <RoundButton @click="itemValidated" :color-bg="COLOR.BEIGE_MEDIUM" :color="COLOR.GREEN_MEDIUM_BEIGE"
                        v-show="currentIndex !== -1">
             <Check/>
           </RoundButton>

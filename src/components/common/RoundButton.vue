@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isBg" :class="(isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass" class="RoundButtonBg p-8 rounded-full">
+  <div v-if="colorBg" :class="(isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass" class="RoundButtonBg p-8 rounded-full">
     <button
       class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
       :class="`${containerClass}`">
@@ -39,7 +39,7 @@ export default defineComponent({
       default: SIZE.MD, // md:80px sm:48px xs:28px
       type: String
     },
-    isBg: {
+    colorBg: {
       default: null,
       type: String
     },
@@ -111,7 +111,7 @@ export default defineComponent({
         break
     }
 
-    switch (this.isBg) {
+    switch (this.colorBg) {
       case COLOR.BEIGE_MEDIUM:
         this.containerBgClass += ' bg-beige-medium';
         break;

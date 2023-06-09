@@ -11,9 +11,9 @@
       <div class="h-5/6 mt-auto w-fit flex items-center" :class="isPageLeft ? 'ml-auto' : 'mr-auto'">
         <div class="content relative bg-beige p-8 h-full drop-shadow-xl transition " :class="isPageLeft ? 'rounded-tl-lg' : 'scroll-left rounded-tr-lg'">
           <Transition name="scaleButtonBg">
-            <RoundButton @click="saveData" :is-bg="COLOR.BEIGE" :color="COLOR.GREEN_MEDIUM_BEIGE" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Check /></RoundButton>
+            <RoundButton @click="saveData" :color-bg="COLOR.BEIGE" :color="COLOR.GREEN_MEDIUM_BEIGE" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Check /></RoundButton>
           </Transition>
-          <RoundButton v-if="photoData.id === photoDataLast.id" @click="close" :is-bg="COLOR.BEIGE" :color="COLOR.RED" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Cross /></RoundButton>
+          <RoundButton v-if="photoData.id === photoDataLast.id" @click="close" :color-bg="COLOR.BEIGE" :color="COLOR.RED" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Cross /></RoundButton>
           <div class="overflow-y-scroll h-full z-10">
             <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
               <div v-for="photo in photos" :v-bind="photo" class="w-48 h-48 flex justify-center items-center">
