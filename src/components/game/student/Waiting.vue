@@ -11,15 +11,18 @@
               <img :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${congratulation.image}`"/>
             </template>
           </CardGame>
+        </div>
+
+        <div class="col-span-2 flex flex-col gap-4">
+          <h1 v-if="congratulation?.title">{{ congratulation.title }}</h1>
+          <p v-if="congratulation?.text" class="">{{ congratulation.text }}</p>
+        </div>
       </div>
-      <div class="col-span-2 flex flex-col gap-4">
-        <h1 v-if="congratulation?.title">{{ congratulation.title }}</h1>
-        <p v-if="congratulation?.text" class="">{{ congratulation.text }}</p>
-      </div>
+
+      <Info v-show="gameStore.currentStep === GAMESTEP.WAIT" text="Patiente un peu, tes camarades réfléchissent encore">
+        <Loading class="loading-animation w-8 aspect-square"/>
+      </Info>
     </div>
-    <Info v-show="gameStore.currentStep === GAMESTEP.WAIT" text="Patiente un peu, tes camarades réfléchissent encore">
-      <Loading class="loading-animation w-8 aspect-square"/>
-    </Info>
   </div>
 </template>
 

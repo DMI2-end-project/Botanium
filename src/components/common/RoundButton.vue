@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isBg" :class="isActive ? '' : ' opacity-50 pointer-events-none'" class="RoundButtonBg bg-beige-medium p-8 rounded-full">
+  <div v-if="isBg" :class="(isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass" class="RoundButtonBg p-8 rounded-full">
     <button
       class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
       :class="`${containerClass}`">
@@ -40,8 +40,8 @@ export default defineComponent({
       type: String
     },
     isBg: {
-      default: false,
-      type: Boolean
+      default: null,
+      type: String
     },
     isActive: {
       default: true,
@@ -50,6 +50,7 @@ export default defineComponent({
   },
   data() {
     return {
+      containerBgClass: '',
       containerClass: '',
       bgClass: '',
       textClass: '',
@@ -109,6 +110,18 @@ export default defineComponent({
       default:
         break
     }
+
+    switch (this.isBg) {
+      case COLOR.BEIGE_MEDIUM:
+        this.containerBgClass += ' bg-beige-medium';
+        break;
+      case COLOR.BEIGE:
+        this.containerBgClass += ' bg-beige';
+        break;
+      default:
+        break
+    }
+    console.log(this.containerBgClass)
   },
   methods: {}
 });

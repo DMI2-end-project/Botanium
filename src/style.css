@@ -220,6 +220,23 @@ button:focus-visible {
     transition: opacity 0.3s ease-out;
 }
 
+.translateLeft-enter-from,
+.translateLeft-leave-to {
+    transform: translateX(50%);
+    opacity: 0;
+}
+
+.translateRight-enter-from,
+.translateRight-leave-to {
+    transform: translateX(-50%);
+    opacity: 0;
+}
+
+.translateLeft-enter-active, .translateRight-enter-active, .translateLeft-leave-active, .translateRight-leave-active {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-out;
+}
+
+
 
 @media (prefers-color-scheme: light) {
     :root {

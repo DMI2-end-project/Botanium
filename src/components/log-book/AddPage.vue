@@ -1,19 +1,26 @@
 <template>
-  <div class="fixed z-30 w-screen h-screen bg-black/25 flex justify-center items-center">
-    <div class="bg-beige p-8">
-      <div>
-        <button v-for="template in numberTemplate" :v-bind="template" @click="templateId = template" class="m-5 border-0 p-0 overflow-hidden drop-shadow-lg outline outline-8 transition-all duration-400" :class="templateId === template ? 'outline-yellow' : 'outline-transparent'">
-          <img alt="" :src="'./templates/' + template + '.svg'">
+  <div class="fixed z-30 w-screen h-screen bg-green/75 flex flex-col justify-center items-center">
+    <div class="bg-beige-medium p-8 w-3/4 mt-20 rounded-lg">
+      <div class="flex justify-around gap-16 px-12">
+        <button v-for="template in numberTemplate" :v-bind="template" @click="templateId = template" class="my-4 flex-1 border-0 p-0 overflow-hidden drop-shadow-lg outline outline-8 transition-all duration-400" :class="templateId === template ? 'outline-yellow' : 'outline-transparent'">
+          <img alt="" :src="'./templates/' + template + '.svg'" class="w-full">
         </button>
       </div>
-      <button v-if="templateId !== -1" @click="validate" class="mx-auto block">Valider</button>
     </div>
+    <RoundButton :is-active="templateId !== -1" :color="COLOR.GREEN_MEDIUM_BEIGE" @click="validate" class="mx-auto mt-6 block"><Check /></RoundButton>
   </div>
 </template>
 
 <script lang="ts">
+import RoundButton from './../common/RoundButton.vue'
+import { COLOR } from "./../../common/Constants";
+import Check from "./../../assets/svg/ico-check.svg?component";
+
 export default {
   name: "AddPageComponent",
+  components: {
+    RoundButton, Check
+  },
   props: {
     page: {
       type: Number,
@@ -21,6 +28,11 @@ export default {
     }
   },
   emits: ['close'],
+  computed: {
+    COLOR() {
+      return COLOR
+    }
+  },
   data: () => {
     return {
       templateId: -1,

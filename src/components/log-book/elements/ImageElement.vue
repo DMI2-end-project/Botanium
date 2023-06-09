@@ -6,15 +6,19 @@
     </div>
     <p v-if="!photoData.id">image</p>
   </button>
-  <div v-if="onModify" class="fixed z-40 w-screen h-screen top-0 left-0 flex items-end">
-      <div class="relative h-5/6 mt-auto w-fit flex items-center" :class="isPageLeft ? 'ml-auto' : 'mr-auto'">
-        <button v-if="photoDataLast != photoData" @click="saveData" class="absolute z-10 h-24 w-24 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-12' : '-right-12'">Valider</button>
-        <div class="bg-beige p-8 h-full" :class="isPageLeft ? '' : 'scroll-left'">
-          <div class="overflow-y-scroll h-full">
+  <Transition :name="isPageLeft ? 'translateLeft' : 'translateRight'">
+    <div v-show="onModify" class="fixed z-40 w-screen h-screen top-0 left-0 flex items-end">
+      <div class="h-5/6 mt-auto w-fit flex items-center" :class="isPageLeft ? 'ml-auto' : 'mr-auto'">
+        <div class="content relative bg-beige p-8 h-full drop-shadow-xl transition " :class="isPageLeft ? 'rounded-tl-lg' : 'scroll-left rounded-tr-lg'">
+          <Transition name="scaleButtonBg">
+            <RoundButton @click="saveData" :is-bg="COLOR.BEIGE" :color="COLOR.GREEN_MEDIUM_BEIGE" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Check /></RoundButton>
+          </Transition>
+          <RoundButton v-if="photoData.id === photoDataLast.id" @click="close" :is-bg="COLOR.BEIGE" :color="COLOR.RED" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Cross /></RoundButton>
+          <div class="overflow-y-scroll h-full z-10">
             <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
               <div v-for="photo in photos" :v-bind="photo" class="w-48 h-48 flex justify-center items-center">
-                <button @click="changeImage(photo)" class="p-0 overflow-hidden">
-                  <img alt="" :src="photoUrl(photo)" class="object-contain w-full h-full pointer-events-none">
+                <button @click="changeImage(photo)" class="p-0 max-w-full max-h-full bg-transparent overflow-hidden drop-shadow-md" :class="photoData === photo ? 'outline outline-8 outline-yellow' : ''">
+                  <img alt="" :src="photoUrl(photo)" class="object-contain w-full h-full max-h-48 pointer-events-none">
                 </button>
               </div>
             </div>
@@ -22,16 +26,24 @@
         </div>
       </div>
     </div>
-
+  </Transition>
 </template>
 
 <script lang="ts">
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import type { PhotoData } from './../../../common/Interfaces'
 import { useMainStore } from '../../../stores/mainStore';
+import RoundButton from './../../common/RoundButton.vue';
+import { COLOR } from "./../../../common/Constants";
+import Check from "./../../../assets/svg/ico-check.svg?component";
+import Cross from "./../../../assets/svg/ico-cross.svg?component";
+
 
 export default {
   name: "ImageElementComponent",
+  components: {
+    RoundButton, Check, Cross
+  },
   props: {
     pageId: {
       type: String,
@@ -51,6 +63,11 @@ export default {
     }
   },
   emits: ['onModify'],
+  computed: {
+    COLOR() {
+      return COLOR
+    }
+  },
   data: () => {
     return {
       mainStore: useMainStore(),
@@ -83,6 +100,10 @@ export default {
       this.photos = await DatabaseManagerInstance.fetchPhotos('page="" && classroom="' + this.mainStore.roomId + '"')
     },
     changeImage(photo: PhotoData) {
+      if (this.photoData === photo) {
+        this.photoData = this.photoDataLast
+        return
+      }
       this.photoData = photo
       this.updateRotate()
       this.updateColor()
@@ -105,6 +126,9 @@ export default {
       this.photoData = await DatabaseManagerInstance.updatePhoto(this.photoData)
       this.photoDataLast = this.photoData
 
+      this.onModify = false
+    },
+    async close() {
       this.onModify = false
     }
   }
