@@ -23,7 +23,7 @@
                  :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">
       <Check/>
     </RoundButton>
-    <ModalView v-if="isModalOpen && teamData">
+    <ModalView v-if="isModalOpen">
       <h1>{{ congratTitle }}</h1>
       <p>{{ congratText }}</p>
       <RoundButton :color="COLOR.YELLOW" @click="closeModal">

@@ -6,7 +6,7 @@
           <SvgIcon :name="congratulation.icon"/>
         </RoundItem>
         <div v-if="congratulation?.image" :class="congratulation?.isCircle ? 'bg-beige rounded-full p-8' : ''">
-          <CardGame>
+          <CardGame mode="vertical">
             <template v-slot:recto>
               <img :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${congratulation.image}`"/>
             </template>

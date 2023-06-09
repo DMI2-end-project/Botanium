@@ -60,13 +60,13 @@ const props = defineProps({
         <slot name="verso" v-if="props.cardState === 'hide'" class=""/>
         <slot name="recto" v-if="props.cardState === 'show'" class=""/>
         <div v-show="props.cardState === 'validated'">
-          <Deco :class="{'w-[45%] ':mode === 'vertical', 'h-[45%] ': mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square top-1 left-1 "/>
-          <Deco :class="{'w-[45%] ':mode === 'vertical', 'h-[45%] ': mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square top-1 right-1 -scale-x-100"/>
-          <Deco :class="{'w-[45%] ':mode === 'vertical', 'h-[45%] ': mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square bottom-1 left-1 -scale-y-100"/>
-          <Deco :class="{'w-[45%] ':mode === 'vertical', 'h-[45%] ': mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square bottom-1 right-1 -scale-100"/>
           <Check class="text-green aspect-square w-16"/>
         </div>
