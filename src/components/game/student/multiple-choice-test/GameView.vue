@@ -22,10 +22,10 @@
                  :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">
       <Check/>
     </RoundButton>
-    <ModalView v-if="isModalOpen">
-      <h1>{{ teamData.congratulation?.title }}</h1>
-      <p>{{ teamData.congratulation?.text }}</p>
-      <RoundButton :color="COLOR.YELLOW" @click="close">
+    <ModalView v-if="isModalOpen && teamData">
+      <h1>{{ congratTitle }}</h1>
+      <p>{{ congratText }}</p>
+      <RoundButton :color="COLOR.YELLOW" @click="closeModal">
         <Replay/>
       </RoundButton>
     </ModalView>
@@ -75,6 +75,16 @@ export default defineComponent({
       if (this.gameStore.teamId !== undefined) {
         return this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers;
       }
+    },
+    congratTitle() {
+      if (this.gameStore.teamId !== undefined) {
+        return this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].congratulation?.title;
+      }
+    },
+    congratText() {
+      if (this.gameStore.teamId !== undefined) {
+        return this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].congratulation?.text;
+      }
     }
   },
   mounted() {
@@ -109,5 +119,3 @@ export default defineComponent({
   }
 });
 </script>
-
-

@@ -94,7 +94,7 @@ export default defineComponent({
     },
     clue() {
       let index = this.gameStore.teamId ? this.gameStore.teamId : 0
-      if (this.gameStore.data && this.gameStore.currentSequence && this.gameStore.currentSequence.teams) {
+      if (this.gameStore.data && this.gameStore.currentSequence && this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams) {
         return this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams[index].clue;
 
       }
