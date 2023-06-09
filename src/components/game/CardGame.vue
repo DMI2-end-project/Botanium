@@ -34,19 +34,16 @@ const props = defineProps({
 </script>
 
 <template>
-  <!-- BORDER ONLY FOR SELECTED - NO BACKGROUND -->
-  <!-- TODO : DO OUTLINE -->
-  <div class=" w-full h-auto rounded-lg border shrink-0 text-center p-2"
+  <!-- OUTLINE ONLY FOR SELECTED - NO BACKGROUND -->
+  <div class=" w-full h-auto rounded-lg outline outline-offset-8 shrink-0 text-center"
        :class="{
-         'border-green-light' : props.answerState === 'selected',
-         'border-transparent' : props.answerState !== 'selected'
+         'outline-green-light' : props.answerState === 'selected',
+         'outline-transparent' : props.answerState !== 'selected'
        }">
     <!-- BORDER ONLY FOR VALID/ERROR -->
     <div class="w-full h-full bg-beige border-transparent rounded-lg border-[6px] p-1.5"
          :class="{
-           'bg-beige !border-blue': props.answerState === 'valid',
-           'bg-beige !border-red': props.answerState === 'error',
-           'bg-beige border-transparent': props.answerState === 'none',
+           'bg-beige border-transparent': props.answerState !== 'selected',
            'bg-green-light border-transparent text-green': props.cardState === 'validated' || props.answerState === 'selected',
          }">
       <!-- BORDER -->
@@ -60,13 +57,13 @@ const props = defineProps({
         <slot name="verso" v-if="props.cardState === 'hide'" class=""/>
         <slot name="recto" v-if="props.cardState === 'show'" class=""/>
         <div v-show="props.cardState === 'validated'">
-          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ': props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square top-1 left-1 "/>
-          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ': props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square top-1 right-1 -scale-x-100"/>
-          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ': props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square bottom-1 left-1 -scale-y-100"/>
-          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ': props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square bottom-1 right-1 -scale-100"/>
           <Check class="text-green aspect-square w-16"/>
         </div>

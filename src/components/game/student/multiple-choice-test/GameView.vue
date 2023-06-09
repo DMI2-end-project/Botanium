@@ -1,14 +1,17 @@
 <template>
-  <div class="relative grid grid-cols-2 auto-rows-fr gap-4 px-8 my-auto">
-    <CardGame v-for="(answer, index) in answers" :v-bind="index" @click.native="() => itemSelected(index)"
-              mode="horizontal"
-              card-state="show" :answer-state="answer.status"
-              class="aspect-[9/4]">
-      <template v-slot:recto>
-        <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
-        <span class="text-md pointer-events-none">{{ answer.text }}</span>
-      </template>
-    </CardGame>
+  <div class="relative grid grid-cols-2 auto-rows-fr gap-8 px-8 my-auto">
+    <CardSlot v-for="(answer, index) in answers" :v-bind="index"  :answer-state="answer.status">
+      <CardGame @click.native="() => itemSelected(index)"
+                mode="horizontal"
+                card-state="show" :answer-state="answer.status"
+                class="aspect-[9/4]">
+        <template v-slot:recto>
+          <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
+          <span class="text-md pointer-events-none">{{ answer.text }}</span>
+        </template>
+      </CardGame>
+    </CardSlot>
+
     <!--div v-for="(answer, index) in answers" :v-bind="index" class="w-full border rounded-md p-3.5"
          :class="answer.isClicked ? 'border-green-light' : 'border-transparent'">
       <button @click="itemSelected" :data-id="index"
@@ -46,10 +49,12 @@ import RoundButton from "../../../common/RoundButton.vue";
 
 import Check from "../../../../assets/svg/ico-check.svg?component";
 import Replay from "../../../../assets/svg/ico-replay.svg?component";
+import CardSlot from "../../CardSlot.vue";
 
 export default defineComponent({
   name: 'StudentGameView',
   components: {
+    CardSlot,
     CardGame,
     Check,
     ModalView,

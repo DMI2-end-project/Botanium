@@ -11,6 +11,7 @@ import RoundButton from "../../../common/RoundButton.vue";
 import CardGame from "../../CardGame.vue";
 
 import Check from "./../../../../assets/svg/ico-check.svg?component";
+import CardSlot from "../../CardSlot.vue";
 
 gsap.registerPlugin(Draggable, Flip);
 
@@ -30,6 +31,8 @@ onMounted(async () => {
   await nextTick();
   //const droppables = document.querySelectorAll<HTMLDivElement>('.droppable');
   const container = document.querySelector('#container');
+  console.log('draggable', draggable.value);
+  console.log('container', container);
 
   if (gameStore.teamId !== undefined) {
     teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
@@ -102,11 +105,11 @@ const itemValidated = () => {
 <template>
   <div
       class="w-full h-full flex-1 grid grid-cols-12 items-center gap-5 text-center">
-    <div
-        class="col-span-3 flex justify-center items-center border border-dashed border-beige rounded-md p-2">
-      <div id="container" class="relative w-full h-full aspect-[5/9]">
+    <div id="container" class="col-span-3 relative w-full h-full">
+      <CardSlot v-if="teamData" :answer-state="currentIndex === -1 ? 'none' : teamData.answers[currentIndex].status"
+                outline class="aspect-[5/9]">
         <div ref="draggable" class="relative w-full h-full">
-          <CardGame v-if="teamData" mode="vertical"
+          <CardGame mode="vertical"
                     :answer-state="currentIndex === -1 ? 'none' : teamData.answers[currentIndex].status"
                     class="h-full">
             <template v-slot:recto>
@@ -121,7 +124,7 @@ const itemValidated = () => {
                :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.background}`"
                class="object-contain object-center"/>
         </div-->
-      </div>
+      </CardSlot>
     </div>
     <div class="relative -z-10 col-span-9 grid grid-cols-3 gap-9 rounded-md px-10 pt-9 pb-14 bg-beige-medium">
       <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
