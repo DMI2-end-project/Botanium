@@ -48,7 +48,7 @@ export default defineComponent({
     window.addEventListener("focus", this.play);
   },
   methods: {
-    hasMicro() {
+    hasMicro() { // TODO var de l'audiomabager ?
       const team = this.gameStore.teams.find(team => team._name === this.gameStore.teamName)
       if (team) {
         return team?.hasMicro
@@ -79,7 +79,7 @@ export default defineComponent({
       const time = (Date.now() + this.deltaTimeWithServer) % this.rhythmFreq
       this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
 
-      if (this.lastClap + (this.rhythmFreq / 2) < Date.now() + this.hasMicro()) {
+      if (this.lastClap + (this.rhythmFreq / 2) < Date.now()) {
 
         this.feedbackMessage = {number: -1, text: ''}
         if (AudioManagerInstance.isClapping()) {

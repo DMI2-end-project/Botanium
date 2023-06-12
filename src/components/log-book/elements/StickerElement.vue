@@ -2,7 +2,7 @@
   <div>
     <button class="sticker-element w-full h-min bg-beige-medium/50 text-beige-dark rounded-full relative p-0 flex justify-center items-center outline outline-8 transition-all duration-400" :class="(onModify ? 'outline-yellow' : 'outline-transparent')" @click="onModify = true">
       <img v-if="stickerData.idSticker >= 0" alt="" :src="getStickerUrl(stickerData.idSticker)" class="h-full w-full rounded-full object-contain absolute shadow-md">
-      <p v-if="!(stickerData.idSticker >= 0)" class="absolute">sticker</p>
+      <p v-if="!(stickerData.idSticker >= 0)" class="absolute"><Stickers class="w-2/3 mx-auto" :class="onModify ? 'text-yellow' : ''" /></p>
     </button>
     <Transition :name="isPageLeft ? 'translateLeft' : 'translateRight'">
       <div v-if="onModify" class="fixed z-40 w-screen h-screen top-0 left-0 flex items-end">
@@ -40,11 +40,12 @@ import RoundButton from './../../common/RoundButton.vue';
 import { COLOR } from "./../../../common/Constants";
 import Check from "./../../../assets/svg/ico-check.svg?component";
 import Cross from "./../../../assets/svg/ico-cross.svg?component";
+import Stickers from "./../../../assets/svg/ico-stickers.svg?component";
 
 export default {
   name: "StickerElementComponent",
   components: {
-    RoundButton, Check, Cross
+    RoundButton, Check, Cross, Stickers
   },
   props: {
     pageId: {
@@ -94,7 +95,7 @@ export default {
     changeSticker(index: number) {
       console.log(this.stickerData.idSticker, index, this.stickerData.idSticker === index)
       if (this.stickerData.idSticker === index) {
-        this.stickerData = this.stickerDataLast
+        this.stickerData = {idSticker: -1} as StickerData
         return
       }
       this.stickerData.idSticker = index;

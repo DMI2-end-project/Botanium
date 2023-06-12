@@ -22,6 +22,9 @@ export type StoreState = {
 
   gameData: GameData,
   gameId: number,
+
+  isClosable: boolean,
+  logBookCloseElements: boolean,
 };
 
 export const useMainStore = defineStore('main', {
@@ -37,6 +40,8 @@ export const useMainStore = defineStore('main', {
     chapterId: 0,
     gameData: GameDataJSON,
     gameId: 0,
+    isClosable: false,
+    logBookCloseElements: false
   }),
   getters: {
     role(): string {
@@ -63,6 +68,8 @@ export const useMainStore = defineStore('main', {
       this.roleId = undefined;
       this.chapterId = 0;
       this.gameId = 0;
+      this.isClosable = false;
+      this.logBookCloseElements = false;
     }
   }
 })

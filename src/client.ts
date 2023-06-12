@@ -40,9 +40,6 @@ export const initClient = (pinia: Pinia) => {
     mainStore.connected = false;
   });
 
-  socket.on("join", () => {
-  });
-
   socket.on(EVENT.ROOM_STATUS, (arg) => {
     console.log('Client EVENT.ROOM_STATUS', arg);
 

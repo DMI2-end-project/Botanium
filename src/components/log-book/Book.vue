@@ -86,14 +86,13 @@ export default defineComponent({
   },
   watch: {
     'mainStore.roomId': {
-      async handler() {
-        if (!this.mainStore.roomId) return
-        this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
-        this.lastPage = this.page = this.pagesContent.length + 1
+       handler() {
+        this.getPages()
       },
     }
   },
   async mounted() {
+    await this.getPages()
     this.openVideo = this.$refs.open as HTMLVideoElement;
     this.nextVideo = this.$refs.next as HTMLVideoElement;
     this.previousVideo = this.$refs.previous as HTMLVideoElement;
@@ -103,6 +102,11 @@ export default defineComponent({
     this.openVideo?.pause();
   },
   methods: {
+    async getPages() {
+      if (!this.mainStore.roomId) return
+      this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
+      this.lastPage = this.page = this.pagesContent.length + 1
+    },
     openTheBook () {
       this.openVideo?.play();
       this.buttonOpen?.classList.add("disable");
@@ -139,7 +143,7 @@ export default defineComponent({
     },
     async onCloseAddPage(n:number) {
       this.onPageAdd = false
-      if (!this.mainStore.roomId) return
+      if (!this.mainStore.roomId || n < 0) return
       await DatabaseManagerInstance.createPage(this.lastPage, n, this.mainStore.roomId);
       this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
       this.lastPage = this.pagesContent.length + 1

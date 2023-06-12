@@ -85,7 +85,7 @@ class AudioManager {
     });
   }
 
-  public isClapping(): Boolean {
+  public isClapping(): Boolean { // TODO remettre dans la gameview
     let clapping = false;
     if (!this.frequencyData) {
       return clapping
@@ -107,7 +107,7 @@ class AudioManager {
 
     const currentFreq: number = this.frequencyData[maxIndex];
 
-    if (currentFreq > 100 &&currentFreq - this.lastFreq > 40 * (1 / this.sensibilityVolume)) {
+    if (currentFreq > 100 && currentFreq - this.lastFreq > 40 * (1 / this.sensibilityVolume)) {
       clapping = true
     }
 
