@@ -132,7 +132,6 @@ export default defineComponent({
       default:
         break
     }
-    console.log(this.containerBgClass)
   },
   methods: {}
 });

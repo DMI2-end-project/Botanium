@@ -93,7 +93,6 @@ export default {
       return './stickers/' + idSticker + '.svg'
     },
     changeSticker(index: number) {
-      console.log(this.stickerData.idSticker, index, this.stickerData.idSticker === index)
       if (this.stickerData.idSticker === index) {
         this.stickerData = {idSticker: -1} as StickerData
         return

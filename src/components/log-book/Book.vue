@@ -39,6 +39,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import {useMainStore} from "./../../stores/mainStore";
+import {useLogBookStore} from "./../../stores/logBookStore";
 import PageContent from './PageContent.vue';
 import AddPage from './AddPage.vue';
 import {DatabaseManagerInstance} from "./../../common/DatabaseManager";
@@ -59,6 +60,7 @@ export default defineComponent({
   data: () => {
     return {
       mainStore: useMainStore(),
+      logBookStore: useLogBookStore(),
       lastPage: 1 as number,
       page: 1 as number,
       isBookOpen: false as Boolean,
@@ -85,11 +87,12 @@ export default defineComponent({
     },
   },
   watch: {
-    'mainStore.roomId': {
-       handler() {
-        this.getPages()
-      },
-    }
+    // 'logBookStore.pages': {
+    //    handler() {
+    //     this.getPages()
+    //   },
+    //   deep: true
+    // }
   },
   async mounted() {
     await this.getPages()
@@ -103,8 +106,8 @@ export default defineComponent({
   },
   methods: {
     async getPages() {
-      if (!this.mainStore.roomId) return
-      this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
+      if (this.logBookStore.pages.length === 0 || this.pagesContent.length > 0) return
+      this.pagesContent = this.logBookStore.pages;
       this.lastPage = this.page = this.pagesContent.length + 1
     },
     openTheBook () {
@@ -144,9 +147,10 @@ export default defineComponent({
     async onCloseAddPage(n:number) {
       this.onPageAdd = false
       if (!this.mainStore.roomId || n < 0) return
-      await DatabaseManagerInstance.createPage(this.lastPage, n, this.mainStore.roomId);
-      this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
-      this.lastPage = this.pagesContent.length + 1
+      await this.logBookStore.createPage(this.lastPage, n, this.mainStore.roomId);
+      this.pagesContent = this.logBookStore.pages;
+      this.lastPage = this.pagesContent.length + 1;
+      console.log(this.pagesContent)
     }
   },
 });

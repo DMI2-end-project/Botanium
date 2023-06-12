@@ -48,6 +48,7 @@
 <script lang="ts">
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import {useMainStore} from "./../../../stores/mainStore";
+import {useLogBookStore} from "./../../../stores/logBookStore";
 import Draw from "./../Draw.vue"
 import type { TextData, DrawData } from './../../../common/Interfaces'
 import { base64ToFile } from './../../../common/Lib';
@@ -88,6 +89,7 @@ export default {
   data: () => {
     return {
       mainStore: useMainStore(),
+      logBookStore: useLogBookStore(),
       onModify: false as Boolean,
       onWrite: false as Boolean,
       onDraw: false as Boolean,
@@ -99,7 +101,7 @@ export default {
     }
   },
   computed: {
-    drawUrl():string {
+    drawUrl(): string {
       return DatabaseManagerInstance.getImageUrl(this.drawData)
     },
     COLOR() {
@@ -113,10 +115,10 @@ export default {
     signature(value: string) {
       this.textData.signature = this.drawData.signature = value;
     },
-    'mainStore.logBookCloseElements': {
+    'logBookStore.closeElements': {
       handler() {
         this.onModify = false
-        this.mainStore.logBookCloseElements = false
+        this.logBookStore.closeElements = false
       },
       deep: true
     }
@@ -124,7 +126,7 @@ export default {
   async mounted() {
     this.ratio = (this.$refs.container as HTMLElement).clientWidth / (this.$refs.container as HTMLElement).clientHeight;
     this.textData = await DatabaseManagerInstance.fetchText(this.pageId, this.slotNumber);
-    this.drawData = await DatabaseManagerInstance.fetchDraw(this.pageId, this.slotNumber);
+    this.drawData = this.logBookStore.draw(this.pageId, this.slotNumber, this.mainStore.roomId);
     this.signature = (this.textData.id ? this.textData.signature : this.drawData.signature);
     this.textData.slot = this.drawData.slot = this.slotNumber;
     this.textData.page = this.drawData.page = this.pageId;
@@ -132,7 +134,7 @@ export default {
   methods: {
     modify() {
       this.onModify = true
-      this.mainStore.isClosable = true
+      this.logBookStore.isClosable = true
     },
     async saveData() {
       if (this.onWrite) {
@@ -142,14 +144,14 @@ export default {
           this.textData = await DatabaseManagerInstance.updateText(this.textData);
         }
         if (this.drawData.id != '') {
-          await DatabaseManagerInstance.deleteDraw(this.drawData)
+          await this.logBookStore.deleteDraw(this.drawData)
           this.drawData.id = ''
         }
       } else if (this.onDraw) {
         if (this.drawData.id === '') {
-          this.drawData = await DatabaseManagerInstance.createDraw(this.drawData);
+          this.drawData = await this.logBookStore.createDraw(this.drawData);
         } else {
-          this.drawData = await DatabaseManagerInstance.updateDraw(this.drawData);
+          this.drawData = await this.logBookStore.updateDraw(this.drawData);
         }
         if (this.textData.id !== '') {
           await DatabaseManagerInstance.deleteText(this.textData)
@@ -161,7 +163,7 @@ export default {
       this.onDraw = false;
       this.onModify = false;
       this.onSignature = false;
-      this.mainStore.isClosable = false
+      this.logBookStore.isClosable = false
       this.mainStore.isModalOpen = false;
     },
     saveDraw(data:string) {

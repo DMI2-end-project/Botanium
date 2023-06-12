@@ -33,6 +33,7 @@
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import type { PhotoData } from './../../../common/Interfaces'
 import { useMainStore } from '../../../stores/mainStore';
+import { useLogBookStore } from '../../../stores/logBookStore';
 import RoundButton from './../../common/RoundButton.vue';
 import { COLOR } from "./../../../common/Constants";
 import Check from "./../../../assets/svg/ico-check.svg?component";
@@ -72,6 +73,7 @@ export default {
   data: () => {
     return {
       mainStore: useMainStore(),
+      logBookStore: useLogBookStore(),
       photoData: {} as PhotoData,
       photoDataLast: {} as PhotoData,
       onModify: false as Boolean,
@@ -102,7 +104,7 @@ export default {
       if (this.photoDataLast.id) {
         this.photos.push(this.photoDataLast)
       }
-      const photosFetch = await DatabaseManagerInstance.fetchPhotos('page="" && classroom="' + this.mainStore.roomId + '"')
+      const photosFetch = this.logBookStore.photosNotUsed
       this.photos.push(...photosFetch)
     },
     changeImage(photo: PhotoData) {
@@ -124,13 +126,13 @@ export default {
       if (this.photoDataLast.id !== '') {
         this.photoDataLast.page = '';
         this.photoDataLast.slot = 0;
-        await DatabaseManagerInstance.updatePhoto(this.photoDataLast)
+        await this.logBookStore.updatePhoto(this.photoDataLast)
       }
 
       if (this.photoData.id !== '') {
         this.photoData.page = this.pageId;
         this.photoData.slot = this.slotNumber;
-        this.photoData = await DatabaseManagerInstance.updatePhoto(this.photoData)
+        this.photoData = await this.logBookStore.updatePhoto(this.photoData)
       }
 
       this.photoDataLast = this.photoData

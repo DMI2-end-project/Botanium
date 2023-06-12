@@ -15,6 +15,7 @@ import {
 } from './Lib';
 import {CHAPTER_STATUS, ROLE} from "./Constants";
 import {connectClient} from "../client";
+import { getDrawData } from './Lib';
 
 class DatabaseManager {
   private static _instance: DatabaseManager;
@@ -91,12 +92,14 @@ class DatabaseManager {
     return pages
   }
 
-  async createPage(pageNumber: number, template: number, classroomId: string) {
-    await this._pocketbase.collection('page').create({
+  async createPage(pageNumber: number, template: number, classroomId: string): Promise<PageData> {
+    const record = await this._pocketbase.collection('page').create({
       "pageNumber": pageNumber,
       "template": template,
       "classroom": classroomId,
     });
+
+    return getPageData(record)
   }
 
   // Text
@@ -135,6 +138,18 @@ class DatabaseManager {
   }
 
   // Draw
+  async fetchDraws(roomId: string): Promise<DrawData[]> {
+    let draws: DrawData[] = [];
+    console.log('roomId', roomId)
+    const drawsRecord: Array<Record> = await this._pocketbase.collection('drawing').getFullList(200, { filter: `classroom="${roomId}"` })
+
+    drawsRecord.forEach((r: Record) => {
+      draws.push(getDrawData(r))
+    });
+
+    return draws;
+  }
+
   async fetchDraw(pageId: string, slot: number): Promise<DrawData> {
     let drawData: DrawData = getDefaultDrawData(pageId, slot);
     await this._pocketbase.collection('drawing').getFirstListItem('page="' + pageId + '" && slot=' + slot + '').then((result: Record) => {
@@ -218,7 +233,7 @@ class DatabaseManager {
   }
 
   getImageUrl(data: DrawData | PhotoData): string {
-    return data.id !== '' ? this.pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file : ''
+    return (data.id !== '' && typeof data.file === "string") ? this.pocketBaseUrl + "api/files/" + data.collectionId + '/' + data.id + '/' + data.file : ''
   }
 }
 

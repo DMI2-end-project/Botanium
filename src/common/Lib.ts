@@ -56,18 +56,20 @@ export const getDrawData = (record: Record): DrawData => {
     file: record.file,
     slot: record.slot,
     page: record.page,
-    signature: record.signature
+    signature: record.signature,
+    classroom: record.classroom
   };
 }
 
-export const getDefaultDrawData = (pageId: string = '', slot:number = -1): DrawData => {
+export const getDefaultDrawData = (pageId: string = '', slot: number = -1, classroom: string = ''): DrawData => {
   return {
     id: '',
     collectionId: '',
     file: {} as File,
     slot: slot,
     page: pageId,
-    signature: ''
+    signature: '',
+    classroom: classroom
   };
 }
 
@@ -124,5 +126,6 @@ export const getDrawFormData = (data: DrawData): FormData => {
   formData.append('slot', data.slot.toString());
   formData.append('page', data.page);
   formData.append('signature', data.signature);
+  formData.append('classroom', data.classroom);
   return formData
 }

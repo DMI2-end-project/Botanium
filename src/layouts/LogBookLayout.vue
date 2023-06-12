@@ -1,7 +1,7 @@
 <template>
   <header class="flex items-center justify-between fixed z-50 w-full p-4">
-    <RoundButton v-if="!mainStore.isClosable" :color="COLOR.YELLOW" @click="router.push({name: 'Dashboard'})"><Home /></RoundButton>
-    <RoundButton v-if="mainStore.isClosable" :color="COLOR.RED" @click="closeElements"><Cross /></RoundButton>
+    <RoundButton v-if="!logBookStore.isClosable" :color="COLOR.YELLOW" @click="router.push({name: 'Dashboard'})"><Home /></RoundButton>
+    <RoundButton v-if="logBookStore.isClosable" :color="COLOR.RED" @click="closeElements"><Cross /></RoundButton>
     <Info text="Ajoute une page au carnet de bord pour commencer !"><Speaker /></Info>
     <button @click="disconnect" class="block">Déconnexion</button>
   </header>
@@ -19,6 +19,7 @@ import {defineComponent} from 'vue'
 import {useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
+import {useLogBookStore} from "../stores/logBookStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import { useGameStore } from "../stores/gameStore";
 import RoundButton from "../components/common/RoundButton.vue";
@@ -40,6 +41,7 @@ export default defineComponent({
   data() {
     return {
       mainStore: useMainStore(),
+      logBookStore: useLogBookStore(),
       gameStore: useGameStore(),
       router: useRouter(),
       socket: getSocket(),
@@ -65,8 +67,8 @@ export default defineComponent({
       });
     },
     closeElements() {
-      this.mainStore.logBookCloseElements = true
-      this.mainStore.isClosable = false
+      this.logBookStore.closeElements = true
+      this.logBookStore.isClosable = false
     }
   }
 });
