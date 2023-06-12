@@ -9,7 +9,7 @@ class AudioManager {
   private analyser: AnalyserNode | null = null;
   private frequencyData: Uint8Array | null = null;
   private lastFreq: number = 0; // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
-  private sensibilityVolume: number = 1; // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
+  private sensibilityVolume: number = 0.8; // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
   private socket = getSocket();
   private mainStore = useMainStore();
 

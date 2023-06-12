@@ -83,7 +83,7 @@ export default defineComponent({
         this.feedbackMessage = {number: -1, text: ''}
       }
 
-      if ((this.lastClap + (this.rhythmFreq / 8)) < (Date.now() + this.deltaTimeWithServer)) {
+      if ((this.lastClap + (this.rhythmFreq / 4)) < (Date.now() + this.deltaTimeWithServer)) {
         if (AudioManagerInstance.isClapping()) {
           this.onClap()
         }
