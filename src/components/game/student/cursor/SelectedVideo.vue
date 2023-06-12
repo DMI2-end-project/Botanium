@@ -82,7 +82,7 @@ export default defineComponent({
 
       // const animation = PIXI.AnimatedSprite.fromFrames(animations["animation_" + this.element]);
 
-      const animation = this.gameStore.animations00103[this.element].animation
+      const animation = this.gameStore.animations00103[this.element as string].animation
       console.log(this.gameStore.animations00103, this.element)
 
       animation.animationSpeed = 0;

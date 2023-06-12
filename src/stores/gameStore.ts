@@ -2,6 +2,10 @@ import {defineStore} from "pinia";
 import { GAME_STEP } from "../common/Constants";
 import * as PIXI from "pixi.js";
 
+interface Animations {
+  [key: string]: any;
+}
+
 export type StoreState = {
   data: any | undefined,
   teamId: number | undefined,
@@ -9,7 +13,7 @@ export type StoreState = {
   teams: any[],
   currentStep: GAME_STEP,
   currentSequence: number
-  animations00103: Object,
+  animations00103: Animations,
 };
 
 export const useGameStore = defineStore('game', {
