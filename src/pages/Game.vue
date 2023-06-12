@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, onMounted, ref} from "vue";
+import {onBeforeMount, onMounted, onUnmounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
@@ -63,6 +63,10 @@ onBeforeMount(async () => {
   });
 });
 
+onUnmounted(() => {
+  AudioManagerInstance.pauseMicrophone()
+})
+
 let isModalOpen: Ref<Boolean> = ref(false);
 
 const getMicro = async () => {
@@ -78,6 +82,8 @@ const getMicro = async () => {
     mainStore.isModalOpen = true
   }
 }
+
+gameStore.preloadAnimations()
 
 const readyWithoutMicro = () => {
   isModalOpen.value = false

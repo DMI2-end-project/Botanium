@@ -100,7 +100,7 @@ export default defineComponent({
     </main>
     <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">
       <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName"/>
-      <Connexion v-if="mainStore.role === ROLE.TEACHER"/>
+      <Connexion v-if="mainStore.role === ROLE.TEACHER" />
     </footer>
   </div>
 </template>
