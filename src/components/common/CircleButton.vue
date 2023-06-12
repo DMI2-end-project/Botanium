@@ -1,6 +1,6 @@
 <template>
   <button class="font-bold flex items-center rounded-full p-2 group transition" :class="containerClass">
-      <div class="rounded-full border aspect-square p-2 flex flex-col items-center justify-center transition" :class="circleClass"><slot /></div>
+      <div class="rounded-full border aspect-square flex flex-col items-center justify-center transition" :class="circleClass"><slot /></div>
       <p class="px-3" :class="textClass">{{ text }}</p>
     </button>
 </template>
@@ -68,11 +68,11 @@ export default defineComponent({
     switch (this.size) {
       case SIZE.SM:
         this.textClass += ' text-sm';
-        this.circleClass += ' w-10 h-10';
+        this.circleClass += ' w-10 h-10 p-2';
         break;
       case SIZE.MD:
         this.textClass += ' text-lg';
-        this.circleClass += ' w-16 h-16';
+        this.circleClass += ' w-16 h-16 p-4';
         break;
       default:
         break

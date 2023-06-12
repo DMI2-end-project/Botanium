@@ -24,7 +24,7 @@ class AudioManager {
       console.log("AUDIO_EVENT.CLAP_SCORE", arg);
       let room = this.rooms.find((room) => room.id === arg.roomId);
       if (room) {
-        room.clapGameScore += arg.rhythm * 5 + Math.max(arg.rhythm * 5 / room.microOnTeams.length, 0);
+        room.clapGameScore += arg.rhythm * 5 + Math.max(arg.rhythm * 2.5 / room.microOnTeams.length, 0);
         room.clapGameScore = Math.min(Math.max(room.clapGameScore, 0), 100);
         io.in(arg.roomId).emit(AUDIO_EVENT.CLAP_SCORE, room.clapGameScore);
       }
