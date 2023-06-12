@@ -1,6 +1,7 @@
 {
   "00101": {
     "color": "#85A754",
+    "colorButton": "pink",
     "introduction": {
       "title": "Les bienfaits des carottes",
       "text": "Retrouvez tous ensemble les bienfaits de la carotte et communiquez les à Capucine !"
@@ -185,6 +186,7 @@
   },
   "00102": {
     "color": "#9B85FF",
+    "colorButton": "pink",
     "introduction": {
       "title": "Les couleurs des carottes",
       "text": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées."
@@ -400,6 +402,7 @@
   },
   "00103": {
     "color": "#EDBD56",
+    "colorButton": "greenMediumBeige",
     "introduction": {
       "title": "La terre parfaite",
       "text": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol"
@@ -469,6 +472,7 @@
   },
   "00104": {
     "color": "#E8ADA4",
+    "colorButton": "greenMediumBeige",
     "introduction": {
       "title": "Déterrer la carotte",
       "text": "Capucine doit déterrer la précieuse carotte et guérir Pinpin. Frappe dans tes mains en rythme avec tes camarades pour l’aider."
