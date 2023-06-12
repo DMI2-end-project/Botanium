@@ -83,7 +83,7 @@ const getMicro = async () => {
   }
 }
 
-gameStore.preloadAnimations()
+// gameStore.preloadAnimations()
 
 const readyWithoutMicro = () => {
   isModalOpen.value = false

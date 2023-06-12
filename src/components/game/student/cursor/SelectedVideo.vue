@@ -77,13 +77,13 @@ export default defineComponent({
       (app.view as HTMLCanvasElement).style.margin = 'auto';
       (this.$refs.canvasContainer as HTMLElement).appendChild(app.view as HTMLCanvasElement);
 
-      // const textureData = await PIXI.Assets.load('/game/animations/00103/animation_' + this.element + '.json');
-      // const animations = textureData.data.animations;
+      const textureData = await PIXI.Assets.load('/game/animations/00103/animation_' + this.element + '.json');
+      const animations = textureData.data.animations;
 
-      // const animation = PIXI.AnimatedSprite.fromFrames(animations["animation_" + this.element]);
+      const animation = PIXI.AnimatedSprite.fromFrames(animations["animation_" + this.element]);
 
-      const animation = this.gameStore.animations00103[this.element as string].animation
-      console.log(this.gameStore.animations00103, this.element)
+      // const animation = this.gameStore.animations00103[this.element as string].animation
+      // console.log(this.gameStore.animations00103, this.element)
 
       animation.animationSpeed = 0;
       animation.width = app.view.width;

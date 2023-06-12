@@ -13,7 +13,7 @@ export type StoreState = {
   teams: any[],
   currentStep: GAME_STEP,
   currentSequence: number
-  animations00103: Animations,
+  // animations00103: Animations,
 };
 
 export const useGameStore = defineStore('game', {
@@ -24,26 +24,26 @@ export const useGameStore = defineStore('game', {
     teams: [],
     currentStep: GAME_STEP.IDLE,
     currentSequence: 0,
-    animations00103: {
-      rock: { url: '/game/animations/00103/animation_rock.json', frames: 'animation_rock', animation: null},
-      sun: { url: '/game/animations/00103/animation_sun.json', frames: 'animation_sun', animation: null},
-      height: { url: '/game/animations/00103/animation_height.json', frames: 'animation_height', animation: null},
-      texture: { url: '/game/animations/00103/animation_texture.json', frames: 'animation_texture', animation: null},
-    }
+    // animations00103: {
+    //   rock: { url: '/game/animations/00103/animation_rock.json', frames: 'animation_rock', animation: null},
+    //   sun: { url: '/game/animations/00103/animation_sun.json', frames: 'animation_sun', animation: null},
+    //   height: { url: '/game/animations/00103/animation_height.json', frames: 'animation_height', animation: null},
+    //   texture: { url: '/game/animations/00103/animation_texture.json', frames: 'animation_texture', animation: null},
+    // }
   }),
   actions: {
-    async preloadAnimations() {
-      if (this.animations00103['rock'].animation) return
-      await Object.values(this.animations00103).forEach(async element => {
+    // async preloadAnimations() {
+    //   if (this.animations00103['rock'].animation) return
+    //   await Object.values(this.animations00103).forEach(async element => {
 
-        const textureData = await PIXI.Assets.load(element.url);
-        const animations = textureData.data.animations;
+    //     const textureData = await PIXI.Assets.load(element.url);
+    //     const animations = textureData.data.animations;
 
-        const animation = PIXI.AnimatedSprite.fromFrames(animations[element.frames]);
-        element.animation = animation;
-      });
-      console.log(this.animations00103)
-    },
+    //     const animation = PIXI.AnimatedSprite.fromFrames(animations[element.frames]);
+    //     element.animation = animation;
+    //   });
+    //   console.log(this.animations00103)
+    // },
     reset() {
       this.teams = [];
       this.currentStep = GAME_STEP.IDLE;
