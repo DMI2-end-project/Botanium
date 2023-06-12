@@ -1,6 +1,6 @@
 <template>
   <button class="font-bold flex items-center rounded-full p-2 group transition" :class="containerClass">
-      <div class="rounded-full border aspect-square p-2 flex flex-col items-center transition" :class="circleClass"><slot /></div>
+      <div class="rounded-full border aspect-square p-2 flex flex-col items-center justify-center transition" :class="circleClass"><slot /></div>
       <p class="px-3" :class="textClass">{{ text }}</p>
     </button>
 </template>

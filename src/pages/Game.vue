@@ -66,7 +66,9 @@ onBeforeMount(async () => {
 let isModalOpen: Ref<Boolean> = ref(false);
 
 const getMicro = async () => {
+  console.log('getMicro')
   const hasMicro = await AudioManagerInstance.getMicrophone();
+  console.log('hasMicro', hasMicro)
   if (hasMicro) {
     isModalOpen.value = false
     mainStore.isModalOpen = false

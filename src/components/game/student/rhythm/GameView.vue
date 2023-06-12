@@ -1,7 +1,7 @@
 <template>
   <Pulse ref="pulse" :color="feedbackMessage.number === 0 || feedbackMessage.number === 1 ? 'green' : (feedbackMessage.number === 2 || feedbackMessage.number === 3 ? 'red' : 'purple')" />
   <div ref="feedback" class="feedback relatif text-purple uppercase text-2xl font-sans font-black"></div>
-  <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p>
+  <!-- <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p> -->
 </template>
 
 <script lang="ts">
@@ -48,7 +48,7 @@ export default defineComponent({
     window.addEventListener("focus", this.play);
   },
   methods: {
-    hasMicro() { // TODO var de l'audiomabager ?
+    hasMicro() { // TODO var de l'audiomanager ?
       const team = this.gameStore.teams.find(team => team._name === this.gameStore.teamName)
       if (team) {
         return team?.hasMicro
@@ -117,8 +117,11 @@ export default defineComponent({
       div.appendChild(p);
       (this.$refs.feedback as HTMLElement).appendChild(div);
       div.style.position = 'absolute'
-      div.style.width = '120px'
-      div.style.height = '120px'
+      div.style.display = 'flex'
+      div.style.flexDirection = 'column'
+      div.style.alignItems = 'center'
+      img.style.width = '60px'
+      img.style.height = '60px'
       div.style.top = 'calc(' + (Math.random() * 20 + 40) + '%)'
       div.style.left = 'calc(' + (Math.random() * 20 + 40) + '%)'
       div.style.transform = 'scale(0) translate(-50%, -50%)'

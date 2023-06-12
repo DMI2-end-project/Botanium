@@ -12,7 +12,7 @@
       <Arrow class="rotate-180"/>
     </RoundButton>
     <CircleButton v-if="mainStore.role === ROLE.STUDENT && microNeeded && !hasMicro" @click="getMicrophone" class="mt-10" text="Allume ton micro" :color="COLOR.PURPLE" :size="SIZE.MD" :colorReverse="true"><MicroOn /></CircleButton>
-    <RoundItem v-else-if="mainStore.role === ROLE.STUDENT && microNeeded && hasMicro" @click="getMicrophone" class="-mt-10" :color="COLOR.GREEN_MEDIUM"><Check /></RoundItem>
+    <RoundItem v-else-if="mainStore.role === ROLE.STUDENT && microNeeded && hasMicro" class="-mt-10" :color="COLOR.GREEN_MEDIUM"><Check /></RoundItem>
   </div>
 </template>
 
