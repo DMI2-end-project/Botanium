@@ -62,17 +62,13 @@ export default defineComponent({
   },
   methods: {
     async connectSocket() {
-      let classRoom = undefined;
+      this.mainStore.roomId = await DatabaseManagerInstance.getRoomId(this.mainStore.role);
 
       switch (this.mainStore.role) {
         case ROLE.TEACHER:
-          classRoom = await DatabaseManagerInstance.pb.collection('classroom').getFirstListItem(`owner="${DatabaseManagerInstance.pb.authStore.model?.id}"`);
-          this.mainStore.roomId = classRoom?.id;
           await connectClient();
           break;
         case ROLE.STUDENT:
-          classRoom = await DatabaseManagerInstance.pb.collection('classroom').getFirstListItem(`students.id="${DatabaseManagerInstance.pb.authStore.model?.id}"`);
-          this.mainStore.roomId = classRoom?.id;
           let teamId = localStorage.getItem('teamId');
           let teamName = localStorage.getItem('teamName');
           this.gameStore.teamId = teamId ? +teamId : undefined;

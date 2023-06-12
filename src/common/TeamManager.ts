@@ -116,7 +116,7 @@ class TeamManager {
     });
   }
 
-  public async mircoReady(hasMicro: boolean) {
+  public async microReady(hasMicro: boolean) {
     console.log("TeamManager MICRO_READY");
 
     await this._socket.emit(AUDIO_EVENT.MICRO_READY, {

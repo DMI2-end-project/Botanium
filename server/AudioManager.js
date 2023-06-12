@@ -1,7 +1,7 @@
 const AUDIO_EVENT = {
   AUDIO_GAME_READY: "audioGameReady",
   AUDIO_SYNCHRO: "audioSynchro",
-  MICRO_READY: "mircoReady",
+  MICRO_READY: "microReady",
   CLAP_SCORE: "clapScore",
 };
 
