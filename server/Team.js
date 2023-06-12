@@ -1,15 +1,23 @@
 export default class Team {
-  _socketId = undefined;
-  _teamId = undefined; // number : gameData.gameSequences.teams[0]
-  _name = undefined;
-  isPlaying = false;
-  isConnected = true;
-  isValidated = false;
-  hasMicro = null; // boolean
-  currentSequence = 0;
+  _socketId = undefined;  // string
+  _teamId = undefined;  // number   : gameData.gameSequences.teams[0]
+  _name = undefined;  // string
+  isPlaying = false;  // boolean
+  isConnected = true;  // boolean
+  isValidated = false;  // boolean
+  hasMicro = null;  // boolean
+  currentSequence = 0;  // number
 
   constructor(id) {
     this._socketId = id;
+  }
+
+
+  reset() {
+    this.isPlaying = false;
+    this.isValidated = false;
+    this.hasMicro = null;
+    this.currentSequence = 0;
   }
 
   set socketId(id) {
@@ -34,12 +42,5 @@ export default class Team {
 
   set name(name) {
     this._name = name;
-  }
-
-  reset() {
-    this.isPlaying = false;
-    this.isValidated = false;
-    this.hasMicro = null;
-    this.currentSequence = 0;
   }
 }

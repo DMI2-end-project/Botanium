@@ -126,7 +126,9 @@ export default {
   async mounted() {
     this.ratio = (this.$refs.container as HTMLElement).clientWidth / (this.$refs.container as HTMLElement).clientHeight;
     this.textData = await DatabaseManagerInstance.fetchText(this.pageId, this.slotNumber);
-    this.drawData = this.logBookStore.draw(this.pageId, this.slotNumber, this.mainStore.roomId);
+    if (this.mainStore.roomId) {
+      this.drawData = this.logBookStore.draw(this.pageId, this.slotNumber, this.mainStore.roomId);
+    }
     this.signature = (this.textData.id ? this.textData.signature : this.drawData.signature);
     this.textData.slot = this.drawData.slot = this.slotNumber;
     this.textData.page = this.drawData.page = this.pageId;

@@ -4,7 +4,6 @@ import {
   getPageData,
   getTextData,
   getDefaultTextData,
-  getDrawData,
   getDrawFormData,
   getDefaultDrawData,
   getPhotoData,
@@ -38,8 +37,19 @@ class DatabaseManager {
     return this._pocketbase;
   }
 
-  async getRoomId() {
-    //this._classroomId =
+  async getRoomId(role: string) {
+    let classRoom;
+
+    switch (role) {
+      case ROLE.STUDENT:
+        classRoom = await this.pb.collection('classroom').getFirstListItem(`students.id="${this.pb.authStore.model?.id}"`);
+        this._classroomId = classRoom?.id;
+        return  this._classroomId
+      case ROLE.TEACHER:
+        classRoom = await this.pb.collection('classroom').getFirstListItem(`owner="${this.pb.authStore.model?.id}"`);
+        this._classroomId = classRoom?.id;
+        return  this._classroomId
+    }
   }
 
   /* USER */
@@ -84,7 +94,7 @@ class DatabaseManager {
   async fetchPages(classroomId: string): Promise<Array<PageData>> {
     const pages: Array<PageData> = [];
     console.log(classroomId)
-    const pagesRecord: Array<Record> = await this._pocketbase.collection('page').getFullList(200, { filter: `classroom="${classroomId}"` })
+    const pagesRecord: Array<Record> = await this._pocketbase.collection('page').getFullList(200, {filter: `classroom="${classroomId}"`})
     pagesRecord.sort((a: Record, b: Record) => (a.pageNumber > b.pageNumber) ? 1 : ((b.pageNumber > a.pageNumber) ? -1 : 0))
     pagesRecord.forEach((pageRecord) => {
       pages.push(getPageData(pageRecord))

@@ -43,14 +43,6 @@ const setSequence = () => {
   }
 }
 
-mainStore.$subscribe((mutation, state) => {
-  if (gameStore.data) {
-    document.documentElement.style.setProperty('--color-background', gameStore.data.color);
-
-    setSequence();
-  }
-});
-
 gameStore.$subscribe((_, state) => {
   if (state.data) {
     document.documentElement.style.setProperty('--color-background', gameStore.data.color);
@@ -78,7 +70,7 @@ const getMicro = async () => {
   if (hasMicro) {
     isModalOpen.value = false
     mainStore.isModalOpen = false
-    TeamManagerInstance.mircoReady(true);
+    await TeamManagerInstance.microReady(true);
   } else {
     isModalOpen.value = true
     mainStore.isModalOpen = true
@@ -88,7 +80,7 @@ const getMicro = async () => {
 const readyWithoutMicro = () => {
   isModalOpen.value = false
   mainStore.isModalOpen = false
-  TeamManagerInstance.mircoReady(false);
+  TeamManagerInstance.microReady(false);
 }
 
 const closeModal = () => {
@@ -120,7 +112,7 @@ const closeModal = () => {
     <p>Rendez vous dans les réglages du navigateur pour activer le micro ou continuer l’activité sans : la
       synchronisation du son ne prendra pas en compte le micro de cette tabalette</p>
     <div class="flex justify-center items-center gap-6">
-      <button @click="getMicro">Retester l'activiation du micro</button>
+      <button @click="getMicro">Retester l'activation du micro</button>
       <button @click="readyWithoutMicro">Faire l'activité sans le micro</button>
     </div>
   </ModalView>

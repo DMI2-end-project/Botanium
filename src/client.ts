@@ -18,7 +18,6 @@ const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-serve
 let socket: Socket;
 export const getSocket = () => socket;
 
-
 export const initClient = (pinia: Pinia) => {
   const mainStore = useMainStore(pinia);
   const chapterStore = useChapterStore(pinia);
