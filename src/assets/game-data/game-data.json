@@ -1,6 +1,6 @@
 {
   "00101": {
-    "color": "#85A754",
+    "color": "green",
     "colorButton": "pink",
     "introduction": {
       "title": "Les bienfaits des carottes",
@@ -185,7 +185,7 @@
     ]
   },
   "00102": {
-    "color": "#9B85FF",
+    "color": "purple",
     "colorButton": "pink",
     "introduction": {
       "title": "Les couleurs des carottes",
@@ -401,7 +401,7 @@
     ]
   },
   "00103": {
-    "color": "#EDBD56",
+    "color": "yellow",
     "colorButton": "greenMediumBeige",
     "introduction": {
       "title": "La terre parfaite",
@@ -471,7 +471,7 @@
     ]
   },
   "00104": {
-    "color": "#E8ADA4",
+    "color": "pink",
     "colorButton": "greenMediumBeige",
     "introduction": {
       "title": "Déterrer la carotte",

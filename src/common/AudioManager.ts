@@ -97,8 +97,7 @@ class AudioManager {
 
     this.analyser.getByteFrequencyData(this.frequencyData);
 
-    // Trouvez le pic le plus haut de la fréquence
-    let decibelAverage = 0; // correspond à la hauteur avec le volume le plus haut
+    let decibelAverage = 0;
     for (var i = 0; i < this.frequencyData.length; i++) {
       decibelAverage += this.frequencyData[i];
     }

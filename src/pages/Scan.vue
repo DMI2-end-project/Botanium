@@ -34,10 +34,6 @@ const scanAgain = (scanAgain: boolean) => {
   isModalOpen.value = false;
 }
 
-onBeforeMount(() => {
-  document.documentElement.style.setProperty('--color-background', "#e5d9b6");
-});
-
 // TODO : Add illustrations
 // TODO : Correspondance fr / en
 // TODO : Ajouter dans le flux

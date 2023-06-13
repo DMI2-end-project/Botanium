@@ -1,13 +1,13 @@
 <template>
   <div>
     <video ref="next" width="100" muted autoplay>
-        <source src="./../../assets/log-book/v5/next.webm" type="video/webm">
+        <source src="/log-book/next.webm" type="video/webm">
     </video>
     <video ref="previous" width="100" muted autoplay>
-        <source src="./../../assets/log-book/v5/previous.webm" type="video/webm">
+        <source src="/log-book/previous.webm" type="video/webm">
     </video>
     <video ref="open" width="100" class="first" muted autoplay>
-        <source src="./../../assets/log-book/v5/open.webm" type="video/webm">
+        <source src="/log-book/open.webm" type="video/webm">
     </video>
     <div class="content">
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">

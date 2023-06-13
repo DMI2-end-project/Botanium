@@ -44,6 +44,9 @@ export default defineComponent({
     },
     backgroundImage():string {
       return 'bg-' + this.mainStore.getFullGameId as string
+    },
+    backgroundColor():string {
+      return 'bg-texture-' + this.gameStore.data.color as string
     }
   },
   created() {
@@ -72,9 +75,9 @@ export default defineComponent({
 
 
 <template>
-  <div class="bg-background bg-cover bg-bottom fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden" :class="gameStore.currentStep !== 1 && gameStore.currentStep !== 5 ? '' : backgroundImage" />
+  <div class="bg-cover bg-bottom fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden" :class="backgroundColor" />
   <div
-      class="bg-texture bg-cover fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden mix-blend-soft-light opacity-50"/>
+      class="bg-cover bg-bottom fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden" :class="gameStore.currentStep !== 1 && gameStore.currentStep !== 5 ? '' : backgroundImage"/>
   <div class="flex flex-col w-full h-full min-h-screen max-h-screen">
     <header class="w-full mt-8 z-20">
       <Breadcrumb v-if="isBreadcrumb"/>
