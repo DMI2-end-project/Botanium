@@ -20,7 +20,7 @@
       </button>
     </div-->
   </div>
-  <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-2 mx-auto my-5"
+  <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-2 mx-auto mt-4"
                :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">
     <Check/>
   </RoundButton>
@@ -46,6 +46,7 @@ import RoundButton from "../../../common/RoundButton.vue";
 
 import Check from "../../../../assets/svg/ico-check.svg?component";
 import Replay from "../../../../assets/svg/ico-replay.svg?component";
+import {shuffle} from "../../../../common/Lib";
 
 export default defineComponent({
   name: 'StudentGameView',
@@ -64,7 +65,8 @@ export default defineComponent({
       gameStore: useGameStore(),
       currentAnswer: undefined as any,
       currentIndex: -1,
-      isModalOpen: false
+      isModalOpen: false,
+
     }
   },
   computed: {
@@ -73,7 +75,10 @@ export default defineComponent({
     },
     answers() {
       if (this.gameStore.teamId !== undefined) {
-        return this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers;
+        const answers = this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers;
+        const shuffledAnswers = shuffle(answers);
+        console.log('answers', answers, shuffledAnswers);
+        return shuffledAnswers;
       }
     },
     congratTitle() {
@@ -96,14 +101,16 @@ export default defineComponent({
   },
   methods: {
     itemSelected(index: number) {
-      this.answers.forEach((answer: any) => {
-        answer.status = "none";
-      });
-      this.answers[index].status = 'selected';
-      this.currentIndex = index;
+      if (this.answers) {
+        this.answers.forEach((answer: any) => {
+          answer.status = "none";
+        });
+        this.answers[index].status = 'selected';
+        this.currentIndex = index;
+      }
     },
     itemValidated() {
-      if (this.currentIndex !== -1) {
+      if (this.currentIndex !== -1 && this.answers) {
         this.answers[this.currentIndex].status = this.answers[this.currentIndex].isValid ? 'valid' : 'error';
         if (this.answers[this.currentIndex].status === 'valid') {
           setTimeout(() => {

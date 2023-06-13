@@ -125,20 +125,18 @@ onMounted(() => {
     }
   }
 });
+
+// TODO : Responsive 💀
 </script>
 
 <template>
-  <div class="relative flex-1 w-full h-full flex flex-col gap-4 px-8 justify-center items-center text-center gap-5 py-10">
-    <div class="flex-1 aspect-square bg-white rounded-full"/>
-    <div class="absolute h-full flex justify-center items-center">
-      <div class="h-full mx-auto flex justify-center items-center">
-        <div class="relative aspect-[5/9] h-full">
-          <img v-if="teamData" alt=""
-               :src="`/game/images/${mainStore.getFullGameId}/${teamData.background}`"
-               class="w-full h-full object-contain"/>
-          <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
-        </div>
-      </div>
+  <div class="max-h-full w-1/3 aspect-square bg-white rounded-full m-auto"/>
+  <div class="absolute top-0 bottom-0 w-1/3 max-h-full left-1/2 -translate-x-1/2">
+    <div class="relative aspect-[5/9 max-h-full]">
+      <img v-if="teamData" alt=""
+           :src="`/game/images/${mainStore.getFullGameId}/${teamData.background}`"
+           class="w-full h-full object-contain"/>
+      <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
     </div>
   </div>
 </template>

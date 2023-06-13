@@ -27,14 +27,13 @@
         </div>
       </div>
     </div-->
-
   </div>
   <RoundButton @click="next" :color="COLOR.GREEN_LIGHT"
                :class="gameStore.currentStep === GAMESTEP.END ? '' : 'opacity-0 pointer-events-none'"
-               class="mx-auto my-5">
+               class="mx-auto mt-4">
     <Check/>
   </RoundButton>
-s</template>
+</template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';

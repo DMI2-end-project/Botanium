@@ -130,6 +130,6 @@ class TeamManager {
 export let TeamManagerInstance: TeamManager;
 
 export const mountTeamManagerInstance = (router: Router) => {
-  TeamManagerInstance = TeamManager.Instance
-  TeamManagerInstance._router = router
+  TeamManagerInstance = TeamManager.Instance;
+  TeamManagerInstance._router = router;
 };

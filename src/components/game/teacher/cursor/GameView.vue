@@ -8,7 +8,7 @@
         </div>
       </div>
     </div>
-    <RoundButton v-show="gameStore.currentStep === GAMESTEP.END" :color="COLOR.GREEN" class="col-span-12 mx-auto my-12" @click="next">
+    <RoundButton v-show="gameStore.currentStep === GAMESTEP.END" :color="COLOR.GREEN" class="mx-auto mt-4" @click="next">
       <Arrow class="rotate-180" />
     </RoundButton>
   </div>

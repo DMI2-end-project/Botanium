@@ -16,22 +16,29 @@ const router = useRouter();
 const mainStore = useMainStore();
 const chapterStore = useChapterStore();
 
+const scanComponent = ref();
 const scan = ref<boolean>(false);
 const isModalOpen = ref<boolean>(false);
 const exp = ref<string>('');
 
 const openModal = (info: any) => {
+  scanComponent.value.isScanning.value = false;
   exp.value = info;
   mainStore.isModalOpen = true;
   isModalOpen.value = true;
 }
 
+const launchScan = () => {
+  console.log('launchScan', scanComponent.value)
+  scan.value = true;
+  scanComponent.value.isScanning = true;
+}
+
 const scanAgain = (scanAgain: boolean) => {
-  if (!scanAgain) {
-    scan.value = false;
-  }
+  scan.value = scanAgain;
   mainStore.isModalOpen = false;
   isModalOpen.value = false;
+  launchScan();
 }
 
 // TODO : Add illustrations
@@ -40,8 +47,8 @@ const scanAgain = (scanAgain: boolean) => {
 </script>
 
 <template>
-  <Introduction v-if="!scan" @scan="scan = true"/>
-  <Scan v-if="scan" @scanned="openModal"/>
+  <Introduction v-if="!scan" @scan="launchScan"/>
+  <Scan v-show="scan" ref="scanComponent" @scanned="openModal"/>
   <ModalView v-if="isModalOpen" :close="false">
     <h1>Bravo !</h1>
     <p>Vous avez scanné le badge {{ exp }}</p>

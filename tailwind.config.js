@@ -52,7 +52,8 @@ module.exports = {
         yellow: "#edbd56",
       },
       backgroundImage: {
-        dotted: "url('/src/assets/dot.png')",
+        "dotted-yellow": "url('/src/assets/dot-yellow.png')",
+        "dotted-green": "url('/src/assets/dot-green.png')",
         signboard: "url('/src/assets/images/common/texture-signboard.png')",
         dig: "url('/game/background/dig.png')",
         "00101": "url('/game/background/00101.png')",

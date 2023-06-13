@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref, watch} from "vue";
+import {computed, onMounted, onUnmounted, ref, watch} from "vue";
 import * as tmImage from '@teachablemachine/image';
 import {useMainStore} from "../../stores/mainStore";
 import {useChapterStore} from "../../stores/chapterStore";
@@ -21,6 +21,10 @@ const emits = defineEmits(['scanned']);
 const camera = ref();
 const isPredicting = ref<boolean>(false);
 const isReady = ref<boolean>(false);
+const isScanning = ref<boolean>(false);
+defineExpose({
+  isScanning
+});
 
 let model: tmImage.CustomMobileNet;
 const exp = ref<string>('');
@@ -62,6 +66,7 @@ const predict = async (videoRef: HTMLVideoElement) => {
   }
 }
 const start = () => {
+  console.log('start');
   isPredicting.value = true;
 
   let fps = 2;
@@ -91,8 +96,9 @@ const stop = () => {
   isPredicting.value = false;
 }
 
-watch(isReady, (newIsReady) => {
-  if (newIsReady) {
+watch([isReady, isScanning], ([newIsReady, newIsScanning]) => {
+  console.log('watch', isReady, isScanning, newIsReady, newIsScanning);
+  if (newIsReady && isScanning) {
     start();
   }
 });

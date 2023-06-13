@@ -2,6 +2,7 @@
   "00101": {
     "color": "green",
     "colorButton": "pink",
+    "colorBreadcrumb": "yellow",
     "introduction": {
       "title": "Les bienfaits des carottes",
       "text": "Retrouvez tous ensemble les bienfaits de la carotte et communiquez les à Capucine !"
@@ -187,6 +188,7 @@
   "00102": {
     "color": "purple",
     "colorButton": "pink",
+    "colorBreadcrumb": "yellow",
     "introduction": {
       "title": "Les couleurs des carottes",
       "text": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées."
@@ -330,7 +332,8 @@
             "congratulation": {
               "title": "Bravo !",
               "text": "<p>La carotte Amfine est le nom donné à la carotte orange.</p><p>Elle possède un pigment appelé la carotène : c’est lui le responsable de la couleur orange !</p><p>Y’aurait-il d’autres couleurs... ?</p>",
-              "image": "amfine.png"
+              "image": "amfine.png",
+              "shape": "card"
             }
           },
           {
@@ -360,7 +363,8 @@
             "congratulation": {
               "title": "Bravo !",
               "text": "<p>La carotte Lubiana est le nom donné à la carotte jaune.</p><p>Elle possède un pigment appelé la lutéine : c’est lui le responsable de la couleur jaune !</p><p>Y’aurait-il d’autres couleurs... ?</p>",
-              "image": "lubiana.png"
+              "image": "lubiana.png",
+              "shape": "card"
             }
           },
           {
@@ -390,7 +394,8 @@
             "congratulation": {
               "title": "Bravo !",
               "text": "<p>La carotte Cosmic est le nom donné à la carotte violette.</p><p>Elle possède un pigment appelé l’anthocyane : c’est lui le responsable de la couleur violette !</p><p>Y’aurait-il d’autres couleurs... ?</p>",
-              "image": "cosmic.png"
+              "image": "cosmic.png",
+              "shape": "card"
             }
           }
         ],
@@ -403,6 +408,7 @@
   "00103": {
     "color": "yellow",
     "colorButton": "greenMediumBeige",
+    "colorBreadcrumb": "green",
     "introduction": {
       "title": "La terre parfaite",
       "text": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol"
@@ -435,7 +441,7 @@
               "title": "Bravo !",
               "text": "La carotte a besoin d’un sol léger et sableux, avec peu de cailloux pour pousser.",
               "image": "rock.png",
-              "isCircle": true
+              "shape": "circle"
             },
             "answers": 1
           },
@@ -447,7 +453,7 @@
               "title": "Bravo !",
               "text": "La carotte a besoin d’un sol très ensoleillé pour se développer.",
               "image": "sun.png",
-              "isCircle": true
+              "shape": "circle"
             },
             "answers": 2
           },
@@ -459,7 +465,7 @@
               "title": "Bravo !",
               "text": "La carotte a besoin d’un sol de profondeur moyenne mais suffisante puisque les carottes poussent immergées.",
               "image": "height.png",
-              "isCircle": true
+              "shape": "circle"
             },
             "answers": 3
           }
@@ -473,6 +479,7 @@
   "00104": {
     "color": "pink",
     "colorButton": "greenMediumBeige",
+    "colorBreadcrumb": "yellow",
     "introduction": {
       "title": "Déterrer la carotte",
       "text": "Capucine doit déterrer la précieuse carotte et guérir Pinpin. Frappe dans tes mains en rythme avec tes camarades pour l’aider."

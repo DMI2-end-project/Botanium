@@ -16,8 +16,6 @@ const gameStore = useGameStore();
 const router = useRouter();
 let chapters: Ref<Record[]> = ref([]);
 
-// TODO : create Interface
-
 onBeforeMount(async () => {
   if (mainStore.roomId) {
     chapters.value = await DatabaseManagerInstance.fetchChapters(mainStore.roomId);
@@ -41,7 +39,7 @@ const goTo = async (e: Event, c: number, id: string) => {
       <h1>Capucine au monde des minuscules</h1>
       <h2>Choisissez le chapitre du jour</h2>
     </div>
-    <div class="grid grid-cols-12 gap-4 px-8">*
+    <div class="grid grid-cols-12 gap-4 px-8">
       <div @click="(e) => goTo(e, i, c.id)" v-for="(c,i) in chapters"
            class="col-span-3 inline-block bg-beige rounded-md p-2">
         Chapitre {{ i + 1 }}

@@ -1,21 +1,17 @@
 <template>
   <div class="flex flex-col gap-10 justify-around items-center text-green">
-    <div class="w-full bg-green-light rounded-md grid grid-cols-3 gap-8 lg:gap-14 p-10"> <!-- flex -->
-      <div class="col-span-1 w-full h-full">
+    <div class="w-full bg-green text-beige rounded-md grid grid-cols-3 gap-8 lg:gap-14 p-10"> <!-- flex -->
+      <div class="col-span-1 w-full">
         <RoundItem v-if="congratulation?.icon" class="w-full aspect-square" :color="COLOR.WHITE">
           <SvgIcon :name="congratulation.icon"/>
         </RoundItem>
-        <div v-if="congratulation?.image" :class="congratulation?.isCircle ? 'bg-beige rounded-full p-8' : ''">
-          <CardGame mode="vertical">
-            <template v-slot:recto>
-              <img :src="`/game/images/${mainStore.getFullGameId}/${congratulation.image}`"/>
-            </template>
-          </CardGame>
+        <div v-if="congratulation?.image" :class="congratulation?.shape === 'circle' ? 'bg-beige rounded-full p-8' : ''">
+          <img :src="`/game/images/${mainStore.getFullGameId}/${congratulation.image}`" :alt="congratulation.image"/>
         </div>
       </div>
       <div class="col-span-2 flex flex-col justify-center gap-4">
         <h1 v-if="congratulation?.title">{{ congratulation.title }}</h1>
-        <p v-if="congratulation?.text" class="">{{ congratulation.text }}</p>
+        <p v-if="congratulation?.text" v-html=" congratulation.text"/>
       </div>
     </div>
     <Info v-show="gameStore.currentStep === GAMESTEP.WAIT" text="Patiente un peu, tes camarades réfléchissent encore">

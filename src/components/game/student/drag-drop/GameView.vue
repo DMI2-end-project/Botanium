@@ -6,6 +6,7 @@ import {Flip} from "gsap/Flip";
 
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
+import {shuffle} from "../../../../common/Lib";
 import {COLOR} from "../../../../common/Constants";
 import RoundButton from "../../../common/RoundButton.vue";
 import CardGame from "../../CardGame.vue";
@@ -37,6 +38,7 @@ onMounted(async () => {
 
   if (gameStore.teamId !== undefined) {
     teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
+    teamData.value.answers = shuffle(teamData.value.answers);
 
     if (draggable.value) {
       Draggable.create(draggable.value, {

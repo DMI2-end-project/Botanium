@@ -15,6 +15,7 @@ import SIX from "../assets/svg/numbers/6.svg?component";
 import SEVEN from "../assets/svg/numbers/7.svg?component";
 import EIGHT from "../assets/svg/numbers/8.svg?component";
 import NINE from "../assets/svg/numbers/9.svg?component";
+import {onBeforeMount} from "vue";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
@@ -43,24 +44,35 @@ const getNumberComponent = (number: number) => {
   }
 }
 
+onBeforeMount(() => {
+  console.log('color', gameStore.data.colorBreadcrumb);
+  switch (gameStore.data.colorBreadcrumb) {
+    case 'yellow':
+      break;
+    case 'green':
+      break;
+  }
+})
 </script>
 
 <template>
   <div class="grid grid-cols-12">
     <div class="col-start-2 col-span-10 relative w-full flex items-center justify-between">
 
-      <div class="absolute flex w-full mx-auto bg-dotted bg-repeat-x	bg-contain h-2">
-        <div class="bg-yellow w-full h-full origin-left transition-transform"
-             :style="{transform: 'scaleX('+ (mainStore.gameId - 1) / (totalGames - 1) +')'}"/>
+      <div class="absolute flex w-full mx-auto bg-repeat-x	bg-contain h-2"
+           :class="gameStore.data?.colorBreadcrumb === 'yellow' ? 'bg-dotted-yellow' : 'bg-dotted-green'">
+        <div class=" w-full h-full origin-left transition-transform"
+             :class="gameStore.data?.colorBreadcrumb === 'yellow' ? 'bg-yellow' : 'bg-green'"
+             :style="{transform: 'scaleX('+ ((mainStore.gameId ? mainStore.gameId : 1) - 1) / ((totalGames ? totalGames : 1) - 1) +')'}"/>
       </div>
       <!-- border-t-8 border-dotted border-secondary -->
       <div v-for="(_, i) in totalGames"
            class="relative flex justify-center items-center aspect-square w-14 rounded-full font-bold p-4"
-           :class="i + 1 <= mainStore.gameId ? 'bg-beige text-secondary' : 'bg-secondary text-beige'">
-        <component :is="getNumberComponent(i + 1)"/>
+           :class="i + 1 <= mainStore.gameId ? 'bg-beige text-secondary' : gameStore.data?.colorBreadcrumb === 'yellow' ? 'bg-yellow text-beige' : 'bg-green text-beige'">
+        <component class="w-full" :is="getNumberComponent(i + 1)"/>
         <div
-            class="absolute top-0 right-0 -translate-y-1/5 translate-x-1/4 bg-green aspect-square w-6 rounded-full p-1.5"
-            :class="(i + 1 < mainStore.gameId) || (i + 1 === mainStore.gameId && gameStore.currentStep === GAME_STEP.CONGRATS) ? '':'hidden'">
+            class="absolute top-0 right-0 -translate-y-1/5 translate-x-1/4 aspect-square w-6 rounded-full shadow-md p-1.5"
+            :class="(i + 1 < mainStore.gameId) || (i + 1 === mainStore.gameId && gameStore.currentStep === GAME_STEP.CONGRATS) ? '':'hidden', gameStore.data?.colorBreadcrumb === 'yellow' ? 'bg-yellow' : 'bg-green'">
           <Check class="text-white w-full aspect-square"/>
         </div>
       </div>

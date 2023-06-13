@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import {CHAPTER_STEP} from "../common/Constants";
+import {taskScanned} from "../client";
 
 export type StoreState = {
   data: any | undefined,
@@ -19,7 +20,11 @@ export const useChapterStore = defineStore('chapter', {
     tasksScanned: 0,
     nbrTasks: 3
   }),
-  getters: {},
+  getters: {
+    sheetUnlocked(): boolean {
+      return this.tasksScanned >= this.nbrTasks;
+    }
+  },
   actions: {
     reset() {
       this.currentStep = CHAPTER_STEP.IDLE;

@@ -30,7 +30,7 @@ const config: RouterOptions = {
       path: '/accueil',
       component: Home,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
       },
     },
     {
@@ -38,7 +38,7 @@ const config: RouterOptions = {
       path: '/connexion',
       component: Login,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
       },
     },
     {
@@ -46,7 +46,7 @@ const config: RouterOptions = {
       path: '/tableau-de-bord',
       component: Dashboard,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
       },
     },
     {
@@ -54,7 +54,7 @@ const config: RouterOptions = {
       path: '/chapitres',
       component: Chapters,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
       }
     },
     {
@@ -86,14 +86,14 @@ const config: RouterOptions = {
       path: '/prise-de-photo',
       component: PhotoTaking,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
       },
     }, {
       name: 'Scan',
       path: '/scan',
       component: Scan,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
       },
     },
   ]

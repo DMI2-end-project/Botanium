@@ -8,5 +8,7 @@ const gameStore = useGameStore();
 </script>
 
 <template>
+  <div>
 
+  </div>
 </template>

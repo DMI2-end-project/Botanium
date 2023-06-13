@@ -88,6 +88,9 @@ export default defineComponent({
         await this.router.push(`/exercice/${this.mainStore.getFullGameId}`);
       }
     },
+    dontJoin() { // TODO
+      localStorage.setItem('join', 'false');
+    },
     closeModal() {
       this.isModalOpen = false;
       this.mainStore.isModalOpen = false;

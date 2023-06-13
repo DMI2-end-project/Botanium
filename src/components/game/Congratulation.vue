@@ -38,14 +38,14 @@ const next = () => {
 </script>
 
 <template>
-  <div class="relative flex flex-col items-center text-beige text-center">
+  <div class="relative flex flex-col items-center text-beige text-center -mt-16">
     <RoundItemVue :size="SIZE.LG" :color="COLOR.YELLOW" class="absolute translate-y-1/2">
       <Trophy class="w-14 aspect-square"/>
     </RoundItemVue>
     <div
         class="w-full min-h-[200px] max-h-[300px] flex flex-col justify-center items-center gap-6 bg-green rounded-md p-10 pt-20">
       <h1>Incroyable !</h1>
-      <p v-html="text()"/>
+      <p>{{ text() }}</p>
     </div>
     <RoundButton v-if="mainStore.role === ROLE.TEACHER" @click="next" :color="gameStore.data.colorButton"
                  class="mt-8 text-lg font-bold">
