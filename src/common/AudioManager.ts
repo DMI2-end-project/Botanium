@@ -8,8 +8,8 @@ class AudioManager {
   private context: AudioContext | null = null;
   private analyser: AnalyserNode | null = null;
   private frequencyData: Uint8Array | null = null;
-  private lastFreq: number = 0; // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
-  private sensibilityVolume: number = 0.8; // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
+  private lastDecibelAverage: number = 0; // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
+  private sensibilityVolume: number = 1; // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
   private socket = getSocket();
   private mainStore = useMainStore();
 
@@ -98,20 +98,18 @@ class AudioManager {
     this.analyser.getByteFrequencyData(this.frequencyData);
 
     // Trouvez le pic le plus haut de la fréquence
-    var maxIndex = 0; // correspond à la hauteur avec le volume le plus haut
+    let decibelAverage = 0; // correspond à la hauteur avec le volume le plus haut
     for (var i = 0; i < this.frequencyData.length; i++) {
-      if (this.frequencyData[i] > this.frequencyData[maxIndex]) {
-        maxIndex = i;
-      }
+      decibelAverage += this.frequencyData[i];
     }
 
-    const currentFreq: number = this.frequencyData[maxIndex];
+    decibelAverage = decibelAverage / this.frequencyData.length;
 
-    if (currentFreq > 100 && currentFreq - this.lastFreq > 40 * (1 / this.sensibilityVolume)) {
+    if (decibelAverage > 80 && decibelAverage - this.lastDecibelAverage > 20 * (1 / this.sensibilityVolume)) {
       clapping = true
     }
 
-    this.lastFreq = currentFreq;
+    this.lastDecibelAverage = decibelAverage;
     return clapping
   }
 }
