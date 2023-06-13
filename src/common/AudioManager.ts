@@ -8,7 +8,7 @@ class AudioManager {
   private context: AudioContext | null = null;
   private analyser: AnalyserNode | null = null;
   private frequencyData: Uint8Array | null = null;
-  private lastDecibelAverage: number = 0; // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
+  public lastDecibelAverage: number = 0; // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
   private sensibilityVolume: number = 1; // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
   private socket = getSocket();
   private mainStore = useMainStore();
@@ -104,7 +104,7 @@ class AudioManager {
 
     decibelAverage = decibelAverage / this.frequencyData.length;
 
-    if (decibelAverage > 40 && decibelAverage - this.lastDecibelAverage > 10 * (1 / this.sensibilityVolume)) {
+    if (decibelAverage > 20 && decibelAverage - this.lastDecibelAverage > 5 * (1 / this.sensibilityVolume)) {
       clapping = true
     }
 
