@@ -43,12 +43,21 @@ const setSequence = () => {
   }
 }
 
+gameStore.$subscribe((_, state) => {
+  if (state.data) {
+    setSequence();
+  }
+});
+
 onBeforeMount(async () => {
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,
     roomId: mainStore.roomId
   });
+  if (gameStore.data) {
+    setSequence();
+  }
 });
 
 onUnmounted(() => {
@@ -70,8 +79,6 @@ const getMicro = async () => {
     mainStore.isModalOpen = true
   }
 }
-
-// gameStore.preloadAnimations()
 
 const readyWithoutMicro = () => {
   isModalOpen.value = false

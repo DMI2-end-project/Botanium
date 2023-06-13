@@ -127,10 +127,10 @@ const itemValidated = () => {
         </div-->
       </div>
     </div>
-    <div class="relative -z-10 col-span-9 grid grid-cols-3 gap-9 rounded-md p-10 bg-beige-medium"
+    <div class="relative col-span-9 grid grid-cols-3 gap-9 rounded-md p-10 bg-beige-medium"
          :class="`grid-cols-${playingTeams.length}`">
       <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
-           class="w-full flex flex-col justify-center items-center gap-6">
+           class="w-full flex flex-col justify-center items-center gap-6 z-10">
         <div ref="droppables"
              class="droppable w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
              :data-is-valid="answer.isValid">
@@ -140,7 +140,7 @@ const itemValidated = () => {
           {{ answer.molecule }}
         </h3>
       </div>
-      <div class="w-full flex justify-center absolute -bottom-20 left-0 right-0 mx-auto -z-10">
+      <div class="w-full flex justify-center absolute -bottom-20 left-0 right-0 mx-auto">
         <Transition name="scaleButtonBg">
           <RoundButton @click="itemValidated" :color-bg="COLOR.BEIGE_MEDIUM" :color="COLOR.GREEN_MEDIUM_BEIGE"
                        v-show="currentIndex !== -1">
