@@ -128,7 +128,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative w-full h-full flex flex-col gap-4 px-8 justify-center items-center text-center gap-5 py-10">
+  <div class="relative flex-1 w-full h-full flex flex-col gap-4 px-8 justify-center items-center text-center gap-5 py-10">
     <div class="flex-1 aspect-square bg-white rounded-full"/>
     <div class="absolute h-full flex justify-center items-center">
       <div class="h-full mx-auto flex justify-center items-center">
@@ -140,6 +140,5 @@ onMounted(() => {
         </div>
       </div>
     </div>
-
   </div>
 </template>

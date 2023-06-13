@@ -100,10 +100,10 @@ const closeModal = () => {
                  class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
     <TeacherGame
         v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
-        class="col-span-12 my-auto"/>
+        class="flex h-full col-span-12"/>
     <StudentGame
         v-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
-        class="col-span-12 my-auto"/>
+        class="flex h-full col-span-12"/>
     <Waiting
         v-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
         class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
