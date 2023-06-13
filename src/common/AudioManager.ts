@@ -104,7 +104,7 @@ class AudioManager {
 
     decibelAverage = decibelAverage / this.frequencyData.length;
 
-    if (decibelAverage > 80 && decibelAverage - this.lastDecibelAverage > 20 * (1 / this.sensibilityVolume)) {
+    if (decibelAverage > 40 && decibelAverage - this.lastDecibelAverage > 10 * (1 / this.sensibilityVolume)) {
       clapping = true
     }
 
