@@ -13,9 +13,11 @@ class AudioManager {
   private sensibilityVolume: number = 1; // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
   private accumulatedRMS: number = 0;
   private sampleCount: number = 0;
+  private sampleCountMax: number = 500;
   public gainNode: GainNode | null = null;
   private socket = getSocket();
   private mainStore = useMainStore();
+  private raf = -1;
 
   public static get Instance(): AudioManager {
     return this._instance || (this._instance = new this());
@@ -53,6 +55,7 @@ class AudioManager {
 
   public pauseMicrophone() {
     console.log('AudioManager pause micro')
+    cancelAnimationFrame(this.raf)
     if (this.stream) {
       this.stream.getTracks().forEach((track) => track.stop());
       this.stream = null;
@@ -99,22 +102,18 @@ class AudioManager {
   public processNormalizeMicrophoneVolume() {
     if (!this.dataArray) return
     if (!this.analyser) return
-    // Lecture des données audio du microphone
     this.analyser.getFloatTimeDomainData(this.dataArray);
 
-    // Calcul de l'amplitude RMS
     let rms = 0;
     for (let i = 0; i < this.analyser.frequencyBinCount; i++) {
       rms += this.dataArray[i] ** 2;
     }
     rms = Math.sqrt(rms / this.analyser.frequencyBinCount);
 
-    // Accumulation de la valeur RMS pendant 1 seconde
     this.accumulatedRMS += rms;
     this.sampleCount++;
+    console.log('rms :', rms);
 
-    // Affichage de la valeur RMS dans la console
-    console.log('Valeur RMS :', rms);
   }
 
   public normalizeMicrophoneVolume() {
@@ -129,7 +128,10 @@ class AudioManager {
       this.gainNode.gain.value = gain;
 
       // Affichage du gain appliqué dans la console
-      console.log('Gain appliqué :', gain);
+    console.log('Gain appliqué :', gain);
+
+    // this.sampleCountMax += 500
+    // this.raf = requestAnimationFrame(this.processNormalizeMicrophoneVolume);
 
       // Arrêt du traitement du flux audio
       // gainNode.disconnect();
@@ -137,12 +139,6 @@ class AudioManager {
   }
 
   public isClapping(): Boolean { // TODO remettre dans la gameview
-    if (this.sampleCount < 1000) {
-      this.processNormalizeMicrophoneVolume()
-    } else if (this.gainNode?.gain.value === 1) {
-      this.normalizeMicrophoneVolume()
-    }
-
     let clapping = false;
     if (!this.frequencyData) {
       return clapping
@@ -152,6 +148,14 @@ class AudioManager {
       return clapping
     }
 
+    if (this.sampleCount % 500 === 0) {
+      this.sampleCount /= 2
+      this.accumulatedRMS /= 2
+    }
+
+    this.processNormalizeMicrophoneVolume()
+    this.normalizeMicrophoneVolume()
+
     this.analyser.getByteFrequencyData(this.frequencyData);
 
     let decibelAverage = 0;
@@ -160,8 +164,11 @@ class AudioManager {
     }
 
     decibelAverage = decibelAverage / this.frequencyData.length;
+    if (this.gainNode && this.gainNode.gain.value && this.gainNode.gain.value !== 1) {
+      decibelAverage = decibelAverage * this.gainNode.gain.value * 0.05
+    }
 
-    if (decibelAverage > 20 && decibelAverage - this.lastDecibelAverage > 5 * (1 / this.sensibilityVolume)) {
+    if (decibelAverage > 40 && decibelAverage - this.lastDecibelAverage > 20 * (1 / this.sensibilityVolume)) {
       clapping = true
     }
 
