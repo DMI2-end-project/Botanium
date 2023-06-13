@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {defineEmits, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import {Application, Graphics, Polygon, Sprite} from "pixi.js";
 import {gsap} from "gsap";
 

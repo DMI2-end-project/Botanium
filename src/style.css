@@ -266,7 +266,7 @@ button:focus-visible {
         @apply text-xl font-bold;
     }
 
-    h3 {
+    h3, .heading-3 {
         @apply text-lg font-bold leading-snug;
     }
 

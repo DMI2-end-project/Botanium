@@ -27,6 +27,7 @@ export default class Room {
   chapterStep = 0;
   gameId = 0;
   gameStep = 0;
+  tasksScanned = 0;
   clapGameScore = 0;
 
   _names = [
@@ -124,6 +125,8 @@ export default class Room {
 
     this.gameId = 0;
     this.gameStep = 0;
+
+    this.tasksScanned = 0;
 
     this._teams.map((team) => team.reset());
   };

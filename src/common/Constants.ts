@@ -82,3 +82,7 @@ export enum SIZE {
   LG = 'lg',
   XL = 'xl',
 }
+
+export enum SCAN {
+
+}

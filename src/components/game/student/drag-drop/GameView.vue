@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {defineEmits, nextTick, onMounted, ref} from "vue";
+import {nextTick, onMounted, ref} from "vue";
 import {gsap} from "gsap";
 import {Draggable} from "gsap/Draggable";
 import {Flip} from "gsap/Flip";

@@ -86,6 +86,10 @@ export default defineComponent({
         this.bgClass += ' bg-red text-beige';
         this.textClass += ' text-beige';
         break;
+      case COLOR.PURPLE:
+        this.bgClass += ' bg-purple text-beige';
+        this.textClass += ' text-beige';
+        break;
       default:
         break
     }
@@ -121,9 +125,7 @@ export default defineComponent({
       default:
         break
     }
-    console.log(this.containerBgClass)
   },
-  methods: {}
 });
 </script>
 
