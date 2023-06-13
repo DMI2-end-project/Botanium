@@ -1,10 +1,18 @@
+let safe = [];
+
+//safelist.push('bg-00101', 'bg-00102', 'bg-00103', 'bg-00104');
+for (let i = 1; i < 13; i++) {
+  safe.push(`grid-cols-${i}`);
+}
+
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-  safelist: [
-    {
-      pattern: /bg-(00101|00102|00103|00104)/,
-    },
-  ],
+   safelist: [
+     {
+       pattern: /bg-(00101|00102|00103|00104)/,
+     },
+     ...safe
+   ],
   theme: {
     extend: {
       borderRadius: {},

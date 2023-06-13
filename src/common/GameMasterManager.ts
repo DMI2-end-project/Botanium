@@ -155,5 +155,5 @@ export let GameMasterManagerInstance: GameMasterManager;
 
 export const mountGameMasterManagerInstance = (router: Router) => {
   GameMasterManagerInstance = GameMasterManager.Instance
-  GameMasterManagerInstance._router = useRouter();
+  GameMasterManagerInstance._router = router;
 };

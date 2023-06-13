@@ -1,9 +1,10 @@
 <template>
-  <div class="w-full relative grid grid-cols-12 gap-4 text-center px-8"><!-- w-full h-full flex-1 flex items-center  -->
-    <div class="col-span-10 col-start-2 w-full  grid grid-cols-3 gap-9 rounded-md px-10 pt-9 pb-14 bg-beige-medium">
+  <div class="w-full relative grid grid-cols-12 gap-4 text-center my-auto"><!-- w-full h-full flex-1 flex items-center  -->
+    <div class="col-span-10 col-start-2 w-full grid grid-cols-3 gap-9 rounded-md p-10  bg-beige-medium"
+         :class="`grid-cols-${playingTeams.length}`">
       <div v-if="answers" v-for="(team, index) in playingTeams" :v-bind="index"
            class="w-full flex flex-col justify-center items-center gap-6">
-        <CardGame mode="vertical"  :answer-state="'none'" :card-state="cardState(index)"
+        <CardGame mode="vertical" :answer-state="'none'" :card-state="cardState(index)"
                   class="w-full aspect-[5/9]">
           <template v-slot:recto>
             <img v-if="answers[index].image" alt=""
