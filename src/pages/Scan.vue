@@ -12,7 +12,6 @@ import {COLOR} from "../common/Constants";
 import Camera from "../assets/svg/ico-photo.svg?component";
 import Cross from "../assets/svg/ico-cross.svg?component";
 
-
 const router = useRouter();
 const mainStore = useMainStore();
 const chapterStore = useChapterStore();
@@ -34,6 +33,10 @@ const scanAgain = (scanAgain: boolean) => {
   mainStore.isModalOpen = false;
   isModalOpen.value = false;
 }
+
+// TODO : Add illustrations
+// TODO : Correspondance fr / en
+// TODO : Ajouter dans le flux
 </script>
 
 <template>

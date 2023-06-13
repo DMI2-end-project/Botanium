@@ -26,6 +26,10 @@ const droppables = ref<HTMLDivElement[]>([]);
 const currentAnswer = ref<any | undefined>(undefined);
 const currentIndex = ref<number>(-1);
 
+const playingTeams = () => {
+  return gameStore.teams.filter((team: any) => team.isPlaying);
+}
+
 onMounted(async () => {
   await nextTick();
   //const droppables = document.querySelectorAll<HTMLDivElement>('.droppable');
@@ -123,7 +127,8 @@ const itemValidated = () => {
         </div-->
       </div>
     </div>
-    <div class="relative -z-10 col-span-9 grid grid-cols-3 gap-9 rounded-md px-10 pt-9 pb-14 bg-beige-medium">
+    <div class="relative -z-10 col-span-9 grid grid-cols-3 gap-9 rounded-md p-10 bg-beige-medium"
+         :class="`grid-cols-${playingTeams.length}`">
       <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
            class="w-full flex flex-col justify-center items-center gap-6">
         <div ref="droppables"

@@ -88,20 +88,20 @@ const closeModal = () => {
 
 <template>
   <div v-if="gameStore.data"
-       class="w-full h-full grid grid-cols-12 items-center justify-center gap-4 px-8">
+       class="flex-1 w-full h-full grid grid-cols-12 items-center justify-center gap-4 px-8">
     <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION" @get-microphone="getMicro"
-                 class="col-start-3 col-span-8"/>
+                 class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
     <TeacherGame
         v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
-        class="col-span-12 h-full my-auto"/>
+        class="col-span-12 my-auto"/>
     <StudentGame
         v-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
-        class="col-span-12 h-full my-auto"/>
+        class="col-span-12 my-auto"/>
     <Waiting
         v-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
-        class="col-start-3 col-span-8"/>
+        class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
     <Congratulation v-if="gameStore.currentStep === GAME_STEP.CONGRATS"
-                    class="col-start-3 col-span-8"/>
+                    class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
   </div>
   <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
     <h1>Appelle ton enseignant pour qu’il active le son</h1>

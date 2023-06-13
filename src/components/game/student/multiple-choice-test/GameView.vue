@@ -19,18 +19,18 @@
         <span class="text-md pointer-events-none">{{ answer.text }}</span>
       </button>
     </div-->
-    <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-2 mx-auto my-5"
-                 :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">
-      <Check/>
-    </RoundButton>
-    <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
-      <h1>{{ congratTitle }}</h1>
-      <p>{{ congratText }}</p>
-      <RoundButton :color="COLOR.YELLOW" @click="closeModal">
-        <Replay/>
-      </RoundButton>
-    </ModalView>
   </div>
+  <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-2 mx-auto my-5"
+               :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">
+    <Check/>
+  </RoundButton>
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
+    <h1>{{ congratTitle }}</h1>
+    <p>{{ congratText }}</p>
+    <RoundButton :color="COLOR.YELLOW" @click="closeModal">
+      <Replay/>
+    </RoundButton>
+  </ModalView>
 </template>
 
 <script lang="ts">

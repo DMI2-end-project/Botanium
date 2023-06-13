@@ -79,29 +79,11 @@ export default defineComponent({
   <div
       class="bg-cover bg-bottom fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden" :class="gameStore.currentStep !== 1 && gameStore.currentStep !== 5 ? '' : backgroundImage"/>
   <div class="flex flex-col w-full h-full min-h-screen max-h-screen">
-    <header class="fixed top-0 left-0 w-full z-20">
-      <!-- DEV INFO -->
-      <div class="col-span-12 flex justify-end items-center gap-6 z-20">
-        <!-- <div>
-          Path : {{ router.currentRoute?.path }},
-          Auth state : {{ pb.authStore.isValid }},
-          Role : {{ mainStore.role }}
-        </div> -->
-        <div class="ml-20">
-          Socket state : {{ mainStore.connected }},
-          RoomID : {{ mainStore.roomId }},
-          TeamID : {{ gameStore.teamId }},
-          TeamName : {{ gameStore.teamName }},
-          <!-- GameId : {{ mainStore.gameId }},
-          Step : {{ gameStore.currentStep }}, -->
-        </div>
-        <button @click="disconnect" class="ml-auto block">Déconnexion</button>
-      </div>
+    <header class="w-full mt-8 z-20">
       <Breadcrumb v-if="isBreadcrumb"/>
       <GameHeader v-if="!isBreadcrumb"/>
-      <slot name="header"/>
     </header>
-    <main class="w-screen h-screen flex-1 flex flex-col justify-center pt-16 z-10">
+    <main class="w-screen flex-1 flex flex-col justify-center z-10">
       <slot></slot>
     </main>
     <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">
