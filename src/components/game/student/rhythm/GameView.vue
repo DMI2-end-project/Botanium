@@ -2,6 +2,11 @@
   <Pulse ref="pulse" :color="feedbackMessage.number === 0 || feedbackMessage.number === 1 ? 'green' : (feedbackMessage.number === 2 || feedbackMessage.number === 3 ? 'red' : 'purple')" />
   <div ref="feedback" class="feedback relatif text-purple uppercase text-2xl font-sans font-black"></div>
   <!-- <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p> -->
+  <p class="w-[200px]">gain : {{ gain }}</p>
+  <p class="w-[200px]">decibelAverage : {{ decibel }}</p>
+  <div class="w-24 h-[300px] bg-green-light flex flex-col justify-end mt-24">
+    <div class="w-full bg-green" :style="`height: ${decibel}%`"></div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -20,7 +25,7 @@ interface Feedback {
 
 export default defineComponent({
   components: { Pulse },
-  emits: ['validated'],
+  emits: ['validated', 'openModal'],
   data() {
     return {
       socket: getSocket(),
@@ -39,6 +44,8 @@ export default defineComponent({
       deltaTimeWithServer: 0 as number,
       raf: 0 as number,
       lastClap: 0 as number,
+      decibel: 0 as number,
+      gain: 1 as number,
     };
   },
   async mounted() {
@@ -79,17 +86,23 @@ export default defineComponent({
       const time = (Date.now() + this.deltaTimeWithServer) % this.rhythmFreq
       this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
 
-      if ((this.lastClap + (this.rhythmFreq / 2)) < (Date.now() + this.deltaTimeWithServer)) {
-        this.feedbackMessage = {number: -1, text: ''}
-      }
-
-      const isClapping = AudioManagerInstance.isClapping()
-
-      if ((this.lastClap + (this.rhythmFreq / 4)) < (Date.now() + this.deltaTimeWithServer)) {
-        if (isClapping) {
-          this.onClap()
+      if (this.hasMicro()) {
+        if ((this.lastClap + (this.rhythmFreq / 2)) < (Date.now() + this.deltaTimeWithServer)) {
+          this.feedbackMessage = {number: -1, text: ''}
         }
+
+        const isClap = AudioManagerInstance.isClapping()
+
+        if ((this.lastClap + (this.rhythmFreq / 4)) < (Date.now() + this.deltaTimeWithServer)) {
+          if (isClap) {
+            this.onClap()
+          }
+        }
+
+        this.decibel = AudioManagerInstance.lastDecibelAverage
+        this.gain = AudioManagerInstance.gainNode?.gain.value as number
       }
+
 
       if (time < this.lastTime) {
         (this.$refs.pulse as typeof Pulse).startAnimation();
