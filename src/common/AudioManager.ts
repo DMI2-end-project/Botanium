@@ -8,8 +8,12 @@ class AudioManager {
   private context: AudioContext | null = null;
   private analyser: AnalyserNode | null = null;
   private frequencyData: Uint8Array | null = null;
+  private dataArray: Float32Array | null = null;
   public lastDecibelAverage: number = 0; // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
   private sensibilityVolume: number = 1; // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
+  private accumulatedRMS: number = 0;
+  private sampleCount: number = 0;
+  public gainNode: GainNode | null = null;
   private socket = getSocket();
   private mainStore = useMainStore();
 
@@ -30,9 +34,16 @@ class AudioManager {
       source.connect(this.analyser);
 
       this.analyser.fftSize = 2048;
-      this.analyser.smoothingTimeConstant = 0.8;
+      // this.analyser.smoothingTimeConstant = 0.8;
 
       this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+      this.dataArray = new Float32Array(this.analyser.frequencyBinCount);
+
+      this.gainNode = this.context.createGain()
+      this.analyser.connect(this.gainNode);
+      // this.gainNode.connect(this.context.destination);
+      const tempDestination = this.context.createMediaStreamDestination();
+      this.gainNode.connect(tempDestination);
 
       return true
     } catch (err) {
@@ -85,7 +96,53 @@ class AudioManager {
     });
   }
 
+  public processNormalizeMicrophoneVolume() {
+    if (!this.dataArray) return
+    if (!this.analyser) return
+    // Lecture des données audio du microphone
+    this.analyser.getFloatTimeDomainData(this.dataArray);
+
+    // Calcul de l'amplitude RMS
+    let rms = 0;
+    for (let i = 0; i < this.analyser.frequencyBinCount; i++) {
+      rms += this.dataArray[i] ** 2;
+    }
+    rms = Math.sqrt(rms / this.analyser.frequencyBinCount);
+
+    // Accumulation de la valeur RMS pendant 1 seconde
+    this.accumulatedRMS += rms;
+    this.sampleCount++;
+
+    // Affichage de la valeur RMS dans la console
+    console.log('Valeur RMS :', rms);
+  }
+
+  public normalizeMicrophoneVolume() {
+    if (!this.gainNode) return
+
+      // Calcul du gain moyen
+      const averageRMS = this.accumulatedRMS / this.sampleCount;
+      const targetRMS = 0.5; // Valeur cible pour l'amplitude RMS
+      const gain = targetRMS / averageRMS;
+
+      // Application du gain pour le reste de l'enregistrement
+      this.gainNode.gain.value = gain;
+
+      // Affichage du gain appliqué dans la console
+      console.log('Gain appliqué :', gain);
+
+      // Arrêt du traitement du flux audio
+      // gainNode.disconnect();
+      // audioContext.close();
+  }
+
   public isClapping(): Boolean { // TODO remettre dans la gameview
+    if (this.sampleCount < 1000) {
+      this.processNormalizeMicrophoneVolume()
+    } else if (this.gainNode?.gain.value === 1) {
+      this.normalizeMicrophoneVolume()
+    }
+
     let clapping = false;
     if (!this.frequencyData) {
       return clapping
