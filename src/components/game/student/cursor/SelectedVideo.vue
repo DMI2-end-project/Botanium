@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useGameStore } from "../../../../stores/gameStore";
 import * as PIXI from "pixi.js";
 import RoundButton from '../../../common/RoundButton.vue';
 import Check from "../../../../assets/svg/ico-check.svg?component";
@@ -41,6 +42,7 @@ export default defineComponent({
   },
   data() {
     return {
+      gameStore: useGameStore(),
       selectedValue: {
         current: 0,
         target: 0
@@ -80,6 +82,9 @@ export default defineComponent({
 
       const animation = PIXI.AnimatedSprite.fromFrames(animations["animation_" + this.element]);
 
+      // const animation = this.gameStore.animations00103[this.element as string].animation
+      // console.log(this.gameStore.animations00103, this.element)
+
       animation.animationSpeed = 0;
       animation.width = app.view.width;
       animation.height = app.view.height;
@@ -99,7 +104,6 @@ export default defineComponent({
         this.selectedValue.current = this.lerp(this.selectedValue.current, this.selectedValue.target, 0.05)
       }
       this.targetSprite = this.getMapSprite(this.selectedValue.current)
-      console.log(this.animation.animationSpeed)
       this.animation.animationSpeed = this.true0((this.targetSprite - this.animation.currentFrame) * 0.1, 0.05);
     },
     getMapSprite(n: number) {

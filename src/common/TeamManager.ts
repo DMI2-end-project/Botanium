@@ -117,7 +117,7 @@ class TeamManager {
   }
 
   public async microReady(hasMicro: boolean) {
-    console.log("TeamManager MICRO_READY");
+    console.log("TeamManager MICRO_READY", hasMicro);
 
     await this._socket.emit(AUDIO_EVENT.MICRO_READY, {
       roomId: this._mainStore.roomId,

@@ -1,6 +1,6 @@
 <template>
-  <button class="edit-element w-full p-0 text-beige-dark outline outline-8 transition-all duration-400" ref="container" :class="classProperty + ' ' + (textData.id || drawData.id ? 'bg-transparent' : 'bg-beige-medium/50') + ' ' + (onModify ? 'outline-yellow' : 'outline-transparent')" @click="onModify = true">
-    <p v-if="!textData.id && !drawData.id">edit</p>
+  <button class="edit-element w-full p-0 text-beige-dark outline outline-8 transition-all duration-400" ref="container" :class="classProperty + ' ' + (textData.id || drawData.id ? 'bg-transparent' : 'bg-beige-medium/50') + ' ' + (onModify ? 'outline-yellow' : 'outline-transparent')" @click="modify">
+    <PenIcon v-if="!textData.id && !drawData.id" class="w-1/3 mx-auto object-contain" :class="onModify ? 'text-yellow' : ''" />
     <div v-if="textData.id" class="flex flex-col justify-between h-full bg-green-light p-4 drop-shadow-lg">
       <p class="text-sm text-left text-green font-semibold">{{ textData.content }}</p>
       <p class="text-right mt-4 font-hand-written text-xs text-green">{{ textData.signature }}</p>
@@ -48,6 +48,7 @@
 <script lang="ts">
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import {useMainStore} from "./../../../stores/mainStore";
+import {useLogBookStore} from "./../../../stores/logBookStore";
 import Draw from "./../Draw.vue"
 import type { TextData, DrawData } from './../../../common/Interfaces'
 import { base64ToFile } from './../../../common/Lib';
@@ -57,6 +58,7 @@ import ModalView from "./../../common/ModalView.vue";
 import WriteIcon from "./../../../assets/svg/ico-write.svg?component"
 import DrawIcon from "./../../../assets/svg/ico-draw.svg?component"
 import CheckIcon from "./../../../assets/svg/ico-check.svg?component"
+import PenIcon from "./../../../assets/svg/ico-pen.svg?component"
 
 export default {
   name: "EditElementComponent",
@@ -66,7 +68,8 @@ export default {
     ModalView,
     WriteIcon,
     DrawIcon,
-    CheckIcon
+    CheckIcon,
+    PenIcon
   },
   props: {
     pageId: {
@@ -86,6 +89,7 @@ export default {
   data: () => {
     return {
       mainStore: useMainStore(),
+      logBookStore: useLogBookStore(),
       onModify: false as Boolean,
       onWrite: false as Boolean,
       onDraw: false as Boolean,
@@ -97,7 +101,7 @@ export default {
     }
   },
   computed: {
-    drawUrl():string {
+    drawUrl(): string {
       return DatabaseManagerInstance.getImageUrl(this.drawData)
     },
     COLOR() {
@@ -110,17 +114,30 @@ export default {
     },
     signature(value: string) {
       this.textData.signature = this.drawData.signature = value;
+    },
+    'logBookStore.closeElements': {
+      handler() {
+        this.onModify = false
+        this.logBookStore.closeElements = false
+      },
+      deep: true
     }
   },
   async mounted() {
     this.ratio = (this.$refs.container as HTMLElement).clientWidth / (this.$refs.container as HTMLElement).clientHeight;
     this.textData = await DatabaseManagerInstance.fetchText(this.pageId, this.slotNumber);
-    this.drawData = await DatabaseManagerInstance.fetchDraw(this.pageId, this.slotNumber);
+    if (this.mainStore.roomId) {
+      this.drawData = this.logBookStore.draw(this.pageId, this.slotNumber, this.mainStore.roomId);
+    }
     this.signature = (this.textData.id ? this.textData.signature : this.drawData.signature);
     this.textData.slot = this.drawData.slot = this.slotNumber;
     this.textData.page = this.drawData.page = this.pageId;
   },
   methods: {
+    modify() {
+      this.onModify = true
+      this.logBookStore.isClosable = true
+    },
     async saveData() {
       if (this.onWrite) {
         if (this.textData.id === '') {
@@ -129,14 +146,14 @@ export default {
           this.textData = await DatabaseManagerInstance.updateText(this.textData);
         }
         if (this.drawData.id != '') {
-          await DatabaseManagerInstance.deleteDraw(this.drawData)
+          await this.logBookStore.deleteDraw(this.drawData)
           this.drawData.id = ''
         }
       } else if (this.onDraw) {
         if (this.drawData.id === '') {
-          this.drawData = await DatabaseManagerInstance.createDraw(this.drawData);
+          this.drawData = await this.logBookStore.createDraw(this.drawData);
         } else {
-          this.drawData = await DatabaseManagerInstance.updateDraw(this.drawData);
+          this.drawData = await this.logBookStore.updateDraw(this.drawData);
         }
         if (this.textData.id !== '') {
           await DatabaseManagerInstance.deleteText(this.textData)
@@ -148,6 +165,7 @@ export default {
       this.onDraw = false;
       this.onModify = false;
       this.onSignature = false;
+      this.logBookStore.isClosable = false
       this.mainStore.isModalOpen = false;
     },
     saveDraw(data:string) {
@@ -160,7 +178,7 @@ export default {
       this.onSignature = true
       this.mainStore.isModalOpen = true;
     }
-  }
+  },
 };
 </script>
 

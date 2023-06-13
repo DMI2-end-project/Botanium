@@ -24,6 +24,7 @@ interface DrawData {
   slot: number;
   page: string;
   signature: string;
+  classroom: string;
 }
 
 interface StickerData {

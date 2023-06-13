@@ -46,7 +46,7 @@ const next = () => {
       <h1>Incroyable !</h1>
       <p>{{ text() }}</p>
     </div>
-    <RoundButton v-if="mainStore.role === ROLE.TEACHER" @click="next" class="mt-8 text-lg font-bold">
+    <RoundButton v-if="mainStore.role === ROLE.TEACHER" @click="next" :color="gameStore.data.colorButton" class="mt-8 text-lg font-bold">
       <Arrow class="rotate-180"/>
     </RoundButton>
   </div>
