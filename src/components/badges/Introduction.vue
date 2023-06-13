@@ -18,7 +18,7 @@ const mainStore = useMainStore();
 const chapterStore = useChapterStore();
 </script>
 <template>
-  <div class="flex-1 w-full h-full bg-background grid grid-cols-12 gap-16 text-center pt-16 z-10">
+  <div class="flex-1 w-full h-full grid grid-cols-12 gap-16 text-center pt-16 z-10">
     <div class="col-span-8 col-start-3 grid grid-cols-8 gap-11 heading-3 bg-beige rounded-lg pb-11 pt-20 mt-auto">
       <p class="col-span-6 col-start-2">
         Rassemblez tous les badges utilisés cette semaine et scannez les pour débloquer les connaissances nécessaires

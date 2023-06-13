@@ -34,10 +34,6 @@ const scanAgain = (scanAgain: boolean) => {
   mainStore.isModalOpen = false;
   isModalOpen.value = false;
 }
-
-onBeforeMount(() => {
-  document.documentElement.style.setProperty('--color-background', "#e5d9b6");
-});
 </script>
 
 <template>

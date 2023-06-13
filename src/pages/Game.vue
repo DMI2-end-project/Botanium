@@ -43,19 +43,7 @@ const setSequence = () => {
   }
 }
 
-gameStore.$subscribe((_, state) => {
-  if (state.data) {
-    document.documentElement.style.setProperty('--color-background', gameStore.data.color);
-    setSequence();
-  }
-});
-
 onBeforeMount(async () => {
-  if (gameStore.data) {
-    document.documentElement.style.setProperty('--color-background', gameStore.data.color);
-    setSequence();
-  }
-
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,

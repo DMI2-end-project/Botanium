@@ -5,9 +5,7 @@
     <Info text="Ajoute une page au carnet de bord pour commencer !"><Speaker /></Info>
     <button @click="disconnect" class="block">Déconnexion</button>
   </header>
-  <main class="w-screen h-screen bg-green-medium">
-    <div
-      class="bg-texture bg-cover fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden mix-blend-soft-light opacity-50"/>
+  <main class="w-screen h-screen bg-cove bg-texture-green">
 
     <!--The <slot> element is a slot outlet that indicates where the "VIEW" content should be rendered.-->
     <slot></slot>
