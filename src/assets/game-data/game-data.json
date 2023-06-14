@@ -436,7 +436,7 @@
           {
             "instruction": "Dose la bonne quantité de cailloux dans la terre pour faire pousser de belles carottes",
             "element": "rock",
-            "clue": "",
+            "clue": "Si il y a trop de cailloux dans la terre elle ne pourra pas se développer comme il faut.",
             "congratulation": {
               "title": "Bravo !",
               "text": "La carotte a besoin d’un sol léger et sableux, avec peu de cailloux pour pousser.",
@@ -447,7 +447,7 @@
           },
           {
             "instruction": "Dose la bonne quantité de soleil pour faire pousser de belles carottes",
-            "clue": "",
+            "clue": "La carotte a besoin de beaucoup de soleil pour bien pousser.",
             "element": "sun",
             "congratulation": {
               "title": "Bravo !",
@@ -459,7 +459,7 @@
           },
           {
             "instruction": "Dose la bonne hauteur de terre pour faire pousser de belles carottes",
-            "clue": "",
+            "clue": "Il faut une profondeur suffisante pour que les carottes puissent se développer",
             "element": "height",
             "congratulation": {
               "title": "Bravo !",
