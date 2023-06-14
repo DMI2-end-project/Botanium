@@ -14,6 +14,8 @@
       </div>
     </div>
 
+    <div ref="flash" class="fixed inset-0 bg-white opacity-0 pointer-events-none"></div>
+
     <div v-if="isPhotosOpen && photos.length > 0" ref="images" class="fixed inset-0 h-screen w-screen bg-white flex flex-wrap gap-6 p-12">
       <div class="fixed right-0 top-0 m-8"><RoundButton @click="isPhotosOpen = false" :color="COLOR.RED"><Cross /></RoundButton></div>
       <img v-for="photo in photos" :src="photo" class="w-64 h-64 object-contain rounded-lg">
@@ -43,7 +45,7 @@ export default {
       photos: [] as string[],
       isPhotosOpen: false,
       currentCamera: 'environment',
-      isMultipleCamera: false
+      isMultipleCamera: true
     };
   },
   computed: {
@@ -65,17 +67,30 @@ export default {
     }
 
     this.setupCamera()
+
+    window.addEventListener("blur", this.destoryCamera);
+    window.addEventListener("focus", this.setupCamera);
+  },
+  unmounted() {
+    this.destoryCamera()
   },
   methods: {
+    destoryCamera() {
+      if (this.stream) {
+        this.stream.getTracks().forEach(track => track.stop());
+      }
+      this.stream = null
+    },
     setupCamera() {
       this.video = this.$refs.video as HTMLVideoElement;
 
       if (!this.video) { return }
+      if (this.stream) { return }
 
       navigator.mediaDevices.getUserMedia({
         video: {
-          width: { ideal: 4096 },
-          height: { ideal: 2160 },
+          width: { ideal: window.innerWidth },
+          height: { ideal: window.innerHeight },
           facingMode: this.currentCamera
         },
       })
@@ -94,18 +109,35 @@ export default {
     },
     async takePhoto() {
       if (!this.video) { return }
+      (this.$refs.flash as HTMLElement).classList.remove('flash')
+      setTimeout(() => {
+        (this.$refs.flash as HTMLElement).classList.add('flash')
+      }, 10)
 
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
 
       if (!context) { return }
 
+      const maxSize = 800;
       canvas.width = this.video.videoWidth;
       canvas.height = this.video.videoHeight;
+      let width = canvas.width
+      let height = canvas.height
+
+      if (canvas.width > maxSize || canvas.height > maxSize) {
+        if (canvas.width > canvas.height) {
+          canvas.width = maxSize;
+          canvas.height = Math.floor((height / width) * maxSize);
+        } else {
+          canvas.height = maxSize;
+          canvas.width = Math.floor((height / width) * maxSize);
+        }
+      }
 
       context.drawImage(this.video, 0, 0, canvas.width, canvas.height);
 
-      const photoDataUrl = canvas.toDataURL('image/jpeg');
+      const photoDataUrl = canvas.toDataURL('image/jpeg', 0.8);
 
       if (this.mainStore.roomId) {
         this.photoData.classroom = this.mainStore.roomId;
@@ -115,10 +147,23 @@ export default {
       }
     },
   },
-  beforeDestroy() {
-    if (this.stream) {
-      this.stream.getTracks().forEach(track => track.stop());
-    }
-  },
 };
 </script>
+
+<style scoped>
+@keyframes flashAnimation {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.flash {
+  animation: flashAnimation 0.4s forwards;
+}
+</style>

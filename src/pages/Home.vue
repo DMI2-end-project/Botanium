@@ -23,5 +23,10 @@ onBeforeMount(() => {
   <div>
     <h1>Ecran d'accueil enfant {{ pb.authStore.model?.firstname }}</h1>
     {{ store.role }}
+
+    <router-link :to="{ name: 'PhotoTaking'}"
+                       class="inline-block bg-primary p-4 rounded-md">
+            Prendre des photos
+          </router-link>
   </div>
 </template>
