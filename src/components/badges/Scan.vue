@@ -16,15 +16,10 @@ const metadataURL = '/tm-models/metadata.json';
 const mainStore = useMainStore();
 const chapterStore = useChapterStore();
 
-const emits = defineEmits(['scanned']);
+const emits = defineEmits(['ready', 'scanned']);
 
 const camera = ref();
-const isPredicting = ref<boolean>(false);
 const isReady = ref<boolean>(false);
-const isScanning = ref<boolean>(false);
-defineExpose({
-  isScanning
-});
 
 let model: tmImage.CustomMobileNet;
 const exp = ref<string>('');
@@ -35,10 +30,6 @@ const timeoutID = ref();
 const load = async () => {
   model = await tmImage.load(modelURL, metadataURL);
 }
-const ready = () => {
-  isReady.value = true;
-}
-
 const predict = async (videoRef: HTMLVideoElement) => {
   // predict can take in an image, video or canvas html element
   if (model && videoRef && videoRef.videoWidth) {
@@ -67,7 +58,6 @@ const predict = async (videoRef: HTMLVideoElement) => {
 }
 const start = () => {
   console.log('start');
-  isPredicting.value = true;
 
   let fps = 2;
   let then = Date.now();
@@ -89,18 +79,15 @@ const start = () => {
   update();
 }
 const stop = () => {
-  console.log('stop', frameRequestID.value)
+  console.log('stop', frameRequestID.value);
+
   if (frameRequestID.value) {
     cancelAnimationFrame(frameRequestID.value);
   }
-  isPredicting.value = false;
 }
 
-watch([isReady, isScanning], ([newIsReady, newIsScanning]) => {
-  console.log('watch', isReady, isScanning, newIsReady, newIsScanning);
-  if (newIsReady && isScanning) {
-    start();
-  }
+defineExpose({
+  start
 });
 
 onMounted(() => {
@@ -109,24 +96,14 @@ onMounted(() => {
 
 onUnmounted(() => {
   stop();
-})
-
-const togglePrediction = () => {
-  console.log('togglePrediction', isPredicting.value);
-
-  if (isPredicting.value) {
-    stop();
-  } else {
-    start();
-  }
-}
+});
 
 </script>
 
 <template>
   <div class="flex-1 grid grid-cols-12 w-full h-full">
     <div class="relative col-span-10 col-start-2 aspect-[7/4] my-auto">
-      <Camera ref="camera" @ready="ready" facing-mode="environment"/>
+      <Camera ref="camera" @ready="() => emits('ready')" facing-mode="environment"/>
     </div>
     <Info class="col-span-10 col-start-2 m-auto mt-0" text="Placez les badges un par un dans la zone centrale">
       <Loading class="loading-animation w-8 aspect-square"/>

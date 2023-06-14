@@ -59,7 +59,7 @@ onBeforeMount(() => {
   <div class="grid grid-cols-12">
     <div class="col-start-2 col-span-10 relative w-full flex items-center justify-between">
 
-      <div class="absolute flex w-full mx-auto bg-repeat-x	bg-contain h-2"
+      <div class="absolute flex w-full mx-auto bg-repeat-x	bg-contain h-2 overflow-hidden"
            :class="gameStore.data?.colorBreadcrumb === 'yellow' ? 'bg-dotted-yellow' : 'bg-dotted-green'">
         <div class=" w-full h-full origin-left transition-transform"
              :class="gameStore.data?.colorBreadcrumb === 'yellow' ? 'bg-yellow' : 'bg-green'"
