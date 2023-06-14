@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {nextTick, onMounted, ref} from "vue";
+import {nextTick, onMounted, provide, Ref, ref, watch} from "vue";
 import {gsap} from "gsap";
 import {Draggable} from "gsap/Draggable";
 import {Flip} from "gsap/Flip";
@@ -24,7 +24,14 @@ const emit = defineEmits(['validated']);
 const teamData = ref<any>(null);
 
 const draggable = ref<HTMLDivElement>();
-const droppables = ref<HTMLDivElement[]>([]);
+
+//const cardSlots = ref<InstanceType<typeof CardSlot>>();
+//const cardRefs: Ref<InstanceType<typeof CardSlot>>[] = [];
+const slotRefs = ref([]);
+provide('slotRefs', slotRefs);
+
+//const droppables = ref<HTMLDivElement[]>([]);
+
 const currentAnswer = ref<any | undefined>(undefined);
 const currentIndex = ref<number>(-1);
 
@@ -32,17 +39,67 @@ const playingTeams = () => {
   return gameStore.teams.filter((team: any) => team.isPlaying);
 }
 
+const enableDrag = () => {
+  const container = document.querySelector('#container');
+
+  if (draggable.value) {
+    Draggable.create(draggable.value, {
+      type: "x,y",
+      edgeResistance: 0.65,
+      inertia: true,
+      onDrag: function (e) {
+        slotRefs.value.forEach(droppable => {
+          if (this.hitTest(droppable, "50%")) {
+            droppable.classList.add('bg-green-light');
+          } else {
+            droppable.classList.remove('bg-green-light');
+          }
+        })
+      },
+      onDragEnd: function (e) {
+        let miss = true;
+        slotRefs.value.forEach((droppable, index) => {
+          if (this.hitTest(droppable, "50%")) {
+            miss = false;
+            if (draggable.value) {
+              Flip.fit(draggable.value, droppable, {
+                scale: true
+              });
+              droppable.classList.add('selected');
+              currentIndex.value = index;
+              //currentAnswer.value = droppable.dataset.isValid ? JSON.parse(droppable.dataset.isValid) : null;
+            }
+          } else {
+            droppable.classList.remove('selected');
+            teamData.value.answers[index].status = "none";
+          }
+        });
+
+        if (miss) {
+          if (draggable.value && container) {
+            Flip.fit(draggable.value, container);
+            currentAnswer.value = undefined;
+          }
+        }
+      }
+    });
+  }
+}
+
+watch(slotRefs.value, (newRef) => {
+  console.log('newRef', newRef)
+  enableDrag()
+})
+
 onMounted(async () => {
   await nextTick();
-  //const droppables = document.querySelectorAll<HTMLDivElement>('.droppable');
-  const container = document.querySelector('#container');
-  console.log('draggable', draggable.value);
-  console.log('container', container);
+  console.log('droppables', slotRefs.value);
 
   if (gameStore.teamId !== undefined) {
     teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
     teamData.value.answers = shuffle(teamData.value.answers);
 
+    /*
     if (draggable.value) {
       Draggable.create(draggable.value, {
         type: "x,y",
@@ -85,6 +142,7 @@ onMounted(async () => {
         }
       });
     }
+    */
   }
 });
 
@@ -97,23 +155,15 @@ const itemValidated = () => {
       }, 500);
     }
   }
-
-  /*
-  if (currentAnswer.value === true) {
-    setTimeout(() => {
-      emit('validated');
-    }, 500)
-  }
-   */
 }
 </script>
 
 <template>
   <div
       class="w-full h-full flex-1 grid grid-cols-12 items-center gap-5 text-center">
-    <div id="container" class="col-span-3 relative w-full h-full">
-      <CardSlot v-if="teamData" :answer-state="currentIndex === -1 ? 'none' : teamData.answers[currentIndex].status"
-                outline class="aspect-[5/9]">
+    <div id="container" class="col-span-3 w-full border-4 border-yellow">
+      <CardSlot v-show="teamData" background outline :answer-state="'none'"
+                class="relative col-span-3 w-full aspect-[5/9]">
         <div ref="draggable" class="relative w-full h-full">
           <CardGame mode="vertical"
                     :answer-state="currentIndex === -1 ? 'none' : teamData.answers[currentIndex].status"
@@ -125,22 +175,23 @@ const itemValidated = () => {
             </template>
           </CardGame>
         </div>
-        <!--div ref="draggable" class="w-full h-full bg-beige rounded-md">
-          <img v-if="teamData"
-               :src="`/game/images/${mainStore.getFullGameId}/${teamData.background}`"
-               class="object-contain object-center"/>
-        </div-->
       </CardSlot>
     </div>
     <div class="relative col-span-9 grid grid-cols-3 gap-9 rounded-md p-10 bg-beige-medium"
          :class="`grid-cols-${playingTeams.length}`">
-      <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
-           class="w-full flex flex-col justify-center items-center gap-6 z-10">
-        <div ref="droppables"
+      <div v-show="teamData" v-for="(answer, index) in teamData? teamData.answers : []" :v-bind="index"
+           class="w-full flex flex-col justify-center items-center gap-6 z-10 border-4 border-yellow">
+        <CardSlot :text="`${answer.label}...`" droppable
+                  class="w-full aspect-[5/9]">
+          <div ref="droppables">
+
+          </div>
+        </CardSlot>
+        <!--div ref="droppables"
              class="droppable w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
              :data-is-valid="answer.isValid">
           {{ answer.label }}...
-        </div>
+        </div-->
         <h3 class="w-full bg-green text-beige rounded-md">
           {{ answer.molecule }}
         </h3>

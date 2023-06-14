@@ -58,6 +58,17 @@ export default defineComponent({
       const data: GameData = gameData;
       this.gameStore.data = data[key];
     }
+
+    this.gameStore.$subscribe((_, state) => {
+      if (state.data) {
+        document.documentElement.style.setProperty('--color-background', this.gameStore.data.color);
+      }
+    });
+  },
+  beforeMount() {
+    if (this.gameStore.data) {
+      document.documentElement.style.setProperty('--color-background', this.gameStore.data.color);
+    }
   },
   methods: {
     DatabaseManagerInstance() {

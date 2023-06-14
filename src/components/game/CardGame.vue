@@ -33,11 +33,13 @@ const props = defineProps({
 
 <template>
   <!-- OUTLINE ONLY FOR SELECTED - NO BACKGROUND -->
-  <div class=" w-full h-auto rounded-lg outline outline-offset-8 shrink-0 text-center"
-       :class="{
-         'outline-green-light' : props.answerState === 'selected',
-         'outline-transparent' : props.answerState !== 'selected'
-       }">
+  <!-- outline outline-offset-8 -->
+  <div class="relative w-full h-auto rounded-lg shrink-0 text-center">
+    <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[105%] h-[111%] border rounded-lg z-0"
+         :class="{
+         'border-green-light' : props.answerState === 'selected',
+         'border-transparent' : props.answerState !== 'selected'
+       }"/>
     <!-- BORDER ONLY FOR VALID/ERROR -->
     <div class="w-full h-full bg-beige border-transparent rounded-lg border-[6px] p-1.5"
          :class="{
