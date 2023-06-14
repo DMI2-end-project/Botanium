@@ -1,12 +1,12 @@
 <template>
   <div>
-    <video ref="next" width="100" muted autoplay>
+    <video ref="next" width="100" muted="true" autoplay>
         <source src="/log-book/next.webm" type="video/webm">
     </video>
-    <video ref="previous" width="100" muted autoplay>
+    <video ref="previous" width="100" muted="true" autoplay>
         <source src="/log-book/previous.webm" type="video/webm">
     </video>
-    <video ref="open" width="100" class="first" muted autoplay>
+    <video ref="open" width="100" class="first" muted="true" autoplay>
         <source src="/log-book/open.webm" type="video/webm">
     </video>
     <div class="content">
