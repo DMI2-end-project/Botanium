@@ -121,14 +121,20 @@ export default {
         (this.$refs.flash as HTMLElement).classList.remove('flash')
       }, 600)
 
+      // if(window.innerHeight > window.innerWidth){
+      //     this.isLandscape = false
+      // } else {
+      //     this.isLandscape = true
+      // }
+
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
 
       if (!context) { return }
 
       const maxSize = 800;
-      canvas.width = this.isLandscape ? this.video.videoWidth : this.video.videoHeight;
-      canvas.height = this.isLandscape ? this.video.videoHeight : this.video.videoWidth;
+      canvas.width = this.video.videoWidth;
+      canvas.height = this.video.videoHeight;
       let width = canvas.width
       let height = canvas.height
 
