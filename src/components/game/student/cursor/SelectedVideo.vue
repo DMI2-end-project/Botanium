@@ -56,13 +56,19 @@ export default defineComponent({
         backgroundAlpha: 0
       }) as PIXI.Application,
       animation: {} as PIXI.AnimatedSprite,
+      raf: -1,
     }
   },
   mounted() {
     this.update = this.update.bind(this)
+    this.$nextTick(() => {
+      (this.$refs.range as HTMLElement).addEventListener('pointerdown', this.click , false);
+      (this.$refs.range as HTMLElement).addEventListener('pointerup', this.unClick, false);
+        this.raf = requestAnimationFrame(this.update)
+    })
+
+
     this.loadSprite();
-    (this.$refs.range as HTMLElement).addEventListener('pointerdown', this.click , false);
-    (this.$refs.range as HTMLElement).addEventListener('pointerup', this.unClick , false);
   },
   methods: {
     unClick() {
@@ -93,7 +99,7 @@ export default defineComponent({
 
       this.animation = animation
 
-      this.app.ticker.add(this.update)
+      // this.app.ticker.add(this.update)
     },
     update() {
       this.selectedValue.target = Math.round(this.selectedValue.current)
@@ -102,6 +108,7 @@ export default defineComponent({
       }
       this.targetSprite = this.getMapSprite(this.selectedValue.current)
       this.animation.animationSpeed = this.true0((this.targetSprite - this.animation.currentFrame) * 0.1, 0.05);
+      this.raf = requestAnimationFrame(this.update)
     },
     getMapSprite(n: number) {
       return (n / 4) * (this.animation.totalFrames - 1)
@@ -120,8 +127,11 @@ export default defineComponent({
     }
   },
   beforeUnmount() {
+    cancelAnimationFrame(this.raf);
     this.app.ticker.remove(this.update);
     this.app.destroy(true);
+    (this.$refs.range as HTMLElement).removeEventListener('pointerdown', this.click , false);
+    (this.$refs.range as HTMLElement).removeEventListener('pointerup', this.unClick , false);
   }
 })
 </script>

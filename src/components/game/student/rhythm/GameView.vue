@@ -2,10 +2,12 @@
   <Pulse ref="pulse" :color="feedbackMessage.number === 0 || feedbackMessage.number === 1 ? 'green' : (feedbackMessage.number === 2 || feedbackMessage.number === 3 ? 'red' : 'purple')" />
   <div ref="feedback" class="feedback relatif text-purple uppercase text-2xl font-sans font-black"></div>
   <!-- <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p> -->
-  <!-- <p class="w-[200px]">gain : {{ gain }}</p>
+  <!-- <div class="fixed top-[200px] left-[50px]">
+    <p class="w-[200px]">gain : {{ gain }}</p>
   <p class="w-[200px]">decibelAverage : {{ decibel }}</p>
   <div class="w-24 h-[300px] bg-green-light flex flex-col justify-end mt-24">
     <div class="w-full bg-green" :style="`height: ${decibel}%`"></div>
+  </div>
   </div> -->
 </template>
 
@@ -55,6 +57,9 @@ export default defineComponent({
     };
   },
   async mounted() {
+    if (!this.gameFacade.audio) {
+      this.gameFacade.microIsNeeded()
+    }
     if (!this.gameFacade.audio) return
     this.deltaTimeWithServer = await this.gameFacade.audio.getDeltaTimeWithServer()
     this.play()

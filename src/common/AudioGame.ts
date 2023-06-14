@@ -9,6 +9,7 @@ export default class AudioGame {
   private frequencyData: Uint8Array | null = null;
   private dataArray: Float32Array | null = null;
   public lastDecibelAverage: number = 0; // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
+  public lastDecibelAverageWithoutGain: number = 0; // volume le plus fort d'une hauteur parmis toutes les hauteurs enregistré à la dernière frame
   private sensibilityVolume: number = 1; // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
   private accumulatedRMS: number = 0;
   private sampleCount: number = 0;
@@ -131,7 +132,7 @@ export default class AudioGame {
       const targetRMS = 0.5;
       const gain = targetRMS / averageRMS;
 
-      this.gainNode.gain.value = gain;
+      this.gainNode.gain.value = Math.min(gain, 50);
 
     console.log('Gain appliqué :', gain);
 
@@ -163,6 +164,7 @@ export default class AudioGame {
     }
 
     decibelAverage = decibelAverage / this.frequencyData.length;
+    this.lastDecibelAverageWithoutGain = decibelAverage
     if (this.gainNode && this.gainNode.gain.value && this.gainNode.gain.value !== 1) {
       decibelAverage = decibelAverage * this.gainNode.gain.value * 0.05
     }

@@ -70,7 +70,7 @@ export default defineComponent({
       }
     },
     hasMicroWaiting() {
-      const teams = this.gameStore.teams.filter(team => team.hasMicro === null)
+      const teams = this.gameStore.teams.filter(team => team.hasMicro === null && team.isConnected)
       if (teams) {
         return teams.length >= 1
       } else {
