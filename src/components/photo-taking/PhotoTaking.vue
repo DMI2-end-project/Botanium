@@ -16,9 +16,11 @@
 
     <div ref="flash" class="fixed inset-0 bg-white opacity-0 pointer-events-none"></div>
 
-    <div v-if="isPhotosOpen && photos.length > 0" ref="images" class="fixed inset-0 h-screen w-screen bg-white flex flex-wrap gap-6 p-12">
+    <div v-if="isPhotosOpen && photos.length > 0" ref="images" class="fixed inset-0 h-screen w-screen bg-white gap-6 p-12 overflow-y-scroll">
       <div class="fixed right-0 top-0 m-8"><RoundButton @click="isPhotosOpen = false" :color="COLOR.RED"><Cross /></RoundButton></div>
-      <img v-for="photo in photos" :src="photo" class="w-64 h-64 object-contain rounded-lg">
+      <div class="flex flex-wrap">
+        <img v-for="photo in photos" :src="photo" class="w-64 h-64 p-2 object-contain rounded-lg">
+      </div>
     </div>
   </div>
 </template>
@@ -71,11 +73,19 @@ export default {
 
     window.addEventListener("blur", this.destoryCamera);
     window.addEventListener("focus", this.setupCamera);
+    window.addEventListener("orientationchange", this.changeOrientation);
   },
   unmounted() {
     this.destoryCamera()
+    window.removeEventListener("blur", this.destoryCamera);
+    window.removeEventListener("focus", this.setupCamera);
+    window.removeEventListener("orientationchange", this.changeOrientation);
   },
   methods: {
+    changeOrientation() {
+      this.destoryCamera()
+      this.setupCamera()
+    },
     destoryCamera() {
       if (this.stream) {
         this.stream.getTracks().forEach(track => track.stop());
@@ -121,11 +131,11 @@ export default {
         (this.$refs.flash as HTMLElement).classList.remove('flash')
       }, 600)
 
-      // if(window.innerHeight > window.innerWidth){
-      //     this.isLandscape = false
-      // } else {
-      //     this.isLandscape = true
-      // }
+      if(window.innerHeight > window.innerWidth){
+          this.isLandscape = false
+      } else {
+          this.isLandscape = true
+      }
 
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
@@ -133,8 +143,8 @@ export default {
       if (!context) { return }
 
       const maxSize = 800;
-      canvas.width = this.video.videoWidth;
-      canvas.height = this.video.videoHeight;
+      canvas.width = this.isLandscape ? this.video.videoWidth : this.video.videoHeight;
+      canvas.height = this.isLandscape ? this.video.videoHeight : this.video.videoWidth;
       let width = canvas.width
       let height = canvas.height
 
