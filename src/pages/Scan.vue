@@ -54,9 +54,10 @@ const launchScan = () => {
   <ModalView v-if="isModalOpen" :close="false">
     <h1>Bravo !</h1>
     <p>La mission {{ exp }} a été validé !!</p>
-    <p>Voulez vous scanner un autre badge ?</p>
+    <p v-if="!chapterStore.sheetUnlocked">Voulez vous scanner un autre badge ?</p>
+    <p v-if="chapterStore.sheetUnlocked">Vous avez scanné tous les badges nécessaires ! La fiche est débloquée !</p>
     <div class="flex justify-center items-center gap-6">
-      <RoundButton :color="COLOR.YELLOW" @click="launchScan">
+      <RoundButton v-if="!chapterStore.sheetUnlocked" :color="COLOR.YELLOW" @click="launchScan">
         <Camera/>
       </RoundButton>
       <RoundButton :color="COLOR.RED" @click="router.push(`/chapitre/${mainStore.getGameId}`)">

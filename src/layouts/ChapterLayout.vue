@@ -59,28 +59,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-beige-medium flex flex-col w-full h-full min-h-screen">
-    <header class="flex flex-col w-full h-full p-4 z-20">
-      <!-- DEV INFO -->
-      <div class="flex justify-between items-center gap-6">
-        <div>
-          Path : {{ router.currentRoute?.path }},
-          Auth state : {{ pb.authStore.isValid }},
-          Role : {{ mainStore.role }}
-        </div>
-        <div>
-          Socket state : {{ mainStore.connected }},
-          RoomID : {{ mainStore.roomId }},
-          GameId : {{ mainStore.gameId }},
-        </div>
-        <div>
-          Step : {{ chapterStore.currentStep }}
-          Section : {{ mainStore.gameId }}
-          Paragraph : {{ chapterStore.currentParagraph }}
-        </div>
-        <button @click="disconnect" class="ml-auto block">Déconnexion</button>
-      </div>
-      <slot name="header"/>
+  <div class="fixed top-0 left-0 right-0 bottom-0 flex flex-col">
+    <header class="w-full flex items-center">
     </header>
     <main class="w-full h-full">
       <slot></slot>
