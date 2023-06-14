@@ -121,12 +121,6 @@ export default {
         (this.$refs.flash as HTMLElement).classList.remove('flash')
       }, 600)
 
-      if(window.innerHeight > window.innerWidth){
-          this.isLandscape = false
-      } else {
-          this.isLandscape = true
-      }
-
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
 
