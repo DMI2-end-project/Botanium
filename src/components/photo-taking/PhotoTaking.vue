@@ -45,7 +45,8 @@ export default {
       photos: [] as string[],
       isPhotosOpen: false,
       currentCamera: 'environment',
-      isMultipleCamera: true
+      isMultipleCamera: false,
+      isLandscape: false
     };
   },
   computed: {
@@ -87,10 +88,16 @@ export default {
       if (!this.video) { return }
       if (this.stream) { return }
 
+      if(window.innerHeight > window.innerWidth){
+          this.isLandscape = false
+      } else {
+          this.isLandscape = true
+      }
+
       navigator.mediaDevices.getUserMedia({
         video: {
-          width: { ideal: window.innerWidth },
-          height: { ideal: window.innerHeight },
+          width: { ideal: this.isLandscape ? window.innerWidth : window.innerHeight },
+          height: { ideal: this.isLandscape ? window.innerHeight : window.innerWidth },
           facingMode: this.currentCamera
         },
       })
@@ -109,10 +116,16 @@ export default {
     },
     async takePhoto() {
       if (!this.video) { return }
-      (this.$refs.flash as HTMLElement).classList.remove('flash')
+      (this.$refs.flash as HTMLElement).classList.add('flash')
       setTimeout(() => {
-        (this.$refs.flash as HTMLElement).classList.add('flash')
-      }, 10)
+        (this.$refs.flash as HTMLElement).classList.remove('flash')
+      }, 600)
+
+      if(window.innerHeight > window.innerWidth){
+          this.isLandscape = false
+      } else {
+          this.isLandscape = true
+      }
 
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
@@ -120,8 +133,8 @@ export default {
       if (!context) { return }
 
       const maxSize = 800;
-      canvas.width = this.video.videoWidth;
-      canvas.height = this.video.videoHeight;
+      canvas.width = this.isLandscape ? this.video.videoWidth : this.video.videoHeight;
+      canvas.height = this.isLandscape ? this.video.videoHeight : this.video.videoWidth;
       let width = canvas.width
       let height = canvas.height
 
