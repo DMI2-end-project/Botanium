@@ -1,6 +1,6 @@
 <template>
   <div>
-    <component v-bind:is="GameView" @validated="validated" @openModal="open"/>
+    <component v-bind:is="GameView" @validated="validated" @openModal="open" :gameFacade="gameFacade"/>
     <ModalView v-if="isModalOpen" @close="close" :close="false" :click-outside="true">
       <h1>{{ teamData.congratulation?.title }}</h1>
       <p>{{ teamData.congratulation?.text }}</p>
@@ -18,6 +18,7 @@ import {useGameStore} from "../../../stores/gameStore";
 import {useMainStore} from "../../../stores/mainStore";
 import {COLOR, GAME_STEP, GAME_TYPE} from "../../../common/Constants";
 import {TeamManagerInstance} from "../../../common/TeamManager";
+import GameFacade from "../../../common/GameFacade";
 
 import Cursor from "./cursor/GameView.vue";
 import DragDrop from "./drag-drop/GameView.vue";
@@ -44,6 +45,12 @@ export default defineComponent({
     Rhythm,
     RoundButton,
     Swipe
+  },
+  props: {
+    gameFacade: {
+      default: null,
+      type: GameFacade
+    }
   },
   data() {
     return {

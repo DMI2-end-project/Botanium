@@ -4,7 +4,6 @@ import {createPinia} from 'pinia';
 import {initClient} from "./client";
 import { DatabaseManagerInstance } from "./common/DatabaseManager";
 import { mountGameMasterManagerInstance } from "./common/GameMasterManager";
-import { mountAudioManagerInstance } from "./common/AudioManager";
 import { ROLE } from "./common/Constants";
 import { mountTeamManagerInstance } from "./common/TeamManager";
 import router from "./router";
@@ -31,7 +30,6 @@ const init = async () => {
 
   mountGameMasterManagerInstance(router);
   mountTeamManagerInstance(router);
-  mountAudioManagerInstance();
 
   app.mount('#app');
 }

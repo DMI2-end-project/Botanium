@@ -1,7 +1,7 @@
 import express from "express";
 import {createServer} from "http";
 import {Server} from "socket.io";
-import {AudioManagerInstance} from "./server/AudioManager.js";
+import AudioGame from "./server/AudioGame.js";
 import Room from "./server/Room.js";
 import {CHAPTER_STEP, EVENT, GAME_STEP, ROLE} from "./server/constants.js";
 
@@ -15,6 +15,7 @@ const io = new Server(http, {
     //origins: [`http://192.168.0.21:${port}`]
   },
 });
+const audioGame = new AudioGame();
 
 http.listen(port, () => {
   console.log(`Server listening on *:${port}`);
@@ -33,7 +34,7 @@ const joinRoom = (socket, arg) => {
   if (roomIndex === -1) {
     room = new Room(arg.roomId);
     rooms.push(room);
-    AudioManagerInstance.updateRooms(rooms)
+    audioGame.updateRooms(rooms);
   } else {
     room = rooms[roomIndex];
   }
@@ -313,5 +314,5 @@ io.on('connection', (socket) => {
     rooms = rooms.filter(room => room.id !== arg.roomId);
   });
 
-  AudioManagerInstance.initListenners(io, socket);
+  audioGame.initListenners(io, socket);
 });

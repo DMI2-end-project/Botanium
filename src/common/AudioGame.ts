@@ -2,8 +2,7 @@ import { getSocket } from "../client";
 import { useMainStore } from "../stores/mainStore";
 import { AUDIO_EVENT } from "./Constants";
 
-class AudioManager {
-  private static _instance: AudioManager;
+export default class AudioGame {
   private stream: MediaStream | null = null;
   private context: AudioContext | null = null;
   private analyser: AnalyserNode | null = null;
@@ -13,15 +12,11 @@ class AudioManager {
   private sensibilityVolume: number = 1; // value between 0.1 & 10 : sensibilité des différences de volume, pour compatbilisé un clappement, 0.1 sensibilité basse, 10 sensibilité très élevé
   private accumulatedRMS: number = 0;
   private sampleCount: number = 0;
-  private sampleCountMax: number = 500;
   public gainNode: GainNode | null = null;
+  private gainDestination: MediaStreamAudioDestinationNode | null = null;
   private socket = getSocket();
   private mainStore = useMainStore();
   private raf = -1;
-
-  public static get Instance(): AudioManager {
-    return this._instance || (this._instance = new this());
-  }
 
   public async getMicrophone(): Promise<boolean> {
     if (this.stream) {
@@ -43,9 +38,8 @@ class AudioManager {
 
       this.gainNode = this.context.createGain()
       this.analyser.connect(this.gainNode);
-      // this.gainNode.connect(this.context.destination);
-      const tempDestination = this.context.createMediaStreamDestination();
-      this.gainNode.connect(tempDestination);
+      this.gainDestination = this.context.createMediaStreamDestination();
+      this.gainNode.connect(this.gainDestination);
 
       return true
     } catch (err) {
@@ -53,12 +47,26 @@ class AudioManager {
     }
   }
 
-  public pauseMicrophone() {
-    console.log('AudioManager pause micro')
+  public async pauseMicrophone() {
+    console.log('AudioGame pause micro')
     cancelAnimationFrame(this.raf)
     if (this.stream) {
       this.stream.getTracks().forEach((track) => track.stop());
       this.stream = null;
+    }
+
+    if (this.gainNode) {
+      this.gainNode.disconnect();
+      this.gainNode = null;
+    }
+    if (this.gainDestination) {
+      this.gainDestination.disconnect();
+      this.gainDestination = null;
+    }
+
+    if (this.analyser) {
+      this.analyser.disconnect();
+      this.analyser = null;
     }
 
     if (this.context) {
@@ -68,7 +76,7 @@ class AudioManager {
   }
 
   public unPauseMicrophone() {
-    console.log('AudioManager unPause micro')
+    console.log('AudioGame unPause micro')
     this.getMicrophone()
   }
 
@@ -119,26 +127,17 @@ class AudioManager {
   public normalizeMicrophoneVolume() {
     if (!this.gainNode) return
 
-      // Calcul du gain moyen
       const averageRMS = this.accumulatedRMS / this.sampleCount;
-      const targetRMS = 0.5; // Valeur cible pour l'amplitude RMS
+      const targetRMS = 0.5;
       const gain = targetRMS / averageRMS;
 
-      // Application du gain pour le reste de l'enregistrement
       this.gainNode.gain.value = gain;
 
-      // Affichage du gain appliqué dans la console
     console.log('Gain appliqué :', gain);
 
-    // this.sampleCountMax += 500
-    // this.raf = requestAnimationFrame(this.processNormalizeMicrophoneVolume);
-
-      // Arrêt du traitement du flux audio
-      // gainNode.disconnect();
-      // audioContext.close();
   }
 
-  public isClapping(): Boolean { // TODO remettre dans la gameview
+  public isClapping(): Boolean {
     let clapping = false;
     if (!this.frequencyData) {
       return clapping
@@ -175,10 +174,21 @@ class AudioManager {
     this.lastDecibelAverage = decibelAverage;
     return clapping
   }
+
+  kill() {
+    console.log("AudioGame kill")
+    this.pauseMicrophone();
+    this.stream = null;
+    this.context = null;
+    this.analyser = null;
+    this.frequencyData = null;
+    this.dataArray = null;
+    this.lastDecibelAverage = 0;
+    this.sensibilityVolume = 1;
+    this.accumulatedRMS = 0;
+    this.sampleCount = 0;
+    this.gainNode = null;
+    this.gainDestination = null;
+    this.raf = -1;
+  }
 }
-
-export let AudioManagerInstance: AudioManager;
-
-export const mountAudioManagerInstance = () => {
-  AudioManagerInstance = AudioManager.Instance
-};

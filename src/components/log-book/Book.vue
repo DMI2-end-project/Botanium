@@ -150,7 +150,6 @@ export default defineComponent({
       await this.logBookStore.createPage(this.lastPage, n, this.mainStore.roomId);
       this.pagesContent = this.logBookStore.pages;
       this.lastPage = this.pagesContent.length + 1;
-      console.log(this.pagesContent)
     }
   },
 });

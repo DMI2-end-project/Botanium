@@ -5,17 +5,8 @@ const AUDIO_EVENT = {
   CLAP_SCORE: "clapScore",
 };
 
-class AudioManager {
-  static _instance;
-
-  static get Instance() {
-    return this._instance || (this._instance = new this());
-  }
-
+export default class AudioGame {
   constructor() {
-    if (AudioManager.exists) {
-      return AudioManager.instance;
-    }
     this.rooms = [];
   }
 
@@ -24,7 +15,7 @@ class AudioManager {
       console.log("AUDIO_EVENT.CLAP_SCORE", arg);
       let room = this.rooms.find((room) => room.id === arg.roomId);
       if (room) {
-        room.clapGameScore += arg.rhythm * 5 + Math.max(arg.rhythm * 2.5 / room.microOnTeams.length, 0);
+        room.clapGameScore += arg.rhythm * 4 + Math.max(arg.rhythm * 3 / room.microOnTeams.length, 0);
         room.clapGameScore = Math.min(Math.max(room.clapGameScore, 0), 100);
         io.in(arg.roomId).emit(AUDIO_EVENT.CLAP_SCORE, room.clapGameScore);
       }
@@ -61,5 +52,3 @@ class AudioManager {
     this.rooms = rooms;
   }
 }
-
-export const AudioManagerInstance = AudioManager.Instance;

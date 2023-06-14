@@ -72,7 +72,7 @@ onBeforeMount(() => {
         <component class="w-full" :is="getNumberComponent(i + 1)"/>
         <div
             class="absolute top-0 right-0 -translate-y-1/5 translate-x-1/4 aspect-square w-6 rounded-full shadow-md p-1.5"
-            :class="(i + 1 < mainStore.gameId) || (i + 1 === mainStore.gameId && gameStore.currentStep === GAME_STEP.CONGRATS) ? '':'hidden', gameStore.data?.colorBreadcrumb === 'yellow' ? 'bg-yellow' : 'bg-green'">
+            :class="(i + 1 < mainStore.gameId) || (i + 1 === mainStore.gameId && gameStore.currentStep === GAME_STEP.CONGRATS) ? '':'hidden' + ' ' + gameStore.data?.colorBreadcrumb === 'yellow' ? 'bg-yellow' : 'bg-green'">
           <Check class="text-white w-full aspect-square"/>
         </div>
       </div>
