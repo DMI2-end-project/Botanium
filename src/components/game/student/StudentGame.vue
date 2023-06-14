@@ -106,7 +106,6 @@ export default defineComponent({
         //this.gameStore.currentSequence += 1;
         await this.TMInstance.nextSequence();
       } else {
-        console.log('we in ?')
         //this.$emit('validated');
         this.gameStore.currentStep = GAME_STEP.WAIT;
         await TeamManagerInstance.teamValidation();

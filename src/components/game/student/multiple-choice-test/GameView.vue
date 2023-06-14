@@ -77,7 +77,6 @@ export default defineComponent({
       if (this.gameStore.teamId !== undefined) {
         const answers = this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers;
         const shuffledAnswers = shuffle(answers);
-        console.log('answers', answers, shuffledAnswers);
         return shuffledAnswers;
       }
     },

@@ -12,7 +12,6 @@ import Camera from "../../assets/svg/ico-photo.svg?component";
 
 const emits = defineEmits(['scan']);
 
-
 const router = useRouter();
 const mainStore = useMainStore();
 const chapterStore = useChapterStore();
@@ -26,7 +25,7 @@ const chapterStore = useChapterStore();
       </p>
       <div class="col-span-8 flex flex-col gap-3 justify-center items-center text-blue px-10">
         <p>Badges scannées {{ chapterStore.tasksScanned }} / {{ chapterStore.nbrTasks }}</p>
-        <div class="w-full rounded-full bg-green h-7 p-1.5">
+        <div class="w-full rounded-full bg-green h-7 p-1.5 overflow-hidden">
           <span class="block w-full h-full bg-blue rounded-full origin-left transition-transform"
                 :style="{transform: 'scaleX('+ (chapterStore.tasksScanned) / (chapterStore.nbrTasks) +')'}"/>
         </div>

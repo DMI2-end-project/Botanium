@@ -1,22 +1,30 @@
 <template>
-  <div class="grid grid-cols-12 gap-4 px-8 flex p-6 text-black">
-    <Reading v-show="chapterStore.currentStep === CHAPTER_STEP.STORY" class="col-span-12"/>
+  <div class="w-full h-full grid grid-cols-12 gap-4 px-8 flex p-6 text-black">
+    <div v-show="chapterStore.currentStep === CHAPTER_STEP.STORY"
+         class="bg-white rounded-lg col-span-12 sm:col-start-4 sm:col-span-9 lg:col-start-6 lg:col-span-7 flex items-center mt-auto p-10">
+      <Reading class=""/>
+      <RoundButton :color="COLOR.PINK" @click="next">
+        <Arrow class="rotate-180"/>
+      </RoundButton>
+    </div>
     <div
         v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
         class="col-span-9 bg-beige rounded-md p-6">
       <h1>Chapitre {{ mainStore.chapterId }}</h1>
       <h2>Capucine Pinpin et les carottes</h2>
     </div>
-    <div class="col-span-3">
+    <div
+        v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
+        class="col-span-3">
       <!-- TODO : add connexion -->
       <RoundButton :color="COLOR.PINK" @click="next">
         <Arrow class="rotate-180"/>
       </RoundButton>
-      <RoundButton v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION"
-                   :color="COLOR.YELLOW"
-                   @click="openSheet">
+      <CircleButton v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" @click="openSheet"
+                    :text="chapterStore.sheetUnlocked ? 'Ouvrir la fiche' : 'Débloquer la fiche'"
+                    :color="COLOR.YELLOW" :size="SIZE.SM" :colorReverse="true">
         <Sheet/>
-      </RoundButton>
+      </CircleButton>
     </div>
   </div>
   <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true">
@@ -32,17 +40,18 @@ import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
 import {useChapterStore} from "../../../stores/chapterStore";
 import {GameMasterManagerInstance} from "../../../common/GameMasterManager";
-import {CHAPTER_STEP, COLOR} from "../../../common/Constants";
+import {CHAPTER_STEP, COLOR, SIZE} from "../../../common/Constants";
 import Reading from "./Reading.vue";
 import ModalView from "../../common/ModalView.vue";
 import RoundButton from "../../common/RoundButton.vue";
 
 import Arrow from "../../../assets/svg/ico-arrow.svg?component";
 import Sheet from "../../../assets/svg/ico-book.svg?component";
+import CircleButton from "../../common/CircleButton.vue";
 
 export default defineComponent({
   name: 'TeacherChapter',
-  components: {ModalView, Arrow, RoundButton, Reading, Sheet},
+  components: {CircleButton, ModalView, Arrow, RoundButton, Reading, Sheet},
   data() {
     return {
       step: 0,
@@ -56,6 +65,9 @@ export default defineComponent({
     }
   },
   computed: {
+    SIZE() {
+      return SIZE
+    },
     COLOR() {
       return COLOR
     },
