@@ -1,37 +1,57 @@
 <template>
-  <div class="bg-gray-100 flex p-6 text-black">
+  <div class="w-full h-full grid grid-cols-12 gap-4 px-8 flex p-6 text-black">
+    <div v-show="chapterStore.currentStep === CHAPTER_STEP.STORY"
+         class="bg-white rounded-lg col-span-12 sm:col-start-4 sm:col-span-9 lg:col-start-6 lg:col-span-7 flex items-center mt-auto p-10">
+      <Reading class=""/>
+      <RoundButton :color="COLOR.PINK" @click="next">
+        <Arrow class="rotate-180"/>
+      </RoundButton>
+    </div>
     <div
         v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
-        class="bg-beige rounded-md p-6">
+        class="col-span-9 bg-beige rounded-md p-6">
       <h1>Chapitre {{ mainStore.chapterId }}</h1>
       <h2>Capucine Pinpin et les carottes</h2>
     </div>
-    <Reading v-show="chapterStore.currentStep === CHAPTER_STEP.STORY"/>
-    <RoundButton :color="COLOR.PINK" @click="next"> ></RoundButton>
-
-    <!--div class="flex flex-col">
-      <button>Projection</button>
-      <button @click="launchGame">
-        Lancer l'exercice {{ mainStore.gameId + 1 }}
-      </button>
-    </div-->
+    <div
+        v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
+        class="col-span-3">
+      <!-- TODO : add connexion -->
+      <RoundButton :color="COLOR.PINK" @click="next">
+        <Arrow class="rotate-180"/>
+      </RoundButton>
+      <CircleButton v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" @click="openSheet"
+                    :text="chapterStore.sheetUnlocked ? 'Ouvrir la fiche' : 'Débloquer la fiche'"
+                    :color="COLOR.YELLOW" :size="SIZE.SM" :colorReverse="true">
+        <Sheet/>
+      </CircleButton>
+    </div>
   </div>
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true">
+    <h1>Fiche connaissance !</h1>
+  </ModalView>
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';
+import {useRouter} from "vue-router";
 import {getSocket} from "../../../client";
-import {CHAPTER_STEP, COLOR} from "../../../common/Constants";
 import {useMainStore} from "../../../stores/mainStore";
 import {useGameStore} from "../../../stores/gameStore";
-import Reading from "./Reading.vue";
-import {GameMasterManagerInstance} from "./../../../common/GameMasterManager";
-import RoundButton from "../../common/RoundButton.vue";
 import {useChapterStore} from "../../../stores/chapterStore";
+import {GameMasterManagerInstance} from "../../../common/GameMasterManager";
+import {CHAPTER_STEP, COLOR, SIZE} from "../../../common/Constants";
+import Reading from "./Reading.vue";
+import ModalView from "../../common/ModalView.vue";
+import RoundButton from "../../common/RoundButton.vue";
+
+import Arrow from "../../../assets/svg/ico-arrow.svg?component";
+import Sheet from "../../../assets/svg/ico-book.svg?component";
+import CircleButton from "../../common/CircleButton.vue";
 
 export default defineComponent({
   name: 'TeacherChapter',
-  components: {RoundButton, Reading},
+  components: {CircleButton, ModalView, Arrow, RoundButton, Reading, Sheet},
   data() {
     return {
       step: 0,
@@ -39,10 +59,15 @@ export default defineComponent({
       mainStore: useMainStore(),
       gameStore: useGameStore(),
       chapterStore: useChapterStore(),
-      GMInstance: GameMasterManagerInstance
+      GMInstance: GameMasterManagerInstance,
+      router: useRouter(),
+      isModalOpen: false
     }
   },
   computed: {
+    SIZE() {
+      return SIZE
+    },
     COLOR() {
       return COLOR
     },
@@ -70,7 +95,7 @@ export default defineComponent({
             break;
           } else {
             if (this.mainStore.gameId < this.totalParts - 1) {
-              this.mainStore.gameId+=1;
+              this.mainStore.gameId += 1;
               this.GMInstance.launchGame(this.mainStore.gameId)
               break;
             } else {
@@ -81,6 +106,18 @@ export default defineComponent({
         case CHAPTER_STEP.END:
           this.GMInstance.endChapter();
       }
+    },
+    openSheet() {
+      if (this.chapterStore.sheetUnlocked) {
+        this.isModalOpen = true;
+        this.mainStore.isModalOpen = true;
+      } else {
+        this.router.push('/scan');
+      }
+    },
+    closeModal() {
+      this.isModalOpen = false;
+      this.mainStore.isModalOpen = false;
     }
   }
 });

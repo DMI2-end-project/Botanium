@@ -11,6 +11,7 @@ import LogBook from "../pages/LogBook.vue";
 import Chapter from "../pages/Chapter.vue";
 import Chapters from "../pages/Chapters.vue";
 import PhotoTaking from "../pages/PhotoTaking.vue";
+import Scan from "../pages/Scan.vue";
 import Dev from "../pages/Dev.vue";
 
 const config: RouterOptions = {
@@ -29,7 +30,7 @@ const config: RouterOptions = {
       path: '/accueil',
       component: Home,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
       },
     },
     {
@@ -37,7 +38,7 @@ const config: RouterOptions = {
       path: '/connexion',
       component: Login,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
       },
     },
     {
@@ -45,7 +46,7 @@ const config: RouterOptions = {
       path: '/tableau-de-bord',
       component: Dashboard,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
       },
     },
     {
@@ -53,7 +54,7 @@ const config: RouterOptions = {
       path: '/chapitres',
       component: Chapters,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
       }
     },
     {
@@ -85,7 +86,14 @@ const config: RouterOptions = {
       path: '/prise-de-photo',
       component: PhotoTaking,
       meta: {
-        layout: 'Dev',
+        layout: 'Default',
+      },
+    }, {
+      name: 'Scan',
+      path: '/scan',
+      component: Scan,
+      meta: {
+        layout: 'Default',
       },
     },
   ]
@@ -95,17 +103,17 @@ const router = createRouter(config);
 
 router.beforeEach((to, from) => {
   const store = useMainStore();
-
+  
   // Need auth to acces pages, redirect the user to the login page
   if (!DatabaseManagerInstance.pb.authStore.isValid && to.name !== 'Login') {
     return {name: 'Login'}
   }
-
+  
   // TODO : not working, example : https://pinia.vuejs.org/core-concepts/outside-component-usage.html
   if (DatabaseManagerInstance.pb.authStore.isValid && to.name === 'Login') {
     let roles = DatabaseManagerInstance.roles;
     let role = roles.find(item => item.id === DatabaseManagerInstance.pb.authStore.model?.role);
-
+    
     switch (store.role) {
       case ROLE.TEACHER:
         return {name: 'Dashboard'}
@@ -114,9 +122,9 @@ router.beforeEach((to, from) => {
         return {name: 'Home'}
     }
   }
-
+  
   if (DatabaseManagerInstance.pb.authStore.isValid) {
-
+  
   }
 });
 

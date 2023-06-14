@@ -1,5 +1,9 @@
 import {defineStore} from "pinia";
-import {GAME_STEP} from "../common/Constants";
+import { GAME_STEP } from "../common/Constants";
+
+interface Animations {
+  [key: string]: any;
+}
 
 export type StoreState = {
   data: any | undefined,
@@ -17,7 +21,7 @@ export const useGameStore = defineStore('game', {
     teamName: undefined,
     teams: [],
     currentStep: GAME_STEP.IDLE,
-    currentSequence: 0
+    currentSequence: 0,
   }),
   actions: {
     reset() {

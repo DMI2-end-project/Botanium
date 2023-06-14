@@ -103,6 +103,17 @@ io.on('connection', (socket) => {
     cleanRoom(socket);
   });
 
+  socket.on('taskScanned', (arg) => {
+    console.log('taskScanned', arg);
+    let room = rooms.find(room => room.id === arg.roomId);
+
+    if (room) {
+      room.tasksScanned += 1;
+    }
+
+    io.in(arg.roomId).emit(EVENT.ROOM_STATUS, room);
+  });
+
   socket.on(EVENT.LAUNCH_CHAPTER, (arg) => {
     console.log('EVENT.LAUNCH_CHAPTER', arg);
     let room = rooms.find(room => room.id === arg.roomId);

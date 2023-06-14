@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col w-full h-full min-h-screen max-h-screen">
-    <header class="fixed top-0 left-0 flex items-center">
+  <div class="border-4 border-red bg-red/20 fixed top-0 left-0 right-0 bottom-0 flex flex-col">
+    <header class="border-4 border-purple bg-purple/20 w-full flex items-center">
       <div class="flex flex-col justify-center w-full h-full p-4 z-20">
         <div>
           Path : {{ router.currentRoute.path }},
@@ -16,8 +16,7 @@
       </div>
       <button @click="disconnect" class="ml-auto block">Déconnexion</button>
     </header>
-    <main class="flex flex-col w-full h-full justify-center items-center pt-16">
-      <!--The <slot> element is a slot outlet that indicates where the "VIEW" content should be rendered.-->
+    <main class="border-4 border-blue w-full h-full">
       <slot></slot>
     </main>
   </div>

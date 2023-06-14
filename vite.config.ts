@@ -10,11 +10,13 @@ export default defineConfig({
     svgLoader(),
     VitePWA({
       registerType: "autoUpdate",
+      includeAssets: "**/*",
       manifest: {
-        name: "Nuxt Vite PWA",
-        short_name: "NuxtVitePWA",
-        description: "test",
+        name: "Les petites pousses",
+        short_name: "LesPetitesPousses",
+        description: "Outil pédagogique sur la thématique du jardin",
         theme_color: "#ffffff",
+        start_url: '/',
         icons: [
           {
             src: "/icons/icon-48x48.png",
@@ -74,7 +76,7 @@ export default defineConfig({
       },
       workbox: {
         // navigateFallback: '/',
-        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
       },
       devOptions: {
         enabled: true,

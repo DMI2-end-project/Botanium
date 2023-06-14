@@ -1,5 +1,19 @@
+let safe = [];
+
+//safelist.push('bg-00101', 'bg-00102', 'bg-00103', 'bg-00104');
+for (let i = 1; i < 13; i++) {
+  safe.push(`grid-cols-${i}`);
+}
+
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  safelist: [
+    {
+      pattern:
+        /bg-(00101|00102|00103|00104|texture-green|texture-purple|texture-yellow|texture-pink)/,
+    },
+    ...safe,
+  ],
   theme: {
     extend: {
       borderRadius: {},
@@ -18,7 +32,6 @@ module.exports = {
         "hand-written": "Belle Allure CE",
       },
       colors: {
-        background: 'var(--color-background)',
         primary: "#4d6b36", // Green
         secondary: "#edbd56", // Yellow
         green: {
@@ -39,10 +52,22 @@ module.exports = {
         yellow: "#edbd56",
       },
       backgroundImage: {
-        'dotted': "url('/src/assets/dot.png')",
-        'signboard': "url('/src/assets/images/common/texture-signboard.png')",
-        'texture': "url('/src/assets/images/common/texture-bg.png')",
-      }
+        "dotted-yellow": "url('/src/assets/dot-yellow.png')",
+        "dotted-green": "url('/src/assets/dot-green.png')",
+        signboard: "url('/src/assets/images/common/texture-signboard.png')",
+        dig: "url('/game/background/dig.png')",
+        "00101": "url('/game/background/00101.png')",
+        "00102": "url('/game/background/00102.png')",
+        "00103": "url('/game/background/00103.png')",
+        "00104": "url('/game/background/00104.png')",
+        "texture-green": "url('/game/background/green.jpg')",
+        "texture-purple": "url('/game/background/purple.jpg')",
+        "texture-yellow": "url('/game/background/yellow.jpg')",
+        "texture-pink": "url('/game/background/pink.jpg')",
+      },
+      backgroundSize: {
+        "width-full": "100% auto",
+      },
     },
   },
   plugins: [],

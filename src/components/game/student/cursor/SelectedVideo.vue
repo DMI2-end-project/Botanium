@@ -4,7 +4,7 @@
     <div class="relative w-4/5 mx-auto">
       <input ref="range" type="range" v-model="selectedValue.current" min="0" max="4" step="0.001" class="w-full" :class="isError ? 'error' : ''"/>
       <Empty class="absolute -top-24 left-0 -ml-5 bg-green-light w-14 h-14 text-green rounded-full p-4"/>
-      <img alt="" :src="'/src/assets/game-data/images/00103/' + element + '.png'" class="absolute -top-24 right-0 -mr-5 bg-green-light w-14 h-14 text-green rounded-full p-2">
+      <img alt="" :src="'/game/images/00103/' + element + '.png'" class="absolute -top-24 right-0 -mr-5 bg-green-light w-14 h-14 text-green rounded-full p-2">
       <span v-for="i in 5" v-bind="i" class="w-3 h-3 m-1 rounded-full absolute pointer-events-none transition" :style="`left: calc(${(i - 1) * 100 / 4}% - ${(i - 1) * 5}px);`" :class="isError ? 'bg-red' : 'bg-purple'" />
     </div>
     <div class="absolute top-[45%] right-10">
@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useGameStore } from "../../../../stores/gameStore";
 import * as PIXI from "pixi.js";
 import RoundButton from '../../../common/RoundButton.vue';
 import Check from "../../../../assets/svg/ico-check.svg?component";
@@ -41,6 +42,7 @@ export default defineComponent({
   },
   data() {
     return {
+      gameStore: useGameStore(),
       selectedValue: {
         current: 0,
         target: 0
@@ -99,7 +101,6 @@ export default defineComponent({
         this.selectedValue.current = this.lerp(this.selectedValue.current, this.selectedValue.target, 0.05)
       }
       this.targetSprite = this.getMapSprite(this.selectedValue.current)
-      console.log(this.animation.animationSpeed)
       this.animation.animationSpeed = this.true0((this.targetSprite - this.animation.currentFrame) * 0.1, 0.05);
     },
     getMapSprite(n: number) {

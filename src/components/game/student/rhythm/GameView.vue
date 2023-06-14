@@ -1,7 +1,12 @@
 <template>
   <Pulse ref="pulse" :color="feedbackMessage.number === 0 || feedbackMessage.number === 1 ? 'green' : (feedbackMessage.number === 2 || feedbackMessage.number === 3 ? 'red' : 'purple')" />
   <div ref="feedback" class="feedback relatif text-purple uppercase text-2xl font-sans font-black"></div>
-  <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p>
+  <!-- <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p> -->
+  <p class="w-[200px]">gain : {{ gain }}</p>
+  <p class="w-[200px]">decibelAverage : {{ decibel }}</p>
+  <div class="w-24 h-[300px] bg-green-light flex flex-col justify-end mt-24">
+    <div class="w-full bg-green" :style="`height: ${decibel}%`"></div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -20,7 +25,7 @@ interface Feedback {
 
 export default defineComponent({
   components: { Pulse },
-  emits: ['validated'],
+  emits: ['validated', 'openModal'],
   data() {
     return {
       socket: getSocket(),
@@ -39,6 +44,8 @@ export default defineComponent({
       deltaTimeWithServer: 0 as number,
       raf: 0 as number,
       lastClap: 0 as number,
+      decibel: 0 as number,
+      gain: 1 as number,
     };
   },
   async mounted() {
@@ -48,7 +55,7 @@ export default defineComponent({
     window.addEventListener("focus", this.play);
   },
   methods: {
-    hasMicro() {
+    hasMicro() { // TODO var de l'audiomanager ?
       const team = this.gameStore.teams.find(team => team._name === this.gameStore.teamName)
       if (team) {
         return team?.hasMicro
@@ -79,13 +86,23 @@ export default defineComponent({
       const time = (Date.now() + this.deltaTimeWithServer) % this.rhythmFreq
       this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
 
-      if (this.lastClap + (this.rhythmFreq / 2) < Date.now() + this.hasMicro()) {
-
-        this.feedbackMessage = {number: -1, text: ''}
-        if (AudioManagerInstance.isClapping()) {
-          this.onClap()
+      if (this.hasMicro()) {
+        if ((this.lastClap + (this.rhythmFreq / 2)) < (Date.now() + this.deltaTimeWithServer)) {
+          this.feedbackMessage = {number: -1, text: ''}
         }
+
+        const isClap = AudioManagerInstance.isClapping()
+
+        if ((this.lastClap + (this.rhythmFreq / 4)) < (Date.now() + this.deltaTimeWithServer)) {
+          if (isClap) {
+            this.onClap()
+          }
+        }
+
+        this.decibel = AudioManagerInstance.lastDecibelAverage
+        this.gain = AudioManagerInstance.gainNode?.gain.value as number
       }
+
 
       if (time < this.lastTime) {
         (this.$refs.pulse as typeof Pulse).startAnimation();
@@ -109,7 +126,7 @@ export default defineComponent({
       const div = document.createElement("div");
       const p = document.createElement("p");
       const img = document.createElement("img") as HTMLImageElement;
-      img.src = window.location.origin + `/src/assets/game-data/icons/00104/clap-${this.feedbackMessage.number}.svg`;
+      img.src = `/game/icons/00104/clap-${this.feedbackMessage.number}.svg`;
       const node = document.createTextNode(this.feedbackMessage.text);
       p.appendChild(node);
       p.style.textAlign = 'center'
@@ -117,8 +134,11 @@ export default defineComponent({
       div.appendChild(p);
       (this.$refs.feedback as HTMLElement).appendChild(div);
       div.style.position = 'absolute'
-      div.style.width = '120px'
-      div.style.height = '120px'
+      div.style.display = 'flex'
+      div.style.flexDirection = 'column'
+      div.style.alignItems = 'center'
+      img.style.width = '60px'
+      img.style.height = '60px'
       div.style.top = 'calc(' + (Math.random() * 20 + 40) + '%)'
       div.style.left = 'calc(' + (Math.random() * 20 + 40) + '%)'
       div.style.transform = 'scale(0) translate(-50%, -50%)'

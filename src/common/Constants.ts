@@ -24,7 +24,7 @@ export enum EVENT {
 
 export enum AUDIO_EVENT {
   AUDIO_GAME_READY = 'audioGameReady',
-  MICRO_READY = 'mircoReady',
+  MICRO_READY = 'microReady',
   AUDIO_SYNCHRO = 'audioSynchro',
   CLAP_SCORE = 'clapScore',
 }
@@ -81,4 +81,8 @@ export enum SIZE {
   MD = 'md',
   LG = 'lg',
   XL = 'xl',
+}
+
+export enum SCAN {
+
 }

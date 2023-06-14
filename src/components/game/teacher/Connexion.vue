@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CircleButton @click="openModal" text="Connexion"><Wifi /></CircleButton>
+    <CircleButton @click="openModal" text="Connexion" class="mb-4"><Wifi /></CircleButton>
   </div>
 
   <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true">

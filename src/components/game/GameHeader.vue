@@ -5,14 +5,14 @@
         <component :is="getNumberComponent(mainStore.gameId)"/>
       </RoundItem>
     </div>
-    <p class="col-start-3 col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">{{ text }}</p>
+    <p class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">{{ text }}</p>
     <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue && clue !== ''" @click="openModal"
                  class="col-start-12 ml-auto">
       <Clue/>
     </RoundButton>
   </div>
 
-  <ModalView v-if="isModalOpen">
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
     <h1>Indice :</h1>
     <p>{{ clue }}</p>
     <RoundButton @click="closeModal" :color="COLOR.GREEN_MEDIUM_BEIGE">

@@ -39,8 +39,6 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="w-full h-full">
-    <TeacherChapter v-if="mainStore.role === ROLE.TEACHER"/>
-    <StudentChapter v-if="mainStore.role === ROLE.STUDENT"/>
-  </div>
+  <TeacherChapter v-if="mainStore.role === ROLE.TEACHER"/>
+  <StudentChapter v-if="mainStore.role === ROLE.STUDENT"/>
 </template>

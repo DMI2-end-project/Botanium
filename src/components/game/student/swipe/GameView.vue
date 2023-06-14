@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {defineEmits, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import {Application, Graphics, Polygon, Sprite} from "pixi.js";
 import {gsap} from "gsap";
 
@@ -101,7 +101,7 @@ onMounted(() => {
        */
 
       for (let i = 0; i < 30; i++) {
-        let src = `/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.value.sprite}`
+        let src = `/game/images/${mainStore.getFullGameId}/${teamData.value.sprite}`
         let sprite = Sprite.from(src);
 
         app.stage.addChild(sprite);
@@ -125,20 +125,18 @@ onMounted(() => {
     }
   }
 });
+
+// TODO : Responsive 💀
 </script>
 
 <template>
-  <div class="relative w-full h-full grid grid-cols-12 gap-4 px-8 justify-center items-center text-center gap-5">
-    <div class="col-span-4 col-start-5 w-full mx-auto aspect-square bg-white rounded-full absolute"/>
-    <div class="col-span-3 col-start-5 h-full flex justify-center items-center">
-      <div class="h-full mx-auto flex justify-center items-center">
-        <div class="relative aspect-[5/9] h-full">
-          <img v-if="teamData" alt=""
-               :src="`/src/assets/game-data/images/${mainStore.getFullGameId}/${teamData.background}`"
-               class="w-full h-full object-contain"/>
-          <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
-        </div>
-      </div>
+  <div class="max-h-full w-1/3 aspect-square bg-white rounded-full m-auto"/>
+  <div class="absolute top-0 bottom-0 w-1/3 max-h-full left-1/2 -translate-x-1/2">
+    <div class="relative aspect-[5/9 max-h-full]">
+      <img v-if="teamData" alt=""
+           :src="`/game/images/${mainStore.getFullGameId}/${teamData.background}`"
+           class="w-full h-full object-contain"/>
+      <canvas ref="canvas" class="absolute top-0 left-0 w-full h-full"/>
     </div>
   </div>
 </template>

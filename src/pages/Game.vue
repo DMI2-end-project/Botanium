@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, onMounted, ref} from "vue";
+import {onBeforeMount, onMounted, onUnmounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
@@ -43,42 +43,37 @@ const setSequence = () => {
   }
 }
 
-mainStore.$subscribe((mutation, state) => {
-  if (gameStore.data) {
-    document.documentElement.style.setProperty('--color-background', gameStore.data.color);
-
-    setSequence();
-  }
-});
-
 gameStore.$subscribe((_, state) => {
   if (state.data) {
-    document.documentElement.style.setProperty('--color-background', gameStore.data.color);
     setSequence();
   }
 });
 
 onBeforeMount(async () => {
-  if (gameStore.data) {
-    document.documentElement.style.setProperty('--color-background', gameStore.data.color);
-    setSequence();
-  }
-
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,
     roomId: mainStore.roomId
   });
+  if (gameStore.data) {
+    setSequence();
+  }
 });
+
+onUnmounted(() => {
+  AudioManagerInstance.pauseMicrophone()
+})
 
 let isModalOpen: Ref<Boolean> = ref(false);
 
 const getMicro = async () => {
+  console.log('getMicro')
   const hasMicro = await AudioManagerInstance.getMicrophone();
+  console.log('hasMicro', hasMicro)
   if (hasMicro) {
     isModalOpen.value = false
     mainStore.isModalOpen = false
-    TeamManagerInstance.mircoReady(true);
+    await TeamManagerInstance.microReady(true);
   } else {
     isModalOpen.value = true
     mainStore.isModalOpen = true
@@ -88,34 +83,39 @@ const getMicro = async () => {
 const readyWithoutMicro = () => {
   isModalOpen.value = false
   mainStore.isModalOpen = false
-  TeamManagerInstance.mircoReady(false);
+  TeamManagerInstance.microReady(false);
+}
+
+const closeModal = () => {
+  isModalOpen.value = false
+  mainStore.isModalOpen = false
 }
 
 </script>
 
 <template>
   <div v-if="gameStore.data"
-       class="w-full h-full grid grid-cols-12 items-center justify-center gap-4 px-8">
+       class="border-4 border-pink bg-pink/20 grid grid-cols-12 my-auto">
     <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION" @get-microphone="getMicro"
-                 class="col-start-3 col-span-8"/>
+                 class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
     <TeacherGame
         v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
-        class="col-span-12 h-full my-auto"/>
+        class="flex flex-col justify-center h-full col-span-12 my-auto"/>
     <StudentGame
         v-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
-        class="col-span-12 h-full my-auto"/>
+        class="flex-1 h-full col-span-12 my-auto"/>
     <Waiting
         v-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
-        class="col-start-3 col-span-8"/>
+        class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
     <Congratulation v-if="gameStore.currentStep === GAME_STEP.CONGRATS"
-                    class="col-start-3 col-span-8"/>
+                    class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
   </div>
-  <ModalView v-if="isModalOpen">
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
     <h1>Appelle ton enseignant pour qu’il active le son</h1>
     <p>Rendez vous dans les réglages du navigateur pour activer le micro ou continuer l’activité sans : la
       synchronisation du son ne prendra pas en compte le micro de cette tabalette</p>
     <div class="flex justify-center items-center gap-6">
-      <button @click="getMicro">Retester l'activiation du micro</button>
+      <button @click="getMicro">Retester l'activation du micro</button>
       <button @click="readyWithoutMicro">Faire l'activité sans le micro</button>
     </div>
   </ModalView>
