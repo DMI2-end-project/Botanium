@@ -37,14 +37,11 @@ const predict = async (videoRef: HTMLVideoElement) => {
     prediction.forEach((predict: any) => {
 
       if (predict.probability > .8 && predict.className !== 'none') {
-        console.log('predict', exp.value, predict.className);
-
         if (exp.value !== predict.className) {
           exp.value = predict.className;
 
           clearTimeout(timeoutID.value);
           timeoutID.value = setTimeout(() => {
-            //console.log('It hasn\'t changed');
             stop();
             taskScanned();
             emits('scanned', predict.className);
@@ -57,8 +54,6 @@ const predict = async (videoRef: HTMLVideoElement) => {
   }
 }
 const start = () => {
-  console.log('start');
-
   let fps = 2;
   let then = Date.now();
   let interval = 1000 / fps;
@@ -79,8 +74,6 @@ const start = () => {
   update();
 }
 const stop = () => {
-  console.log('stop', frameRequestID.value);
-
   if (frameRequestID.value) {
     cancelAnimationFrame(frameRequestID.value);
   }

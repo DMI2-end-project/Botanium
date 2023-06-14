@@ -40,9 +40,6 @@ onMounted(() => {
     }
   };
 
-  //console.log('props.facingMode', props.facingMode);
-  //console.log('window.navigator.mediaDevices', window.navigator, window.navigator.mediaDevices);
-
   if (currentVideo && window.navigator && window.navigator.mediaDevices) {
     window.navigator.mediaDevices.getUserMedia(constraints)
       .then((stream) => handleSuccess(currentVideo, stream))

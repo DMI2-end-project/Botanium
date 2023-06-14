@@ -21,10 +21,6 @@ const scan = ref<boolean>(false);
 const isModalOpen = ref<boolean>(false);
 const exp = ref<string>('');
 
-onMounted(() => {
-  console.log('ref', scanComponent);
-});
-
 const openModal = (info: any) => {
   exp.value = info;
   mainStore.isModalOpen = true;
@@ -37,7 +33,6 @@ const closeModal = () => {
 }
 
 const launchScan = () => {
-  console.log('launchScan', scanComponent);
   mainStore.isModalOpen = false;
   isModalOpen.value = false;
   scanComponent.value.start();
@@ -45,7 +40,6 @@ const launchScan = () => {
 
 // TODO : Add illustrations
 // TODO : Correspondance fr / en
-// TODO : Ajouter dans le flux
 </script>
 
 <template>
