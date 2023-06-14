@@ -109,7 +109,7 @@ const closeModal = () => {
 
 <template>
   <div v-if="gameStore.data"
-       class="border-4 border-pink bg-pink/20 grid grid-cols-12 my-auto">
+       class="border-4 border-pink bg-pink/20 grid grid-cols-12 my-auto pb-12">
     <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION" @get-microphone="getMicro"
                  class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
     <TeacherGame

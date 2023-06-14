@@ -23,9 +23,12 @@
         </h3>
       </div>
     </div>
-    <button v-show="gameStore.currentStep === GAMESTEP.END" class="col-span-12 mx-auto my-5" @click="next">
+    <!-- <button v-show="gameStore.currentStep === GAMESTEP.END" class="col-span-12 mx-auto my-5" @click="next">
       Continuer
-    </button>
+    </button> -->
+    <RoundButton v-show="gameStore.currentStep === GAMESTEP.END" class="col-span-12 mx-auto my-5" @click="next">
+      <Arrow class="rotate-180"/>
+    </RoundButton>
   </div>
 </template>
 
@@ -35,11 +38,15 @@ import {useGameStore} from "../../../../stores/gameStore";
 import {GAME_STEP} from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
 import CardGame from "../../CardGame.vue";
-import {useMainStore} from "../../../../stores/mainStore";
+import { useMainStore } from "../../../../stores/mainStore";
+import RoundButton from "../../../common/RoundButton.vue";
+
+import Arrow from "../../../../assets/svg/ico-arrow.svg?component";
+
 
 export default defineComponent({
   name: "TeacherGameView",
-  components: {CardGame},
+  components: {CardGame, RoundButton, Arrow},
   data() {
     return {
       mainStore: useMainStore(),

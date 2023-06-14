@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center relative">
-    <div ref="canvasContainer" class="canvas w-full -my-20" :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" ></div>
+    <div ref="canvasContainer" class="canvas w-full" :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" ></div>
     <!-- :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" -->
   </div>
 </template>
