@@ -29,6 +29,9 @@
     <RoundButton v-show="gameStore.currentStep === GAMESTEP.END" class="col-span-12 mx-auto my-5" @click="next">
       <Arrow class="rotate-180"/>
     </RoundButton>
+     <button class="col-span-12 mx-auto my-5 z-10" @click="next">
+      Exercice reussi
+    </button>
   </div>
 </template>
 
