@@ -15,6 +15,8 @@
 import RoundButton from './../common/RoundButton.vue'
 import { COLOR } from "./../../common/Constants";
 import Check from "./../../assets/svg/ico-check.svg?component";
+import { useMainStore } from '../../stores/mainStore';
+import { useLogBookStore } from '../../stores/logBookStore';
 
 export default {
   name: "AddPageComponent",
@@ -33,16 +35,33 @@ export default {
       return COLOR
     }
   },
+  watch: {
+    'logBookStore.closeElements': {
+      handler() {
+        this.logBookStore.closeElements = false
+        this.$emit('close', -1)
+      },
+      deep: true
+    }
+  },
   data: () => {
     return {
+      mainStore: useMainStore(),
+      logBookStore: useLogBookStore(),
       templateId: -1,
       numberTemplate: 3
     }
+  },
+  mounted() {
+    this.logBookStore.isClosable = true
   },
   methods: {
     validate() {
       this.$emit('close', this.templateId)
     }
+  },
+  unmounted() {
+    this.logBookStore.isClosable = false
   }
 };
 </script>

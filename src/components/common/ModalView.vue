@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineEmits, defineProps, ref} from "vue";
+import {ref} from "vue";
 import {onClickOutside} from '@vueuse/core'
 import {useMainStore} from "../../stores/mainStore";
 import {COLOR, SIZE} from "../../common/Constants";

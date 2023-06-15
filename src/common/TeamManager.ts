@@ -4,7 +4,7 @@ import {useChapterStore} from "../stores/chapterStore";
 import {useGameStore} from "../stores/gameStore";
 import {getSocket} from "./../client";
 import {EVENT, GAME_STEP, ROLE, AUDIO_EVENT} from "./Constants";
-import gameData from "../assets/game-data/game-data-v2.json";
+import gameData from "../assets/game-data/game-data.json";
 
 class TeamManager {
   private static _instance: TeamManager;
@@ -116,8 +116,8 @@ class TeamManager {
     });
   }
 
-  public async mircoReady(hasMicro: boolean) {
-    console.log("TeamManager MICRO_READY");
+  public async microReady(hasMicro: boolean) {
+    console.log("TeamManager MICRO_READY", hasMicro);
 
     await this._socket.emit(AUDIO_EVENT.MICRO_READY, {
       roomId: this._mainStore.roomId,
@@ -130,6 +130,6 @@ class TeamManager {
 export let TeamManagerInstance: TeamManager;
 
 export const mountTeamManagerInstance = (router: Router) => {
-  TeamManagerInstance = TeamManager.Instance
-  TeamManagerInstance._router = router
+  TeamManagerInstance = TeamManager.Instance;
+  TeamManagerInstance._router = router;
 };

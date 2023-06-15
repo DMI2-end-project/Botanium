@@ -1,13 +1,17 @@
 <script lang="ts">
-// Path: src\layouts\TheDefaultLayout.vue
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
+
 export default defineComponent({
-    name: "DefaultLayout",
+  name: "DefaultLayout",
 });
 </script>
 
 <template>
-    <main>
-        <slot></slot>
+  <div class="fixed top-0 left-0 right-0 bottom-0 flex flex-col">
+    <header class="w-full flex items-center">
+    </header>
+    <main class="w-full h-full">
+      <slot></slot>
     </main>
+  </div>
 </template>

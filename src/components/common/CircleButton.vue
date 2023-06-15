@@ -1,13 +1,16 @@
 <template>
-  <button class="font-bold flex items-center rounded-full p-2 group transition" :class="containerClass">
-      <div class="rounded-full border aspect-square p-2 flex flex-col items-center transition" :class="circleClass"><slot /></div>
-      <p class="px-3" :class="textClass">{{ text }}</p>
-    </button>
+  <button class="font-bold flex gap-2 items-center rounded-full p-2 pr-4 group transition" :class="containerClass">
+    <div class="rounded-full border aspect-square flex flex-col items-center justify-center transition"
+         :class="circleClass">
+      <slot/>
+    </div>
+    <p :class="textClass">{{ text }}</p>
+  </button>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { COLOR, SIZE } from "../../common/Constants";
+import {defineComponent} from 'vue';
+import {COLOR, SIZE} from "../../common/Constants";
 
 export default defineComponent({
   name: 'CircleButton',
@@ -61,6 +64,15 @@ export default defineComponent({
           this.circleClass += ' border-purple group-hover:border-beige';
         }
         break;
+      case COLOR.YELLOW:
+        if (this.colorReverse) {
+          this.containerClass += ' text-beige bg-yellow hover:bg-beige hover:text-yellow';
+          this.circleClass += ' border-beige group-hover:border-yellow';
+        } else {
+          this.containerClass += ' text-yellow bg-beige hover:bg-yellow hover:text-beige';
+          this.circleClass += ' border-yellow group-hover:border-beige';
+        }
+        break;
       default:
         break
     }
@@ -68,11 +80,11 @@ export default defineComponent({
     switch (this.size) {
       case SIZE.SM:
         this.textClass += ' text-sm';
-        this.circleClass += ' w-10 h-10';
+        this.circleClass += ' w-10 h-10 p-2';
         break;
       case SIZE.MD:
         this.textClass += ' text-lg';
-        this.circleClass += ' w-16 h-16';
+        this.circleClass += ' w-16 h-16 p-4';
         break;
       default:
         break

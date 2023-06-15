@@ -14,23 +14,23 @@
       <button @click="itemSelected" :data-id="index"
               class="w-full h-full rounded-md shadow-md w-max-content flex flex-col items-center gap-5 text-center py-14 px-10 focus:outline-none "
               :class="answer.status === 'error' ? '!bg-red text-white' : (answer.status === 'valid' ? '!bg-blue text-white' : (answer.isClicked ? '!bg-green-light text-green' : '!bg-beige text-green'))">
-        <img :src="publicPath + '/src/assets/game-data/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
+        <img :src="'/game/icons/'+ mainStore.getFullGameId +'/' + answer.icon" alt=""
              class="w-16 aspect-square pointer-events-none">
         <span class="text-md pointer-events-none">{{ answer.text }}</span>
       </button>
     </div-->
-    <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-2 mx-auto my-5"
-                 :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">
-      <Check/>
-    </RoundButton>
-    <ModalView v-if="isModalOpen">
-      <h1>{{ congratTitle }}</h1>
-      <p>{{ congratText }}</p>
-      <RoundButton :color="COLOR.YELLOW" @click="closeModal">
-        <Replay/>
-      </RoundButton>
-    </ModalView>
   </div>
+  <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-2 mx-auto mt-4"
+               :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">
+    <Check/>
+  </RoundButton>
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
+    <h1>{{ congratTitle }}</h1>
+    <p>{{ congratText }}</p>
+    <RoundButton :color="COLOR.YELLOW" @click="closeModal">
+      <Replay/>
+    </RoundButton>
+  </ModalView>
 </template>
 
 <script lang="ts">
@@ -46,6 +46,7 @@ import RoundButton from "../../../common/RoundButton.vue";
 
 import Check from "../../../../assets/svg/ico-check.svg?component";
 import Replay from "../../../../assets/svg/ico-replay.svg?component";
+import {shuffle} from "../../../../common/Lib";
 
 export default defineComponent({
   name: 'StudentGameView',
@@ -60,12 +61,12 @@ export default defineComponent({
   emits: ['validated'],
   data() {
     return {
-      publicPath: window.location.origin,
       mainStore: useMainStore(),
       gameStore: useGameStore(),
       currentAnswer: undefined as any,
       currentIndex: -1,
-      isModalOpen: false
+      isModalOpen: false,
+
     }
   },
   computed: {
@@ -74,7 +75,9 @@ export default defineComponent({
     },
     answers() {
       if (this.gameStore.teamId !== undefined) {
-        return this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers;
+        const answers = this.gameStore.data.gameSequences[this.gameStore.currentSequence].teams[this.gameStore.teamId].answers;
+        const shuffledAnswers = shuffle(answers);
+        return shuffledAnswers;
       }
     },
     congratTitle() {
@@ -97,14 +100,16 @@ export default defineComponent({
   },
   methods: {
     itemSelected(index: number) {
-      this.answers.forEach((answer: any) => {
-        answer.status = "none";
-      });
-      this.answers[index].status = 'selected';
-      this.currentIndex = index;
+      if (this.answers) {
+        this.answers.forEach((answer: any) => {
+          answer.status = "none";
+        });
+        this.answers[index].status = 'selected';
+        this.currentIndex = index;
+      }
     },
     itemValidated() {
-      if (this.currentIndex !== -1) {
+      if (this.currentIndex !== -1 && this.answers) {
         this.answers[this.currentIndex].status = this.answers[this.currentIndex].isValid ? 'valid' : 'error';
         if (this.answers[this.currentIndex].status === 'valid') {
           setTimeout(() => {

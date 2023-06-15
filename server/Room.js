@@ -18,18 +18,16 @@ const shuffle = (array) => {
 }
 
 export default class Room {
-  _id = undefined;
-  _teams = [];
-  gamemaster = undefined;
+  _id = undefined;  // string
+  _teams = [];  // Team[]
+  gamemaster = undefined; // string
   currentParagraph = 0;
   currentSequence = 0;
-
   chapterId = 0;
   chapterStep = 0;
-
   gameId = 0;
   gameStep = 0;
-
+  tasksScanned = 0;
   clapGameScore = 0;
 
   _names = [
@@ -62,6 +60,76 @@ export default class Room {
   constructor(id) {
     this._id = id;
   }
+  createTeam(socketId) {
+    let team = new Team(socketId);
+    let i = 0;
+    while (this._names[i].isTaken && i < this._names.length - 1) {
+      i++;
+    }
+    if (this._names[i].isTaken) {
+      // Debug
+      team.name = "random" + Math.round(Math.random() * 100);
+    } else {
+      team.name = this._names[i].name;
+      this._names[i].isTaken = true;
+    }
+    this._teams.push(team);
+    return team;
+  }
+  addTeam(socketId, teamName) {
+    /*  With router.push we keep our socketId from page to page */
+    let team = this._teams.find((t) => t.socketId === socketId);
+
+    if (!team) {
+      /*  When we loose the connection or reload page socketId is changing */
+      team = this._teams.find((t) => t.name === teamName);
+      if (!team) {
+        team = this.createTeam(socketId);
+      } else {
+        if (!team.isConnected) {
+          team.socketId = socketId;
+          team.isConnected = true;
+        } else {
+          team = this.createTeam(socketId);
+        }
+      }
+    }
+
+    return team;
+  }
+  removeTeam(socketId) {
+    let teamIndex = this._teams.findIndex((t) => t.socketId === socketId);
+
+    if (teamIndex > -1) {
+      this._teams[teamIndex].isConnected = false;
+      return this._teams[teamIndex];
+    }
+  }
+  isRoomAudioReady() {
+    return this.connectedTeams.filter((t) => t.hasMicro === null).length > 0
+      ? null
+      : this.connectedTeams.filter((t) => t.hasMicro).length >= 1;
+  }
+  shuffleTeams() {
+    this._teams = shuffle(this._teams);
+  }
+  isGameFinished() {
+    return this.validatedTeams.length >= this.playingTeams.length;
+  }
+  reset = () => {
+    this.currentParagraph = 0;
+    this.currentSequence = 0;
+
+    this.chapterId = 0;
+    this.chapterStep = 0;
+
+    this.gameId = 0;
+    this.gameStep = 0;
+
+    this.tasksScanned = 0;
+
+    this._teams.map((team) => team.reset());
+  };
 
   get id() {
     return this._id;
@@ -85,80 +153,5 @@ export default class Room {
 
   get microOnTeams() {
     return this.connectedTeams.filter((t) => t.hasMicro);
-  }
-
-  isRoomAudioReady() {
-    return this.connectedTeams.filter((t) => t.hasMicro === null).length > 0
-      ? null
-      : this.connectedTeams.filter((t) => t.hasMicro).length >= 1;
-  }
-
-  isGameFinished() {
-    return this.validatedTeams.length >= this.playingTeams.length;
-  }
-
-  addTeam(socketId, teamName) {
-    /*  With router.push we keep our socketId from page to page */
-    let team = this._teams.find((t) => t.socketId === socketId);
-
-    if (!team) {
-      /*  When we loose the connection or reload page socketId is changing */
-      team = this._teams.find((t) => t.name === teamName);
-      if (!team) {
-        team = this.createTeam(socketId);
-      } else {
-        if (!team.isConnected) {
-          team.socketId = socketId;
-          team.isConnected = true;
-        } else {
-          team = this.createTeam(socketId);
-        }
-      }
-    }
-
-    return team;
-  }
-
-  createTeam(socketId) {
-    let team = new Team(socketId);
-    let i = 0;
-    while (this._names[i].isTaken && i < this._names.length - 1) {
-      i++;
-    }
-    if (this._names[i].isTaken) {
-      // Debug
-      team.name = "random" + Math.round(Math.random() * 100);
-    } else {
-      team.name = this._names[i].name;
-      this._names[i].isTaken = true;
-    }
-    this._teams.push(team);
-    return team;
-  }
-
-  removeTeam(socketId) {
-    let teamIndex = this._teams.findIndex((t) => t.socketId === socketId);
-
-    if (teamIndex > -1) {
-      this._teams[teamIndex].isConnected = false;
-      return this._teams[teamIndex];
-    }
-  }
-
-  reset = () => {
-    this.currentParagraph = 0;
-    this.currentSequence = 0;
-
-    this.chapterId = 0;
-    this.chapterStep = 0;
-
-    this.gameId = 0;
-    this.gameStep = 0;
-
-    this._teams.map((team) => team.reset());
-  };
-
-  shuffleTeams() {
-    this._teams = shuffle(this._teams);
   }
 }

@@ -50,7 +50,7 @@ export default defineComponent({
                  :to="mainStore.role === ROLE.STUDENT ? '/accueil' : '/tableau-de-bord'">
       Home
     </router-link>
-    <button v-if="mainStore.role === ROLE.TEACHER" @click="killRoom">Bye bye room</button>
+    <button v-if="mainStore.role === ROLE.TEACHER" @click="killRoom">Kill</button>
   </div>
   <component :is="layout">
     <slot/>

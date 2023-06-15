@@ -7,6 +7,23 @@ export const leading = (num: number, size: number): string => {
   return string;
 }
 
+export const shuffle = (array: any[]) => {
+  let currentIndex = array.length, randomIndex;
+  
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+    
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+  
+  return array;
+}
+
 export const base64ToFile = (base64String: string): File => {
   const byteCharacters: string = atob(base64String.split(',')[1]);
   const byteNumbers: Array<any> = new Array(byteCharacters.length);
@@ -56,18 +73,20 @@ export const getDrawData = (record: Record): DrawData => {
     file: record.file,
     slot: record.slot,
     page: record.page,
-    signature: record.signature
+    signature: record.signature,
+    classroom: record.classroom
   };
 }
 
-export const getDefaultDrawData = (pageId: string = '', slot:number = -1): DrawData => {
+export const getDefaultDrawData = (pageId: string = '', slot: number = -1, classroom: string = ''): DrawData => {
   return {
     id: '',
     collectionId: '',
     file: {} as File,
     slot: slot,
     page: pageId,
-    signature: ''
+    signature: '',
+    classroom: classroom
   };
 }
 
@@ -124,5 +143,6 @@ export const getDrawFormData = (data: DrawData): FormData => {
   formData.append('slot', data.slot.toString());
   formData.append('page', data.page);
   formData.append('signature', data.signature);
+  formData.append('classroom', data.classroom);
   return formData
 }

@@ -2,24 +2,20 @@ import {defineStore} from "pinia";
 import {Record} from "pocketbase";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {leading} from "../common/Lib";
-import GameDataJSON from '../assets/game-data/game-data-v2.json';
+import GameDataJSON from '../assets/game-data/game-data.json';
 import ChapterDataJSON from '../assets/chapters-data/chapters-data.json';
 import {ChapterData, GameData} from "../common/Interfaces";
 
 export type StoreState = {
   isModalOpen: boolean,
   askForRedirection: boolean,
-  
   connected: boolean,
   roomId: string | undefined,
-  
   roleId: string | undefined,
   roles: Record[],
-  
   dbChapterId: string | undefined,
   chapterData: ChapterData,
   chapterId: number
-  
   gameData: GameData,
   gameId: number,
 };
@@ -27,8 +23,8 @@ export type StoreState = {
 export const useMainStore = defineStore('main', {
   state: (): StoreState => ({
     isModalOpen: true,
-    askForRedirection: false,
     connected: false,
+    askForRedirection: false,
     roomId: undefined,
     roleId: undefined,
     roles: [],

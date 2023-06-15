@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import {defineProps} from 'vue';
-
 import Check from '../../assets/svg/ico-check-transparency.svg?component';
 import Deco from '../../assets/svg/card-corner.svg?component';
 

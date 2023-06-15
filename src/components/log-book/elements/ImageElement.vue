@@ -4,7 +4,7 @@
       <div :class="color" class="w-16 h-4 opacity-70 absolute -top-2 z-10"></div>
       <img alt="" :src="photoUrl(photoData)" class="image max-h-full max-w-full object-contain bg-white border-4 border-white drop-shadow-lg">
     </div>
-    <p v-if="!photoData.id">image</p>
+    <Picture v-if="!photoData.id" class="w-1/3 mx-auto" :class="onModify ? 'text-yellow' : ''" />
   </button>
   <Transition :name="isPageLeft ? 'translateLeft' : 'translateRight'">
     <div v-show="onModify" class="fixed z-40 w-screen h-screen top-0 left-0 flex items-end">
@@ -13,7 +13,7 @@
           <Transition name="scaleButtonBg">
             <RoundButton @click="saveData" :color-bg="COLOR.BEIGE" :color="COLOR.GREEN_MEDIUM_BEIGE" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Check /></RoundButton>
           </Transition>
-          <RoundButton v-if="photoData.id === photoDataLast.id" @click="close" :color-bg="COLOR.BEIGE" :color="COLOR.RED" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Cross /></RoundButton>
+          <!-- <RoundButton v-if="photoData.id === photoDataLast.id" @click="close" :color-bg="COLOR.BEIGE" :color="COLOR.RED" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Cross /></RoundButton> -->
           <div class="overflow-y-scroll h-full z-10">
             <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
               <div v-for="photo in photos" :v-bind="photo" class="w-48 h-48 flex justify-center items-center">
@@ -33,16 +33,18 @@
 import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
 import type { PhotoData } from './../../../common/Interfaces'
 import { useMainStore } from '../../../stores/mainStore';
+import { useLogBookStore } from '../../../stores/logBookStore';
 import RoundButton from './../../common/RoundButton.vue';
 import { COLOR } from "./../../../common/Constants";
 import Check from "./../../../assets/svg/ico-check.svg?component";
 import Cross from "./../../../assets/svg/ico-cross.svg?component";
+import Picture from "./../../../assets/svg/ico-picture.svg?component";
 
 
 export default {
   name: "ImageElementComponent",
   components: {
-    RoundButton, Check, Cross
+    RoundButton, Check, Cross, Picture
   },
   props: {
     pageId: {
@@ -71,6 +73,7 @@ export default {
   data: () => {
     return {
       mainStore: useMainStore(),
+      logBookStore: useLogBookStore(),
       photoData: {} as PhotoData,
       photoDataLast: {} as PhotoData,
       onModify: false as Boolean,
@@ -97,11 +100,16 @@ export default {
     },
     async modify() {
       this.onModify = true
-      this.photos = await DatabaseManagerInstance.fetchPhotos('page="" && classroom="' + this.mainStore.roomId + '"')
+      this.photos = []
+      if (this.photoDataLast.id) {
+        this.photos.push(this.photoDataLast)
+      }
+      const photosFetch = this.logBookStore.photosNotUsed
+      this.photos.push(...photosFetch)
     },
     changeImage(photo: PhotoData) {
       if (this.photoData === photo) {
-        this.photoData = this.photoDataLast
+        this.photoData = {id:''} as PhotoData
         return
       }
       this.photoData = photo
@@ -118,14 +126,16 @@ export default {
       if (this.photoDataLast.id !== '') {
         this.photoDataLast.page = '';
         this.photoDataLast.slot = 0;
-        await DatabaseManagerInstance.updatePhoto(this.photoDataLast)
+        await this.logBookStore.updatePhoto(this.photoDataLast)
       }
 
-      this.photoData.page = this.pageId;
-      this.photoData.slot = this.slotNumber;
-      this.photoData = await DatabaseManagerInstance.updatePhoto(this.photoData)
-      this.photoDataLast = this.photoData
+      if (this.photoData.id !== '') {
+        this.photoData.page = this.pageId;
+        this.photoData.slot = this.slotNumber;
+        this.photoData = await this.logBookStore.updatePhoto(this.photoData)
+      }
 
+      this.photoDataLast = this.photoData
       this.onModify = false
     },
     async close() {

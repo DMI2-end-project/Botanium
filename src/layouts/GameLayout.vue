@@ -13,7 +13,7 @@ import GameHeader from "../components/game/GameHeader.vue";
 import TeamSignboard from "../components/common/TeamSignboard.vue";
 import Connexion from "../components/game/teacher/Connexion.vue";
 
-import gameData from "../assets/game-data/game-data-v2.json";
+import gameData from "../assets/game-data/game-data.json";
 
 interface GameData {
   [key: string]: any;
@@ -42,6 +42,15 @@ export default defineComponent({
     ROLE() {
       return ROLE
     },
+    backgroundImage(): string {
+      return 'bg-' + this.mainStore.getFullGameId as string
+    },
+    backgroundColor(): string {
+      if (this.gameStore.data) {
+        return 'bg-texture-' + this.gameStore.data.color as string
+      }
+      return '';
+    }
   },
   created() {
     if (this.mainStore.getFullGameId) {
@@ -69,38 +78,36 @@ export default defineComponent({
 
 
 <template>
-  <div class="bg-background fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden"/>
+  <div class="bg-cover bg-bottom fixed top-0 left-0 bottom-0 right-0 w-screen pointer-events-none overflow-hidden"
+       :class="backgroundColor"/>
   <div
-      class="bg-texture bg-cover fixed top-0 left-0 w-screen h-screen pointer-events-none overflow-hidden mix-blend-soft-light opacity-50"/>
-  <div class="flex flex-col w-full h-full min-h-screen max-h-screen">
-    <header class="fixed top-0 left-0 w-full z-20">
-      <!-- DEV INFO -->
-      <div class="col-span-12 flex justify-end items-center gap-6 z-20">
-        <!-- <div>
-          Path : {{ router.currentRoute?.path }},
-          Auth state : {{ pb.authStore.isValid }},
-          Role : {{ mainStore.role }}
-        </div> -->
-        <div class="ml-20">
-          Socket state : {{ mainStore.connected }},
-          RoomID : {{ mainStore.roomId }},
-          TeamID : {{ gameStore.teamId }},
-          TeamName : {{ gameStore.teamName }},
-          <!-- GameId : {{ mainStore.gameId }},
-          Step : {{ gameStore.currentStep }}, -->
-        </div>
-        <button @click="disconnect" class="ml-auto block">Déconnexion</button>
-      </div>
+      class="bg-cover bg-bottom fixed top-0 left-0 bottom-0 right-0 w-screen pointer-events-none overflow-hidden"
+      :class="gameStore.currentStep !== 1 && gameStore.currentStep !== 5 ? '' : backgroundImage"/>
+
+  <div class="fixed top-0 left-0 right-0 bottom-0 flex flex-col">
+    <header class="w-full mt-8">
       <Breadcrumb v-if="isBreadcrumb"/>
       <GameHeader v-if="!isBreadcrumb"/>
-      <slot name="header"/>
     </header>
-    <main class="w-screen h-screen flex-1 flex flex-col justify-center pt-16 z-10">
+    <main class="relative w-full h-full flex flex-col">
+      <slot></slot>
+    </main>
+  </div>
+  <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">
+    <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName"/>
+    <Connexion v-if="mainStore.role === ROLE.TEACHER"/>
+  </footer>
+  <!--div class="flex-1 flex flex-col w-full h-full min-h-screen max-h-screen gap-10">
+    <header class="w-full mt-8 z-20">
+      <Breadcrumb v-if="isBreadcrumb"/>
+      <GameHeader v-if="!isBreadcrumb"/>
+    </header>
+    <main class="w-screen flex-1 h-full flex flex-col justify-center pb-10 z-10">
       <slot></slot>
     </main>
     <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">
       <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName"/>
       <Connexion v-if="mainStore.role === ROLE.TEACHER"/>
     </footer>
-  </div>
+  </div-->
 </template>

@@ -15,7 +15,7 @@ import ModalView from "./components/common/ModalView.vue";
 import RoundButton from "./components/common/RoundButton.vue";
 
 import chapterData from "./assets/chapters-data/chapters-data.json";
-import gameData from "./assets/game-data/game-data-v2.json";
+import gameData from "./assets/game-data/game-data.json";
 
 import Check from "./assets/svg/ico-check.svg?component";
 import Cross from "./assets/svg/ico-cross.svg?component";
@@ -62,17 +62,13 @@ export default defineComponent({
   },
   methods: {
     async connectSocket() {
-      let classRoom = undefined;
+      this.mainStore.roomId = await DatabaseManagerInstance.getRoomId(this.mainStore.role);
 
       switch (this.mainStore.role) {
         case ROLE.TEACHER:
-          classRoom = await DatabaseManagerInstance.pb.collection('classroom').getFirstListItem(`owner="${DatabaseManagerInstance.pb.authStore.model?.id}"`);
-          this.mainStore.roomId = classRoom?.id;
           await connectClient();
           break;
         case ROLE.STUDENT:
-          classRoom = await DatabaseManagerInstance.pb.collection('classroom').getFirstListItem(`students.id="${DatabaseManagerInstance.pb.authStore.model?.id}"`);
-          this.mainStore.roomId = classRoom?.id;
           let teamId = localStorage.getItem('teamId');
           let teamName = localStorage.getItem('teamName');
           this.gameStore.teamId = teamId ? +teamId : undefined;
@@ -92,6 +88,9 @@ export default defineComponent({
         await this.router.push(`/exercice/${this.mainStore.getFullGameId}`);
       }
     },
+    dontJoin() { // TODO
+      localStorage.setItem('join', 'false');
+    },
     closeModal() {
       this.isModalOpen = false;
       this.mainStore.isModalOpen = false;
@@ -105,7 +104,7 @@ export default defineComponent({
 <template>
   <AppLayout>
     <router-view/>
-    <ModalView v-if="isModalOpen">
+    <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
       <h1>Attention !</h1>
       <p>Il y a une partie en cours, est-ce que tu veux la rejoindre ?</p>
       <div class="flex justify-center items-center gap-6">

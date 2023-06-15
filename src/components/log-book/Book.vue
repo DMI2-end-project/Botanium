@@ -1,13 +1,13 @@
 <template>
   <div>
-    <video ref="next" width="100" muted autoplay>
-        <source src="./../../assets/log-book/v5/next.webm" type="video/webm">
+    <video ref="next" width="100" muted="true" autoplay>
+        <source src="/log-book/next.webm" type="video/webm">
     </video>
-    <video ref="previous" width="100" muted autoplay>
-        <source src="./../../assets/log-book/v5/previous.webm" type="video/webm">
+    <video ref="previous" width="100" muted="true" autoplay>
+        <source src="/log-book/previous.webm" type="video/webm">
     </video>
-    <video ref="open" width="100" class="first" muted autoplay>
-        <source src="./../../assets/log-book/v5/open.webm" type="video/webm">
+    <video ref="open" width="100" class="first" muted="true" autoplay>
+        <source src="/log-book/open.webm" type="video/webm">
     </video>
     <div class="content">
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
@@ -39,6 +39,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import {useMainStore} from "./../../stores/mainStore";
+import {useLogBookStore} from "./../../stores/logBookStore";
 import PageContent from './PageContent.vue';
 import AddPage from './AddPage.vue';
 import {DatabaseManagerInstance} from "./../../common/DatabaseManager";
@@ -59,6 +60,7 @@ export default defineComponent({
   data: () => {
     return {
       mainStore: useMainStore(),
+      logBookStore: useLogBookStore(),
       lastPage: 1 as number,
       page: 1 as number,
       isBookOpen: false as Boolean,
@@ -85,15 +87,15 @@ export default defineComponent({
     },
   },
   watch: {
-    'mainStore.roomId': {
-      async handler() {
-        if (!this.mainStore.roomId) return
-        this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
-        this.lastPage = this.page = this.pagesContent.length + 1
-      },
-    }
+    // 'logBookStore.pages': {
+    //    handler() {
+    //     this.getPages()
+    //   },
+    //   deep: true
+    // }
   },
   async mounted() {
+    await this.getPages()
     this.openVideo = this.$refs.open as HTMLVideoElement;
     this.nextVideo = this.$refs.next as HTMLVideoElement;
     this.previousVideo = this.$refs.previous as HTMLVideoElement;
@@ -103,6 +105,11 @@ export default defineComponent({
     this.openVideo?.pause();
   },
   methods: {
+    async getPages() {
+      if (this.logBookStore.pages.length === 0 || this.pagesContent.length > 0) return
+      this.pagesContent = this.logBookStore.pages;
+      this.lastPage = this.page = this.pagesContent.length + 1
+    },
     openTheBook () {
       this.openVideo?.play();
       this.buttonOpen?.classList.add("disable");
@@ -139,10 +146,10 @@ export default defineComponent({
     },
     async onCloseAddPage(n:number) {
       this.onPageAdd = false
-      if (!this.mainStore.roomId) return
-      await DatabaseManagerInstance.createPage(this.lastPage, n, this.mainStore.roomId);
-      this.pagesContent = await DatabaseManagerInstance.fetchPages(this.mainStore.roomId);
-      this.lastPage = this.pagesContent.length + 1
+      if (!this.mainStore.roomId || n < 0) return
+      await this.logBookStore.createPage(this.lastPage, n, this.mainStore.roomId);
+      this.pagesContent = this.logBookStore.pages;
+      this.lastPage = this.pagesContent.length + 1;
     }
   },
 });
