@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useMainStore} from "../stores/mainStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import { GameMasterManagerInstance } from "../common/GameMasterManager";
+import {GameMasterManagerInstance} from "../common/GameMasterManager";
 
 import Book from "../assets/svg/ico-book.svg?component"
 import router from "../router";
@@ -15,33 +15,34 @@ const launchGame = (i: number) => {
 
 </script>
 <template>
-  <div class="w-full h-full flex flex-col gap-6 text-left overflow-hidden">
-    <h1>Bonjour {{ DatabaseManagerInstance.pb.authStore.model?.firstname }}, que souhaitez-vous faire ?</h1>
-    <div class="grid grid-cols-12 gap-4 px-8">
-      <div class="col-start-10 col-span-3 flex flex-col gap-4">
-        <router-link :to="{ name: 'LogBook'}" class="inline-block bg-beige p-4 rounded-md origin-left">
-          <!--Book class="w-full h-full"/--> Carnet de bord
-        </router-link>
-        <div class=" bg-beige rounded-md flex flex-col gap-6 p-6">
-          <span class="text-lg text-black">L'histoire </span>
-          <router-link :to="{ name: 'Chapters'}"
-                       class="inline-block bg-primary p-4 rounded-md">
-            Consulter les chapitres
-          </router-link>
-        </div>
-        <router-link :to="{ name: 'PhotoTaking'}"
-                       class="inline-block bg-primary p-4 rounded-md">
-            Prendre des photos
-          </router-link>
-        <div class=" bg-beige rounded-md flex flex-col gap-6 p-6">
-          <button v-for="i in 4" :v-bind="i" class="inline-block bg-primary p-4 rounded-md" @click="launchGame(i)">
-            Exercice {{ i }}
-          </button>
-        </div>
+  <div class="w-full h-full grid grid-cols-12 gap-4 px-8">
+    <div class="col-span-12 flex justify-between items-center">
+      <div></div>
+      <div class="bg-beige rounded-full px-10 py-6">
+        Bonjour {{ DatabaseManagerInstance.pb.authStore.model?.firstname }}, que souhaitez-vous faire ?
+      </div>
+      <div></div>
+    </div>
+    <div class="col-span-8"></div>
+    <div class="col-span-4 bg-beige/50 rounded-lg flex flex-col gap-4 p-4">
+      <h3 class="bg-beige/50 rounded-lg px-4 py-2 mb-4">
+        Je veux consulter et gérer :
+      </h3>
+      <router-link :to="{ name: 'LogBook'}" class="inline-block bg-beige text-green p-4 rounded-lg origin-left">
+        <h3>Carnet de bord</h3>
+      </router-link>
+      <router-link :to="{ name: 'Chapters'}" class="inline-block bg-beige text-green p-4 rounded-lg origin-left">
+        <h3>Consulter les chapitres </h3>
+      </router-link>
+      <router-link :to="{ name: 'PhotoTaking'}" class="inline-block bg-beige text-green p-4 rounded-lg origin-left">
+        <h3>Prendre des photos </h3>
+      </router-link>
+      <div class=" bg-beige rounded-md flex flex-col gap-6 p-6">
+        <button v-for="i in 4" :v-bind="i" class="inline-block bg-primary p-4 rounded-lg" @click="launchGame(i)">
+          Exercice {{ i }}
+        </button>
       </div>
     </div>
-
-    <!-- query: { id: store.getFullGameId }} -->
   </div>
 </template>
 <style scoped>
