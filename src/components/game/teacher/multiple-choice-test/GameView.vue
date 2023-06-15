@@ -33,6 +33,9 @@
                class="mx-auto mt-4">
     <Check/>
   </RoundButton>
+   <button class="col-span-12 mx-auto my-5 z-10" @click="next">
+      Exercice reussi
+    </button>
 </template>
 
 <script lang="ts">
