@@ -84,12 +84,12 @@ export default defineComponent({
       class="bg-cover bg-bottom fixed top-0 left-0 bottom-0 right-0 w-screen pointer-events-none overflow-hidden"
       :class="gameStore.currentStep !== 1 && gameStore.currentStep !== 5 ? '' : backgroundImage"/>
 
-  <div class="border-4 border-red bg-red/20 fixed top-0 left-0 right-0 bottom-0 flex flex-col">
-    <header class="border-4 border-purple bg-purple/20 w-full mt-8">
+  <div class="fixed top-0 left-0 right-0 bottom-0 flex flex-col">
+    <header class="w-full mt-8">
       <Breadcrumb v-if="isBreadcrumb"/>
       <GameHeader v-if="!isBreadcrumb"/>
     </header>
-    <main class="relative border-4 border-blue w-full h-full flex flex-col">
+    <main class="relative w-full h-full flex flex-col">
       <slot></slot>
     </main>
   </div>
