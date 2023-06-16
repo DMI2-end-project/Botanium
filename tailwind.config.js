@@ -65,6 +65,7 @@ module.exports = {
         "texture-yellow": "url('/game/background/yellow.jpg')",
         "texture-pink": "url('/game/background/pink.jpg')",
         "home": "url('/home/images/background.jpg')",
+        "log-book": "url('/log-book/background.png')",
       },
       backgroundSize: {
         "width-full": "100% auto",
