@@ -104,6 +104,12 @@ export default defineComponent({
       case COLOR.PURPLE:
         this.bgClass += ' bg-purple text-beige';
         this.textClass += ' text-beige';
+        this.borderClass += ' border-beige';
+        break;
+      case COLOR.BEIGE:
+        this.bgClass += ' bg-beige text-green';
+        this.textClass += ' text-green';
+        this.borderClass += ' border-green';
         break;
       default:
         break
