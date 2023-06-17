@@ -44,7 +44,7 @@ onBeforeMount(() => {
   <div class="bg-home w-screen h-screen bg-cover bg-center reltative">
     <img src="/home/images/plant-4.png" class="organic-5 absolute w-auto h-4/5 object-contain -bottom-[30%] -right-[2%] -scale-x-100">
     <img src="/home/images/plant-2.png" class="organic-4 absolute w-auto h-2/3 object-contain -top-[35%] -right-[10%]">
-    <img src="/home/images/plant-3.png" class="organic-3 absolute w-auto h-full object-contain -top-[30%] -right-[15%]">
+    <img src="/home/images/plant-3.png" class="organic-3 absolute w-1/3 h-full object-contain -top-[30%] -right-[15%]">
     <img src="/home/images/sun.png" class="sun absolute w-auto h-full object-contain -top-[0%] -left-[0%]">
     <div class="-scale-x-100 absolute w-1/3 h-auto object-contain -bottom-[5%] -right-[2%]">
       <img src="/home/images/plant-1.png" class="organic-2   origin-bottom-right">
@@ -52,7 +52,7 @@ onBeforeMount(() => {
 
     <Particles />
 
-    <div class="absolute bottom-0 left-0 right-0 mx-auto w-fit px-24 pt-4 pb-8 bg-beige-medium/80 border-4 border-beige border-b-0 rounded-t-[60px] flex justify-center items-center gap-12">
+    <div class="absolute bottom-0 left-0 right-0 mx-auto w-fit px-12 pt-4 pb-8 bg-beige-medium/80 border-4 border-beige border-b-0 rounded-t-[60px] flex justify-around min-w-[40%] items-center gap-4">
       <div v-for="data in menuData" :v-bind="data.name" class="flex flex-col items-center">
         <RoundButton :color="COLOR.BEIGE" @click="() => {router.push({name: data.url})}">
           <component :is="data.icon"/>
