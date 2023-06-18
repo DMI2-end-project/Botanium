@@ -104,6 +104,7 @@ export default defineComponent({
 <template>
   <AppLayout>
     <router-view/>
+
     <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
       <h1>Attention !</h1>
       <p>Il y a une partie en cours, est-ce que tu veux la rejoindre ?</p>

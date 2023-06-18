@@ -1,5 +1,5 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent, Component } from 'vue';
 import {useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
@@ -42,8 +42,8 @@ export default defineComponent({
     ROLE() {
       return ROLE
     },
-    backgroundImage(): string {
-      return 'bg-' + this.mainStore.getFullGameId as string
+    getImage(): string {
+      return '/game/background/' + this.mainStore.getFullGameId +'.png' as string
     },
     backgroundColor(): string {
       if (this.gameStore.data) {
@@ -80,14 +80,31 @@ export default defineComponent({
 <template>
   <div class="bg-cover bg-bottom fixed top-0 left-0 bottom-0 right-0 w-screen pointer-events-none overflow-hidden"
        :class="backgroundColor"/>
-  <div
-      class="bg-cover bg-bottom fixed top-0 left-0 bottom-0 right-0 w-screen pointer-events-none overflow-hidden"
-      :class="gameStore.currentStep !== 1 && gameStore.currentStep !== 5 ? '' : backgroundImage"/>
+  <div class="fixed inset-0 overflow-hidden w-screen h-screen">
+    <Transition name="bgTransitionLeft1">
+      <div v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" class="absolute bottom-0 h-2/3 w-fit max-w-[40%] origin-bottom">
+        <img :src="getImage" alt=""
+          class="-scale-x-100 h-full w-auto object-contain object-bottom">
+      </div>
+    </Transition>
+    <Transition name="bgTransitionLeft2" v-if="mainStore.getFullGameId !== '00101' && mainStore.getFullGameId !== '00104'">
+      <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-[25%] left-[10%] h-1/2 w-auto object-contain origin-bottom">
+    </Transition>
+    <Transition name="bgTransitionRight2">
+      <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-0 -right-[5%] h-5/6 max-w-[60%] w-auto object-contain origin-bottom object-bottom">
+    </Transition>
+    <Transition name="bgTransitionRight1" v-if="mainStore.getFullGameId !== '00104'">
+      <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-0 right-[10%] h-1/2 w-auto object-contain origin-bottom">
+    </Transition>
+  </div>
 
   <div class="fixed top-0 left-0 right-0 bottom-0 flex flex-col">
     <header class="w-full mt-8">
-      <Breadcrumb v-if="isBreadcrumb"/>
-      <GameHeader v-if="!isBreadcrumb"/>
+      <Transition name="fade" :mode="gameStore.currentStep < 3 ? 'out-in' : ''">
+          <component :is="isBreadcrumb ? 'Breadcrumb' : 'GameHeader'"/>
+        <!-- <Breadcrumb v-if="isBreadcrumb"/>
+        <GameHeader v-else-if="!isBreadcrumb" /> -->
+      </Transition>
     </header>
     <main class="relative w-full h-full flex flex-col">
       <slot></slot>
@@ -111,3 +128,47 @@ export default defineComponent({
     </footer>
   </div-->
 </template>
+
+
+<style scoped>
+.bgTransitionLeft1-enter-from,
+.bgTransitionLeft1-leave-to,
+.bgTransitionLeft2-enter-from,
+.bgTransitionLeft2-leave-to{
+    transform: scaleX(1.2) translate(-200px, 30px) rotate(-50deg);
+    opacity: 0;
+}
+
+.bgTransitionRight1-enter-from,
+.bgTransitionRight1-leave-to,
+.bgTransitionRight2-enter-from,
+.bgTransitionRight2-leave-to{
+    transform: scaleX(1.2) translate(200px, 30px) rotate(50deg);
+    opacity: 0;
+}
+
+.bgTransitionLeft1-enter-active,
+.bgTransitionRight1-enter-active {
+    transition: transform 1.2s cubic-bezier(0.445, 1.375, 0.305, 1.000),
+        opacity 0.2s ease-out;
+}
+
+.bgTransitionLeft2-enter-active,
+.bgTransitionRight2-enter-active {
+    transition: transform 1.2s cubic-bezier(0.445, 1.375, 0.305, 1.000) 0.2s,
+        opacity 0.2s ease-out 0.2s;
+}
+
+.bgTransitionLeft1-leave-active,
+.bgTransitionRight1-leave-active{
+    transition: transform 0.9s cubic-bezier(0.36, 0, 0.66, -0.56) 0.2s,
+        opacity 0.2s ease-in 0.9s;
+}
+
+.bgTransitionLeft2-leave-active,
+.bgTransitionRight2-leave-active{
+    transition: transform 0.9s cubic-bezier(0.36, 0, 0.66, -0.56),
+        opacity 0.2s ease-in 0.7s;
+}
+
+</style>

@@ -110,20 +110,22 @@ const closeModal = () => {
 <template>
   <div v-if="gameStore.data"
        class="grid grid-cols-12 my-auto pb-12">
-    <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION" @get-microphone="getMicro"
+    <Transition name="slide" mode="out-in">
+      <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION" @get-microphone="getMicro"
                  class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
-    <TeacherGame
-        v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
+      <TeacherGame
+        v-else-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
         class="flex flex-col justify-center h-full col-span-12 my-auto"/>
-    <StudentGame
-        v-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
+      <StudentGame
+        v-else-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
         :gameFacade="gameFacade"
         class="flex-1 h-full col-span-12 my-auto"/>
-    <Waiting
-        v-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
+      <Waiting
+        v-else-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
         class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
-    <Congratulation v-if="gameStore.currentStep === GAME_STEP.CONGRATS"
+      <Congratulation v-else-if="gameStore.currentStep === GAME_STEP.CONGRATS"
                     class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
+    </Transition>
   </div>
   <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
     <h1>Appelle ton enseignant pour qu’il active le son</h1>

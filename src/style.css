@@ -232,11 +232,30 @@ button:focus-visible {
     opacity: 0;
 }
 
-.translateLeft-enter-active, .translateRight-enter-active, .translateLeft-leave-active, .translateRight-leave-active {
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-out;
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s ease-out;
+}
 
+.slide-enter-from {
+    opacity: 0;
+    transform: translateX(3%) scaleX(1.03);
+    /* transform-origin: right; */
+}
+
+.slide-leave-to {
+    opacity: 0;
+    transform: translateX(-3%) scaleX(1.03);
+    /* transform-origin: right; */
+}
+
+.slide-enter-active, .slide-leave-active {
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
 @media (prefers-color-scheme: light) {
     :root {
