@@ -1,18 +1,14 @@
 <template>
   <div class="w-full h-full grid grid-cols-12 gap-4 px-8 flex p-6 text-black">
-    <div v-show="chapterStore.currentStep === CHAPTER_STEP.STORY"
-         class="bg-white rounded-lg col-span-12 sm:col-start-4 sm:col-span-9 lg:col-start-6 lg:col-span-7 flex items-center mt-auto p-10">
-      <Reading class=""/>
-      <RoundButton :color="COLOR.PINK" @click="next">
-        <Arrow class="rotate-180"/>
-      </RoundButton>
-    </div>
+    <Reading v-if="chapterStore.currentStep === CHAPTER_STEP.STORY" class="" @next="next"/>
+
     <div
         v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
         class="col-span-9 bg-beige rounded-md p-6">
       <h1>Chapitre {{ mainStore.chapterId }}</h1>
       <h2>Capucine Pinpin et les carottes</h2>
     </div>
+
     <div
         v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
         class="col-span-3">
@@ -22,7 +18,7 @@
       </RoundButton>
       <CircleButton v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" @click="openSheet"
                     :text="chapterStore.sheetUnlocked ? 'Ouvrir la fiche' : 'Débloquer la fiche'"
-                    :color="COLOR.YELLOW" :size="SIZE.SM" :colorReverse="true">
+                    :color="COLOR.GREEN" :size="SIZE.SM" :colorReverse="true">
         <Sheet/>
       </CircleButton>
     </div>
