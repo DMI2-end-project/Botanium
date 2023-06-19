@@ -6,7 +6,7 @@
       <div class="w-24 h-24 flex justify-left items-center">
         <RoundButton v-show="isMultipleCamera" @click="switchCamera" :color="COLOR.YELLOW" :size="SIZE.SM"><Reverse /></RoundButton>
       </div>
-      <RoundButton @click="takePhoto" :color="COLOR.YELLOW"><Camera /></RoundButton>
+      <RoundButton @click="takePhoto" :color="COLOR.YELLOW"><Photo /></RoundButton>
       <div class="w-24 h-24">
         <button v-show="photos.length > 0" @click="isPhotosOpen = true" class="w-24 h-24 rounded-lg border-2 border-white p-0 overflow-hidden">
         <img :src="photos[photos.length - 1]" class="w-full h-full object-cover">
@@ -31,13 +31,13 @@ import { useMainStore } from '../../stores/mainStore';
 import { PhotoData } from "../../common/Interfaces";
 import RoundButton from "../../components/common/RoundButton.vue";
 import { base64ToFile } from './../../common/Lib';
-import Camera from "./../../assets/svg/ico-camera.svg?component";
+import Photo from "./../../assets/svg/ico-photo.svg?component";
 import Cross from "./../../assets/svg/ico-cross.svg?component";
 import Reverse from "./../../assets/svg/ico-reverse.svg?component";
 import { COLOR, SIZE } from "./../../common/Constants";
 
 export default {
-  components: { RoundButton, Camera, Cross, Reverse },
+  components: { RoundButton, Photo, Cross, Reverse },
   data() {
     return {
       mainStore: useMainStore(),
