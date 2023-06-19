@@ -1,14 +1,16 @@
 <template>
-  <div v-if="colorBg" :class="(isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass" class="RoundButtonBg p-8 rounded-full">
+  <div v-if="colorBg" :class="(isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass"
+       class="RoundButtonBg p-8 rounded-full">
     <button
-      class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
-      :class="`${containerClass}`">
+        class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
+        :class="`${containerClass}`">
       <div
           class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform"
           :class="`${bgClass}`">
         <div
-        class="RoundButton__border absolute w-full h-full rounded-full bg-transparent border scale-[0.85] group-hover:scale-100 transform"
-        :class="`${borderClass}`"/></div>
+            class="RoundButton__border absolute w-full h-full rounded-full bg-transparent border scale-[0.85] group-hover:scale-100 transform"
+            :class="`${borderClass}`"/>
+      </div>
       <div class="RoundButton__icon z-10" :class="`${textClass}`">
         <slot/>
       </div>
@@ -18,22 +20,23 @@
       v-else
       class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
       :class="`${containerClass}` + (isActive ? '' : ' opacity-50 pointer-events-none')">
+    <div
+        class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform"
+        :class="`${bgClass}`">
       <div
-          class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform"
-          :class="`${bgClass}`">
-        <div
-        class="RoundButton__border absolute w-full h-full rounded-full bg-transparent border scale-[0.85] group-hover:scale-100 transform"
-        :class="`${borderClass}`"/></div>
+          class="RoundButton__border absolute w-full h-full rounded-full bg-transparent border scale-[0.85] group-hover:scale-100 transform"
+          :class="`${borderClass}`"/>
+    </div>
 
-      <div class="RoundButton__icon z-10" :class="`${textClass}`">
-        <slot/>
-      </div>
-    </button>
+    <div class="RoundButton__icon z-10" :class="`${textClass}`">
+      <slot/>
+    </div>
+  </button>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { COLOR, SIZE } from "../../common/Constants";
+import {defineComponent} from 'vue'
+import {COLOR, SIZE} from "../../common/Constants";
 
 export default defineComponent({
   name: 'RoundButton',
@@ -66,6 +69,11 @@ export default defineComponent({
   },
   mounted() {
     switch (this.color) {
+      case COLOR.BLUE:
+        this.bgClass += ' bg-blue text-beige';
+        this.textClass += ' text-beige';
+        this.borderClass += ' border-beige';
+        break;
       case COLOR.PINK:
         this.bgClass += ' bg-pink text-beige';
         this.textClass += ' text-beige';
@@ -117,7 +125,7 @@ export default defineComponent({
 
     switch (this.size) {
       case SIZE.XS:
-        this.containerClass += ' w-7 h-7 RoundButton--xs';
+        this.containerClass += ' w-10 h-10 RoundButton--xs';
         break;
       case SIZE.SM:
         this.containerClass += ' w-12 h-12 RoundButton--sm';
@@ -148,9 +156,9 @@ export default defineComponent({
 
 <style>
 .RoundButton--lg .RoundButton__icon > svg {
-  width: 88px;
-  height: 88px;
-  object-fit: contain;
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
 }
 
 .RoundButton--md .RoundButton__icon > svg {
@@ -166,8 +174,8 @@ export default defineComponent({
 }
 
 .RoundButton--xs .RoundButton__icon > svg {
-    width: 12px;
-    height: 12px;
+    width: 18px;
+    height: 18px;
     object-fit: contain;
 }
 
@@ -176,6 +184,6 @@ export default defineComponent({
 }
 
 .RoundButton__border {
-  transition: transform 0.2s ease-out;
+    transition: transform 0.2s ease-out;
 }
 </style>

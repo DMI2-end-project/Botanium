@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="fixed top-0 left-0 right-0 bottom-0 bg-beige-medium flex flex-col py-4 lg:py-6">
+  <div class="bg-beige-medium min-h-screen flex flex-col py-4 lg:py-6">
     <header class="w-full flex items-center">
     </header>
     <main class="w-full h-full pb-6 lg:pb-10">

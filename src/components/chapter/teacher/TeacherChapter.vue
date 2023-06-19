@@ -6,7 +6,7 @@
         v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
         class="col-span-9 bg-beige rounded-md p-6">
       <h1>Chapitre {{ mainStore.chapterId }}</h1>
-      <h2>Capucine Pinpin et les carottes</h2>
+      <h2>{{ chapterStore.data.title }}</h2>
     </div>
 
     <div
