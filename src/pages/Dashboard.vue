@@ -20,7 +20,7 @@ const launchGame = (i: number) => {
 </script>
 <template>
   <div class="w-full h-full grid grid-cols-12 gap-4 px-8">
-    <div class="col-span-12 flex justify-between items-center">
+    <div class="w-full col-span-12 flex justify-between items-center">
       <div></div>
       <p class="bg-beige rounded-full font-bold px-10 py-6">
         Bonjour {{ DatabaseManagerInstance.pb.authStore.model?.firstname }}, que souhaitez-vous faire ?
@@ -65,18 +65,18 @@ const launchGame = (i: number) => {
           <Chevron class="rotate-180"/>
         </RoundButton>
       </router-link>
-      <router-link :to="{ name: 'PhotoTaking'}" class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
-        <h3>Prendre des photos </h3>
-        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
-          <Chevron class="rotate-180"/>
-        </RoundButton>
-      </router-link>
       <div class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
         <h3>Le guide du jardin</h3>
         <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
           <Chevron class="rotate-180"/>
         </RoundButton>
       </div>
+      <router-link :to="{ name: 'PhotoTaking'}" class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
+        <h3>Prendre des photos </h3>
+        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
+          <Chevron class="rotate-180"/>
+        </RoundButton>
+      </router-link>
       <div class=" bg-beige rounded-md flex flex-col gap-6 p-6">
         <button v-for="i in 4" :v-bind="i" class="inline-block bg-primary p-4 rounded-lg" @click="launchGame(i)">
           Exercice {{ i }}

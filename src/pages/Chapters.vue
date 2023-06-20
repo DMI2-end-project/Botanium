@@ -25,27 +25,52 @@ const mainStore = useMainStore();
 const chapterStore = useChapterStore();
 const gameStore = useGameStore();
 
-const season = ref<string>();
+const seasons = ref<string[]>([]);
 
 let chapters: Ref<Record[]> = ref([]);
-
-// TODO : Filter
+let filteredChapters: Ref<Record[]> = ref([]);
 
 onBeforeMount(async () => {
   if (mainStore.roomId) {
     chapters.value = await DatabaseManagerInstance.fetchChapters(mainStore.roomId);
+    filteredChapters.value = chapters.value;
   }
 
   mainStore.$subscribe(async (mutation, state) => {
     // @ts-ignore
     if (mutation.events.key === "roomId" && state.roomId) {
       chapters.value = await DatabaseManagerInstance.fetchChapters(state.roomId);
+      filteredChapters.value = chapters.value;
     }
   })
 });
 
+watch(seasons, (newSeason, _) => {
+  if (newSeason.length === 0) {
+    filteredChapters.value = chapters.value;
+  } else {
+    filteredChapters.value = chapters.value.filter(c => newSeason.includes(c.season));
+  }
+  /*
+  if (newSeason) {
+    filteredChapters.value = chapters.value.filter(c => c.season === newSeason);
+  } else {
+    filteredChapters.value = chapters.value;
+  }
+   */
+}, {deep: true});
+
+const setSeasons = (season: string) => {
+  let found = seasons.value.findIndex(s => s === season);
+  if (found !== -1) {
+    seasons.value.splice(found, 1);
+  } else {
+    seasons.value.push(season);
+  }
+}
+
 const goTo = async (e: Event, c: number, id: string) => {
-  GameMasterManagerInstance.launchChapter(c + 1, id);
+  GameMasterManagerInstance.launchChapter(c, id);
 }
 </script>
 
@@ -65,37 +90,41 @@ const goTo = async (e: Event, c: number, id: string) => {
       </p>
       <div
           class="col-span-12 lg:col-span-6 bg-beige rounded-lg flex flex-col sm:flex-row sm:items-center justify-around gap-4 font-bold p-4">
-        <div :key="season" class="cursor-pointer flex items-center gap-2" @click="season = 'autumn'"
-             :class="season === 'autumn' ? 'text-yellow':'text-green'">
-          <RoundButton :size="SIZE.XS" :color="season === 'autumn' ? COLOR.YELLOW : COLOR.GREEN">
+        <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('autumn')"
+             :class="seasons.includes('autumn') ? 'text-yellow' : 'text-green'">
+          <RoundButton :key="seasons.length" :size="SIZE.XS"
+                       :color="seasons.includes('autumn') ? COLOR.YELLOW : COLOR.GREEN">
             <Autumn/>
           </RoundButton>
           Automne
         </div>
-        <div :key="season" class="cursor-pointer flex items-center gap-2" @click="season = 'winter'"
-             :class="season === 'winter' ? 'text-yellow':'text-green'">
-          <RoundButton :size="SIZE.XS" :color="season === 'winter' ? COLOR.YELLOW : COLOR.GREEN">
+        <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('winter')"
+             :class="seasons.includes('winter') ? 'text-yellow':'text-green'">
+          <RoundButton :key="seasons.length" :size="SIZE.XS"
+                       :color="seasons.includes('winter') ? COLOR.YELLOW : COLOR.GREEN">
             <Winter/>
           </RoundButton>
           Hiver
         </div>
-        <div :key="season" class="cursor-pointer flex items-center gap-2" @click="season = 'spring'"
-             :class="season === 'spring' ? 'text-yellow':'text-green'">
-          <RoundButton :size="SIZE.XS" :color="season === 'spring' ? COLOR.YELLOW : COLOR.GREEN">
+        <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('spring')"
+             :class="seasons.includes('spring') ? 'text-yellow':'text-green'">
+          <RoundButton :key="seasons.length" :size="SIZE.XS"
+                       :color="seasons.includes('spring') ? COLOR.YELLOW : COLOR.GREEN">
             <Spring/>
           </RoundButton>
           Printemps
         </div>
-        <div :key="season" class="cursor-pointer flex items-center gap-2" @click="season = 'summer'"
-             :class="season === 'summer' ? 'text-yellow':'text-green'">
-          <RoundButton :size="SIZE.XS" :color="season === 'summer' ? COLOR.YELLOW : COLOR.GREEN">
+        <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('summer')"
+             :class="seasons.includes('summer') ? 'text-yellow':'text-green'">
+          <RoundButton :key="seasons.length" :size="SIZE.XS"
+                       :color="seasons.includes('summer') ? COLOR.YELLOW : COLOR.GREEN">
             <Summer/>
           </RoundButton>
           Ete
         </div>
       </div>
-      <CardChapter v-for="(c,i) in chapters" @click="(e) => goTo(e, i, c.id)"
-                   :index="i+1" :card-state="c.status" :item="chaptersData[leading(i+1, 3)]"
+      <CardChapter v-for="c in filteredChapters" @click="(e) => goTo(e, c.number, c.id)"
+                   :index="c.number" :card-state="c.status" :item="chaptersData[leading(c.number, 3)]"
                    class="cursor-pointer col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 h-full inline-block bg-beige rounded-md p-2"/>
     </div>
   </div>

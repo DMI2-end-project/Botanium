@@ -21,7 +21,7 @@ const props = defineProps({
 
 <template>
   <div class="flex flex-col gap-3.5 font-semibold p-2">
-    <div class="flex justify-between items-center bg-green-medium/70 rounded-lg p-2"
+    <div class="flex justify-between items-center rounded-lg p-2"
          :class="cardState === 'done' ? 'bg-blue/70' : ' bg-green-medium/70'">
       <div class="flex flex-col">
         <span class="font-semibold text-xs">Thématique</span>
