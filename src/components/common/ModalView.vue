@@ -8,7 +8,16 @@ import RoundButton from "../../components/common/RoundButton.vue";
 import Cross from "../../assets/svg/ico-cross.svg?component";
 
 const mainStore = useMainStore();
-const props = defineProps(['close', 'clickOutside']);
+const props = defineProps({
+  padding: {
+    type: Boolean,
+    required: false,
+    default: true
+  },
+  close: Boolean,
+  clickOutside: Boolean
+});
+
 const emits = defineEmits(['close']);
 
 const container = ref<HTMLDivElement>();
@@ -29,7 +38,8 @@ if (props.clickOutside) {
         </RoundButton>
       </div>
       <div
-          class="aspect-[5/3] container max-w-[600px] mx-auto bg-beige flex flex-col justify-center items-center text-center gap-6 rounded-md py-11 px-14"
+          class="aspect-[5/3] container max-w-[600px] mx-auto bg-beige flex flex-col items-center text-center gap-6 rounded-md px-14"
+          :class="padding ? ' justify-center py-11' : ''"
           ref="container">
         <slot/>
       </div>

@@ -275,12 +275,16 @@ button:focus-visible {
         @apply text-sm font-bold;
     }
 
-    p.bold {
-        @apply text-md font-bold;
-    }
-
     p {
         @apply text-md;
+    }
+
+    .p1 {
+        @apply text-md;
+    }
+
+    .p2 {
+        @apply text-sm;
     }
 
     a {
@@ -288,10 +292,6 @@ button:focus-visible {
     }
 
     button {
-        @apply bg-secondary text-beige;
-    }
-
-    button:hover {
-        @apply border-purple;
+        @apply bg-secondary text-beige font-bold;
     }
 }

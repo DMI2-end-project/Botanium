@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, Ref, ref, watch} from "vue";
+import {computed, onBeforeMount, Ref, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 import {Record} from "pocketbase";
 import {useMainStore} from "../stores/mainStore";
@@ -18,6 +18,9 @@ import Autumn from "../assets/svg/ico-autumn.svg";
 import Winter from "../assets/svg/ico-winter.svg";
 import Spring from "../assets/svg/ico-spring.svg";
 import Summer from "../assets/svg/ico-summer.svg";
+import Cross from "../assets/svg/ico-cross.svg";
+import Play from "../assets/svg/ico-play.svg";
+import ChapterModalView from "../components/common/ChapterModalView.vue";
 
 const router = useRouter();
 
@@ -26,9 +29,12 @@ const chapterStore = useChapterStore();
 const gameStore = useGameStore();
 
 const seasons = ref<string[]>([]);
+const chapter = ref<any>();
 
 let chapters: Ref<Record[]> = ref([]);
 let filteredChapters: Ref<Record[]> = ref([]);
+
+const isModalOpen = ref<boolean>(false);
 
 onBeforeMount(async () => {
   if (mainStore.roomId) {
@@ -69,9 +75,25 @@ const setSeasons = (season: string) => {
   }
 }
 
-const goTo = async (e: Event, c: number, id: string) => {
-  GameMasterManagerInstance.launchChapter(c, id);
+const closeModal = () => {
+  isModalOpen.value = false;
+  mainStore.isModalOpen = false;
 }
+
+const setChapter = (c: any) => {
+  console.log('setChapter', c)
+  chapter.value = c;
+  isModalOpen.value = true;
+  mainStore.isModalOpen = true;
+}
+
+const getChapterData = (c: any) => {
+  if (c) {
+    return chaptersData[leading(c.number, 3)];
+  }
+}
+
+
 </script>
 
 <template>
@@ -123,9 +145,12 @@ const goTo = async (e: Event, c: number, id: string) => {
           Ete
         </div>
       </div>
-      <CardChapter v-for="c in filteredChapters" @click="(e) => goTo(e, c.number, c.id)"
-                   :index="c.number" :card-state="c.status" :item="chaptersData[leading(c.number, 3)]"
+      <CardChapter v-for="c in filteredChapters" @click="() => setChapter(c)"
+                   :index="c.number" :card-state="c.status" :item="getChapterData(c)"
                    class="cursor-pointer col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 h-full inline-block bg-beige rounded-md p-2"/>
     </div>
   </div>
+
+  <ChapterModalView :chapter="chapter" :data="getChapterData(chapter)" :close="closeModal"/>
+
 </template>
