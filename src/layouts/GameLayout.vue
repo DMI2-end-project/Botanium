@@ -102,8 +102,6 @@ export default defineComponent({
     <header class="w-full mt-8">
       <Transition name="fade" :mode="gameStore.currentStep < 3 ? 'out-in' : ''">
           <component :is="isBreadcrumb ? 'Breadcrumb' : 'GameHeader'"/>
-        <!-- <Breadcrumb v-if="isBreadcrumb"/>
-        <GameHeader v-else-if="!isBreadcrumb" /> -->
       </Transition>
     </header>
     <main class="relative w-full h-full flex flex-col">

@@ -243,13 +243,13 @@ button:focus-visible {
 
 .slide-enter-from {
     opacity: 0;
-    transform: translateX(3%) scaleX(1.03);
+    transform: translateX(3%);
     /* transform-origin: right; */
 }
 
 .slide-leave-to {
     opacity: 0;
-    transform: translateX(-3%) scaleX(1.03);
+    transform: translateX(-3%);
     /* transform-origin: right; */
 }
 
