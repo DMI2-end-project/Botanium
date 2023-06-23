@@ -8,12 +8,16 @@ import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {GAME_STEP, ROLE} from "../common/Constants";
 
+import ModalView from "../components/common/ModalView.vue";
+import TeamSignboard from "../components/common/TeamSignboard.vue";
+import CircleButton from "../components/common/CircleButton.vue";
 import Breadcrumb from "../components/Breadcrumb.vue";
 import GameHeader from "../components/game/GameHeader.vue";
-import TeamSignboard from "../components/common/TeamSignboard.vue";
 import Connexion from "../components/game/teacher/Connexion.vue";
 
 import gameData from "../assets/game-data/game-data.json";
+
+import Wifi from "../assets/svg/ico-wifi.svg?component";
 
 interface GameData {
   [key: string]: any;
@@ -21,7 +25,7 @@ interface GameData {
 
 export default defineComponent({
   name: 'GameLayout',
-  components: {GameHeader, Breadcrumb, TeamSignboard, Connexion},
+  components: {Breadcrumb, CircleButton, Connexion, GameHeader, ModalView, TeamSignboard, Wifi},
   data() {
     return {
       mainStore: useMainStore(),
@@ -29,7 +33,8 @@ export default defineComponent({
       router: useRouter(),
       socket: getSocket(),
       pb: DatabaseManagerInstance.pb,
-      GMInstance: GameMasterManagerInstance
+      GMInstance: GameMasterManagerInstance,
+      isModalOpen: false,
     }
   },
   computed: {
@@ -71,6 +76,14 @@ export default defineComponent({
       this.router.push({
         name: 'Login'
       });
+    },
+    openModal() {
+      this.mainStore.isModalOpen = true;
+      this.isModalOpen = true
+    },
+    closeModal() {
+      this.mainStore.isModalOpen = false;
+      this.isModalOpen = false
     }
   }
 });
@@ -78,7 +91,7 @@ export default defineComponent({
 
 
 <template>
-  <div class="bg-cover bg-bottom fixed top-0 left-0 bottom-0 right-0 w-screen pointer-events-none overflow-hidden"
+  <div class="bg-cover bg-bottom bg-beige-medium fixed top-0 left-0 bottom-0 right-0 w-screen pointer-events-none overflow-hidden"
        :class="backgroundColor"/>
   <div class="fixed inset-0 overflow-hidden w-screen h-screen">
     <Transition name="bgTransitionLeft1">
@@ -110,7 +123,16 @@ export default defineComponent({
   </div>
   <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">
     <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName"/>
-    <Connexion v-if="mainStore.role === ROLE.TEACHER"/>
+
+    <div v-if="mainStore.role === ROLE.TEACHER">
+      <CircleButton @click="openModal" text="Connexion" class="mb-4">
+        <Wifi/>
+      </CircleButton>
+
+      <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true" :padding="false">
+        <Connexion class="h-full justify-between" :status-needed="true"/>
+      </ModalView>
+    </div>
   </footer>
   <!--div class="flex-1 flex flex-col w-full h-full min-h-screen max-h-screen gap-10">
     <header class="w-full mt-8 z-20">

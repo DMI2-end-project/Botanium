@@ -22,7 +22,7 @@ export type StoreState = {
 
 export const useMainStore = defineStore('main', {
   state: (): StoreState => ({
-    isModalOpen: true,
+    isModalOpen: false,
     connected: false,
     askForRedirection: false,
     roomId: undefined,

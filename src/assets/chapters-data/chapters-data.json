@@ -1,8 +1,12 @@
 {
   "001": {
+    "thematic": "Les carottes",
+    "season": "winter",
     "title": "Capucine, Pinpin et les carottes",
     "quote": "Et si je te racontais l’histoire de Pinpin et des carottes...",
     "image": "",
+    "summary": "Capucine n’a plus de nouvelles de son ami Pinpin et est très inquiète. Il est malade et pour retrouver la forme il a besoin d’une carotte aux milles vertues ! La classe va devoir aider Capucine dans sa quête pour la trouver.",
+    "knowledge": "Dans ce chapitre nous abordons la carotte, ses caractéristiques, ses bienfaits, sa culture et même un exemple de recette !",
     "sections": [
       [
         {
@@ -89,5 +93,47 @@
       "00103",
       "00104"
     ]
+  },
+  "002": {
+    "thematic": "Les vers de terre",
+    "season": "winter",
+    "title": "Capucine au pays des vers de terre",
+    "image": ""
+  },
+  "003": {
+    "thematic": "Les abeilles",
+    "season": "winter",
+    "title": "Capucine fabrique du miel avec les abeilles",
+    "image": ""
+  },
+  "004": {
+    "thematic": "La graine",
+    "season": "winter",
+    "title": "Capucine au coeur d’une graine",
+    "image": ""
+  },
+  "005": {
+    "thematic": "La terre",
+    "season": "winter",
+    "title": "Capucine et les ressources de la terre",
+    "image": ""
+  },
+  "006": {
+    "thematic": "Les escargots",
+    "season": "winter",
+    "title": "Capucine et Hugo l’escargot",
+    "image": ""
+  },
+  "007": {
+    "thematic": "Les fleurs",
+    "season": "winter",
+    "title": "Capucine découvre les fleurs",
+    "image": ""
+  },
+  "008": {
+    "thematic": "Les nuisibles",
+    "season": "winter",
+    "title": "Capucine combat les nuisibles",
+    "image": ""
   }
 }

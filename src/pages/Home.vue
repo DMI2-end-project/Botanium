@@ -41,7 +41,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="bg-home w-screen h-screen bg-cover bg-center reltative">
+  <div class="bg-home w-screen h-screen bg-cover bg-center relative overflow-hidden">
     <img src="/home/images/plant-4.png" class="organic-5 absolute w-auto h-4/5 object-contain -bottom-[30%] -right-[2%] -scale-x-100">
     <img src="/home/images/plant-2.png" class="organic-4 absolute w-auto h-2/3 object-contain -top-[35%] -right-[10%]">
     <img src="/home/images/plant-3.png" class="organic-3 absolute w-1/3 h-full object-contain -top-[30%] -right-[15%]">
