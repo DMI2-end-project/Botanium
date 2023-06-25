@@ -3,7 +3,7 @@
     <CardGame v-for="(answer, index) in answers" :v-bind="index" @click.native="() => itemSelected(index)"
               mode="horizontal"
               card-state="show" :answer-state="answer.status"
-              class="aspect-[9/4] max-h-[30vh] max-w-[70vh]"
+              class="aspect-[9/4] max-h-[25vh] max-w-[60vh]"
               :class="index%2 === 0 ? 'ml-auto' : 'mr-auto'">
       <template v-slot:recto>
         <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
