@@ -21,6 +21,7 @@ import Winter from "../assets/svg/ico-winter.svg?component";
 import Spring from "../assets/svg/ico-spring.svg?component";
 import Summer from "../assets/svg/ico-summer.svg?component";
 import {ChapterData} from "../common/Interfaces";
+import DefaultLayout from "../layouts/DefaultLayout.vue";
 
 const router = useRouter();
 
@@ -97,7 +98,7 @@ const getChapterData = (c: any) => {
 </script>
 
 <template>
-  <div class="w-full h-full flex flex-col gap-12 px-8">
+  <div class="w-full h-full flex flex-col gap-12 px-8 pb-10 lg:pb-16 pt-4 lg:pt-6">
     <div class="flex justify-between items-center">
       <div></div>
       <div class="bg-beige rounded-full font-bold text-center leading-none px-10 py-6">
@@ -155,8 +156,6 @@ const getChapterData = (c: any) => {
       </div>
     </div>
   </div>
-
   <ChapterModalView v-if="mainStore.isModalOpen && isModalOpen" :chapter="chapter" :data="getChapterData(chapter)"
                     :close="closeModal"/>
-
 </template>

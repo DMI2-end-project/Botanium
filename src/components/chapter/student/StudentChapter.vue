@@ -6,8 +6,8 @@
                   text="Scanner tes missions" :color="COLOR.YELLOW" :size="SIZE.SM" :colorReverse="true">
       <Camera/>
     </CircleButton>
-    <span class="absolute top-1/2 -translate-y-[200%] heading-1 text-center ">Vous serez l'équipe :</span>
-    <TeamSignboard class="absolute bottom-0 left-1/2 -translate-x-1/2 text-xl" height="50%"/>
+    <span v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" class="absolute top-1/2 -translate-y-[200%] heading-1 text-center ">Vous serez l'équipe :</span>
+    <TeamSignboard v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" class="absolute bottom-0 left-1/2 -translate-x-1/2 text-xl" height="50%"/>
     <Info class="absolute bottom-2 sm:bottom-6 lg:bottom-12 left-1/2 -translate-x-1/2"
           :text="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION ?
         'Un peu de patience ... L’histoire va bientôt commencer' :

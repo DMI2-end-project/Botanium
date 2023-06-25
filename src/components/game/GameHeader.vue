@@ -1,18 +1,21 @@
 <template>
-  <div class="relative grid grid-cols-12 gap-4 px-8">
-    <div class="absolute top-2 left-2 text-xl">
-      <RoundItem :color="COLOR.YELLOW" :isEnigma="true">
+  <div class="relative grid grid-cols-12 items-center gap-4 px-8">
+    <!-- absolute top-2 left-2 -->
+    <div class="col-span-2 text-xl">
+      <RoundItem :color="COLOR.YELLOW" :isEnigma="true" class="mx-auto">
         <component :is="getNumberComponent(mainStore.gameId)"/>
       </RoundItem>
     </div>
-    <p class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">
+    <p class="col-start-3 col-span-8 lg:col-start-3 lg:col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">
       {{ text }}</p>
 
-    <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue && clue !== ''" @click="openModal" :size="SIZE.SM"
-                 class="col-start-12 ml-auto">
-      <Clue/>
-      <div class="absolute animate-ping bg-pink rounded-full w-full aspect-square top-0 left-0 z-0"/>
-    </RoundButton>
+    <div class="col-span-2">
+      <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue && clue !== ''" @click="openModal"
+                   class="mx-auto">
+        <Clue/>
+        <div class="absolute animate-ping bg-pink rounded-full w-full aspect-square top-0 left-0 z-0"/>
+      </RoundButton>
+    </div>
   </div>
 
   <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
