@@ -107,10 +107,10 @@ const itemValidated = () => {
 
 <template>
   <div
-      class="w-full h-full flex-1 grid grid-cols-12 items-center gap-5 text-center">
+      class="w-full h-full flex-1 grid grid-cols-12 items-center gap-5 text-center pt-4 px-8">
     <div
-        class="col-span-3 flex justify-center items-center border border-dashed border-beige rounded-md p-2">
-      <div id="container" class="relative w-full h-full aspect-[5/9]">
+        class="col-span-3 flex justify-center items-center border border-dashed border-beige rounded-md p-2 max-h-[50vh] max-w-[35vh]">
+      <div id="container" class="relative w-full h-full aspect-[5/9] max-h-[50vh] max-w-[35vh]">
         <div ref="draggable" class="relative w-full h-full">
           <CardGame v-if="teamData" mode="vertical"
                     :answer-state="currentIndex === -1 ? 'none' : teamData.answers[currentIndex].status"
@@ -118,7 +118,7 @@ const itemValidated = () => {
             <template v-slot:recto>
               <img v-if="teamData" alt=""
                    :src="`/game/images/${mainStore.getFullGameId}/${teamData.image}`"
-                   class="object-contain object-center"/>
+                   class="object-contain object-center w-full h-full object-contain"/>
             </template>
           </CardGame>
         </div>
@@ -132,9 +132,9 @@ const itemValidated = () => {
     <div class="relative col-span-9 grid grid-cols-3 gap-9 rounded-md p-10 bg-beige-medium"
          :class="`grid-cols-${playingTeams.length}`">
       <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
-           class="w-full flex flex-col justify-center items-center gap-6 z-10">
+           class="w-full flex flex-col justify-center items-center gap-6 z-10 max-w-[35vh] mx-auto">
         <div ref="droppables"
-             class="droppable w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
+             class="droppable w-full aspect-[5/9] max-h-[50vh] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
              :data-is-valid="answer.isValid">
           {{ answer.label }}...
         </div>
