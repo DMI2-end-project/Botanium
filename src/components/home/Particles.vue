@@ -9,12 +9,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-// interface Particules { x: number; y: number; size: number; delay: number }[]
+interface Particule { x: number; y: number; size: number; delay: number }
 
 export default defineComponent({
   data: () => {
     return {
-      particles: []
+      particles: [] as Particule[]
     }
   },
 
@@ -59,9 +59,10 @@ export default defineComponent({
       const particle = this.particles[index];
 
       this.$nextTick(() => {
-        this.$refs.particule[index].style.setProperty('--time', `${Math.random() * 10 + 10}s`)
-        this.$refs.particule[index].style.setProperty('--delay', `${particle.delay * 10}s`)
-        this.$refs.particule[index].style.setProperty('--y', `${particle.delay}px`)
+        const particulesHTML = this.$refs.particule as HTMLElement[]
+        particulesHTML[index].style.setProperty('--time', `${Math.random() * 10 + 10}s`)
+        particulesHTML[index].style.setProperty('--delay', `${particle.delay * 10}s`)
+        particulesHTML[index].style.setProperty('--y', `${particle.delay}px`)
       })
 
       return {
