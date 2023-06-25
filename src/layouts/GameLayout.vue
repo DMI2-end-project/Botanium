@@ -91,9 +91,9 @@ export default defineComponent({
 
 
 <template>
-  <div class="bg-cover bg-bottom bg-beige-medium fixed top-0 left-0 bottom-0 right-0 w-screen pointer-events-none overflow-hidden"
+  <div class="bg-cover bg-bottom bg-beige-medium fixed inset-0 pointer-events-none overflow-hidden"
        :class="backgroundColor"/>
-  <div class="fixed inset-0 overflow-hidden w-screen h-screen">
+  <div class="fixed inset-0 overflow-hidden">
     <Transition name="bgTransitionLeft1">
       <div v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" class="absolute bottom-0 h-2/3 w-fit max-w-[40%] origin-bottom">
         <img :src="getImage" alt=""
