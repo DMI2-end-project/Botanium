@@ -5,7 +5,8 @@
         <RoundItem v-if="congratulation?.icon" class="w-full aspect-square" :color="COLOR.WHITE">
           <SvgIcon :name="congratulation.icon"/>
         </RoundItem>
-        <div v-if="congratulation?.image" :class="congratulation?.shape === 'circle' ? 'bg-beige rounded-full p-8' : ''">
+        <div v-if="congratulation?.image"
+             :class="congratulation?.shape === 'circle' ? 'bg-beige rounded-full p-8' : ''">
           <img :src="`/game/images/${mainStore.getFullGameId}/${congratulation.image}`" :alt="congratulation.image"/>
         </div>
       </div>
@@ -14,7 +15,8 @@
         <p v-if="congratulation?.text" v-html=" congratulation.text"/>
       </div>
     </div>
-    <Info v-show="gameStore.currentStep === GAMESTEP.WAIT" text="Patiente un peu, tes camarades réfléchissent encore">
+    <Info class="transition-opacity" :class="gameStore.currentStep === GAMESTEP.WAIT ? '' : 'opacity-0'"
+          text="Patiente un peu, tes camarades réfléchissent encore">
       <Loading class="loading-animation w-8 aspect-square"/>
     </Info>
   </div>

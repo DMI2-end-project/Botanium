@@ -3,7 +3,7 @@
     <RoundItem :color="COLOR.GREEN_MEDIUM" :size="SIZE.SM">
       <slot />
     </RoundItem>
-    <p class="m-2 mr-8 flex-1 text-center">{{ text }}</p>
+    <p class="flex-1 text-center m-2 mr-8">{{ text }}</p>
   </div>
 </template>
 

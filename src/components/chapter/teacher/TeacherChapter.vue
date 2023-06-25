@@ -1,16 +1,22 @@
 <template>
-  <div class="relative  w-full h-full grid grid-cols-1 sm:grid-cols-12 gap-4 px-8 flex p-6 text-black">
-    <Reading v-if="chapterStore.currentStep === CHAPTER_STEP.STORY" class="" @next="next"/>
+  <div class="bg-texture-beige w-full h-full grid grid-cols-1 sm:grid-cols-12 gap-4 py-6 px-8 flex text-black">
+    <Reading v-if="chapterStore.currentStep === CHAPTER_STEP.STORY" @next="next"/>
 
     <div
         v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
-        class="relative sm:col-span-8 lg:col-span-9">
-      <img class="absolute aspect-[4/3] -left-8 bottom-0" src="/chapter/book.png" alt=""/>
-      <div
-          class="absolute w-[45%] h-[55%] bottom-[10%] right-[20%] -rotate-[3.52deg] flex flex-col items-center justify-center text-center">
-        <img class="w-[80%]" :src="`/chapter/${mainStore.getChapterId}/first-page-chapter-${mainStore.getChapterId}.png`" alt=""/>
-        <h2 class="font-bold text-green-medium">Chapitre {{ mainStore.chapterId }}</h2>
-        <h1 class="font-hand-written text-xl text-green leading-snug mt-6">{{ chapterStore.data ? chapterStore.data.title : '' }}</h1>
+        class="relative flex flex-col justify-end items-end sm:col-span-8 lg:col-span-9">
+      <div class="absolute w-full aspect-[4/3] -left-8 bottom-0">
+        <div class="relative w-full h-full flex">
+          <img class="mt-auto" src="/chapter/book.png" alt=""/>
+          <div
+              class="absolute w-[55%] h-[80%] bottom-[2%] lg:bottom-[8%] right-[12%] -rotate-[3.52deg] flex flex-col items-center justify-center text-center">
+            <img class="w-[50%] sm:w-[65%] lg:w-[80%]"
+                 :src="`/chapter/${mainStore.getChapterId}/first-page-chapter-${mainStore.getChapterId}.png`" alt=""/>
+            <h2 class="font-bold text-green-medium">Chapitre {{ mainStore.chapterId }}</h2>
+            <h1 class="font-hand-written text-sm sm:text-md lg:text-xl text-green leading-snug mt-2 lg:mt-6">
+              {{ chapterStore.data ? chapterStore.data.title : '' }}</h1>
+          </div>
+        </div>
       </div>
     </div>
 

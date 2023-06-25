@@ -105,7 +105,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('taskScanned', (arg) => {
-    console.log('taskScanned', arg);
     let room = rooms.find(room => room.id === arg.roomId);
 
     if (room) {

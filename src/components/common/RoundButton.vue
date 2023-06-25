@@ -1,6 +1,6 @@
 <template>
   <div v-if="colorBg" :class="(isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass"
-       class="RoundButtonBg p-8 rounded-full">
+       class="RoundButtonBg p-8 rounded-full  ">
     <button
         class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
         :class="`${containerClass}`">
@@ -18,10 +18,10 @@
   </div>
   <button
       v-else
-      class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
+      class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0"
       :class="`${containerClass}` + (isActive ? '' : ' opacity-50 pointer-events-none')">
     <div
-        class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform"
+        class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform  z-10"
         :class="`${bgClass}`">
       <div
           class="RoundButton__border absolute w-full h-full rounded-full bg-transparent border scale-[0.85] group-hover:scale-100 transform"

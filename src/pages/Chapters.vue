@@ -107,12 +107,12 @@ const getChapterData = (c: any) => {
       <div></div>
     </div>
     <div class="bg-beige/50 rounded-lg w-full h-full flex flex-col gap-10 px-5 py-8">
-      <div class="flex justify-between items-center gap-4">
+      <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4">
         <p class="col-span-12 lg:col-span-6 font-hand-written text-lg leading-tight lg:leading-none">
           Capucine au monde des minuscules
         </p>
         <div
-            class="col-span-12 lg:col-span-6 bg-beige rounded-lg flex flex-col sm:flex-row sm:items-center justify-around gap-6 font-bold py-4 px-6">
+            class="col-span-12 lg:col-span-6 bg-beige rounded-lg flex flex-wrap items-center gap-6 font-bold py-4 px-6">
           <Filter class="text-beige-medium w-5"/>
           <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('autumn')"
                :class="seasons.includes('autumn') ? 'text-yellow' : 'text-green'">

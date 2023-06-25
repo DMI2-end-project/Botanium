@@ -45,7 +45,6 @@ const getNumberComponent = (number: number) => {
 }
 
 onBeforeMount(() => {
-  console.log('color', gameStore.data.colorBreadcrumb);
   switch (gameStore.data.colorBreadcrumb) {
     case 'yellow':
       break;

@@ -6,7 +6,6 @@ import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {COLOR, SIZE} from "../common/Constants";
 import RoundButton from "../components/common/RoundButton.vue";
 
-import Book from "../assets/svg/ico-book.svg?component";
 import Chevron from "../assets/svg/ico-chevron.svg?component";
 import Organization from "../assets/svg/ico-organization.svg?component";
 

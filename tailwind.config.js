@@ -10,7 +10,7 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /bg-(texture-green|texture-purple|texture-yellow|texture-pink)/,
+        /bg-(texture-beige|texture-green|texture-purple|texture-yellow|texture-pink)/,
     },
     ...safe,
   ],
@@ -56,10 +56,11 @@ module.exports = {
         "dotted-green": "url('/src/assets/dot-green.png')",
         signboard: "url('/src/assets/images/common/texture-signboard.png')",
         dig: "url('/game/background/dig.png')",
-        "texture-green": "url('/game/background/green.jpg')",
-        "texture-purple": "url('/game/background/purple.jpg')",
-        "texture-yellow": "url('/game/background/yellow.jpg')",
-        "texture-pink": "url('/game/background/pink.jpg')",
+        "texture-beige": "url('/images/bg-beige.jpg')",
+        "texture-green": "url('/images/bg-green.jpg')",
+        "texture-purple": "url('/images/bg-purple.jpg')",
+        "texture-yellow": "url('/images/bg-yellow.jpg')",
+        "texture-pink": "url('/images/bg-pink.jpg')",
         "home": "url('/home/images/background.jpg')",
         "log-book": "url('/log-book/background.png')",
       },

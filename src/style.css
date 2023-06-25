@@ -278,7 +278,7 @@ button:focus-visible {
         @apply font-base text-primary;
     }
 
-    h1 {
+    h1, .heading-1 {
         @apply text-2xl font-title font-bold leading-none;
     }
 

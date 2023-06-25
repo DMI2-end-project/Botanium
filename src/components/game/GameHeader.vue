@@ -5,10 +5,13 @@
         <component :is="getNumberComponent(mainStore.gameId)"/>
       </RoundItem>
     </div>
-    <p class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">{{ text }}</p>
-    <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue && clue !== ''" @click="openModal"
+    <p class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">
+      {{ text }}</p>
+
+    <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue && clue !== ''" @click="openModal" :size="SIZE.SM"
                  class="col-start-12 ml-auto">
       <Clue/>
+      <div class="absolute animate-ping bg-pink rounded-full w-full aspect-square top-0 left-0 z-0"/>
     </RoundButton>
   </div>
 
