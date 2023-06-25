@@ -64,7 +64,7 @@ export const initClient = (pinia: Pinia) => {
       gameStore.teams = arg._teams;
     }
     
-    chapterData.data = chapterData[mainStore.getChapterId];
+    chapterStore.data = chapterData[mainStore.getChapterId];
     gameStore.data = gameData[mainStore.getFullGameId];
     
     if (arg._teams && gameStore.teamId !== undefined) {

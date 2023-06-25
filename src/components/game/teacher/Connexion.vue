@@ -68,7 +68,7 @@ export default defineComponent({
       return this.gameStore.teams.filter(team => team.isConnected)
     },
     microNeeded() {
-      return this.gameStore.data.gameSequences[this.gameStore.currentSequence].microNeeded
+      return this.gameStore.data ? this.gameStore.data.gameSequences[this.gameStore.currentSequence].microNeeded : false
     },
     COLOR() {
       return COLOR

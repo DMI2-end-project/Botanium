@@ -3,6 +3,7 @@ import {COLOR, SIZE} from "../../common/Constants";
 import RoundButton from "../common/RoundButton.vue";
 
 import Eye from "../../assets/svg/ico-eye.svg?component";
+import {leading} from "../../common/Lib";
 
 const props = defineProps({
   cardState: {
@@ -13,9 +14,18 @@ const props = defineProps({
       return ['toDo', 'inProgress', 'pause', 'done'].includes(value);
     }
   },
-  index: Number,
+  index: {
+    type: Number,
+    required: true
+  },
   item: Object
 });
+
+const getImage = () => {
+  let chapterNumber = leading(props.index, 3);
+
+  return `/chapter/${chapterNumber}/preview-chapter-${chapterNumber}.jpg`;
+}
 
 </script>
 
@@ -25,17 +35,18 @@ const props = defineProps({
          :class="cardState === 'done' ? 'bg-blue/70' : ' bg-green-medium/70'">
       <div class="flex flex-col">
         <span class="font-semibold text-xs">Thématique</span>
-        <p class="text-beige leading-tight">{{ props.item.thematic }}</p>
+        <p class="text-beige leading-tight">{{ props.item ? props.item.thematic : '' }}</p>
       </div>
       <p class=" text-beige">{{ index }}</p>
     </div>
     <div class="flex flex-col sm:flex-row gap-5">
-      <div class="w-10 h-10 lg:w-20 lg:h-20 aspect-square rounded-full bg-red">
+      <div class="w-10 h-10 lg:w-20 lg:h-20 aspect-square shrink-0 rounded-full overflow-hidden">
+        <img class="w-full h-full object-cover object-center" :src="getImage()" alt=""/>
       </div>
       <div class="flex flex-col gap-1.5">
         <span>Chapitre</span>
         <span class="leading-tight"
-              :class="cardState === 'done' ? 'text-blue' : 'text-green-medium'">{{ props.item.title }}</span>
+              :class="cardState === 'done' ? 'text-blue' : 'text-green-medium'">{{ props.item? props.item.title : '' }}</span>
       </div>
       <RoundButton class="self-end" :color="cardState === 'done' ? COLOR.BLUE : COLOR.GREEN_MEDIUM_BEIGE"
                    :size="SIZE.XS">

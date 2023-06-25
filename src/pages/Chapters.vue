@@ -9,18 +9,18 @@ import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {COLOR, SIZE} from "../common/Constants";
 import {leading} from "../common/Lib";
+import ChapterModalView from "../components/common/ChapterModalView.vue";
 import RoundButton from "../components/common/RoundButton.vue";
 import CardChapter from "../components/chapter/CardChapter.vue";
 
 import chaptersData from "../assets/chapters-data/chapters-data.json";
 
-import Autumn from "../assets/svg/ico-autumn.svg";
-import Winter from "../assets/svg/ico-winter.svg";
-import Spring from "../assets/svg/ico-spring.svg";
-import Summer from "../assets/svg/ico-summer.svg";
-import Cross from "../assets/svg/ico-cross.svg";
-import Play from "../assets/svg/ico-play.svg";
-import ChapterModalView from "../components/common/ChapterModalView.vue";
+import Filter from "../assets/svg/ico-filter.svg?component";
+import Autumn from "../assets/svg/ico-autumn.svg?component";
+import Winter from "../assets/svg/ico-winter.svg?component";
+import Spring from "../assets/svg/ico-spring.svg?component";
+import Summer from "../assets/svg/ico-summer.svg?component";
+import {ChapterData} from "../common/Interfaces";
 
 const router = useRouter();
 
@@ -81,18 +81,18 @@ const closeModal = () => {
 }
 
 const setChapter = (c: any) => {
-  console.log('setChapter', c)
   chapter.value = c;
   isModalOpen.value = true;
   mainStore.isModalOpen = true;
 }
 
+const data: ChapterData = chaptersData;
+
 const getChapterData = (c: any) => {
   if (c) {
-    return chaptersData[leading(c.number, 3)];
+    return data[leading(c.number, 3)];
   }
 }
-
 
 </script>
 
@@ -106,51 +106,57 @@ const getChapterData = (c: any) => {
       </div>
       <div></div>
     </div>
-    <div class="bg-beige/50 rounded-lg w-full h-full grid grid-cols-12 items-center gap-4 px-5 py-8">
-      <p class="col-span-12 lg:col-span-6 font-hand-written text-lg leading-tight lg:leading-none">
-        Capucine au monde des minuscules
-      </p>
-      <div
-          class="col-span-12 lg:col-span-6 bg-beige rounded-lg flex flex-col sm:flex-row sm:items-center justify-around gap-4 font-bold p-4">
-        <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('autumn')"
-             :class="seasons.includes('autumn') ? 'text-yellow' : 'text-green'">
-          <RoundButton :key="seasons.length" :size="SIZE.XS"
-                       :color="seasons.includes('autumn') ? COLOR.YELLOW : COLOR.GREEN">
-            <Autumn/>
-          </RoundButton>
-          Automne
-        </div>
-        <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('winter')"
-             :class="seasons.includes('winter') ? 'text-yellow':'text-green'">
-          <RoundButton :key="seasons.length" :size="SIZE.XS"
-                       :color="seasons.includes('winter') ? COLOR.YELLOW : COLOR.GREEN">
-            <Winter/>
-          </RoundButton>
-          Hiver
-        </div>
-        <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('spring')"
-             :class="seasons.includes('spring') ? 'text-yellow':'text-green'">
-          <RoundButton :key="seasons.length" :size="SIZE.XS"
-                       :color="seasons.includes('spring') ? COLOR.YELLOW : COLOR.GREEN">
-            <Spring/>
-          </RoundButton>
-          Printemps
-        </div>
-        <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('summer')"
-             :class="seasons.includes('summer') ? 'text-yellow':'text-green'">
-          <RoundButton :key="seasons.length" :size="SIZE.XS"
-                       :color="seasons.includes('summer') ? COLOR.YELLOW : COLOR.GREEN">
-            <Summer/>
-          </RoundButton>
-          Ete
+    <div class="bg-beige/50 rounded-lg w-full h-full flex flex-col gap-10 px-5 py-8">
+      <div class="flex justify-between items-center gap-4">
+        <p class="col-span-12 lg:col-span-6 font-hand-written text-lg leading-tight lg:leading-none">
+          Capucine au monde des minuscules
+        </p>
+        <div
+            class="col-span-12 lg:col-span-6 bg-beige rounded-lg flex flex-col sm:flex-row sm:items-center justify-around gap-6 font-bold py-4 px-6">
+          <Filter class="text-beige-medium w-5"/>
+          <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('autumn')"
+               :class="seasons.includes('autumn') ? 'text-yellow' : 'text-green'">
+            <RoundButton :key="seasons.length" :size="SIZE.XS"
+                         :color="seasons.includes('autumn') ? COLOR.YELLOW : COLOR.GREEN">
+              <Autumn/>
+            </RoundButton>
+            Automne
+          </div>
+          <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('winter')"
+               :class="seasons.includes('winter') ? 'text-yellow':'text-green'">
+            <RoundButton :key="seasons.length" :size="SIZE.XS"
+                         :color="seasons.includes('winter') ? COLOR.YELLOW : COLOR.GREEN">
+              <Winter/>
+            </RoundButton>
+            Hiver
+          </div>
+          <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('spring')"
+               :class="seasons.includes('spring') ? 'text-yellow':'text-green'">
+            <RoundButton :key="seasons.length" :size="SIZE.XS"
+                         :color="seasons.includes('spring') ? COLOR.YELLOW : COLOR.GREEN">
+              <Spring/>
+            </RoundButton>
+            Printemps
+          </div>
+          <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('summer')"
+               :class="seasons.includes('summer') ? 'text-yellow':'text-green'">
+            <RoundButton :key="seasons.length" :size="SIZE.XS"
+                         :color="seasons.includes('summer') ? COLOR.YELLOW : COLOR.GREEN">
+              <Summer/>
+            </RoundButton>
+            Ete
+          </div>
         </div>
       </div>
-      <CardChapter v-for="c in filteredChapters" @click="() => setChapter(c)"
-                   :index="c.number" :card-state="c.status" :item="getChapterData(c)"
-                   class="cursor-pointer col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 h-full inline-block bg-beige rounded-md p-2"/>
+      <div class="grid grid-cols-12 items-center gap-4">
+        <CardChapter v-for="c in filteredChapters" @click="() => setChapter(c)"
+                     :index="c.number" :card-state="c.status" :item="getChapterData(c)"
+                     class="cursor-pointer col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 h-full inline-block bg-beige rounded-md p-2"/>
+      </div>
     </div>
   </div>
 
-  <ChapterModalView :chapter="chapter" :data="getChapterData(chapter)" :close="closeModal"/>
+  <ChapterModalView v-if="mainStore.isModalOpen && isModalOpen" :chapter="chapter" :data="getChapterData(chapter)"
+                    :close="closeModal"/>
 
 </template>
