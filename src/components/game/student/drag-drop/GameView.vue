@@ -109,8 +109,8 @@ const itemValidated = () => {
   <div
       class="w-full h-full flex-1 grid grid-cols-12 items-center gap-5 text-center pt-4 px-8">
     <div
-        class="col-span-3 flex justify-center items-center border border-dashed border-beige rounded-md p-2 max-h-[40vh] max-w-[25vh]">
-      <div id="container" class="relative w-full h-full aspect-[5/9] max-h-[40vh] max-w-[25vh]">
+        class="col-span-3 flex relative justify-center items-center border border-dashed border-beige rounded-md p-2 h-full w-full max-h-[40vh] max-w-[25vh]">
+      <div id="container" class="relative h-full w-full">
         <div ref="draggable" class="relative w-full h-full">
           <CardGame v-if="teamData" mode="vertical"
                     :answer-state="currentIndex === -1 ? 'none' : teamData.answers[currentIndex].status"
