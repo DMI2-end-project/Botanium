@@ -1,9 +1,10 @@
 <template>
-  <div class="relative grid grid-cols-2 auto-rows-fr gap-4 px-8 my-auto">
+  <div class="relative grid grid-cols-2 auto-rows-fr gap-4 px-8 my-auto pt-4">
     <CardGame v-for="(answer, index) in answers" :v-bind="index" @click.native="() => itemSelected(index)"
               mode="horizontal"
               card-state="show" :answer-state="answer.status"
-              class="aspect-[9/4]">
+              class="aspect-[9/4] max-h-[25vh] max-w-[60vh]"
+              :class="index%2 === 0 ? 'ml-auto' : 'mr-auto'">
       <template v-slot:recto>
         <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
         <span class="text-md pointer-events-none">{{ answer.text }}</span>
