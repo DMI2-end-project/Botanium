@@ -50,6 +50,9 @@ import Picture from "./../../../assets/svg/ico-picture.svg?component";
 import Flower from "./../../../assets/svg/ico-flower.svg?component";
 import Underline from "./../../../assets/svg/underline.svg?component";
 
+interface SubArray {
+  [key: string]: any;
+}
 
 export default {
   name: "ImageElementComponent",
@@ -131,7 +134,7 @@ export default {
       this.updateColor()
     },
     createSubArrays(arr:PhotoData[]):Array<Array<PhotoData>> {
-      const subArrays = {};
+      const subArrays:SubArray = {};
 
       arr.forEach((item) => {
         const { created } = item;
@@ -139,8 +142,7 @@ export default {
 
         const dateFormat = new Date(date);
 
-        const options = { weekday: 'long', day: 'numeric', month: 'long' };
-        const formattedDate = dateFormat.toLocaleDateString('fr-FR', options);
+        const formattedDate = dateFormat.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 
         const formattedDateWithCapitalizedDay = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 

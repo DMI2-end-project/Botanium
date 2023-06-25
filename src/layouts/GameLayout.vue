@@ -113,7 +113,7 @@ export default defineComponent({
 
   <div class="fixed top-0 left-0 right-0 bottom-0 flex flex-col">
     <header class="w-full mt-8">
-      <Transition name="fade" :mode="gameStore.currentStep < 3 ? 'out-in' : ''">
+      <Transition name="fade" :mode="gameStore.currentStep < 3 ? 'out-in' : 'default'">
           <component :is="isBreadcrumb ? 'Breadcrumb' : 'GameHeader'"/>
       </Transition>
     </header>
