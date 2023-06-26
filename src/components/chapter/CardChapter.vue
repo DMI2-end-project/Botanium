@@ -24,7 +24,8 @@ const props = defineProps({
 const getImage = () => {
   let chapterNumber = leading(props.index, 3);
 
-  return `/chapter/${chapterNumber}/preview-chapter-${chapterNumber}.jpg`;
+  //return `/chapter/${chapterNumber}/preview-chapter-${chapterNumber}.jpg`;
+  return `/chapter/001/preview-chapter-001.jpg`;
 }
 
 </script>
@@ -39,8 +40,8 @@ const getImage = () => {
       </div>
       <p class=" text-beige">{{ index }}</p>
     </div>
-    <div class="flex flex-col sm:flex-row gap-5">
-      <div class="w-10 h-10 lg:w-20 lg:h-20 aspect-square shrink-0 rounded-full overflow-hidden">
+    <div class="flex gap-5">
+      <div class="w-20 h-20 aspect-square shrink-0 rounded-full overflow-hidden">
         <img class="w-full h-full object-cover object-center" :src="getImage()" alt=""/>
       </div>
       <div class="flex flex-col gap-1.5">
@@ -48,7 +49,7 @@ const getImage = () => {
         <span class="leading-tight"
               :class="cardState === 'done' ? 'text-blue' : 'text-green-medium'">{{ props.item? props.item.title : '' }}</span>
       </div>
-      <RoundButton class="self-end" :color="cardState === 'done' ? COLOR.BLUE : COLOR.GREEN_MEDIUM_BEIGE"
+      <RoundButton class="self-end ml-auto" :color="cardState === 'done' ? COLOR.BLUE : COLOR.GREEN_MEDIUM_BEIGE"
                    :size="SIZE.XS">
         <Eye class="w-10"/>
       </RoundButton>

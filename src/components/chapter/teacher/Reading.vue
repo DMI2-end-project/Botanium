@@ -48,8 +48,7 @@ chapterStore.$subscribe((_, state) => {
 <template>
   <div v-if="chapterStore.currentStep === CHAPTER_STEP.STORY"
        class="fixed top-0 left-0 right-0 bottom-0 col-span-12" style="z-index: 0">
-    <img class="w-full h-full object-cover object-center"
-         :src="images[0]"/>
+    <img class="w-full h-full object-cover object-center z-10" :src="images[0]"/>
     <Transition name="texture">
       <img v-show="images.length > 1" class="w-full h-full object-cover object-center absolute inset-0"
            :src="images[1]"/>
