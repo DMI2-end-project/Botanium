@@ -122,7 +122,7 @@ const closeModal = () => {
         class="flex-1 h-full col-span-12 my-auto"/>
       <Waiting
         v-else-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
-        class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
+        class="col-start-2 col-span-10 sm:col-start-3 sm:col-span-8 lg:col-start-4 lg:col-span-6"/>
       <Congratulation v-else-if="gameStore.currentStep === GAME_STEP.CONGRATS"
                     class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
     </Transition>

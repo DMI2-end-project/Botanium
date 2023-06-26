@@ -12,6 +12,7 @@ import RoundButton from "../../../common/RoundButton.vue";
 import CardGame from "../../CardGame.vue";
 
 import Check from "./../../../../assets/svg/ico-check.svg?component";
+import DragDropGrid from "../../DragDropGrid.vue";
 
 gsap.registerPlugin(Draggable, Flip);
 
@@ -129,12 +130,11 @@ const itemValidated = () => {
         </div-->
       </div>
     </div>
-    <div class="relative col-span-9 grid grid-cols-3 gap-9 rounded-md p-10 bg-beige-medium"
-         :class="`grid-cols-${playingTeams.length}`">
+    <DragDropGrid class="relative col-span-9 w-full pb-10">
       <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
-           class="w-full flex flex-col justify-center items-center gap-6 z-10 max-w-[25vh] mx-auto">
+           class="w-full flex flex-col justify-center items-center gap-2 max-h-[50vh] mx-auto z-10">
         <div ref="droppables"
-             class="droppable w-full aspect-[5/9] max-h-[40vh] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
+             class="droppable w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
              :data-is-valid="answer.isValid">
           {{ answer.label }}...
         </div>
@@ -150,6 +150,6 @@ const itemValidated = () => {
           </RoundButton>
         </Transition>
       </div>
-    </div>
+    </DragDropGrid>
   </div>
 </template>

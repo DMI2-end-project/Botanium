@@ -43,7 +43,6 @@ const launchScan = () => {
 </script>
 
 <template>
-  <div class="w-full h-full flex items-center justify-center">
   <Introduction v-if="!scan" @scan="scan = true"/>
   <Scan v-if="scan" ref="scanComponent" @ready="launchScan" @scanned="openModal"/>
   <ModalView v-if="isModalOpen" :close="false">
@@ -60,5 +59,4 @@ const launchScan = () => {
       </RoundButton>
     </div>
   </ModalView>
-  </div>
 </template>

@@ -34,7 +34,7 @@ const props = defineProps({
 <template>
   <!-- BORDER ONLY FOR SELECTED - NO BACKGROUND -->
   <!-- TODO : DO OUTLINE -->
-  <div class=" w-full h-full rounded-lg border shrink-0 text-center p-2"
+  <div class=" rounded-lg border shrink-0 text-center p-2"
        :class="{
          'border-green-light' : props.answerState === 'selected',
          'border-transparent' : props.answerState !== 'selected'

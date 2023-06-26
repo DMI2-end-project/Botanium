@@ -24,8 +24,8 @@
         v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
         class="col-span-4 lg:col-span-3 lg:col-start flex flex-col justify-around items-center">
       <div class="flex flex-col items-center">
-        <Connexion class="pb-20" :status-needed="false"/>
-        <div class="bg-beige rounded-full p-4 -translate-y-1/2">
+        <Connexion v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" class="pb-20" :status-needed="false"/>
+        <div class="bg-beige rounded-full p-4" :class="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION ? '-translate-y-1/2' :''">
           <RoundButton :color="COLOR.PINK" @click="next">
             <Arrow class="rotate-180"/>
           </RoundButton>

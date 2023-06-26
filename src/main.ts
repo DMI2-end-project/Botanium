@@ -1,10 +1,9 @@
 import './style.css';
+import {initClient} from "./client";
 import {createApp} from 'vue';
 import {createPinia} from 'pinia';
-import {initClient} from "./client";
 import { DatabaseManagerInstance } from "./common/DatabaseManager";
 import { mountGameMasterManagerInstance } from "./common/GameMasterManager";
-import { ROLE } from "./common/Constants";
 import { mountTeamManagerInstance } from "./common/TeamManager";
 import router from "./router";
 import App from './App.vue';
@@ -13,7 +12,7 @@ import {registerLayouts} from './layouts/register';
 
 const app = createApp(App);
 
-app.provide('pocketBaseUrl', "https://pocketbase-dmi2.fly.dev/")
+app.provide('pocketBaseUrl', "https://pocketbase-dmi2.fly.dev/");
 
 export const pinia = createPinia();
 app.use(pinia);
