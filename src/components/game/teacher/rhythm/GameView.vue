@@ -2,8 +2,8 @@
   <div class="relative">
     <div class="fixed -z-10 bg-dig bg-width-full bg-bottom bg-no-repeat w-screen h-screen inset-0" />
     <Gauge :content="score" />
-    <button class="col-span-12 mx-auto my-5 z-10" @click="next">
-      Exercice reussi
+    <button class="fixed top-[80px] right-[30px]" @click="next">
+      Do
     </button>
   </div>
 </template>
