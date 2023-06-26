@@ -1,44 +1,69 @@
-<script setup lang="ts">
-/*
-  TODO :
-     - Loaders Student
-     - Loader Teacher
-*/
-
-import {onBeforeMount} from "vue";
+<script lang="ts">
+import {defineComponent} from 'vue'
+import {useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
 import {useChapterStore} from "../stores/chapterStore";
-import {ROLE} from "../common/Constants";
+import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import {GAME_STEP} from "../common/Constants";
 
-import chaptersData from "../assets/chapters-data/chapters-data.json";
+import Breadcrumb from "../components/Breadcrumb.vue";
+import GameHeader from "../components/game/GameHeader.vue";
+import Chapter from "../components/chapter/Chapter.vue";
 
-import StudentChapter from "./../components/chapter/student/StudentChapter.vue";
-import TeacherChapter from "./../components/chapter/teacher/TeacherChapter.vue";
+import gameData from "../assets/game-data/game-data.json";
 
-const mainStore = useMainStore();
-const chapterStore = useChapterStore();
-
-interface ChaptersData {
+interface GameData {
   [key: string]: any;
 }
 
-const socket = getSocket();
-
-const key = mainStore.getChapterId as string;
-const data: ChaptersData = chaptersData;
-chapterStore.data = data[key];
-
-onBeforeMount(async () => {
-  await socket.connect();
-  await socket.emit('join', {
-    role: mainStore.role,
-    roomId: mainStore.roomId
-  });
-})
+export default defineComponent({
+  computed: {
+    GAMESTEP() {
+      return GAME_STEP
+    },
+    gameData(): { [key: string]: any } {
+      return gameData;
+    }
+  },
+  components: {GameHeader, Breadcrumb, Chapter},
+  data() {
+    return {
+      mainStore: useMainStore(),
+      chapterStore: useChapterStore(),
+      router: useRouter(),
+      socket: getSocket(),
+      pb: DatabaseManagerInstance.pb,
+    }
+  },
+  created() {
+    if (this.mainStore.getFullGameId) {
+      const key = this.mainStore.getFullGameId as string;
+      const data: GameData = gameData;
+    }
+  },
+  methods: {
+    DatabaseManagerInstance() {
+      return DatabaseManagerInstance
+    },
+    disconnect() {
+      this.socket.disconnect();
+      this.pb.authStore.clear();
+      this.mainStore.reset();
+      this.router.push({
+        name: 'Login'
+      });
+    }
+  }
+});
 </script>
 
 <template>
-  <TeacherChapter v-if="mainStore.role === ROLE.TEACHER"/>
-  <StudentChapter v-if="mainStore.role === ROLE.STUDENT"/>
+  <div class="fixed top-0 left-0 right-0 bottom-0 flex flex-col">
+    <header class="w-full flex items-center">
+    </header>
+    <main class="relative w-full h-full">
+      <Chapter />
+    </main>
+  </div>
 </template>

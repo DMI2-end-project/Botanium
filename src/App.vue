@@ -9,8 +9,6 @@ import {CHAPTER_STEP, COLOR, GAME_STEP, ROLE} from "./common/Constants";
 import {connectClient} from "./client";
 
 import AppLayout from "./layouts/AppLayout.vue";
-import DevLayout from "./layouts/DevLayout.vue";
-import GameLayout from "./layouts/GameLayout.vue";
 import ModalView from "./components/common/ModalView.vue";
 import RoundButton from "./components/common/RoundButton.vue";
 
@@ -23,14 +21,14 @@ import Cross from "./assets/svg/ico-cross.svg?component";
 
 export default defineComponent({
   name: 'App',
-  components: {RoundButton, ModalView, AppLayout, DevLayout, GameLayout, Check, Cross},
+  components: {RoundButton, ModalView, AppLayout, Check, Cross},
   data() {
     return {
       router: useRouter(),
       mainStore: useMainStore(),
       chapterStore: useChapterStore(),
       gameStore: useGameStore(),
-      isModalOpen: false
+      isModalOpen: false,
     }
   },
   computed: {
@@ -103,7 +101,11 @@ export default defineComponent({
 
 <template>
   <AppLayout>
-    <router-view/>
+    <router-view v-slot="{ Component }">
+    <transition name="slide">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 
     <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
       <h1>Attention !</h1>

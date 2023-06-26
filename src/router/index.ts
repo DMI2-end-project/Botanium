@@ -62,7 +62,7 @@ const config: RouterOptions = {
       path: '/chapitre/:id', // 001
       component: Chapter,
       meta: {
-        layout: 'Chapter',
+        layout: 'Default',
       }
     },
     {
@@ -70,7 +70,7 @@ const config: RouterOptions = {
       path: '/exercice/:id', // 00101
       component: Game,
       meta: {
-        layout: 'Game',
+        layout: 'Default',
       },
     },
     {
@@ -78,7 +78,7 @@ const config: RouterOptions = {
       path: '/carnet-de-bord',
       component: LogBook,
       meta: {
-        layout: 'LogBook',
+        layout: 'Default',
       },
     },
     {

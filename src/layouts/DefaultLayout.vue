@@ -23,7 +23,7 @@ export default defineComponent({
       return COLOR
     },
     show() {
-      return this.router.currentRoute.name !== 'Dashboard' && 'Home';
+      return this.router.currentRoute.name !== 'Dashboard' && this.router.currentRoute.name !== 'Home' && this.router.currentRoute.name !== 'Game' && this.router.currentRoute.name !== 'Chapter' && this.router.currentRoute.name !== 'LogBook';
     }
   },
 });
