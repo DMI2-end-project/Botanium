@@ -11,9 +11,11 @@
 
     <div class="col-span-2">
       <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue && clue !== ''" @click="openModal"
-                   class="mx-auto">
-        <Clue/>
-        <div class="absolute animate-ping bg-pink rounded-full w-full aspect-square top-0 left-0 z-0"/>
+                   class="relative mx-auto">
+        <Clue class="relative z-10"/>
+        <template #animation>
+          <div ref="clue" class="absolute bg-pink rounded-full w-full aspect-square top-0 left-0 -z-10"/>
+        </template>
       </RoundButton>
     </div>
   </div>
@@ -69,6 +71,8 @@ export default defineComponent({
       gameStore: useGameStore(),
       publicPath: window.location.origin,
       isModalOpen: false,
+      timeoutID: setTimeout(() => {
+      })
     }
   },
   computed: {
@@ -130,6 +134,17 @@ export default defineComponent({
         case 4:
           return FOUR;
           break;
+      }
+    }
+  },
+  watch: {
+    clue(newClue, _) {
+      if (newClue) {
+        this.timeoutID = setTimeout(() => {
+          (this.$refs.clue as HTMLDivElement).classList.add('animate-ping');
+        }, 60000);
+      } else {
+        clearTimeout(this.timeoutID);
       }
     }
   }

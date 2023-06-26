@@ -283,6 +283,54 @@ button:focus-visible {
     transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.texture-enter-active, .texture-in-out-enter-active, .texture-in-out-2-enter-active {
+    -webkit-mask: url('/chapter/global-mask.png');
+        mask: url('/chapter/global-mask.png');
+        -webkit-mask-size: 3000% 100%;
+        mask-size: 3000% 100%;
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+        -webkit-animation: mask-play 1s steps(29, end) 1 both;
+        animation: mask-play 1s steps(29, end) 1 both;
+}
+
+.texture-in-out-enter-active {
+    -webkit-animation: mask-play 0.8s steps(29, end) 1 both;
+    animation: mask-play 0.8s steps(29, end) 1 both;
+    animation-delay: 0.4s;
+}
+
+.texture-in-out-2-enter-active {
+    -webkit-animation: mask-play 0.8s steps(29, end) 1 both;
+    animation: mask-play 0.8s steps(29, end) 1 both;
+    animation-delay: 0.6s;
+}
+
+
+@-webkit-keyframes mask-play {
+    from {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+    }
+
+    to {
+        -webkit-mask-position: 0% 0;
+        mask-position: 0% 0;
+    }
+}
+
+@keyframes mask-play {
+    from {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+    }
+
+    to {
+        -webkit-mask-position: 0% 0;
+        mask-position: 0% 0;
+    }
+}
+
 @media (prefers-color-scheme: light) {
     :root {
         /* color: #213547; */

@@ -22,7 +22,9 @@
             <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/common/plus.png" class="p-6"></RoundButton>
             <p class="font-bold mt-2">Ajouter une page</p>
           </div>
-          <PageContent v-else-if="pagesContent[pageNumber - 2]" :content="pagesContent[pageNumber - 2]" @onModify="onModify = $event" />
+          <Transition name="texture-in-out">
+            <PageContent v-show="pagesContent[pageNumber - 2]" :content="pagesContent[pageNumber - 2]" @onModify="onModify = $event" />
+          </Transition>
         </div>
         <div ref="pageRight" class="page page-right flex">
           <!-- <p class="absolute -bottom-6">page {{ pageNumber }}</p> -->
@@ -30,7 +32,9 @@
             <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/common/plus.png" class="p-6"></RoundButton>
             <p class="font-bold mt-2">Ajouter une page</p>
           </div>
-          <PageContent v-else-if="pagesContent[pageNumber - 1]" :content="pagesContent[pageNumber - 1]" @onModify="onModify = $event" />
+          <Transition name="texture-in-out-2">
+            <PageContent v-show="pagesContent[pageNumber - 1]" :content="pagesContent[pageNumber - 1]" @onModify="onModify = $event" />
+          </Transition>
         </div>
       </div>
       <RoundButton class="open" ref="buttonOpen" @click="openTheBook"><Play /></RoundButton>
@@ -278,9 +282,8 @@ button.previous {
   inset:0;
   margin: auto;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease;
 }
-
 
 .book-content .page-active {
   opacity: 1;

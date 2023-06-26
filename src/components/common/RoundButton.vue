@@ -1,5 +1,5 @@
 <template>
-  <div v-if="colorBg" :class="(isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass"
+  <div v-if="colorBg" :class="'relative' + (isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass"
        class="RoundButtonBg p-8 rounded-full  ">
     <button
         class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
@@ -15,13 +15,15 @@
         <slot/>
       </div>
     </button>
+    <slot name="animation"/>
+
   </div>
   <button
       v-else
       class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0"
       :class="`${containerClass}` + (isActive ? '' : ' opacity-50 pointer-events-none')">
     <div
-        class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform  z-10"
+        class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform"
         :class="`${bgClass}`">
       <div
           class="RoundButton__border absolute w-full h-full rounded-full bg-transparent border scale-[0.85] group-hover:scale-100 transform"
@@ -31,6 +33,7 @@
     <div class="RoundButton__icon z-10" :class="`${textClass}`">
       <slot/>
     </div>
+    <slot name="animation"/>
   </button>
 </template>
 
@@ -156,34 +159,34 @@ export default defineComponent({
 
 <style>
 .RoundButton--lg .RoundButton__icon > svg {
-    width: 88px;
-    height: 88px;
-    object-fit: contain;
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
 }
 
 .RoundButton--md .RoundButton__icon > svg {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
 }
 
 .RoundButton--sm .RoundButton__icon > svg {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .RoundButton--xs .RoundButton__icon > svg {
-    width: 18px;
-    height: 18px;
-    object-fit: contain;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 }
 
 .RoundButton__bg {
-    transition: transform 0.4s cubic-bezier(0.3, 2.0, 0.45, 1.0);
+  transition: transform 0.4s cubic-bezier(0.3, 2.0, 0.45, 1.0);
 }
 
 .RoundButton__border {
-    transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
 }
 </style>

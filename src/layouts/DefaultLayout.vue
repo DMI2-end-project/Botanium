@@ -31,7 +31,7 @@ export default defineComponent({
 
 <template>
   <div class="bg-beige-medium min-h-screen flex flex-col">
-    <header class="w-full flex items-center">
+    <header class="w-full flex items-center z-20">
       <RoundButton v-if="show" :color="COLOR.YELLOW" class="!absolute top-6 left-8"
                    @click="router.push({name: mainStore.role === ROLE.STUDENT ? 'Home' : 'Dashboard'})">
         <Home/>

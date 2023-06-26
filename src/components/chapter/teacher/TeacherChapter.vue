@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-texture-beige w-full h-full grid grid-cols-1 sm:grid-cols-12 gap-4 px-8 flex text-black">
+  <div class="w-full h-full grid grid-cols-1 sm:grid-cols-12 gap-4 px-8 flex text-black">
     <Reading v-if="chapterStore.currentStep === CHAPTER_STEP.STORY" @next="next"/>
 
     <div
