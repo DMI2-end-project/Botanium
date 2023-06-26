@@ -3,7 +3,7 @@
     <CardGame v-for="(team, index) in playingTeams" :v-bind="index"
               mode="horizontal"
               :answer-state="'none'" :card-state="cardState(index)"
-              class="aspect-[9/4] max-h-[30vh] max-w-[70vh]"
+              class="w-full h-full aspect-[9/4] max-h-[30vh] max-w-[70vh]"
               :class="index % 2 === 0 ? 'ml-auto' : 'mr-auto'">
       <template v-slot:recto>
         <SvgIcon :name="answers[index].icon" class="w-16 aspect-square pointer-events-none"/>
