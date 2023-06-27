@@ -27,8 +27,9 @@ export const initClient = (pinia: Pinia) => {
   const gameData: GameData = gameDataJSON;
   
   socket = io(URL, {
-    autoConnect: false,
-    rejectUnauthorized: false // WARN: please do not do this in production
+    reconnectionDelay: 500,
+    timeout: 3000,
+    closeOnBeforeunload: false
   });
   
   socket.on("connect", () => {

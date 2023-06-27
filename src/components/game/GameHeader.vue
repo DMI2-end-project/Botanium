@@ -71,7 +71,8 @@ export default defineComponent({
       gameStore: useGameStore(),
       publicPath: window.location.origin,
       isModalOpen: false,
-      timeoutID: setTimeout(() => {})
+      timeoutID: setTimeout(() => {
+      })
     }
   },
   computed: {
@@ -106,7 +107,9 @@ export default defineComponent({
       if (this.gameStore.data && this.gameStore.currentSequence !== null && this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams) {
         this.timeoutID = setTimeout(() => {
           console.log('play pulse');
-          (this.$refs.clue as HTMLDivElement).classList.add('animate-ping');
+          if (this.$refs.clue) {
+            (this.$refs.clue as HTMLDivElement).classList.add('animate-ping');
+          }
         }, 60000);
         return this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams[index].clue;
       }
