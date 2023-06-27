@@ -1,5 +1,5 @@
 <template>
-  <div class="relative grid grid-cols-2 auto-rows-fr gap-4 px-8">
+  <div class="relative grid grid-cols-2 auto-rows-fr gap-4 px-8 pt-4">
     <CardGame v-for="(team, index) in playingTeams" :v-bind="index"
               mode="horizontal"
               :answer-state="'none'" :card-state="cardState(index)"

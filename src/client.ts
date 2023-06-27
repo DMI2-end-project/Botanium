@@ -13,7 +13,7 @@ import router from "./router";
 
 // TODO : for production
 // "undefined" means the URL will be computed from the `window.location` object
-const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-server.fly.dev/" : "http://localhost:8080";
+const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-server.fly.dev/" : "http://192.168.43.91:8080";
 
 let socket: Socket;
 export const getSocket = () => socket;
@@ -29,7 +29,8 @@ export const initClient = (pinia: Pinia) => {
   socket = io(URL, {
     reconnectionDelay: 500,
     timeout: 3000,
-    closeOnBeforeunload: false
+    closeOnBeforeunload: false,
+    rejectUnauthorized: false // WARN: please do not do this in production
   });
   
   socket.on("connect", () => {

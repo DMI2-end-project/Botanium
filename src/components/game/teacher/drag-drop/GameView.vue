@@ -3,22 +3,25 @@
     <div class="col-span-10 col-start-2 sm:col-span-8 sm:col-start-3 xl:col-span-6 xl:col-start-4 flex">
       <DragDropGrid>
         <div v-if="answers" v-for="(team, index) in playingTeams" :v-bind="index"
-             class="flex flex-col justify-center items-center gap-2 max-h-[50vh] mx-auto">
-          <CardGame mode="vertical" :answer-state="'none'" :card-state="cardState(index)"
-                    class="aspect-[5/9]">
-            <template v-slot:recto>
-              <img v-if="answers[index].image" alt=""
-                   :src="`/game/images/${mainStore.getFullGameId}/${answers[index].image}`"
-                   class="object-contain object-center w-full h-full"/>
-            </template>
-            <template v-slot:verso>
-              <div
-                  class="w-full flex flex-col justify-center items-center bg-beige font-hand-written text-beige-dark text-2xl">
-                {{ answers[index].label }}...
-              </div>
-            </template>
-          </CardGame>
-          <div class="flex-1 w-full bg-green text-beige rounded-md">
+             class="flex flex-col justify-center items-center gap-2 mx-auto">
+          <div class="h-full aspect-[5/9]">
+            <CardGame mode="vertical" :answer-state="'none'" :card-state="cardState(index)"
+                      class="max-h-[50vh]">
+              <template v-slot:recto>
+                <img v-if="answers[index].image" alt=""
+                     :src="`/game/images/${mainStore.getFullGameId}/${answers[index].image}`"
+                     class="object-contain object-center w-full h-full"/>
+              </template>
+              <template v-slot:verso>
+                <div
+                    class="w-full flex flex-col justify-center items-center bg-beige font-hand-written text-beige-dark text-2xl">
+                  {{ answers[index].label }}...
+                </div>
+              </template>
+            </CardGame>
+          </div>
+
+          <div class="w-full bg-green text-beige rounded-md fill">
             <h3>{{ answers[index].molecule }}</h3>
           </div>
         </div>
@@ -84,3 +87,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style>
+.fill {
+  width: -webkit-fill-available;
+}
+</style>

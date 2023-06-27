@@ -110,7 +110,7 @@ const itemValidated = () => {
   <div
       class="w-full h-full flex-1 grid grid-cols-12 items-center gap-5 text-center pt-4 px-8">
     <div
-        class="col-span-3 flex relative justify-center items-center border border-dashed border-beige rounded-md p-2 h-full w-full max-h-[40vh] max-w-[25vh]">
+        class="col-span-3 xl:col-span-2 xl:col-start-3 flex relative justify-center items-center border border-dashed border-beige rounded-md p-2 h-full w-full max-h-[40vh] max-w-[25vh]">
       <div id="container" class="relative h-full w-full">
         <div ref="draggable" class="relative w-full h-full">
           <CardGame v-if="teamData" mode="vertical"
@@ -130,11 +130,11 @@ const itemValidated = () => {
         </div-->
       </div>
     </div>
-    <DragDropGrid class="relative col-span-9 w-full pb-10">
+    <DragDropGrid class="relative w-full col-span-9 xl:col-span-6 pb-12">
       <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
-           class="w-full flex flex-col justify-center items-center gap-2 max-h-[50vh] mx-auto z-10">
+           class="w-full flex flex-col justify-center items-center gap-6 z-10 max-w-[25vh] mx-auto">
         <div ref="droppables"
-             class="droppable w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
+             class="droppable w-full aspect-[5/9] max-h-[40vh] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
              :data-is-valid="answer.isValid">
           {{ answer.label }}...
         </div>
