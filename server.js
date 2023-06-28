@@ -310,7 +310,11 @@ io.on('connection', (socket) => {
   socket.on('killRoom', (arg) => {
     io.to(arg.roomId).emit('killRoom');
 
-    rooms = rooms.filter(room => room.id !== arg.roomId);
+    rooms.map(room => {
+      if (room.id === arg.roomId) {
+        room._teams = [];
+      }
+    });
   });
 
   audioGame.initListenners(io, socket);

@@ -48,20 +48,19 @@ chapterStore.$subscribe((_, state) => {
 <template>
   <div v-if="chapterStore.currentStep === CHAPTER_STEP.STORY"
        class="fixed top-0 left-0 right-0 bottom-0 col-span-12" style="z-index: 0">
-    <img class="w-full h-full object-cover object-center"
-         :src="images[0]"/>
+    <img class="w-full h-full object-cover object-center z-10" :src="images[0]"/>
     <Transition name="texture">
       <img v-show="images.length > 1" class="w-full h-full object-cover object-center absolute inset-0"
-         :src="images[1]"/>
+           :src="images[1]"/>
     </Transition>
 
   </div>
 
   <Transition name="slide">
     <div v-if="chapterStore.currentStep === CHAPTER_STEP.STORY" v-show="texts.length <= 1"
-        class="absolute m-6 md:w-2/3 w-full bottom-0 right-0 bg-beige rounded-lg flex items-center gap-6 p-6 mt-auto">
-      <p class="w-full h-full flex flex-col items-center justify-center text-green font-bold"
-          v-html="texts[0]" />
+         class="absolute m-6 md:w-2/3 w-3/4 bottom-0 right-0 bg-beige rounded-lg flex items-center gap-6 p-6 mt-auto">
+      <p class="w-full h-full flex flex-col justify-center text-green font-bold"
+         v-html="texts[0]"/>
       <RoundButton :color="COLOR.PINK" @click="$emit('next')">
         <Arrow class="rotate-180"/>
       </RoundButton>

@@ -8,7 +8,6 @@ import RoundButton from "../components/common/RoundButton.vue";
 
 import Chevron from "../assets/svg/ico-chevron.svg?component";
 import Organization from "../assets/svg/ico-organization.svg?component";
-import DefaultLayout from "../layouts/DefaultLayout.vue";
 
 const store = useMainStore();
 

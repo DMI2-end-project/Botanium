@@ -8,7 +8,6 @@ import {DatabaseManagerInstance} from "./common/DatabaseManager";
 import {CHAPTER_STEP, COLOR, GAME_STEP, ROLE} from "./common/Constants";
 import {connectClient} from "./client";
 
-import AppLayout from "./layouts/AppLayout.vue";
 import ModalView from "./components/common/ModalView.vue";
 import RoundButton from "./components/common/RoundButton.vue";
 
@@ -21,7 +20,7 @@ import Cross from "./assets/svg/ico-cross.svg?component";
 
 export default defineComponent({
   name: 'App',
-  components: {RoundButton, ModalView, AppLayout, Check, Cross},
+  components: {RoundButton, ModalView, Check, Cross},
   data() {
     return {
       router: useRouter(),
@@ -100,24 +99,22 @@ export default defineComponent({
 </script>
 
 <template>
-  <AppLayout>
-    <router-view v-slot="{ Component }">
+  <router-view v-slot="{ Component }">
     <transition name="slide">
       <component :is="Component" />
     </transition>
   </router-view>
 
-    <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
-      <h1>Attention !</h1>
-      <p>Il y a une partie en cours, est-ce que tu veux la rejoindre ?</p>
-      <div class="flex justify-center items-center gap-6">
-        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="()=>joinOthers()">
-          <Check/>
-        </RoundButton>
-        <RoundButton :color="COLOR.RED" @click="()=>closeModal()">
-          <Cross/>
-        </RoundButton>
-      </div>
-    </ModalView>
-  </AppLayout>
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
+    <h1>Attention !</h1>
+    <p>Il y a une partie en cours, est-ce que tu veux la rejoindre ?</p>
+    <div class="flex justify-center items-center gap-6">
+      <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="()=>joinOthers()">
+        <Check/>
+      </RoundButton>
+      <RoundButton :color="COLOR.RED" @click="()=>closeModal()">
+        <Cross/>
+      </RoundButton>
+    </div>
+  </ModalView>
 </template>

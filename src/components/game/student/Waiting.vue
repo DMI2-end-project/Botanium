@@ -2,8 +2,8 @@
   <div class="flex flex-col gap-10 justify-around items-center text-green">
     <div class="w-full bg-green text-beige rounded-md grid grid-cols-3 gap-8 lg:gap-14 p-10"> <!-- flex -->
       <div class="col-span-1 w-full">
-        <RoundItem v-if="congratulation?.icon" class="w-full aspect-square" :color="COLOR.WHITE">
-          <SvgIcon :name="congratulation.icon"/>
+        <RoundItem v-if="congratulation?.icon" class="w-full aspect-square p-4 sm:p-12 lg:p-16" :color="COLOR.WHITE">
+          <SvgIcon class="!w-full !h-full" :name="congratulation.icon"/>
         </RoundItem>
         <div v-if="congratulation?.image"
              :class="congratulation?.shape === 'circle' ? 'bg-beige rounded-full p-8' : ''">

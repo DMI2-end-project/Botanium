@@ -5,7 +5,7 @@ import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
 import {useChapterStore} from "../stores/chapterStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {GAME_STEP} from "../common/Constants";
+import {CHAPTER_STEP, GAME_STEP, ROLE} from "../common/Constants";
 
 import Breadcrumb from "../components/Breadcrumb.vue";
 import GameHeader from "../components/game/GameHeader.vue";
@@ -19,6 +19,12 @@ interface GameData {
 
 export default defineComponent({
   computed: {
+    ROLE() {
+      return ROLE
+    },
+    CHAPTER_STEP() {
+      return CHAPTER_STEP
+    },
     GAMESTEP() {
       return GAME_STEP
     },
@@ -62,7 +68,8 @@ export default defineComponent({
   <div class="fixed top-0 left-0 right-0 bottom-0 flex flex-col">
     <header class="w-full flex items-center">
     </header>
-    <main class="relative w-full h-full">
+    <main class="relative w-full h-full bg-cover bg-center"
+          :class="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION  || mainStore.role === ROLE.TEACHER ? 'bg-texture-beige' : 'bg-texture-green'">
       <Chapter />
     </main>
   </div>

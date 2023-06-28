@@ -9,7 +9,6 @@ import { mountTeamManagerInstance } from "./common/TeamManager";
 import router from "./router";
 import App from './App.vue';
 import {useMainStore} from "./stores/mainStore";
-import {registerLayouts} from './layouts/register';
 
 const app = createApp(App);
 
@@ -25,8 +24,6 @@ const store = useMainStore();
 const init = async () => {
   store.roles = await DatabaseManagerInstance.fetchRoles();
   app.use(router);
-
-  registerLayouts(app);
 
   mountGameMasterManagerInstance(router);
   mountTeamManagerInstance(router);

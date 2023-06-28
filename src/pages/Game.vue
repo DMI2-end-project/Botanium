@@ -91,6 +91,8 @@ export default defineComponent({
 
 
 <template>
+  <div>
+
   <div class="bg-cover bg-bottom bg-beige-medium fixed inset-0 pointer-events-none overflow-hidden"
        :class="backgroundColor"/>
   <div class="fixed inset-0 overflow-hidden">
@@ -147,6 +149,7 @@ export default defineComponent({
       <Connexion v-if="mainStore.role === ROLE.TEACHER"/>
     </footer>
   </div-->
+  </div>
 </template>
 
 

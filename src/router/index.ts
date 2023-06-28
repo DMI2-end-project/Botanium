@@ -21,80 +21,50 @@ const config: RouterOptions = {
       name: 'Dev',
       path: '/dev',
       component: Dev,
-      meta: {
-        layout: 'Dev',
-      },
     },
     {
       name: 'Home',
       path: '/accueil',
       component: Home,
-      meta: {
-        layout: 'Default',
-      },
     },
     {
       name: 'Login',
       path: '/connexion',
       component: Login,
-      meta: {
-        layout: 'Default',
-      },
     },
     {
       name: 'Dashboard',
       path: '/tableau-de-bord',
       component: Dashboard,
-      meta: {
-        layout: 'Default',
-      },
     },
     {
       name: 'Chapters',
       path: '/chapitres',
       component: Chapters,
-      meta: {
-        layout: 'Default',
-      }
     },
     {
       name: 'Chapter',
       path: '/chapitre/:id', // 001
       component: Chapter,
-      meta: {
-        layout: 'Default',
-      }
     },
     {
       name: 'Game',
       path: '/exercice/:id', // 00101
       component: Game,
-      meta: {
-        layout: 'Default',
-      },
     },
     {
       name: 'LogBook',
       path: '/carnet-de-bord',
       component: LogBook,
-      meta: {
-        layout: 'Default',
-      },
     },
     {
       name: 'PhotoTaking',
       path: '/prise-de-photo',
       component: PhotoTaking,
-      meta: {
-        layout: 'Default',
-      },
     }, {
       name: 'Scan',
       path: '/scan',
       component: Scan,
-      meta: {
-        layout: 'Default',
-      },
     },
   ]
 }
