@@ -1,16 +1,14 @@
 <template>
   <div>
     <header class="flex items-center justify-between fixed z-50 w-full p-4">
-    <RoundButton v-if="!logBookStore.isClosable" :color="COLOR.YELLOW" @click="router.push({name: mainStore.role === ROLE.STUDENT ? 'Home' : 'Dashboard'})"><Home /></RoundButton>
-    <RoundButton v-if="logBookStore.isClosable" :color="COLOR.RED" @click="closeElements"><Cross /></RoundButton>
-    <Info text="Ajoute une page au carnet de bord pour commencer !"><Speaker /></Info>
-    <button @click="disconnect" class="block">Déconnexion</button>
-  </header>
-  <main class="w-screen h-screen bg-cover bg-texture-green">
-
-    <!--The <slot> element is a slot outlet that indicates where the "VIEW" content should be rendered.-->
-    <LogBook />
-  </main>
+      <RoundButton v-if="!logBookStore.isClosable" :color="COLOR.YELLOW" @click="router.push({name: mainStore.role === ROLE.STUDENT ? 'Home' : 'Dashboard'})"><Home /></RoundButton>
+      <RoundButton v-if="logBookStore.isClosable" :color="COLOR.RED" @click="closeElements"><Cross /></RoundButton>
+      <Info text="Ajoute une page au carnet de bord pour commencer !"><Speaker /></Info>
+      <button @click="disconnect" class="block">Déconnexion</button>
+    </header>
+    <main class="w-screen h-screen bg-cover bg-texture-green">
+      <LogBook />
+    </main>
   </div>
 </template>
 

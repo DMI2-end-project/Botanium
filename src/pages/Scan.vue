@@ -44,21 +44,21 @@ const launchScan = () => {
 
 <template>
   <div class="w-full h-full flex items-center justify-center">
-  <Introduction v-if="!scan" @scan="scan = true"/>
-  <Scan v-if="scan" ref="scanComponent" @ready="launchScan" @scanned="openModal"/>
-  <ModalView v-if="isModalOpen" :close="false">
-    <h1>Bravo !</h1>
-    <p>La mission {{ exp }} a été validé !!</p>
-    <p v-if="!chapterStore.sheetUnlocked">Voulez vous scanner un autre badge ?</p>
-    <p v-if="chapterStore.sheetUnlocked">Vous avez scanné tous les badges nécessaires ! La fiche est débloquée !</p>
-    <div class="flex justify-center items-center gap-6">
-      <RoundButton v-if="!chapterStore.sheetUnlocked" :color="COLOR.YELLOW" @click="launchScan">
-        <Camera/>
-      </RoundButton>
-      <RoundButton :color="COLOR.RED" @click="router.push(`/chapitre/${mainStore.getChapterId}`)">
-        <Cross/>
-      </RoundButton>
-    </div>
-  </ModalView>
+    <Introduction v-if="!scan" @scan="scan = true"/>
+    <Scan v-if="scan" ref="scanComponent" @ready="launchScan" @scanned="openModal"/>
+    <ModalView v-if="isModalOpen" :close="false">
+      <h1>Bravo !</h1>
+      <p>La mission {{ exp }} a été validé !!</p>
+      <p v-if="!chapterStore.sheetUnlocked">Voulez vous scanner un autre badge ?</p>
+      <p v-if="chapterStore.sheetUnlocked">Vous avez scanné tous les badges nécessaires ! La fiche est débloquée !</p>
+      <div class="flex justify-center items-center gap-6">
+        <RoundButton v-if="!chapterStore.sheetUnlocked" :color="COLOR.YELLOW" @click="launchScan">
+          <Camera/>
+        </RoundButton>
+        <RoundButton :color="COLOR.RED" @click="router.push(`/chapitre/${mainStore.getChapterId}`)">
+          <Cross/>
+        </RoundButton>
+      </div>
+    </ModalView>
   </div>
 </template>

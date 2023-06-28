@@ -93,62 +93,49 @@ export default defineComponent({
 <template>
   <div>
 
-  <div class="bg-cover bg-bottom bg-beige-medium fixed inset-0 pointer-events-none overflow-hidden"
+    <div class="bg-cover bg-bottom bg-beige-medium fixed inset-0 pointer-events-none overflow-hidden"
        :class="backgroundColor"/>
-  <div class="fixed inset-0 overflow-hidden">
-    <Transition name="bgTransitionLeft1">
-      <div v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" class="absolute bottom-0 h-2/3 w-fit max-w-[40%] origin-bottom">
-        <img :src="getImage" alt=""
-          class="-scale-x-100 h-full w-auto object-contain object-bottom">
-      </div>
-    </Transition>
-    <Transition name="bgTransitionLeft2" v-if="mainStore.getFullGameId !== '00101' && mainStore.getFullGameId !== '00104'">
-      <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-[25%] left-[10%] h-1/2 w-auto object-contain origin-bottom">
-    </Transition>
-    <Transition name="bgTransitionRight2">
-      <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-0 -right-[5%] h-5/6 max-w-[60%] w-auto object-contain origin-bottom object-bottom">
-    </Transition>
-    <Transition name="bgTransitionRight1" v-if="mainStore.getFullGameId !== '00104'">
-      <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-0 right-[10%] h-1/2 w-auto object-contain origin-bottom">
-    </Transition>
-  </div>
-
-  <div class="fixed top-0 left-0 right-0 bottom-0 flex flex-col">
-    <header class="w-full mt-8">
-      <Transition name="fade" :mode="gameStore.currentStep < 3 ? 'out-in' : 'default'">
-          <component :is="isBreadcrumb ? 'Breadcrumb' : 'GameHeader'"/>
+    <div class="fixed inset-0 overflow-hidden">
+      <Transition name="bgTransitionLeft1">
+        <div v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" class="absolute bottom-0 h-2/3 w-fit max-w-[40%] origin-bottom">
+          <img :src="getImage" alt=""
+            class="-scale-x-100 h-full w-auto object-contain object-bottom">
+        </div>
       </Transition>
-    </header>
-    <main class="relative w-full h-full flex flex-col">
-      <Game />
-    </main>
-  </div>
-  <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">
-    <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName"/>
-
-    <div v-if="mainStore.role === ROLE.TEACHER">
-      <CircleButton @click="openModal" text="Connexion" class="mb-4">
-        <Wifi/>
-      </CircleButton>
-
-      <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true" :padding="false">
-        <Connexion class="h-full justify-between" :status-needed="true"/>
-      </ModalView>
+      <Transition name="bgTransitionLeft2" v-if="mainStore.getFullGameId !== '00101' && mainStore.getFullGameId !== '00104'">
+        <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-[25%] left-[10%] h-1/2 w-auto object-contain origin-bottom">
+      </Transition>
+      <Transition name="bgTransitionRight2">
+        <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-0 -right-[5%] h-5/6 max-w-[60%] w-auto object-contain origin-bottom object-bottom">
+      </Transition>
+      <Transition name="bgTransitionRight1" v-if="mainStore.getFullGameId !== '00104'">
+        <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-0 right-[10%] h-1/2 w-auto object-contain origin-bottom">
+      </Transition>
     </div>
-  </footer>
-  <!--div class="flex-1 flex flex-col w-full h-full min-h-screen max-h-screen gap-10">
-    <header class="w-full mt-8 z-20">
-      <Breadcrumb v-if="isBreadcrumb"/>
-      <GameHeader v-if="!isBreadcrumb"/>
-    </header>
-    <main class="w-screen flex-1 h-full flex flex-col justify-center pb-10 z-10">
-      <slot></slot>
-    </main>
+
+    <div class="fixed top-0 left-0 right-0 bottom-0 flex flex-col">
+      <header class="w-full mt-8">
+        <Transition name="fade" :mode="gameStore.currentStep < 3 ? 'out-in' : 'default'">
+            <component :is="isBreadcrumb ? 'Breadcrumb' : 'GameHeader'"/>
+        </Transition>
+      </header>
+      <main class="relative w-full h-full flex flex-col">
+        <Game />
+      </main>
+    </div>
     <footer class="fixed bottom-0 flex gap-5 left-[2%] z-20">
       <TeamSignboard v-if="mainStore.role === ROLE.STUDENT" :text="gameStore.teamName"/>
-      <Connexion v-if="mainStore.role === ROLE.TEACHER"/>
+
+      <div v-if="mainStore.role === ROLE.TEACHER">
+        <CircleButton @click="openModal" text="Connexion" class="mb-4">
+          <Wifi/>
+        </CircleButton>
+
+        <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true" :padding="false">
+          <Connexion class="h-full justify-between" :status-needed="true"/>
+        </ModalView>
+      </div>
     </footer>
-  </div-->
   </div>
 </template>
 
