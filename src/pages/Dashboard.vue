@@ -37,29 +37,31 @@ const launchGame = (i: number) => {
         </RoundButton>
       </div>
       <div class="bg-beige rounded-lg p-2">
-        <div class="bg-beige rounded-lg border border-beige-medium p-5"></div>
+        <img src="/home/week-monday.jpg"/>
       </div>
       <div class="bg-beige rounded-lg p-2">
-        <div class="bg-beige rounded-lg  border border-beige-medium p-5"></div>
+        <img src="/home/week-tuesday.jpg"/>
       </div>
       <div class="bg-beige rounded-lg p-2">
-        <div class="bg-beige rounded-lg  border border-beige-medium p-5"></div>
+        <img src="/home/week-thursday.jpg"/>
       </div>
       <div class="bg-beige rounded-lg p-2">
-        <div class="bg-beige rounded-lg border border-beige-medium p-5"></div>
+        <img src="/home/week-friday.jpg"/>
       </div>
     </div>
     <div class="col-span-4 bg-beige/50 rounded-lg flex flex-col gap-4 p-4">
       <h3 class="bg-beige/50 rounded-lg px-4 py-2 mb-4">
         Je veux consulter et gérer
       </h3>
-      <router-link :to="{ name: 'LogBook'}" class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
+      <router-link :to="{ name: 'LogBook'}"
+                   class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
         <h3>Carnet de bord</h3>
         <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
           <Chevron class="rotate-180"/>
         </RoundButton>
       </router-link>
-      <router-link :to="{ name: 'Chapters'}" class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
+      <router-link :to="{ name: 'Chapters'}"
+                   class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
         <h3>Consulter les chapitres </h3>
         <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
           <Chevron class="rotate-180"/>
@@ -71,7 +73,8 @@ const launchGame = (i: number) => {
           <Chevron class="rotate-180"/>
         </RoundButton>
       </div>
-      <router-link :to="{ name: 'PhotoTaking'}" class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
+      <router-link :to="{ name: 'PhotoTaking'}"
+                   class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
         <h3>Prendre des photos </h3>
         <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
           <Chevron class="rotate-180"/>

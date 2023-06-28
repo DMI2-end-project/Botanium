@@ -34,8 +34,8 @@ const props = defineProps({
 <template>
   <!-- OUTLINE ONLY FOR SELECTED - NO BACKGROUND -->
   <!-- outline outline-offset-8 -->
-  <!-- class=" w-full h-full rounded-lg border shrink-0 text-center p-2" -->
-  <div class="relative w-full h-auto rounded-lg shrink-0 text-center">
+  <!-- class="h-auto p-2" -->
+  <div class="relative w-full h-full rounded-lg shrink-0 text-center">
     <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[105%] h-[111%] border rounded-lg z-0"
          :class="{
          'border-green-light' : props.answerState === 'selected',
