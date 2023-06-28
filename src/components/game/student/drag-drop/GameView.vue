@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {nextTick, onMounted, provide, Ref, ref, watch} from "vue";
+import {nextTick, onMounted, provide, ref} from "vue";
 import {gsap} from "gsap";
 import {Draggable} from "gsap/Draggable";
 import {Flip} from "gsap/Flip";
@@ -13,6 +13,7 @@ import CardGame from "../../CardGame.vue";
 
 import Check from "./../../../../assets/svg/ico-check.svg?component";
 import CardSlot from "../../CardSlot.vue";
+import DragDropGrid from "../../DragDropGrid.vue";
 
 gsap.registerPlugin(Draggable, Flip);
 
@@ -95,6 +96,9 @@ onMounted(async () => {
   await nextTick();
   console.log('droppables', slotRefs.value);
 
+  //const droppables = document.querySelectorAll<HTMLDivElement>('.droppable');
+  const container = document.querySelector('#container');
+
   if (gameStore.teamId !== undefined) {
     teamData.value = gameStore.data.gameSequences[gameStore.currentSequence].teams[gameStore.teamId];
     teamData.value.answers = shuffle(teamData.value.answers);
@@ -155,13 +159,21 @@ const itemValidated = () => {
       }, 500);
     }
   }
+
+  /*
+  if (currentAnswer.value === true) {
+    setTimeout(() => {
+      emit('validated');
+    }, 500)
+  }
+   */
 }
 </script>
 
 <template>
   <div
-      class="w-full h-full flex-1 grid grid-cols-12 items-center gap-5 text-center">
-    <div id="container" class="col-span-3 w-full border-4 border-yellow">
+      class="w-full h-full flex-1 grid grid-cols-12 items-center gap-5 text-center pt-4 px-8">
+    <div id="container" class="col-span-3 xl:col-span-2 xl:col-start-3 w-full border-4 border-yellow">
       <CardSlot v-show="teamData" background outline :answer-state="'none'"
                 class="relative col-span-3 w-full aspect-[5/9]">
         <div ref="draggable" class="relative w-full h-full">
@@ -171,27 +183,33 @@ const itemValidated = () => {
             <template v-slot:recto>
               <img v-if="teamData" alt=""
                    :src="`/game/images/${mainStore.getFullGameId}/${teamData.image}`"
-                   class="object-contain object-center"/>
+                   class="w-full h-full object-contain object-center"/>
             </template>
           </CardGame>
         </div>
-      </CardSlot>
+        <!--div ref="draggable" class="w-full h-full bg-beige rounded-md">
+          <img v-if="teamData"
+               :src="`/game/images/${mainStore.getFullGameId}/${teamData.background}`"
+               class="object-contain object-center"/>
+        </div-->
+      </div>
     </div>
-    <div class="relative col-span-9 grid grid-cols-3 gap-9 rounded-md p-10 bg-beige-medium"
-         :class="`grid-cols-${playingTeams.length}`">
-      <div v-show="teamData" v-for="(answer, index) in teamData? teamData.answers : []" :v-bind="index"
-           class="w-full flex flex-col justify-center items-center gap-6 z-10 border-4 border-yellow">
-        <CardSlot :text="`${answer.label}...`" droppable
+  <DragDropGrid class="relative w-full col-span-9 xl:col-span-6 pb-12">
+  <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
+           class="w-full flex flex-col justify-center items-center gap-6 z-10 max-w-[25vh] mx-auto">
+       <!--
+           <CardSlot :text="`${answer.label}...`" droppable
                   class="w-full aspect-[5/9]">
           <div ref="droppables">
 
           </div>
         </CardSlot>
-        <!--div ref="droppables"
-             class="droppable w-full aspect-[5/9] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
+        -->
+        <div ref="droppables"
+             class="droppable w-full aspect-[5/9] max-h-[40vh] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
              :data-is-valid="answer.isValid">
           {{ answer.label }}...
-        </div-->
+        </div>
         <h3 class="w-full bg-green text-beige rounded-md">
           {{ answer.molecule }}
         </h3>
@@ -204,6 +222,6 @@ const itemValidated = () => {
           </RoundButton>
         </Transition>
       </div>
-    </div>
+  </DragDropGrid>
   </div>
 </template>

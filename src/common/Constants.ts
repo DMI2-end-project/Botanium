@@ -73,6 +73,7 @@ export enum COLOR {
   PURPLE = 'purple',
   BEIGE_MEDIUM = 'beigeMedium',
   BEIGE = 'beige',
+  BLUE = 'blue'
 }
 
 export enum SIZE {

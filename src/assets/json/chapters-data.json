@@ -1,0 +1,107 @@
+{
+  "001": {
+    "thematic": "Les carottes",
+    "season": "winter",
+    "title": "Capucine, Pinpin et les carottes",
+    "quote": "Et si je te racontais l’histoire de Pinpin et des carottes...",
+    "summary": "Capucine n’a plus de nouvelles de son ami Pinpin et est très inquiète. Il est malade et pour retrouver la forme il a besoin d’une carotte aux milles vertues ! La classe va devoir aider Capucine dans sa quête pour la trouver.",
+    "knowledge": "Dans ce chapitre nous abordons la carotte, ses caractéristiques, ses bienfaits, sa culture et même un exemple de recette !",
+    "sections": [
+      [
+        {
+          "text": "Pendant l’histoire de cette semaine, Capucine est très inquiète.",
+          "image": "illu-chapter-001-00-desktop.jpg"
+        },
+        {
+          "text": "son ami Pinpin est très malade. ",
+          "image": "illu-chapter-001-01-desktop.jpg"
+        },
+        {
+          "text": "<p>Pour aller mieux, il doit manger une carotte spéciale. Capucine va donc partir en quête de carotte et les élèves vont l’aider à travers ses péripéties.</p><p>La première énigme à laquelle va être confrontée Capucine est qu’elle va devoir identifier les bienfaits des carottes pour mieux comprendre comment aider Pinpin.</p>",
+          "image": "illu-chapter-001-02-desktop.jpg"
+        }
+      ],
+      [
+        {
+          "text": "Après la résolution de cette première énigme, Capucine va ensuite se rendre dans la famille de Pinpin pour trouver des informations sur l’emplacement de cette mystérieuse carotte. Et effectivement, le grand-père de Pinpin sait où se trouve la carotte. ",
+          "image": "illu-chapter-001-03-desktop.jpg"
+        },
+        {
+          "text": "Mais, étant donné que c’est un secret gardé au sein de la communauté des lapins, il va soumettre une énigme à Capucine pour s’assurer qu’elle est digne de confiance. Il va donc lui demander de trier une sélection de carottes en fonction de leur couleur et de leur composition.",
+          "image": "illu-chapter-001-04-desktop.jpg"
+        }
+      ],
+      [
+        {
+          "text": "Le grand-père de Pinpin est impressionné par Capucine et lui révèle donc l’emplacement de la carotte. Capucine part donc en quête de la carotte.",
+          "image": "illu-chapter-001-02-desktop.jpg"
+        },
+        {
+          "text": "Après quelques péripéties, elle arrive enfin à la clairière décrite par le grand-père de Pinpin ! Mais pas de carotte à l’horizon ...",
+          "image": "illu-chapter-001-06-desktop.jpg"
+        },
+        {
+          "text": "Elle se remémore alors toutes les connaissances qu’elle a acquise sur les carottes et se rappelle que les carottes poussent dans des conditions spécifiques avec un type de sol bien particulier.<br/>Les élèves vont aider Capucine à identifier le type de sol adapté à la pousse des carottes pour qu’elle puisse le repérer dans la clairière",
+          "image": "illu-chapter-001-07-desktop.jpg"
+        }
+      ],
+      [
+        {
+          "text": "Capucine réussit à retrouver l’endroit de la clairière où poussent les carottes. Elle a encore besoin d’un peu d’aide pour déterrer la carotte, heureusement elle peut compter sur les élèves.",
+          "image": "illu-chapter-001-07-desktop.jpg"
+        }
+      ],
+      [
+        {
+          "text": "Capucine récupère enfin la précieuse carotte et s’empresse de la ramener à Pinpin.",
+          "image": "illu-chapter-001-08-desktop.jpg"
+        },
+        {
+          "text": "Grâce à elle, il guérit rapidement et sort de cette mauvaise passe.<br/>Les élèves et Capucine auront donc réussi mis leurs forces en commun pour sauver Pinpin !",
+          "image": "illu-chapter-001-09-desktop.jpg"
+        }
+      ]
+    ],
+    "games": [
+      "00101",
+      "00102",
+      "00103",
+      "00104"
+    ]
+  },
+  "002": {
+    "thematic": "Les vers de terre",
+    "season": "winter",
+    "title": "Capucine au pays des vers de terre"
+  },
+  "003": {
+    "thematic": "Les abeilles",
+    "season": "winter",
+    "title": "Capucine fabrique du miel avec les abeilles"
+  },
+  "004": {
+    "thematic": "La graine",
+    "season": "winter",
+    "title": "Capucine au coeur d’une graine"
+  },
+  "005": {
+    "thematic": "La terre",
+    "season": "winter",
+    "title": "Capucine et les ressources de la terre"
+  },
+  "006": {
+    "thematic": "Les escargots",
+    "season": "winter",
+    "title": "Capucine et Hugo l’escargot"
+  },
+  "007": {
+    "thematic": "Les fleurs",
+    "season": "winter",
+    "title": "Capucine découvre les fleurs"
+  },
+  "008": {
+    "thematic": "Les nuisibles",
+    "season": "winter",
+    "title": "Capucine combat les nuisibles"
+  }
+}

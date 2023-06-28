@@ -130,9 +130,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-h-full w-1/3 aspect-square bg-white rounded-full m-auto"/>
-  <div class="absolute top-0 bottom-0 w-1/3 max-h-full left-1/2 -translate-x-1/2">
-    <div class="relative aspect-[5/9 max-h-full]">
+  <div class="max-w-[60vh] w-1/3 fixed inset-0 top-40 m-auto aspect-square bg-white rounded-full"/>
+  <div class="inset-0 max-h-[70vh] aspect-[5/9] mx-auto">
+    <div class="relative w-full h-full">
       <img v-if="teamData" alt=""
            :src="`/game/images/${mainStore.getFullGameId}/${teamData.background}`"
            class="w-full h-full object-contain"/>

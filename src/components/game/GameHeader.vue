@@ -1,15 +1,23 @@
 <template>
-  <div class="relative grid grid-cols-12 gap-4 px-8">
-    <div class="absolute top-2 left-2 text-xl">
-      <RoundItem :color="COLOR.YELLOW" :isEnigma="true">
+  <div class="relative grid grid-cols-12 items-center gap-4 px-8">
+    <!-- absolute top-2 left-2 -->
+    <div class="col-span-2 text-xl">
+      <RoundItem :color="COLOR.YELLOW" :isEnigma="true" class="mx-auto">
         <component :is="getNumberComponent(mainStore.gameId)"/>
       </RoundItem>
     </div>
-    <p class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">{{ text }}</p>
-    <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue && clue !== ''" @click="openModal"
-                 class="col-start-12 ml-auto">
-      <Clue/>
-    </RoundButton>
+    <p class="col-start-3 col-span-8 lg:col-start-3 lg:col-span-8 bg-green text-beige text-center leading-tight py-7 px-8 rounded-md">
+      {{ text }}</p>
+
+    <div class="col-span-2">
+      <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue && clue !== ''" @click="openModal"
+                   class="relative mx-auto">
+        <Clue class="relative z-10"/>
+        <template #animation>
+          <div ref="clue" class="absolute bg-pink rounded-full w-full aspect-square top-0 left-0 -z-10"/>
+        </template>
+      </RoundButton>
+    </div>
   </div>
 
   <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
@@ -63,6 +71,8 @@ export default defineComponent({
       gameStore: useGameStore(),
       publicPath: window.location.origin,
       isModalOpen: false,
+      timeoutID: setTimeout(() => {
+      })
     }
   },
   computed: {
@@ -94,9 +104,14 @@ export default defineComponent({
     },
     clue() {
       let index = this.gameStore.teamId ? this.gameStore.teamId : 0
-      if (this.gameStore.data && this.gameStore.currentSequence && this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams) {
+      if (this.gameStore.data && this.gameStore.currentSequence !== null && this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams) {
+        this.timeoutID = setTimeout(() => {
+          console.log('play pulse');
+          if (this.$refs.clue) {
+            (this.$refs.clue as HTMLDivElement).classList.add('animate-ping');
+          }
+        }, 60000);
         return this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams[index].clue;
-
       }
     }
   },
@@ -124,6 +139,17 @@ export default defineComponent({
         case 4:
           return FOUR;
           break;
+      }
+    }
+  },
+  watch: {
+    clue(newClue, _) {
+      if (newClue) {
+        this.timeoutID = setTimeout(() => {
+          (this.$refs.clue as HTMLDivElement).classList.add('animate-ping');
+        }, 60000);
+      } else {
+        clearTimeout(this.timeoutID);
       }
     }
   }

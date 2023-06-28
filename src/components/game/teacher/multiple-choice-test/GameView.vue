@@ -1,9 +1,10 @@
 <template>
-  <div class="relative grid grid-cols-2 auto-rows-fr gap-4 px-8">
+  <div class="relative grid grid-cols-2 auto-rows-fr gap-4 px-8 pt-4">
     <CardGame v-for="(team, index) in playingTeams" :v-bind="index"
               mode="horizontal"
               :answer-state="'none'" :card-state="cardState(index)"
-              class="aspect-[9/4]">
+              class="w-full h-full aspect-[9/4] max-h-[30vh] max-w-[70vh]"
+              :class="index % 2 === 0 ? 'ml-auto' : 'mr-auto'">
       <template v-slot:recto>
         <SvgIcon :name="answers[index].icon" class="w-16 aspect-square pointer-events-none"/>
         <span class="text-md pointer-events-none">{{ answers[index].text }}</span>
@@ -33,6 +34,9 @@
                class="mx-auto mt-4">
     <Check/>
   </RoundButton>
+   <button class="fixed top-[80px] right-[30px]" @click="next">
+      Do
+    </button>
 </template>
 
 <script lang="ts">

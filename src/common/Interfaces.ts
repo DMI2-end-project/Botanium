@@ -41,6 +41,7 @@ interface PhotoData {
   slot: number;
   page: string;
   classroom: string;
+  created: string;
 }
 
 interface ChapterData {

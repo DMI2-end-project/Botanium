@@ -13,13 +13,21 @@
           <Transition name="scaleButtonBg">
             <RoundButton @click="saveData" :color-bg="COLOR.BEIGE" :color="COLOR.GREEN_MEDIUM_BEIGE" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Check /></RoundButton>
           </Transition>
-          <!-- <RoundButton v-if="photoData.id === photoDataLast.id" @click="close" :color-bg="COLOR.BEIGE" :color="COLOR.RED" class="absolute -z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Cross /></RoundButton> -->
           <div class="overflow-y-scroll h-full z-10">
-            <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
-              <div v-for="photo in photos" :v-bind="photo" class="w-48 h-48 flex justify-center items-center">
-                <button @click="changeImage(photo)" class="p-0 max-w-full max-h-full bg-transparent overflow-hidden drop-shadow-md" :class="photoData === photo ? 'outline outline-8 outline-yellow' : ''">
-                  <img alt="" :src="photoUrl(photo)" class="object-contain w-full h-full max-h-48 pointer-events-none">
-                </button>
+            <div v-for="photos in photosSort" :v-bind="photos">
+              <h3 class="mx-8 text-left mt-12 flex" :class="isPageLeft ? '' : 'flex-row-reverse'">
+                <Flower class="text-purple w-10 block mr-4" />
+                <span>
+                  {{ photos[0].created }}
+                  <Underline />
+                </span>
+              </h3>
+              <div class="grid grid-cols-3 gap-4 mt-8 mx-8">
+                <div v-for="photo in photos" class="w-48 h-48 flex flex-col justify-center items-center">
+                  <button @click="changeImage(photo)" class="p-0 max-w-full max-h-full bg-transparent overflow-hidden drop-shadow-md" :class="photoData === photo ? 'outline outline-8 outline-yellow' : ''">
+                    <img alt="" :src="photoUrl(photo)" class="object-contain w-full h-full max-h-48 pointer-events-none">
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -39,12 +47,17 @@ import { COLOR } from "./../../../common/Constants";
 import Check from "./../../../assets/svg/ico-check.svg?component";
 import Cross from "./../../../assets/svg/ico-cross.svg?component";
 import Picture from "./../../../assets/svg/ico-picture.svg?component";
+import Flower from "./../../../assets/svg/ico-flower.svg?component";
+import Underline from "./../../../assets/svg/underline.svg?component";
 
+interface SubArray {
+  [key: string]: any;
+}
 
 export default {
   name: "ImageElementComponent",
   components: {
-    RoundButton, Check, Cross, Picture
+    RoundButton, Check, Cross, Picture, Flower, Underline
   },
   props: {
     pageId: {
@@ -78,6 +91,7 @@ export default {
       photoDataLast: {} as PhotoData,
       onModify: false as Boolean,
       photos: [] as Array<PhotoData>,
+      photosSort: [] as Array<Array<PhotoData>>,
       rotate: 0 as number,
       colors: ['bg-purple', 'bg-pink', 'bg-yellow'] as string[],
       color: '' as string,
@@ -101,11 +115,14 @@ export default {
     async modify() {
       this.onModify = true
       this.photos = []
+      const photosFetch = this.logBookStore.photosNotUsed
+      this.photos.push(...photosFetch)
       if (this.photoDataLast.id) {
         this.photos.push(this.photoDataLast)
       }
-      const photosFetch = this.logBookStore.photosNotUsed
-      this.photos.push(...photosFetch)
+      console.log(this.photos)
+      this.photosSort = this.createSubArrays(this.photos)
+      console.log(this.photosSort)
     },
     changeImage(photo: PhotoData) {
       if (this.photoData === photo) {
@@ -115,6 +132,30 @@ export default {
       this.photoData = photo
       this.updateRotate()
       this.updateColor()
+    },
+    createSubArrays(arr:PhotoData[]):Array<Array<PhotoData>> {
+      const subArrays:SubArray = {};
+
+      arr.forEach((item) => {
+        const { created } = item;
+        const date = created.split(' ')[0];
+
+        const dateFormat = new Date(date);
+
+        const formattedDate = dateFormat.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+
+        const formattedDateWithCapitalizedDay = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+
+        const newItem: PhotoData = { ...item, created: formattedDateWithCapitalizedDay };
+
+        if (!subArrays[date]) {
+          subArrays[date] = [];
+        }
+
+        subArrays[date].push(newItem);
+      });
+
+      return Object.values(subArrays);
     },
     updateRotate() {
       this.rotate = (Math.random() - 0.5) * 10;

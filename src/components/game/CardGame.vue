@@ -34,6 +34,7 @@ const props = defineProps({
 <template>
   <!-- OUTLINE ONLY FOR SELECTED - NO BACKGROUND -->
   <!-- outline outline-offset-8 -->
+  <!-- class=" w-full h-full rounded-lg border shrink-0 text-center p-2" -->
   <div class="relative w-full h-auto rounded-lg shrink-0 text-center">
     <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[105%] h-[111%] border rounded-lg z-0"
          :class="{
@@ -57,13 +58,13 @@ const props = defineProps({
         <slot name="verso" v-if="props.cardState === 'hide'" class=""/>
         <slot name="recto" v-if="props.cardState === 'show'" class=""/>
         <div v-show="props.cardState === 'validated'">
-          <Deco :class="{'w-[45%] ': props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square top-1 left-1 "/>
-          <Deco :class="{'w-[45%] ': props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square top-1 right-1 -scale-x-100"/>
-          <Deco :class="{'w-[45%] ': props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square bottom-1 left-1 -scale-y-100"/>
-          <Deco :class="{'w-[45%] ': props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
+          <Deco :class="{'w-[45%] ':props.mode === 'vertical', 'h-[45%] ': props.mode === 'horizontal'}"
                 class="absolute aspect-square bottom-1 right-1 -scale-100"/>
           <Check class="text-green aspect-square w-16"/>
         </div>

@@ -11,7 +11,7 @@ import {useMainStore} from "../stores/mainStore";
 import {useChapterStore} from "../stores/chapterStore";
 import {ROLE} from "../common/Constants";
 
-import chaptersData from "../assets/chapters-data/chapters-data.json";
+import chaptersData from "../assets/json/chapters-data.json";
 
 import StudentChapter from "./../components/chapter/student/StudentChapter.vue";
 import TeacherChapter from "./../components/chapter/teacher/TeacherChapter.vue";

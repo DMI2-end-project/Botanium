@@ -2,11 +2,13 @@
   <Pulse ref="pulse" :color="feedbackMessage.number === 0 || feedbackMessage.number === 1 ? 'green' : (feedbackMessage.number === 2 || feedbackMessage.number === 3 ? 'red' : 'purple')" />
   <div ref="feedback" class="feedback relatif text-purple uppercase text-2xl font-sans font-black"></div>
   <!-- <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p> -->
-  <p class="w-[200px]">gain : {{ gain }}</p>
+  <!-- <div class="fixed top-[200px] left-[50px]">
+    <p class="w-[200px]">gain : {{ gain }}</p>
   <p class="w-[200px]">decibelAverage : {{ decibel }}</p>
   <div class="w-24 h-[300px] bg-green-light flex flex-col justify-end mt-24">
     <div class="w-full bg-green" :style="`height: ${decibel}%`"></div>
   </div>
+  </div> -->
 </template>
 
 <script lang="ts">
@@ -15,7 +17,7 @@ import { getSocket } from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
 import { AUDIO_EVENT } from "../../../../common/Constants";
-import { AudioManagerInstance } from "../../../../common/AudioManager";
+import GameFacade from "../../../../common/GameFacade";
 import Pulse from './Pulse.vue';
 
 interface Feedback {
@@ -26,6 +28,12 @@ interface Feedback {
 export default defineComponent({
   components: { Pulse },
   emits: ['validated', 'openModal'],
+  props: {
+    gameFacade: {
+      default: null,
+      type: GameFacade
+    }
+  },
   data() {
     return {
       socket: getSocket(),
@@ -49,13 +57,17 @@ export default defineComponent({
     };
   },
   async mounted() {
-    this.deltaTimeWithServer = await AudioManagerInstance.getDeltaTimeWithServer()
+    if (!this.gameFacade.audio) {
+      this.gameFacade.microIsNeeded()
+    }
+    if (!this.gameFacade.audio) return
+    this.deltaTimeWithServer = await this.gameFacade.audio.getDeltaTimeWithServer()
     this.play()
     window.addEventListener("blur", this.stop);
     window.addEventListener("focus", this.play);
   },
   methods: {
-    hasMicro() { // TODO var de l'audiomanager ?
+    hasMicro() { // TODO var de l'audiogame ?
       const team = this.gameStore.teams.find(team => team._name === this.gameStore.teamName)
       if (team) {
         return team?.hasMicro
@@ -64,12 +76,13 @@ export default defineComponent({
       }
     },
     async stop() {
-      AudioManagerInstance.pauseMicrophone()
+    if (!this.gameFacade.audio) return
+      this.gameFacade.audio.pauseMicrophone()
       cancelAnimationFrame(this.raf)
     },
     async play() {
-      if (this.hasMicro()) {
-        AudioManagerInstance.unPauseMicrophone()
+      if (this.hasMicro() && this.gameFacade.audio) {
+        this.gameFacade.audio.unPauseMicrophone()
       }
       const waitTime = this.rhythmFreq - ((Date.now() + this.deltaTimeWithServer) % this.rhythmFreq)
       setTimeout(() => {
@@ -86,12 +99,12 @@ export default defineComponent({
       const time = (Date.now() + this.deltaTimeWithServer) % this.rhythmFreq
       this.rhythm = Math.abs((time / this.rhythmFreq) - 0.5) * -4 + 1
 
-      if (this.hasMicro()) {
+      if (this.hasMicro() && this.gameFacade.audio) {
         if ((this.lastClap + (this.rhythmFreq / 2)) < (Date.now() + this.deltaTimeWithServer)) {
           this.feedbackMessage = {number: -1, text: ''}
         }
 
-        const isClap = AudioManagerInstance.isClapping()
+        const isClap = this.gameFacade.audio.isClapping()
 
         if ((this.lastClap + (this.rhythmFreq / 4)) < (Date.now() + this.deltaTimeWithServer)) {
           if (isClap) {
@@ -99,8 +112,8 @@ export default defineComponent({
           }
         }
 
-        this.decibel = AudioManagerInstance.lastDecibelAverage
-        this.gain = AudioManagerInstance.gainNode?.gain.value as number
+        this.decibel = this.gameFacade.audio.lastDecibelAverage
+        this.gain = this.gameFacade.audio.gainNode?.gain.value as number
       }
 
 

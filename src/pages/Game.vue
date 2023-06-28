@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {onBeforeMount, onMounted, onUnmounted, ref} from "vue";
+import {onBeforeMount, onBeforeUnmount, onMounted, onUnmounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {TeamManagerInstance} from '../common/TeamManager';
-import {AudioManagerInstance} from "../common/AudioManager";
+import GameFacade from "../common/GameFacade";
 import {ROLE, GAME_STEP} from "../common/Constants";
 import {useGameStore} from "../stores/gameStore";
 import {useMainStore} from "../stores/mainStore";
@@ -25,6 +25,7 @@ const gameStore = useGameStore();
 const socket = getSocket();
 const router = useRouter();
 const route = useRoute();
+let gameFacade:GameFacade
 
 const setSequence = () => {
   let currentSequence = gameStore.data.gameSequences[gameStore.currentSequence];
@@ -43,13 +44,22 @@ const setSequence = () => {
   }
 }
 
+const setNeeded = () => {
+  let currentSequence = gameStore.data.gameSequences[gameStore.currentSequence];
+  if (currentSequence.microNeeded && gameFacade) {
+    gameFacade.microIsNeeded()
+  }
+}
+
 gameStore.$subscribe((_, state) => {
   if (state.data) {
     setSequence();
+    setNeeded()
   }
 });
 
 onBeforeMount(async () => {
+  gameFacade = new GameFacade()
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,
@@ -57,18 +67,22 @@ onBeforeMount(async () => {
   });
   if (gameStore.data) {
     setSequence();
+    setNeeded()
   }
 });
 
-onUnmounted(() => {
-  AudioManagerInstance.pauseMicrophone()
+onBeforeUnmount(() => {
+  if (gameFacade) {
+    gameFacade.kill()
+  }
 })
 
 let isModalOpen: Ref<Boolean> = ref(false);
 
 const getMicro = async () => {
   console.log('getMicro')
-  const hasMicro = await AudioManagerInstance.getMicrophone();
+  if (!gameFacade.audio) return
+  const hasMicro = await gameFacade.audio.getMicrophone();
   console.log('hasMicro', hasMicro)
   if (hasMicro) {
     isModalOpen.value = false
@@ -95,20 +109,23 @@ const closeModal = () => {
 
 <template>
   <div v-if="gameStore.data"
-       class="border-4 border-pink bg-pink/20 grid grid-cols-12 my-auto">
-    <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION" @get-microphone="getMicro"
+       class="grid grid-cols-12 my-auto pb-12">
+    <Transition name="slide" mode="out-in">
+      <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION" @get-microphone="getMicro"
                  class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
-    <TeacherGame
-        v-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
+      <TeacherGame
+        v-else-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
         class="flex flex-col justify-center h-full col-span-12 my-auto"/>
-    <StudentGame
-        v-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
+      <StudentGame
+        v-else-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
+        :gameFacade="gameFacade"
         class="flex-1 h-full col-span-12 my-auto"/>
-    <Waiting
-        v-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
-        class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
-    <Congratulation v-if="gameStore.currentStep === GAME_STEP.CONGRATS"
+      <Waiting
+        v-else-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
+        class="col-start-2 col-span-10 sm:col-start-3 sm:col-span-8 lg:col-start-4 lg:col-span-6"/>
+      <Congratulation v-else-if="gameStore.currentStep === GAME_STEP.CONGRATS"
                     class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
+    </Transition>
   </div>
   <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">
     <h1>Appelle ton enseignant pour qu’il active le son</h1>

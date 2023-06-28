@@ -1,15 +1,18 @@
 <template>
-  <div class="RoundItem relative aspect-square rounded-full flex items-center justify-center m-0 p-0 border-0 " :class="`${containerClass}`" >
-    <div class="RoundItem__icon" :class="`${textClass}`"><slot></slot></div>
+  <div class="RoundItem relative aspect-square rounded-full flex items-center justify-center m-0 p-0 border-0 "
+       :class="`${containerClass} ${isEnigma ? '' : ''}`">
+    <div class="RoundItem__icon" :class="`${textClass}`">
+      <slot></slot>
+    </div>
     <div v-if="isEnigma" class="enigma absolute w-[180%] h-[180%] text-beige">
-      <Enigma class="w-full h-full object-contains" />
+      <Enigma class="w-full h-full object-contains"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { COLOR, SIZE } from "./../../common/Constants"
+import {defineComponent} from 'vue'
+import {COLOR, SIZE} from "./../../common/Constants"
 import Enigma from "./../../assets/svg/text-enigma.svg?component"
 
 export default defineComponent({
@@ -80,8 +83,7 @@ export default defineComponent({
         break
     }
   },
-  methods: {
-  }
+  methods: {}
 });
 </script>
 

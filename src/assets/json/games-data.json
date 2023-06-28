@@ -1,0 +1,518 @@
+{
+  "00101": {
+    "color": "green",
+    "colorButton": "pink",
+    "colorBreadcrumb": "yellow",
+    "introduction": {
+      "title": "Les bienfaits des carottes",
+      "text": "Retrouvez tous ensemble les bienfaits de la carotte et communiquez les à Capucine !"
+    },
+    "gameSequences": [
+      {
+        "type": "multipleChoice",
+        "teamsNeeded": true,
+        "microNeeded": false,
+        "gamemaster": {
+          "instruction": "Chaque groupe doit retrouver un bienfait pour ensuite les communiquer tous ensemble à Capucine !",
+          "answers": [
+            {
+              "icon": "ico-eye",
+              "text": "Elle améliore la vision nocturne",
+              "status": "none"
+            },
+            {
+              "icon": "ico-sun",
+              "text": "La carotte prépare ta peau au soleil",
+              "status": "none"
+            },
+            {
+              "icon": "ico-health",
+              "text": "Elle ralentit le vieillissement",
+              "status": "none"
+            },
+            {
+              "icon": "ico-health",
+              "text": "La carotte prévient des maladies ",
+              "status": "none"
+            }
+          ]
+        },
+        "teams": [
+          {
+            "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
+            "clue": "Les lapins se repèrent très bien dans les terriers sombres.",
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "La carotte possède une vitamine A qui entretient la santé de la rétine et a un impact positif sur la vision nocturne et l’adaptation à l’obscurité.",
+              "icon": "ico-eye"
+            },
+            "answers": [
+              {
+                "isValid": true,
+                "icon": "ico-eye",
+                "text": "Elle améliore la vision nocturne",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-arm",
+                "text": "Elle donne des muscles",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-tooth",
+                "text": "Elle blanchit les dents",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-bone",
+                "text": "Elle renforce les os",
+                "status": "none"
+              }
+            ]
+          },
+          {
+            "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
+            "clue": "Grâce à la carotte, tu auras une belle peau bronzée...",
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "Le béta-carotène présent dans la carotte enclenche la production de mélanine. La mélanine permet à ta peau de se protéger du soleil, cela te donne un beau bronzage !",
+              "icon": "ico-sun"
+            },
+            "answers": [
+              {
+                "isValid": true,
+                "icon": "ico-sun",
+                "text": "Elle ralentit le vieillissement",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-arm",
+                "text": "Elle donne des muscles",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-tooth",
+                "text": "Elle blanchit les dents",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-bone",
+                "text": "Elle renforce les os",
+                "status": "none"
+              }
+            ]
+          },
+          {
+            "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
+            "clue": "Les papis et les mamies mangent beaucoup de carottes !",
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "La carotte possède beaucoup de vitamines A et C, elles sont très riches en antioxydants. Un antioxydant permet de préserver l’élasticité de la peau et donc de prévenir les rides !",
+              "icon": "ico-health"
+            },
+            "answers": [
+              {
+                "isValid": true,
+                "icon": "ico-health",
+                "text": "La carotte prépare ta peau au soleil",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-arm",
+                "text": "Elle donne des muscles",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-tooth",
+                "text": "Elle blanchit les dents",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-bone",
+                "text": "Elle renforce les os",
+                "status": "none"
+              }
+            ]
+          },
+          {
+            "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
+            "clue": "En mangeant des carottes, tu as moins de chances de tomber malade.",
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "",
+              "icon": "ico-health"
+            },
+            "answers": [
+              {
+                "isValid": true,
+                "icon": "ico-health",
+                "text": "La carotte prévient des maladies",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-arm",
+                "text": "Elle donne des muscles",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-tooth",
+                "text": "Elle blanchit les dents",
+                "status": "none"
+              },
+              {
+                "isValid": false,
+                "icon": "ico-bone",
+                "text": "Elle renforce les os",
+                "status": "none"
+              }
+            ]
+          }
+        ],
+        "congratulation": {
+          "text": "Grâce à vous Capucine connait les bienfaits des carottes !"
+        }
+      }
+    ]
+  },
+  "00102": {
+    "color": "purple",
+    "colorButton": "pink",
+    "colorBreadcrumb": "yellow",
+    "introduction": {
+      "title": "Les couleurs des carottes",
+      "text": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées."
+    },
+    "gameSequences": [
+      {
+        "type": "swipe",
+        "teamsNeeded": true,
+        "microNeeded": false,
+        "teams": [
+          {
+            "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
+            "sprite": "soil.png",
+            "background": "amfine.png",
+            "points": [
+              70,
+              160,
+              80,
+              130,
+              130,
+              120,
+              145,
+              140,
+              175,
+              390,
+              140,
+              350,
+              115,
+              300
+            ],
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "Tu as découvert la carotte Amfine. On peut passer à la prochaine étape pour résoudre l’énigme de papi lapin !"
+            }
+          },
+          {
+            "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
+            "sprite": "soil.png",
+            "background": "lubiana.png",
+            "points": [
+              70,
+              160,
+              80,
+              130,
+              130,
+              115,
+              150,
+              140,
+              178,
+              400,
+              148,
+              370,
+              115,
+              300
+            ],
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "Tu as découvert la carotte Lubiana. On peut passer à la prochaine étape pour résoudre l’énigme de papi lapin ! "
+            }
+          },
+          {
+            "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
+            "sprite": "soil.png",
+            "background": "cosmic.png",
+            "points": [
+              80,
+              175,
+              90,
+              145,
+              135,
+              130,
+              155,
+              155,
+              180,
+              350,
+              160,
+              350,
+              115,
+              270
+            ],
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "Tu as découvert la carotte Cosmic. On peut passer à la prochaine étape pour résoudre l’énigme de papi lapin !",
+              "image": "cosmic.png"
+            }
+          }
+        ]
+      },
+      {
+        "type": "dragDrop",
+        "teamsNeeded": true,
+        "microNeeded": false,
+        "gamemaster": {
+          "instruction": "Chaque groupe doit découvrir la couleur de sa carotte pour déchiffrer l’énigme de papi lapin et ranger dans le bon ordre les carottes qui viennent d’être récoltées.",
+          "answers": [
+            {
+              "label": "Am",
+              "name": "Amfine",
+              "molecule": "Carotène",
+              "image": "amfine.png"
+            },
+            {
+              "label": "Lu",
+              "name": "Lubiana",
+              "molecule": "Lutéine",
+              "image": "lubiana.png"
+            },
+            {
+              "label": "Co",
+              "name": "Cosmic",
+              "molecule": "Anthocyane",
+              "image": "cosmic.png"
+            }
+          ]
+        },
+        "teams": [
+          {
+            "instruction": "Range ta carotte orange au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
+            "clue": "Le carotène est un pigment orange",
+            "image": "amfine.png",
+            "answers": [
+              {
+                "isValid": true,
+                "status": "none",
+                "label": "Am",
+                "molecule": "Carotène"
+              },
+              {
+                "isValid": false,
+                "status": "none",
+                "label": "Lu",
+                "molecule": "Lutéine"
+              },
+              {
+                "isValid": false,
+                "status": "none",
+                "label": "Co",
+                "molecule": "Anthocyane"
+              }
+            ],
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "<p>La carotte Amfine est le nom donné à la carotte orange.</p><p>Elle possède un pigment appelé la carotène : c’est lui le responsable de la couleur orange !</p><p>Y’aurait-il d’autres couleurs... ?</p>",
+              "image": "amfine.png",
+              "shape": "card"
+            }
+          },
+          {
+            "instruction": "Range ta carotte jaune au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
+            "clue": "La lutéine donne une couleur jaune",
+            "image": "lubiana.png",
+            "answers": [
+              {
+                "isValid": false,
+                "status": "none",
+                "label": "Am",
+                "molecule": "Carotène"
+              },
+              {
+                "isValid": true,
+                "status": "none",
+                "label": "Lu",
+                "molecule": "Lutéine"
+              },
+              {
+                "isValid": false,
+                "status": "none",
+                "label": "Co",
+                "molecule": "Anthocyane"
+              }
+            ],
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "<p>La carotte Lubiana est le nom donné à la carotte jaune.</p><p>Elle possède un pigment appelé la lutéine : c’est lui le responsable de la couleur jaune !</p><p>Y’aurait-il d’autres couleurs... ?</p>",
+              "image": "lubiana.png",
+              "shape": "card"
+            }
+          },
+          {
+            "instruction": "Range ta carotte violette au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
+            "clue": "Les anthocyanes sont des colorants d'origine naturelle de couleur rouge ou bleue.",
+            "image": "cosmic.png",
+            "answers": [
+              {
+                "isValid": false,
+                "status": "none",
+                "label": "Am",
+                "molecule": "Carotène"
+              },
+              {
+                "isValid": false,
+                "status": "none",
+                "label": "Lu",
+                "molecule": "Lutéine"
+              },
+              {
+                "isValid": true,
+                "status": "none",
+                "label": "Co",
+                "molecule": "Anthocyane"
+              }
+            ],
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "<p>La carotte Cosmic est le nom donné à la carotte violette.</p><p>Elle possède un pigment appelé l’anthocyane : c’est lui le responsable de la couleur violette !</p><p>Y’aurait-il d’autres couleurs... ?</p>",
+              "image": "cosmic.png",
+              "shape": "card"
+            }
+          }
+        ],
+        "congratulation": {
+          "text": "Grâce à vous Capucine connait les différents types des carottes !"
+        }
+      }
+    ]
+  },
+  "00103": {
+    "color": "yellow",
+    "colorButton": "greenMediumBeige",
+    "colorBreadcrumb": "green",
+    "introduction": {
+      "title": "La terre parfaite",
+      "text": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol"
+    },
+    "gameSequences": [
+      {
+        "type": "cursor",
+        "teamsNeeded": true,
+        "microNeeded": false,
+        "gamemaster": {
+          "instruction": "Pour aider Capucine à trouver le sol parfait pour faire pousser la carotte magique, montre lui comment doit être composé le sol.",
+          "answers": [
+            {
+              "image": "rock.png"
+            },
+            {
+              "image": "sun.png"
+            },
+            {
+              "image": "height.png"
+            }
+          ]
+        },
+        "teams": [
+          {
+            "instruction": "Dose la bonne quantité de cailloux dans la terre pour faire pousser de belles carottes",
+            "element": "rock",
+            "clue": "Si il y a trop de cailloux dans la terre elle ne pourra pas se développer comme il faut.",
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "La carotte a besoin d’un sol léger et sableux, avec peu de cailloux pour pousser.",
+              "image": "rock.png",
+              "shape": "circle"
+            },
+            "answers": 1
+          },
+          {
+            "instruction": "Dose la bonne quantité de soleil pour faire pousser de belles carottes",
+            "clue": "La carotte a besoin de beaucoup de soleil pour bien pousser.",
+            "element": "sun",
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "La carotte a besoin d’un sol très ensoleillé pour se développer.",
+              "image": "sun.png",
+              "shape": "circle"
+            },
+            "answers": 2
+          },
+          {
+            "instruction": "Dose la bonne hauteur de terre pour faire pousser de belles carottes",
+            "clue": "Il faut une profondeur suffisante pour que les carottes puissent se développer",
+            "element": "height",
+            "congratulation": {
+              "title": "Bravo !",
+              "text": "La carotte a besoin d’un sol de profondeur moyenne mais suffisante puisque les carottes poussent immergées.",
+              "image": "height.png",
+              "shape": "circle"
+            },
+            "answers": 3
+          }
+        ],
+        "congratulation": {
+          "text": "Grâce à vous Capucine sait reconnaître la terre idéale pour la pousse des carottes !"
+        }
+      }
+    ]
+  },
+  "00104": {
+    "color": "pink",
+    "colorButton": "greenMediumBeige",
+    "colorBreadcrumb": "yellow",
+    "introduction": {
+      "title": "Déterrer la carotte",
+      "text": "Capucine doit déterrer la précieuse carotte et guérir Pinpin. Frappe dans tes mains en rythme avec tes camarades pour l’aider."
+    },
+    "gameSequences": [
+      {
+        "type": "rhythm",
+        "teamsNeeded": false,
+        "microNeeded": true,
+        "gamemaster": {
+          "instruction": "Capucine a besoin de ton aide pour déterrer la carotte. Frappe dans tes mains avec tes camarades pour lui donner le rythme."
+        },
+        "teams": [
+          {
+            "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette."
+          },
+          {
+            "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette."
+          },
+          {
+            "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette."
+          },
+          {
+            "instruction": "Frappe dans tes mains en même temps que tes camarades. Sois attentif en suivant le rythme sur la tablette."
+          }
+        ],
+        "congratulation": {
+          "text": "Grâce à vous Capucine a réussi à déterrer la carotte !"
+        }
+      }
+    ],
+    "congratulation": {
+      "text": "Grâce à vous Capucine a réussi à déterrer la carotte !"
+    }
+  }
+}

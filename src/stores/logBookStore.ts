@@ -59,7 +59,6 @@ export const useLogBookStore = defineStore('logBook', {
       return drawRecord
     },
     async createDraw(draw: DrawData): Promise<DrawData> {
-      console.log(draw)
       const drawRecord = await DatabaseManagerInstance.createDraw(draw)
       this.draws.push(drawRecord)
       return drawRecord

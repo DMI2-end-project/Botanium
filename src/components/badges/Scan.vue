@@ -31,12 +31,14 @@ const load = async () => {
   model = await tmImage.load(modelURL, metadataURL);
 }
 const predict = async (videoRef: HTMLVideoElement) => {
+  console.log('predict')
   // predict can take in an image, video or canvas html element
   if (model && videoRef && videoRef.videoWidth) {
     let prediction = await model.predict(videoRef);
     prediction.forEach((predict: any) => {
 
       if (predict.probability > .8 && predict.className !== 'none') {
+        console.log('className', predict.className)
         if (exp.value !== predict.className) {
           exp.value = predict.className;
 
@@ -95,11 +97,17 @@ onUnmounted(() => {
 
 <template>
   <div class="flex-1 grid grid-cols-12 w-full h-full">
-    <div class="relative col-span-10 col-start-2 aspect-[7/4] my-auto">
-      <Camera ref="camera" @ready="() => emits('ready')" facing-mode="environment"/>
+    <div class="col-span-10 col-start-2 flex flex-col gap-4 lg:gap-10 my-auto">
+      <div class="relative w-full">
+        <div class="w-full aspect-[7/4]">
+          <Camera ref="camera" @ready="() => emits('ready')" facing-mode="environment"/>
+          <div class="absolute aspect-[6/8] h-full left-1/2 -translate-x-1/2 scale-90 border-8 border-dashed rounded-xl"
+               :class="exp ? 'border-blue' : 'border-beige'"/>
+        </div>
+      </div>
+      <Info class="col-span-10 col-start-2 m-auto mt-0" text="Placez les badges un par un dans la zone centrale">
+        <Loading class="loading-animation w-8 aspect-square"/>
+      </Info>
     </div>
-    <Info class="col-span-10 col-start-2 m-auto mt-0" text="Placez les badges un par un dans la zone centrale">
-      <Loading class="loading-animation w-8 aspect-square"/>
-    </Info>
   </div>
 </template>

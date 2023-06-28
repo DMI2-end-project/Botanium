@@ -1,20 +1,27 @@
+import * as fs from "fs";
 import express from "express";
 import {createServer} from "http";
+//import {createServer} from "https";
 import {Server} from "socket.io";
-import {AudioManagerInstance} from "./server/AudioManager.js";
+import AudioGame from "./server/AudioGame.js";
 import Room from "./server/Room.js";
 import {CHAPTER_STEP, EVENT, GAME_STEP, ROLE} from "./server/constants.js";
 
+const key = fs.readFileSync("localhost-key.pem", "utf-8");
+const cert = fs.readFileSync("localhost.pem", "utf-8");
+
 const port = 8080;
 const app = express();
-const http = createServer(app);
+const http = createServer({key, cert}, app);
 const io = new Server(http, {
   cors: {
-    origins: [`http://localhost:${port}`],
+     origins: [`http://localhost:${port}`],
     // origins: [`http://192.168.0.13:${port}`],
     //origins: [`http://192.168.0.21:${port}`]
+    //origins: [`https://192.168.43.91:8080:${port}`]
   },
 });
+const audioGame = new AudioGame();
 
 http.listen(port, () => {
   console.log(`Server listening on *:${port}`);
@@ -33,7 +40,7 @@ const joinRoom = (socket, arg) => {
   if (roomIndex === -1) {
     room = new Room(arg.roomId);
     rooms.push(room);
-    AudioManagerInstance.updateRooms(rooms)
+    audioGame.updateRooms(rooms);
   } else {
     room = rooms[roomIndex];
   }
@@ -104,7 +111,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('taskScanned', (arg) => {
-    console.log('taskScanned', arg);
     let room = rooms.find(room => room.id === arg.roomId);
 
     if (room) {
@@ -310,8 +316,12 @@ io.on('connection', (socket) => {
   socket.on('killRoom', (arg) => {
     io.to(arg.roomId).emit('killRoom');
 
-    rooms = rooms.filter(room => room.id !== arg.roomId);
+    rooms.map(room => {
+      if (room.id === arg.roomId) {
+        room._teams = [];
+      }
+    });
   });
 
-  AudioManagerInstance.initListenners(io, socket);
+  audioGame.initListenners(io, socket);
 });

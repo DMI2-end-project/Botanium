@@ -1,28 +1,39 @@
 <template>
-  <div class="w-full h-full grid grid-cols-12 gap-4 px-8 flex p-6 text-black">
-    <div v-show="chapterStore.currentStep === CHAPTER_STEP.STORY"
-         class="bg-white rounded-lg col-span-12 sm:col-start-4 sm:col-span-9 lg:col-start-6 lg:col-span-7 flex items-center mt-auto p-10">
-      <Reading class=""/>
-      <RoundButton :color="COLOR.PINK" @click="next">
-        <Arrow class="rotate-180"/>
-      </RoundButton>
-    </div>
+  <div class="w-full h-full grid grid-cols-1 sm:grid-cols-12 gap-4 px-8 flex text-black">
+    <Reading v-if="chapterStore.currentStep === CHAPTER_STEP.STORY" @next="next"/>
+
     <div
         v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
-        class="col-span-9 bg-beige rounded-md p-6">
-      <h1>Chapitre {{ mainStore.chapterId }}</h1>
-      <h2>Capucine Pinpin et les carottes</h2>
+        class="relative flex flex-col justify-end items-end sm:col-span-8 lg:col-span-9">
+      <div class="absolute w-full aspect-[4/3] -left-8 bottom-0">
+        <div class="relative w-full h-full flex">
+          <img class="mt-auto" src="/chapter/book.png" alt=""/>
+          <div
+              class="absolute w-[55%] h-[80%] bottom-[2%] lg:bottom-[8%] right-[12%] -rotate-[3.52deg] flex flex-col items-center justify-center text-center">
+            <img class="w-[50%] sm:w-[65%] lg:w-[80%]"
+                 :src="`/chapter/${mainStore.getChapterId}/first-page-chapter-${mainStore.getChapterId}.png`" alt=""/>
+            <h2 class="font-bold text-green-medium">Chapitre {{ mainStore.chapterId }}</h2>
+            <h1 class="font-hand-written text-sm sm:text-md lg:text-xl text-green leading-snug mt-2 lg:mt-6">
+              {{ chapterStore.data ? chapterStore.data.title : '' }}</h1>
+          </div>
+        </div>
+      </div>
     </div>
+
     <div
         v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
-        class="col-span-3">
-      <!-- TODO : add connexion -->
-      <RoundButton :color="COLOR.PINK" @click="next">
-        <Arrow class="rotate-180"/>
-      </RoundButton>
+        class="col-span-4 lg:col-span-3 lg:col-start flex flex-col justify-around items-center">
+      <div class="flex flex-col items-center">
+        <Connexion v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" class="pb-20" :status-needed="false"/>
+        <div class="bg-beige rounded-full p-4" :class="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION ? '-translate-y-1/2' :''">
+          <RoundButton :color="COLOR.PINK" @click="next">
+            <Arrow class="rotate-180"/>
+          </RoundButton>
+        </div>
+      </div>
       <CircleButton v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" @click="openSheet"
                     :text="chapterStore.sheetUnlocked ? 'Ouvrir la fiche' : 'Débloquer la fiche'"
-                    :color="COLOR.YELLOW" :size="SIZE.SM" :colorReverse="true">
+                    :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.SM" :colorReverse="true">
         <Sheet/>
       </CircleButton>
     </div>
@@ -44,14 +55,15 @@ import {CHAPTER_STEP, COLOR, SIZE} from "../../../common/Constants";
 import Reading from "./Reading.vue";
 import ModalView from "../../common/ModalView.vue";
 import RoundButton from "../../common/RoundButton.vue";
+import CircleButton from "../../common/CircleButton.vue";
+import Connexion from "../../game/teacher/Connexion.vue";
 
 import Arrow from "../../../assets/svg/ico-arrow.svg?component";
 import Sheet from "../../../assets/svg/ico-book.svg?component";
-import CircleButton from "../../common/CircleButton.vue";
 
 export default defineComponent({
   name: 'TeacherChapter',
-  components: {CircleButton, ModalView, Arrow, RoundButton, Reading, Sheet},
+  components: {Arrow, CircleButton, Connexion, ModalView, Reading, RoundButton, Sheet},
   data() {
     return {
       step: 0,

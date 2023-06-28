@@ -1,12 +1,13 @@
 <template>
-  <div class="flex flex-col gap-10 justify-around items-center text-green">
+  <div class="flex flex-col gap-10 justify-around items-center text-green my-auto">
     <div class="w-full bg-green text-beige rounded-md grid grid-cols-3 gap-8 lg:gap-14 p-10"> <!-- flex -->
       <div class="col-span-1 w-full">
-        <RoundItem v-if="congratulation?.icon" class="w-full aspect-square" :color="COLOR.WHITE">
-          <SvgIcon :name="congratulation.icon"/>
+        <RoundItem v-if="congratulation?.icon" class="w-full aspect-square p-4 sm:p-12" :color="COLOR.WHITE">
+          <SvgIcon class="!w-full !h-full" :name="congratulation.icon"/>
         </RoundItem>
-        <div v-if="congratulation?.image" :class="congratulation?.shape === 'circle' ? 'bg-beige rounded-full p-8' : ''">
-          <img :src="`/game/images/${mainStore.getFullGameId}/${congratulation.image}`" :alt="congratulation.image"/>
+        <div v-if="congratulation?.image"
+             :class="congratulation?.shape === 'circle' ? 'bg-beige rounded-full p-8' : ''">
+          <img class="r" :src="`/game/images/${mainStore.getFullGameId}/${congratulation.image}`" :alt="congratulation.image"/>
         </div>
       </div>
       <div class="col-span-2 flex flex-col justify-center gap-4">
@@ -14,7 +15,8 @@
         <p v-if="congratulation?.text" v-html=" congratulation.text"/>
       </div>
     </div>
-    <Info v-show="gameStore.currentStep === GAMESTEP.WAIT" text="Patiente un peu, tes camarades réfléchissent encore">
+    <Info class="transition-opacity" :class="gameStore.currentStep === GAMESTEP.WAIT ? '' : 'opacity-0'"
+          text="Patiente un peu, tes camarades réfléchissent encore">
       <Loading class="loading-animation w-8 aspect-square"/>
     </Info>
   </div>

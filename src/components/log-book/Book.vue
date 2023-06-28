@@ -1,34 +1,43 @@
 <template>
-  <div>
-    <video ref="next" width="100" muted autoplay>
+  <div class="bg-log-book w-screen h-screen bg-cover bg-center">
+    <video ref="next" width="100" muted="true" autoplay>
         <source src="/log-book/next.webm" type="video/webm">
     </video>
-    <video ref="previous" width="100" muted autoplay>
+    <video ref="previous" width="100" muted="true" autoplay>
         <source src="/log-book/previous.webm" type="video/webm">
     </video>
-    <video ref="open" width="100" class="first" muted autoplay>
+    <video ref="open" width="100" class="first -translate-x-[17.5%]" muted="true" autoplay>
         <source src="/log-book/open.webm" type="video/webm">
     </video>
-    <div class="content">
+    <div class="content z-[0]">
+      <div class="book-content">
+        <div ref="shadow" class="video-shadow absolute inset-0 top-[15%] m-auto bg-black/40 blur-lg w-[65%] h-[75%] -z-10" />
+      </div>
+    </div>
+    <div class="content z-20">
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
         <div ref="pageLeft" class="page page-left flex">
           <!-- <p class="absolute -bottom-6">page {{ pageNumber - 1 }}</p> -->
           <div v-if="lastPage === pageNumber - 1" class="m-auto">
-            <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/common/plus.png" class="p-6"></RoundButton>
+            <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/plus.png" class="p-6"></RoundButton>
             <p class="font-bold mt-2">Ajouter une page</p>
           </div>
-          <PageContent v-else-if="pagesContent[pageNumber - 2]" :content="pagesContent[pageNumber - 2]" @onModify="onModify = $event" />
+          <Transition name="texture-in-out">
+            <PageContent v-show="pagesContent[pageNumber - 2]" :content="pagesContent[pageNumber - 2]" @onModify="onModify = $event" />
+          </Transition>
         </div>
         <div ref="pageRight" class="page page-right flex">
           <!-- <p class="absolute -bottom-6">page {{ pageNumber }}</p> -->
           <div v-if="lastPage === pageNumber" class="m-auto">
-            <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/common/plus.png" class="p-6"></RoundButton>
+            <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/plus.png" class="p-6"></RoundButton>
             <p class="font-bold mt-2">Ajouter une page</p>
           </div>
-          <PageContent v-else-if="pagesContent[pageNumber - 1]" :content="pagesContent[pageNumber - 1]" @onModify="onModify = $event" />
+          <Transition name="texture-in-out-2">
+            <PageContent v-show="pagesContent[pageNumber - 1]" :content="pagesContent[pageNumber - 1]" @onModify="onModify = $event" />
+          </Transition>
         </div>
       </div>
-      <RoundButton class="open" ref="buttonOpen" @click="openTheBook">Ouvrir le livre</RoundButton>
+      <RoundButton class="open" ref="buttonOpen" @click="openTheBook"><Play /></RoundButton>
       <RoundButton v-if="(pageNumber < lastPage) && isBookOpen" class="next" ref="buttonNext" @click="nextPage" :size="SIZE.SM" :color="COLOR.GREEN_LIGHT"><Arrow class="rotate-180" /></RoundButton>
       <RoundButton v-if="(page > 2) && isBookOpen" class="previous" ref="buttonPrevious" @click="previousPage" :size="SIZE.SM" :color="COLOR.GREEN_LIGHT"><Arrow /></RoundButton>
       <AddPage v-if="onPageAdd" :page:="lastPage" @close="onCloseAddPage" />
@@ -48,6 +57,7 @@ import RoundButton from './../common/RoundButton.vue'
 import { CreateComponentPublicInstance } from 'vue';
 import { COLOR, SIZE } from "./../../common/Constants";
 import Arrow from "./../../assets/svg/ico-chevron.svg?component";
+import Play from "./../../assets/svg/ico-play.svg?component";
 
 export default defineComponent({
   name: "BookComponent",
@@ -55,7 +65,8 @@ export default defineComponent({
     PageContent,
     AddPage,
     RoundButton,
-    Arrow
+    Arrow,
+    Play
   },
   data: () => {
     return {
@@ -70,6 +81,7 @@ export default defineComponent({
       openVideo: undefined as HTMLVideoElement | undefined,
       nextVideo: undefined as HTMLVideoElement | undefined,
       previousVideo: undefined as HTMLVideoElement | undefined,
+      shadow: undefined as HTMLElement | undefined,
       buttonOpen: undefined as HTMLButtonElement | undefined,
       pageLeft: undefined as HTMLElement | undefined,
       pageRight: undefined as HTMLElement | undefined,
@@ -99,6 +111,7 @@ export default defineComponent({
     this.openVideo = this.$refs.open as HTMLVideoElement;
     this.nextVideo = this.$refs.next as HTMLVideoElement;
     this.previousVideo = this.$refs.previous as HTMLVideoElement;
+    this.shadow = this.$refs.shadow as HTMLElement;
     this.buttonOpen = (this.$refs.buttonOpen as CreateComponentPublicInstance).$el as HTMLButtonElement;
     this.pageLeft = this.$refs.pageLeft as HTMLElement;
     this.pageRight = this.$refs.pageRight as HTMLElement;
@@ -112,6 +125,8 @@ export default defineComponent({
     },
     openTheBook () {
       this.openVideo?.play();
+      this.openVideo?.classList.add("is-open")
+      this.shadow?.classList.add("is-open")
       this.buttonOpen?.classList.add("disable");
       this.isBookOpen = true;
       this.updateContentPage(2400, 0);
@@ -150,7 +165,6 @@ export default defineComponent({
       await this.logBookStore.createPage(this.lastPage, n, this.mainStore.roomId);
       this.pagesContent = this.logBookStore.pages;
       this.lastPage = this.pagesContent.length + 1;
-      console.log(this.pagesContent)
     }
   },
 });
@@ -160,7 +174,6 @@ export default defineComponent({
 video {
   position: fixed;
   width: auto;
-  /* max-width: 100vw; */
   height: 100vh;
   inset: 0;
   margin: auto;
@@ -171,10 +184,45 @@ video {
 video.first {
   z-index: 2;
   opacity: 1;
+  transition: transform 1s ease;
 }
+
+.video-shadow {
+  transform: scaleX(51%) translateX(-2%);
+  /* transition: transform 1s ease; */
+}
+
+.video-shadow.is-open {
+  transform: scaleX(100%) translateX(0);
+  animation: open 1.4s ease forwards;
+}
+
+@keyframes open {
+  0% {
+    transform: scaleX(51%) translateX(-2%);
+  }
+  20% {
+    opacity: 0;
+  }
+  60% {
+    transform: scaleX(51%) translateX(25%);
+    opacity: 0;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    transform: scaleX(100%) translateX(0);
+    opacity: 1;
+  }
+}
+
+video.is-open {
+  transform: translate(0);
+}
+
 .content {
   position: fixed;
-  z-index: 20;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -195,7 +243,7 @@ button.disable {
 }
 
 button.open {
-  margin-left: 30%;
+  margin-left: 0%;
   margin-top: 8%;
 }
 
@@ -234,9 +282,8 @@ button.previous {
   inset:0;
   margin: auto;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease;
 }
-
 
 .book-content .page-active {
   opacity: 1;

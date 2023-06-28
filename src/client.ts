@@ -7,13 +7,13 @@ import {useGameStore} from "./stores/gameStore";
 import {CHAPTER_STEP, EVENT, GAME_STEP, ROLE} from "./common/Constants";
 import {ChapterData, GameData} from "./common/Interfaces";
 
-import chapterDataJSON from "./assets/chapters-data/chapters-data.json";
-import gameDataJSON from "./assets/game-data/game-data.json";
+import chapterDataJSON from "./assets/json/chapters-data.json";
+import gameDataJSON from "./assets/json/games-data.json";
 import router from "./router";
 
 // TODO : for production
 // "undefined" means the URL will be computed from the `window.location` object
-const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-server.fly.dev/" : "http://localhost:8080";
+const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-server.fly.dev/" : "http://localhost:8080";//https://192.168.43.91:8080
 
 let socket: Socket;
 export const getSocket = () => socket;
@@ -27,7 +27,9 @@ export const initClient = (pinia: Pinia) => {
   const gameData: GameData = gameDataJSON;
   
   socket = io(URL, {
-    autoConnect: false,
+    reconnectionDelay: 500,
+    timeout: 3000,
+    closeOnBeforeunload: false,
     rejectUnauthorized: false // WARN: please do not do this in production
   });
   
@@ -64,7 +66,7 @@ export const initClient = (pinia: Pinia) => {
       gameStore.teams = arg._teams;
     }
     
-    chapterData.data = chapterData[mainStore.getChapterId];
+    chapterStore.data = chapterData[mainStore.getChapterId];
     gameStore.data = gameData[mainStore.getFullGameId];
     
     if (arg._teams && gameStore.teamId !== undefined) {

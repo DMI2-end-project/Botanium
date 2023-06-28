@@ -4,13 +4,28 @@ import {useMainStore} from "../../stores/mainStore";
 
 const props = defineProps({
   name: {
-    type: String,
+    type: String || Number,
     required: true,
   },
+  source: {
+    type: String,
+    default: 'game',
+    validator(value: string) {
+      // The value must match one of these strings
+      return ['game', 'stickers', 'templates'].includes(value);
+    }
+  }
 });
 
 const dynamicComponent = computed<any>(() => {
-  return defineAsyncComponent(() => import(`../../assets/game-data/icons/${useMainStore().getFullGameId}/${props.name}.svg`));
+  switch (props.source) {
+    case 'game':
+      return defineAsyncComponent(() => import(`../../assets/svg/${props.name}.svg`));
+    case 'stickers':
+      return defineAsyncComponent(() => import(`../../assets/svg/stickers/${props.name}.svg`));
+    case 'templates':
+      return defineAsyncComponent(() => import(`../../assets/svg/templates/${props.name}.svg`));
+  }
 });
 </script>
 

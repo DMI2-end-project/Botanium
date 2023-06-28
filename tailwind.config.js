@@ -10,7 +10,7 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /bg-(00101|00102|00103|00104|texture-green|texture-purple|texture-yellow|texture-pink)/,
+        /bg-(texture-beige|texture-green|texture-purple|texture-yellow|texture-pink)/,
     },
     ...safe,
   ],
@@ -53,18 +53,17 @@ module.exports = {
         yellow: "#edbd56",
       },
       backgroundImage: {
-        "dotted-yellow": "url('/src/assets/dot-yellow.png')",
-        "dotted-green": "url('/src/assets/dot-green.png')",
-        signboard: "url('/src/assets/images/common/texture-signboard.png')",
+        "dotted-yellow": "url('/src/assets/images/dot-yellow.png')",
+        "dotted-green": "url('/src/assets/images/dot-green.png')",
+        signboard: "url('/src/assets/images/texture-signboard.png')",
         dig: "url('/game/background/dig.png')",
-        "00101": "url('/game/background/00101.png')",
-        "00102": "url('/game/background/00102.png')",
-        "00103": "url('/game/background/00103.png')",
-        "00104": "url('/game/background/00104.png')",
-        "texture-green": "url('/game/background/green.jpg')",
-        "texture-purple": "url('/game/background/purple.jpg')",
-        "texture-yellow": "url('/game/background/yellow.jpg')",
-        "texture-pink": "url('/game/background/pink.jpg')",
+        "texture-beige": "url('/images/bg-beige.jpg')",
+        "texture-green": "url('/images/bg-green.jpg')",
+        "texture-purple": "url('/images/bg-purple.jpg')",
+        "texture-yellow": "url('/images/bg-yellow.jpg')",
+        "texture-pink": "url('/images/bg-pink.jpg')",
+        "home": "url('/home/background.jpg')",
+        "log-book": "url('/log-book/background.png')",
       },
       backgroundSize: {
         "width-full": "100% auto",
@@ -74,5 +73,8 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
+
 };

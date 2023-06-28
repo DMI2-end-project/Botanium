@@ -45,11 +45,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="fixed flex items-center gap-4 z-50">
-    <router-link class=" bg-green p-2 rounded-md"
-                 :to="mainStore.role === ROLE.STUDENT ? '/accueil' : '/tableau-de-bord'">
-      Home
-    </router-link>
+  <div class="fixed top-6 right-8 flex items-center gap-4 z-50">
     <button v-if="mainStore.role === ROLE.TEACHER" @click="killRoom">Kill</button>
   </div>
   <component :is="layout">
