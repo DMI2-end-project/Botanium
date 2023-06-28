@@ -32,19 +32,19 @@ const props = defineProps({
 </script>
 
 <template>
-  <!-- BORDER ONLY FOR SELECTED - NO BACKGROUND -->
-  <!-- TODO : DO OUTLINE -->
-  <div class=" w-full h-full rounded-lg border shrink-0 text-center p-2"
-       :class="{
+  <!-- OUTLINE ONLY FOR SELECTED - NO BACKGROUND -->
+  <!-- outline outline-offset-8 -->
+  <!-- class="h-auto p-2" -->
+  <div class="relative w-full h-full rounded-lg shrink-0 text-center">
+    <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[105%] h-[111%] border rounded-lg z-0"
+         :class="{
          'border-green-light' : props.answerState === 'selected',
          'border-transparent' : props.answerState !== 'selected'
-       }">
+       }"/>
     <!-- BORDER ONLY FOR VALID/ERROR -->
     <div class="w-full h-full bg-beige border-transparent rounded-lg border-[6px] p-1.5"
          :class="{
-           'bg-beige !border-blue': props.answerState === 'valid',
-           'bg-beige !border-red': props.answerState === 'error',
-           'bg-beige border-transparent': props.answerState === 'none',
+           'bg-beige border-transparent': props.answerState !== 'selected',
            'bg-green-light border-transparent text-green': props.cardState === 'validated' || props.answerState === 'selected',
          }">
       <!-- BORDER -->
