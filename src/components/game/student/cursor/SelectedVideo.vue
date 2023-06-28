@@ -1,6 +1,10 @@
 <template>
   <div class="w-full h-full px-10 relative flex flex-col justify-between">
-    <div ref="canvasContainer" class="w-full -my-20" :class="isError ? 'shake-animation' : ''"></div>
+    <div ref="canvasContainer" class="canvasContainer w-full relative mb-16" :class="(isError ? 'shake-animation' : '') + (onLoad ? ' opacity-100' : ' opacity-0')">
+      <div class="absolute h-full aspect-[75/38] inset-0 m-auto">
+        <div class="polygon w-full absolute h-full blur-lg bg-black/40 bottom-0 left-0 right-0 mx-auto -z-10" />
+      </div>
+    </div>
     <div class="relative w-4/5 mx-auto">
       <input ref="range" type="range" v-model="selectedValue.current" min="0" max="4" step="0.001" class="w-full" :class="isError ? 'error' : ''"/>
       <Empty class="absolute -top-24 left-0 -ml-5 bg-green-light w-14 h-14 text-green rounded-full p-4"/>
@@ -47,12 +51,13 @@ export default defineComponent({
         current: 0,
         target: 0
       },
+      onLoad: false,
       targetSprite: 0,
       isClicked: false,
       app: new PIXI.Application({
         autoStart: true,
-        width: 850,
-        height: 600,
+        width: 750,
+        height: 380,
         backgroundAlpha: 0
       }) as PIXI.Application,
       animation: {} as PIXI.AnimatedSprite,
@@ -67,10 +72,13 @@ export default defineComponent({
         this.raf = requestAnimationFrame(this.update)
     })
 
-
     this.loadSprite();
   },
   methods: {
+    isLoad() {
+      this.onLoad = true;
+      (this.app.view as HTMLCanvasElement).style.transform = 'translateY(0px)';
+    },
     unClick() {
       this.isClicked = false
     },
@@ -78,10 +86,13 @@ export default defineComponent({
       this.isClicked = true
     },
     async loadSprite() {
+      const time = Date.now()
       const app = this.app;
-      (app.view as HTMLCanvasElement).style.width = '100vh';
+      (app.view as HTMLCanvasElement).style.width = '60vh';
       (app.view as HTMLCanvasElement).style.margin = 'auto';
       (this.$refs.canvasContainer as HTMLElement).appendChild(app.view as HTMLCanvasElement);
+      (app.view as HTMLCanvasElement).style.transform = 'translateY(-50px)';
+      (app.view as HTMLCanvasElement).style.transition = 'transform 1s cubic-bezier(0.25, 1, 0.5, 1)';
 
       const textureData = await PIXI.Assets.load('/game/animations/00103/animation_' + this.element + '.json');
       const animations = textureData.data.animations;
@@ -97,9 +108,10 @@ export default defineComponent({
 
       app.stage.addChild(animation);
 
-      this.animation = animation
-
-      // this.app.ticker.add(this.update)
+      this.animation = animation;
+      setTimeout(() => {
+        this.isLoad()
+      }, Math.max(300 - (Date.now() - time), 0))
     },
     update() {
       this.selectedValue.target = Math.round(this.selectedValue.current)
@@ -137,17 +149,19 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#canvasContainer {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
 @keyframes shake {
   0% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
   20%, 40%, 60%, 80% { transform: translateX(5px); }
   100% { transform: translateX(0); }
+}
+
+.polygon {
+  transform: translateY(35%) rotateX(70deg) rotateY(352deg) rotateZ(21deg) scale(0.9);
+}
+
+.canvasContainer {
+  transition: opacity 0.8s ease-out;
 }
 
 .shake-animation {

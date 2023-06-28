@@ -13,7 +13,7 @@ import router from "./router";
 
 // TODO : for production
 // "undefined" means the URL will be computed from the `window.location` object
-const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-server.fly.dev/" : "http://192.168.43.91:8080";
+const URL = process.env.NODE_ENV === "production" ? "https://botanium-node-server.fly.dev/" : "http://localhost:8080";
 
 let socket: Socket;
 export const getSocket = () => socket;
@@ -22,28 +22,28 @@ export const initClient = (pinia: Pinia) => {
   const mainStore = useMainStore(pinia);
   const chapterStore = useChapterStore(pinia);
   const gameStore = useGameStore(pinia);
-  
+
   const chapterData: ChapterData = chapterDataJSON;
   const gameData: GameData = gameDataJSON;
-  
+
   socket = io(URL, {
     reconnectionDelay: 500,
     timeout: 3000,
     closeOnBeforeunload: false,
     rejectUnauthorized: false // WARN: please do not do this in production
   });
-  
+
   socket.on("connect", () => {
     mainStore.connected = true;
   });
-  
+
   socket.on("disconnect", () => {
     mainStore.connected = false;
   });
-  
+
   socket.on(EVENT.ROOM_STATUS, (arg) => {
     console.log('Client EVENT.ROOM_STATUS', arg);
-    
+
     if (arg.chapterId) {
       mainStore.chapterId = arg.chapterId
     }
@@ -65,21 +65,21 @@ export const initClient = (pinia: Pinia) => {
     if (arg._teams) {
       gameStore.teams = arg._teams;
     }
-    
+
     chapterStore.data = chapterData[mainStore.getChapterId];
     gameStore.data = gameData[mainStore.getFullGameId];
-    
+
     if (arg._teams && gameStore.teamId !== undefined) {
       let team = arg._teams.find((team: any) => team._teamId === gameStore.teamId);
       if (team && arg.gameStep === GAME_STEP.PLAY && team.isValidated) {
         gameStore.currentStep = GAME_STEP.WAIT
       }
     }
-    
+
     if (arg.tasksScanned) {
       chapterStore.tasksScanned = arg.tasksScanned;
     }
-    
+
     if (mainStore.role === ROLE.STUDENT) { // TODO : && localStorage.getItem('join') !== 'false'
       if ((router.currentRoute.value.name !== 'Scan') && (arg.chapterStep !== CHAPTER_STEP.IDLE && router.currentRoute.value.name !== 'Chapter') || (arg.gameStep !== GAME_STEP.IDLE && router.currentRoute.value.name !== 'Game')) {
         mainStore.askForRedirection = true
@@ -91,7 +91,7 @@ export const initClient = (pinia: Pinia) => {
 export const connectClient = async () => {
   const mainStore = useMainStore(pinia);
   const gameStore = useGameStore(pinia);
-  
+
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,
@@ -103,7 +103,7 @@ export const connectClient = async () => {
 
 export const taskScanned = async () => {
   const mainStore = useMainStore(pinia);
-  
+
   await socket.emit('taskScanned', {
     roomId: mainStore.roomId
   });

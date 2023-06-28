@@ -10,10 +10,10 @@ const app = express();
 const http = createServer(app);
 const io = new Server(http, {
   cors: {
-    // origins: [`http://localhost:${port}`],
+    origins: [`http://localhost:${port}`]
     // origins: [`http://192.168.0.13:${port}`],
     //origins: [`http://192.168.0.21:${port}`]
-    origins: [`http://192.168.43.91:8080:${port}`]
+    // origins: [`http://192.168.43.91:8080:${port}`]
   },
 });
 const audioGame = new AudioGame();
