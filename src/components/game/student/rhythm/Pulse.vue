@@ -1,6 +1,9 @@
 <template>
   <div class="flex justify-center items-center relative">
-    <div ref="canvasContainer" class="canvas w-full" :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" ></div>
+
+    <div class="absolute aspect-square h-[160%] bg-white rounded-full shadow-lg"></div>
+    <div class="absolute aspect-square h-[200%] bg-white/20 rounded-full"></div>
+    <div ref="canvasContainer" class="canvas w-full" :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" />
     <!-- :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" -->
   </div>
 </template>
@@ -25,8 +28,8 @@ export default defineComponent({
       } as Colors,
       app: new PIXI.Application({
         autoStart: true,
-        width: 600,
-        height: 600,
+        width: 250,
+        height: 250,
         backgroundAlpha: 0
       }) as PIXI.Application,
       animation: {} as PIXI.AnimatedSprite,
@@ -49,14 +52,14 @@ export default defineComponent({
     },
     async loadSprite() {
       const app = this.app;
-      (app.view as HTMLCanvasElement).style.width = '40vh';
+      (app.view as HTMLCanvasElement).style.width = '25vh';
       (app.view as HTMLCanvasElement).style.margin = 'auto';
       (this.$refs.canvasContainer as HTMLElement).appendChild(app.view as HTMLCanvasElement);
 
-      const textureData = await PIXI.Assets.load('/game/animations/00104/animation_clap.json');
+      const textureData = await PIXI.Assets.load('/game/animations/00104/animation_hands.json');
       const animations = textureData.data.animations;
 
-      const animation = await PIXI.AnimatedSprite.fromFrames(animations["animation_clap"]);
+      const animation = PIXI.AnimatedSprite.fromFrames(animations["hands"]);
 
       animation.animationSpeed = 0.65;
       animation.width = app.view.width;

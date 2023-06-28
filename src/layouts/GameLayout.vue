@@ -148,7 +148,7 @@ export default defineComponent({
       </ModalView>
     </div>
   </footer>
-  <button class="absolute z-80 top-[80px] right-[30px]" @click="next">
+  <button v-if="mainStore.role === ROLE.TEACHER" class="absolute z-80 top-[80px] right-[30px]" @click="next">
       Do
     </button>
   <!--div class="flex-1 flex flex-col w-full h-full min-h-screen max-h-screen gap-10">

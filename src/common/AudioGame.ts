@@ -121,7 +121,7 @@ export default class AudioGame {
 
     this.accumulatedRMS += rms;
     this.sampleCount++;
-    console.log('rms :', rms);
+    // console.log('rms :', rms);
 
   }
 
@@ -134,7 +134,7 @@ export default class AudioGame {
 
       this.gainNode.gain.value = Math.min(gain, 50);
 
-    console.log('Gain appliqué :', gain);
+    // console.log('Gain appliqué :', gain);
 
   }
 
