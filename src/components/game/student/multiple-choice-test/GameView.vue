@@ -1,17 +1,23 @@
 <template>
   <div class="relative grid grid-cols-2 auto-rows-fr gap-8 px-8 my-auto">
-    <CardSlot v-for="(answer, index) in answers" :v-bind="index" :answer-state="answer.status">
-      <CardGame @click.native="() => itemSelected(index)"
-                mode="horizontal"
-                card-state="show" :answer-state="answer.status"
-                class="w-full h-full aspect-[9/4] max-h-[25vh] max-w-[60vh]"
-                :class="index%2 === 0 ? 'ml-auto' : 'mr-auto'">
-        <template v-slot:recto>
-          <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
-          <span class="text-md pointer-events-none">{{ answer.text }}</span>
-        </template>
-      </CardGame>
-    </CardSlot>
+    <div v-for="(answer, index) in answers" :v-bind="index">
+      <div class="relative p-2 aspect-[9/4] max-h-[25vh] max-w-[60vh]"
+           :class="index % 2 === 0 ? 'ml-auto' : 'mr-auto'">
+        <div class="!absolute top-0 left-0 w-full h-full">
+          <CardSlot :answer-state="answer.status" class="w-full h-full"/>
+        </div>
+        <CardGame @click.native="() => itemSelected(index)"
+                  mode="horizontal"
+                  card-state="show" :answer-state="answer.status"
+                  class="w-full h-full">
+          <template v-slot:recto>
+            <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
+            <span class="text-md pointer-events-none">{{ answer.text }}</span>
+          </template>
+        </CardGame>
+      </div>
+    </div>
+
   </div>
   <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-2 mx-auto mt-4"
                :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">

@@ -70,14 +70,11 @@ module.exports = {
       },
       boxShadow: {
         inner: 'inset 0px 0px 15px 5px rgba(0,0,0,0.3)',
-        'card': {
-          inner: 'inset 0px 4px 4px rgba(0,0,0,0.25)'
-        }
+        card: 'inset 0px 4px 4px rgba(0,0,0,0.25)'
       }
     },
   },
   plugins: [
     require('@tailwindcss/line-clamp'),
   ],
-
 };
