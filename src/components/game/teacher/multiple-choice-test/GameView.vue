@@ -34,7 +34,7 @@
                class="mx-auto mt-4">
     <Check/>
   </RoundButton>
-   <button class="fixed top-[80px] right-[30px]" @click="next">
+   <button class="absolute top-[80px] right-[30px]" @click="next">
       Do
     </button>
 </template>

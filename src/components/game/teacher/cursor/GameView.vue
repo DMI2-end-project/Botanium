@@ -11,7 +11,7 @@
     <RoundButton v-show="gameStore.currentStep === GAMESTEP.END" :color="COLOR.GREEN" class="mx-auto mt-8" @click="next">
       <Arrow class="rotate-180" />
     </RoundButton>
-     <button class="fixed top-[80px] right-[30px]" @click="next">
+     <button class="absolute top-[80px] right-[30px]" @click="next">
       Do
     </button>
   </div>

@@ -117,7 +117,7 @@ export default defineComponent({
           <component :is="isBreadcrumb ? 'Breadcrumb' : 'GameHeader'"/>
       </Transition>
     </header>
-    <main class="relative w-full h-full flex flex-col">
+    <main class="w-full h-full flex flex-col">
       <slot></slot>
     </main>
   </div>

@@ -130,7 +130,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-w-[60vh] w-1/3 fixed inset-0 top-40 m-auto aspect-square bg-white rounded-full"/>
+  <div class="max-w-[60vh] w-1/3 absolute inset-0 top-10 m-auto aspect-square bg-white rounded-full"/>
   <div class="inset-0 max-h-[70vh] aspect-[5/9] mx-auto">
     <div class="relative w-full h-full">
       <img v-if="teamData" alt=""

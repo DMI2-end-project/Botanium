@@ -30,7 +30,7 @@
     <RoundButton v-show="gameStore.currentStep === GAMESTEP.END" class="col-span-12 mx-auto my-5" @click="next">
       <Arrow class="rotate-180"/>
     </RoundButton>
-    <button class="fixed top-[80px] right-[30px]" @click="next">
+    <button class="absolute top-[80px] right-[30px]" @click="next">
       Do
     </button>
   </div>
