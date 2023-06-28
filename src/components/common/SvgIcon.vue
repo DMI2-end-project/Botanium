@@ -20,11 +20,11 @@ const props = defineProps({
 const dynamicComponent = computed<any>(() => {
   switch (props.source) {
     case 'game':
-      return defineAsyncComponent(() => import(`../../assets/game-data/icons/${useMainStore().getFullGameId}/${props.name}.svg`));
+      return defineAsyncComponent(() => import(`../../assets/svg/${props.name}.svg`));
     case 'stickers':
-      return defineAsyncComponent(() => import(`../../assets/log-book/stickers/${props.name}.svg`));
+      return defineAsyncComponent(() => import(`../../assets/svg/stickers/${props.name}.svg`));
     case 'templates':
-      return defineAsyncComponent(() => import(`../../assets/log-book/templates/${props.name}.svg`));
+      return defineAsyncComponent(() => import(`../../assets/svg/templates/${props.name}.svg`));
   }
 });
 </script>

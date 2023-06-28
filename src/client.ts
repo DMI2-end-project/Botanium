@@ -7,8 +7,8 @@ import {useGameStore} from "./stores/gameStore";
 import {CHAPTER_STEP, EVENT, GAME_STEP, ROLE} from "./common/Constants";
 import {ChapterData, GameData} from "./common/Interfaces";
 
-import chapterDataJSON from "./assets/chapters-data/chapters-data.json";
-import gameDataJSON from "./assets/game-data/game-data.json";
+import chapterDataJSON from "./assets/json/chapters-data.json";
+import gameDataJSON from "./assets/json/games-data.json";
 import router from "./router";
 
 // TODO : for production
