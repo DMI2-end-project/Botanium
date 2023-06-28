@@ -284,8 +284,8 @@ button:focus-visible {
 }
 
 .texture-enter-active, .texture-in-out-enter-active, .texture-in-out-2-enter-active {
-    -webkit-mask: url('/chapter/global-mask.png');
-        mask: url('/chapter/global-mask.png');
+    -webkit-mask: url('/images/global-mask.png');
+        mask: url('/images/global-mask.png');
         -webkit-mask-size: 3000% 100%;
         mask-size: 3000% 100%;
         -webkit-mask-position: 100% 0;
@@ -381,6 +381,14 @@ button:focus-visible {
 
     a {
         @apply text-xs font-bold text-secondary;
+    }
+
+    b, strong {
+        @apply font-bold;
+    }
+
+    i {
+        @apply italic;
     }
 
     button {

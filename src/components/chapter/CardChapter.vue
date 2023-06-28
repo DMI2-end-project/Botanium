@@ -24,8 +24,8 @@ const props = defineProps({
 const getImage = () => {
   let chapterNumber = leading(props.index, 3);
 
-  //return `/chapter/${chapterNumber}/preview-chapter-${chapterNumber}.jpg`;
-  return `/chapter/001/preview-chapter-001.jpg`;
+  //return `/chapter/${chapterNumber}/preview-chapter-${chapterNumber}.png`;
+  return `/chapter/001/preview-chapter-001.png`;
 }
 
 </script>
