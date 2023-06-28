@@ -3,9 +3,24 @@
     <div class="col-span-10 col-start-2 sm:col-span-8 sm:col-start-3 xl:col-span-6 xl:col-start-4 flex">
       <DragDropGrid>
         <div v-if="answers" v-for="(team, index) in playingTeams" :v-bind="index"
-             class="flex flex-col justify-center items-center gap-2 mx-auto">
-          <div class="h-full aspect-[5/9]">
-            <CardGame mode="vertical" :answer-state="'none'" :card-state="cardState(index)"
+             class="w-full flex flex-col justify-center items-center gap-6 z-10 max-w-[25vh]">
+          <div
+              class="relative w-full rounded-lg overflow-hidden aspect-[5/9] max-h-[40vh] bg-beige rounded-md flex items-center justify-center">
+            <CardGame mode="vertical" :answer-state="'none'"
+                      :card-state="this.gameStore.currentStep === GAME_STEP.END ? 'show' : 'validated'"
+                      class="relative w-full h-full z-10"
+                      :class="!playingTeams[index]?.isValidated ? 'opacity-0 pointer-events-none' : ''">
+              <template v-slot:recto>
+                <img alt=""
+                     :src="`/game/images/${mainStore.getFullGameId}/${answers[index].image}`"
+                     class="w-full h-full object-contain object-center"/>
+              </template>
+            </CardGame>
+            <CardSlot class="!absolute top-0 left-0 w-full h-full aspect-[5/9]">
+              <span class="font-hand-written text-beige-dark text-2xl leading-none">{{ answers[index].label }}...</span>
+            </CardSlot>
+
+            <!--CardGame mode="vertical" :answer-state="'none'" :card-state="cardState(index)"
                       class="max-h-[50vh]">
               <template v-slot:recto>
                 <img v-if="answers[index].image" alt=""
@@ -18,7 +33,7 @@
                   {{ answers[index].label }}...
                 </div>
               </template>
-            </CardGame>
+            </CardGame-->
           </div>
 
           <div class="w-full bg-green text-beige rounded-md fill">
@@ -47,11 +62,12 @@ import RoundButton from "../../../common/RoundButton.vue";
 
 import Arrow from "../../../../assets/svg/ico-arrow.svg?component";
 import DragDropGrid from "../../DragDropGrid.vue";
+import CardSlot from "../../CardSlot.vue";
 
 
 export default defineComponent({
   name: "TeacherGameView",
-  components: {DragDropGrid, CardGame, RoundButton, Arrow},
+  components: {CardSlot, DragDropGrid, CardGame, RoundButton, Arrow},
   data() {
     return {
       mainStore: useMainStore(),
@@ -59,6 +75,9 @@ export default defineComponent({
     }
   },
   computed: {
+    GAME_STEP() {
+      return GAME_STEP
+    },
     GAMESTEP() {
       return GAME_STEP
     },

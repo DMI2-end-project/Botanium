@@ -32,6 +32,7 @@ module.exports = {
         "hand-written": "Belle Allure CE",
       },
       colors: {
+        background: "var(--color-background)",
         primary: "#4d6b36", // Green
         secondary: "#edbd56", // Yellow
         green: {
@@ -67,6 +68,12 @@ module.exports = {
       backgroundSize: {
         "width-full": "100% auto",
       },
+      boxShadow: {
+        inner: 'inset 0px 0px 15px 5px rgba(0,0,0,0.3)',
+        'card': {
+          inner: 'inset 0px 4px 4px rgba(0,0,0,0.25)'
+        }
+      }
     },
   },
   plugins: [

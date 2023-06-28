@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {nextTick, onMounted, ref} from "vue";
+import {nextTick, onMounted, provide, ref, watch} from "vue";
 import {gsap} from "gsap";
 import {Draggable} from "gsap/Draggable";
 import {Flip} from "gsap/Flip";
@@ -12,6 +12,7 @@ import RoundButton from "../../../common/RoundButton.vue";
 import CardGame from "../../CardGame.vue";
 
 import Check from "./../../../../assets/svg/ico-check.svg?component";
+import CardSlot from "../../CardSlot.vue";
 import DragDropGrid from "../../DragDropGrid.vue";
 
 gsap.registerPlugin(Draggable, Flip);
@@ -25,6 +26,7 @@ const teamData = ref<any>(null);
 
 const draggable = ref<HTMLDivElement>();
 const droppables = ref<HTMLDivElement[]>([]);
+
 const currentAnswer = ref<any | undefined>(undefined);
 const currentIndex = ref<number>(-1);
 
@@ -34,6 +36,7 @@ const playingTeams = () => {
 
 onMounted(async () => {
   await nextTick();
+
   //const droppables = document.querySelectorAll<HTMLDivElement>('.droppable');
   const container = document.querySelector('#container');
 
@@ -108,35 +111,36 @@ const itemValidated = () => {
 
 <template>
   <div
-      class="w-full h-full flex-1 grid grid-cols-12 items-center gap-5 text-center pt-4 px-8">
-    <div
-        class="col-span-3 xl:col-span-2 xl:col-start-3 flex relative justify-center items-center border border-dashed border-beige rounded-md p-2 h-full w-full max-h-[40vh] max-w-[25vh]">
-      <div id="container" class="relative h-full w-full">
-        <div ref="draggable" class="relative w-full h-full">
-          <CardGame v-if="teamData" mode="vertical"
-                    :answer-state="currentIndex === -1 ? 'none' : teamData.answers[currentIndex].status"
-                    class="h-full">
-            <template v-slot:recto>
-              <img v-if="teamData" alt=""
-                   :src="`/game/images/${mainStore.getFullGameId}/${teamData.image}`"
-                   class="object-contain object-center w-full h-full object-contain"/>
-            </template>
-          </CardGame>
+      class="w-full h-full flex-1 grid grid-cols-12 items-center gap-8 text-center pt-4 px-8">
+    <div class="col-span-3 xl:col-span-2 xl:col-start-3 w-full">
+      <div class="relative">
+        <CardSlot class="relative col-span-3 w-full aspect-[5/9]" outline background/>
+        <div id="container" class="absolute top-0 left-0 w-full h-full">
+          <div ref="draggable" class="relative w-full h-full">
+            <CardGame mode="vertical"
+                      :answer-state="currentIndex === -1 ? 'none' : teamData.answers[currentIndex].status"
+                      class="h-full">
+              <template v-slot:recto>
+                <img v-if="teamData" alt=""
+                     :src="`/game/images/${mainStore.getFullGameId}/${teamData.image}`"
+                     class="w-full h-full object-contain object-center"/>
+              </template>
+            </CardGame>
+          </div>
         </div>
-        <!--div ref="draggable" class="w-full h-full bg-beige rounded-md">
-          <img v-if="teamData"
-               :src="`/game/images/${mainStore.getFullGameId}/${teamData.background}`"
-               class="object-contain object-center"/>
-        </div-->
       </div>
     </div>
     <DragDropGrid class="relative w-full col-span-9 xl:col-span-6 pb-12">
       <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
            class="w-full flex flex-col justify-center items-center gap-6 z-10 max-w-[25vh] mx-auto">
-        <div ref="droppables"
-             class="droppable w-full aspect-[5/9] max-h-[40vh] bg-beige rounded-md flex items-center justify-center font-hand-written text-beige-dark text-2xl"
-             :data-is-valid="answer.isValid">
-          {{ answer.label }}...
+        <div
+            class="relative w-full rounded-lg overflow-hidden p-2 aspect-[5/9] max-h-[40vh] bg-beige rounded-md flex items-center justify-center"
+            :data-is-valid="answer.isValid">
+          <CardSlot class="!absolute top-0 left-0 w-full h-full aspect-[5/9]"
+                    :answer-state="answer.status">
+            <span class="font-hand-written text-beige-dark text-2xl leading-none">{{ answer.label }}...</span>
+          </CardSlot>
+          <div ref="droppables" class="relative w-full h-full rounded-lg"/>
         </div>
         <h3 class="w-full bg-green text-beige rounded-md">
           {{ answer.molecule }}
