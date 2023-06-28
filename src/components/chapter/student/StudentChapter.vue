@@ -21,18 +21,18 @@
 
     <Transition v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" name="bgTransitionLeft1">
       <div class="absolute -top-[20%] -left-[40%] -scale-x-100 h-1/2 w-auto">
-        <img :src="'/chapter/illu-leaf-drop.png'" alt=""
+        <img :src="'/images/illu-leaf-drop.png'" alt=""
              class="w-full h-full object-contain origin-top-left">
       </div>
     </Transition>
     <Transition v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" name="bgTransitionLeft2">
       <div>
         <div class="absolute -bottom-[30%] -left-[33%] h-2/3 w-1/2 object-contain origin-bottom">
-          <img :src="'/chapter/illu-carrot.png'" alt=""
+          <img :src="'/images/illu-carrot.png'" alt=""
                class="w-full h-full object-contain ">
         </div>
         <div class="absolute -bottom-[15%] -left-[55%] h-2/3 w-1/2 object-contain origin-bottom rotate-[40deg]">
-          <img :src="'/chapter/illu-carrot.png'" alt=""
+          <img :src="'/images/illu-carrot.png'" alt=""
                class="w-full h-full object-contain ">
         </div>
       </div>
@@ -40,7 +40,7 @@
     <Transition v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" name="bgTransitionRight2">
       <div
           class="absolute -bottom-[37%] -right-[25%] h-5/6 max-w-[60%] w-auto object-contain origin-bottom object-bottom">
-        <img :src="'/chapter/illu-carrot.png'" alt=""
+        <img :src="'/images/illu-carrot.png'" alt=""
         >
       </div>
     </Transition>

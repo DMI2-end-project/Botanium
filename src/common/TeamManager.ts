@@ -4,7 +4,7 @@ import {useChapterStore} from "../stores/chapterStore";
 import {useGameStore} from "../stores/gameStore";
 import {getSocket} from "./../client";
 import {EVENT, GAME_STEP, ROLE, AUDIO_EVENT} from "./Constants";
-import gameData from "../assets/game-data/game-data.json";
+import gameData from "../assets/json/games-data.json";
 
 class TeamManager {
   private static _instance: TeamManager;

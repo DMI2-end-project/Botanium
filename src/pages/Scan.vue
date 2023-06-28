@@ -9,6 +9,7 @@ import ModalView from "../components/common/ModalView.vue";
 import RoundButton from "../components/common/RoundButton.vue";
 import {COLOR} from "../common/Constants";
 
+import Arrow from "../assets/svg/ico-arrow.svg?component";
 import Camera from "../assets/svg/ico-photo.svg?component";
 import Cross from "../assets/svg/ico-cross.svg?component";
 
@@ -47,15 +48,18 @@ const launchScan = () => {
   <Scan v-if="scan" ref="scanComponent" @ready="launchScan" @scanned="openModal"/>
   <ModalView v-if="isModalOpen" :close="false">
     <h1>Bravo !</h1>
-    <p>La mission {{ exp }} a été validé !!</p>
+    <p>La mission <b>{{ exp }}</b> a été validé !!</p>
     <p v-if="!chapterStore.sheetUnlocked">Voulez vous scanner un autre badge ?</p>
     <p v-if="chapterStore.sheetUnlocked">Vous avez scanné tous les badges nécessaires ! La fiche est débloquée !</p>
     <div class="flex justify-center items-center gap-6">
       <RoundButton v-if="!chapterStore.sheetUnlocked" :color="COLOR.YELLOW" @click="launchScan">
         <Camera/>
       </RoundButton>
-      <RoundButton :color="COLOR.RED" @click="router.push(`/chapitre/${mainStore.getChapterId}`)">
+      <RoundButton v-if="!chapterStore.sheetUnlocked" :color="COLOR.RED" @click="router.push(`/chapitre/${mainStore.getChapterId}`)">
         <Cross/>
+      </RoundButton>
+      <RoundButton v-if="chapterStore.sheetUnlocked" :color="COLOR.PINK" @click="router.push(`/chapitre/${mainStore.getChapterId}`)">
+        <Arrow class="rotate-180"/>
       </RoundButton>
     </div>
   </ModalView>

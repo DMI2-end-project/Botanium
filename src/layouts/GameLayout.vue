@@ -15,7 +15,7 @@ import Breadcrumb from "../components/Breadcrumb.vue";
 import GameHeader from "../components/game/GameHeader.vue";
 import Connexion from "../components/game/teacher/Connexion.vue";
 
-import gameData from "../assets/game-data/game-data.json";
+import gameData from "../assets/json/games-data.json";
 
 import Wifi from "../assets/svg/ico-wifi.svg?component";
 

@@ -13,7 +13,7 @@ import ChapterModalView from "../components/common/ChapterModalView.vue";
 import RoundButton from "../components/common/RoundButton.vue";
 import CardChapter from "../components/chapter/CardChapter.vue";
 
-import chaptersData from "../assets/chapters-data/chapters-data.json";
+import chaptersData from "../assets/json/chapters-data.json";
 
 import Filter from "../assets/svg/ico-filter.svg?component";
 import Autumn from "../assets/svg/ico-autumn.svg?component";

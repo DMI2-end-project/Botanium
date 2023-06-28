@@ -42,12 +42,12 @@ onBeforeMount(() => {
 
 <template>
   <div class="bg-home inset-0 bg-cover bg-center fixed overflow-hidden">
-    <img src="/home/images/plant-4.png" class="organic-5 absolute w-auto h-4/5 object-contain -bottom-[30%] -right-[2%] -scale-x-100">
-    <img src="/home/images/plant-2.png" class="organic-4 absolute w-auto h-2/3 object-contain -top-[35%] -right-[10%]">
-    <img src="/home/images/plant-3.png" class="organic-3 absolute w-1/3 h-full object-contain -top-[30%] -right-[15%]">
-    <img src="/home/images/sun.png" class="sun absolute w-auto h-full object-contain -top-[0%] -left-[0%]">
+    <img src="/home/plant-4.png" class="organic-5 absolute w-auto h-4/5 object-contain -bottom-[30%] -right-[2%] -scale-x-100">
+    <img src="/home/plant-2.png" class="organic-4 absolute w-auto h-2/3 object-contain -top-[35%] -right-[10%]">
+    <img src="/home/plant-3.png" class="organic-3 absolute w-1/3 h-full object-contain -top-[30%] -right-[15%]">
+    <img src="/home/sun.png" class="sun absolute w-auto h-full object-contain -top-[0%] -left-[0%]">
     <div class="-scale-x-100 absolute w-1/3 h-auto object-contain -bottom-[5%] -right-[2%]">
-      <img src="/home/images/plant-1.png" class="organic-2   origin-bottom-right">
+      <img src="/home/plant-1.png" class="organic-2   origin-bottom-right">
     </div>
 
     <Particles />
@@ -61,7 +61,7 @@ onBeforeMount(() => {
       </div>
     </div>
 
-    <img src="/home/images/plant-1.png" class="organic-1 absolute w-1/2 h-auto object-contain -bottom-[25%] -left-[20%] origin-bottom-left">
+    <img src="/home/plant-1.png" class="organic-1 absolute w-1/2 h-auto object-contain -bottom-[25%] -left-[20%] origin-bottom-left">
 
     <div class="logo-container absolute py-6 px-12 top-0 left-0 right-0 mx-auto w-fit">
       <img src="/images/logo.png" class="w-[300px] h-auto object-fit">

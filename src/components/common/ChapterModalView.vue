@@ -25,7 +25,7 @@ const getImage = () => {
     chapterNumber = leading(props.chapter.number, 3);
   }
 
-  return `/chapter/${chapterNumber}/preview-chapter-${chapterNumber}.jpg`;
+  return `/chapter/${chapterNumber}/preview-chapter-${chapterNumber}.png`;
 }
 
 </script>

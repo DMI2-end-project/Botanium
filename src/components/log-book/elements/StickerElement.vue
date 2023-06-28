@@ -1,8 +1,14 @@
 <template>
   <div>
-    <button class="sticker-element w-full h-min bg-beige-medium/50 text-beige-dark rounded-full relative p-0 flex justify-center items-center outline outline-8 transition-all duration-400" :class="(onModify ? 'outline-yellow' : 'outline-transparent')" @click="onModify = true">
-      <img v-if="stickerData.idSticker >= 0" alt="" :src="getStickerUrl(stickerData.idSticker)" class="h-full w-full rounded-full object-contain absolute shadow-md">
-      <p v-if="!(stickerData.idSticker >= 0)" class="absolute"><Stickers class="w-2/3 mx-auto" :class="onModify ? 'text-yellow' : ''" /></p>
+    <button
+        class="sticker-element w-full h-min bg-beige-medium/50 text-beige-dark rounded-full relative p-0 flex justify-center items-center outline outline-8 transition-all duration-400"
+        :class="(onModify ? 'outline-yellow' : 'outline-transparent')" @click="onModify = true">
+      <!--img v-if="stickerData.idSticker >= 0" alt="" :src="getStickerUrl(stickerData.idSticker)" class="h-full w-full rounded-full object-contain absolute shadow-md"-->
+      <SvgIcon v-if="stickerData.idSticker >= 0" source="stickers" :name="stickerData.idSticker"
+               class="h-full w-full rounded-full object-contain absolute shadow-md"/>
+      <p v-if="!(stickerData.idSticker >= 0)" class="absolute">
+        <Stickers class="w-2/3 mx-auto" :class="onModify ? 'text-yellow' : ''"/>
+      </p>
     </button>
     <Transition :name="isPageLeft ? 'translateLeft' : 'translateRight'">
       <div v-if="onModify" class="fixed z-40 w-screen h-screen top-0 left-0 flex items-end">
@@ -10,7 +16,11 @@
           <!-- <button v-if="stickerData.idSticker !== stickerDataLast.idSticker" @click="saveData" class="absolute z-10 h-24 w-24 rounded-full top-0 bottom-0 my-auto h-fit" :class="isPageLeft ? '-left-12' : '-right-12'">Valider</button> -->
 
           <Transition name="scaleButtonBg">
-            <RoundButton @click="saveData" :color-bg="COLOR.BEIGE" :color="COLOR.GREEN_MEDIUM_BEIGE" class="absolute top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Check /></RoundButton>
+            <RoundButton @click="saveData" :color-bg="COLOR.BEIGE" :color="COLOR.GREEN_MEDIUM_BEIGE"
+                         class="absolute top-0 bottom-0 my-auto h-fit rounded-full"
+                         :class="isPageLeft ? '-left-20' : '-right-20'">
+              <Check/>
+            </RoundButton>
           </Transition>
           <!-- <RoundButton v-if="stickerData.idSticker === stickerDataLast.idSticker" @click="close" :color-bg="COLOR.BEIGE" :color="COLOR.RED" class="absolute z-10 top-0 bottom-0 my-auto h-fit rounded-full" :class="isPageLeft ? '-left-20' : '-right-20'"><Cross /></RoundButton> -->
 
@@ -20,7 +30,8 @@
               <p>Les autocollants du jardin</p>
               <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
                 <div v-for="index in numberStickers" :v-bind="index" class="w-32 h-32 flex justify-center items-center">
-                  <button @click="changeSticker(index)" class="p-0 overflow-hidden rounded-full shadow-md" :class="stickerData.idSticker === index ? 'outline outline-8 outline-yellow' : ''">
+                  <button @click="changeSticker(index)" class="p-0 overflow-hidden rounded-full shadow-md"
+                          :class="stickerData.idSticker === index ? 'outline outline-8 outline-yellow' : ''">
                     <img alt="" :src="getStickerUrl(index)" class="object-contain w-full h-full pointer-events-none">
                   </button>
                 </div>
@@ -34,17 +45,19 @@
 </template>
 
 <script lang="ts">
-import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
-import type { StickerData } from './../../../common/Interfaces'
+import {DatabaseManagerInstance} from "./../../../common/DatabaseManager";
+import type {StickerData} from './../../../common/Interfaces'
 import RoundButton from './../../common/RoundButton.vue';
-import { COLOR } from "./../../../common/Constants";
+import {COLOR} from "./../../../common/Constants";
 import Check from "./../../../assets/svg/ico-check.svg?component";
 import Cross from "./../../../assets/svg/ico-cross.svg?component";
 import Stickers from "./../../../assets/svg/ico-stickers.svg?component";
+import SvgIcon from "../../common/SvgIcon.vue";
 
 export default {
   name: "StickerElementComponent",
   components: {
+    SvgIcon,
     RoundButton, Check, Cross, Stickers
   },
   props: {
@@ -78,7 +91,7 @@ export default {
     }
   },
   watch: {
-    onModify(value:boolean) {
+    onModify(value: boolean) {
       this.$emit('onModify', value)
     }
   },
@@ -89,8 +102,8 @@ export default {
     this.stickerDataLast = Object.assign({}, this.stickerData)
   },
   methods: {
-    getStickerUrl(idSticker:number):string {
-      return './stickers/' + idSticker + '.svg'
+    getStickerUrl(idSticker: number): string {
+      return '/log-book/stickers/' + idSticker + '.svg'
     },
     changeSticker(index: number) {
       if (this.stickerData.idSticker === index) {

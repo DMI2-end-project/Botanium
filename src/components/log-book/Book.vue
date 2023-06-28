@@ -19,7 +19,7 @@
         <div ref="pageLeft" class="page page-left flex">
           <!-- <p class="absolute -bottom-6">page {{ pageNumber - 1 }}</p> -->
           <div v-if="lastPage === pageNumber - 1" class="m-auto">
-            <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/common/plus.png" class="p-6"></RoundButton>
+            <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/plus.png" class="p-6"></RoundButton>
             <p class="font-bold mt-2">Ajouter une page</p>
           </div>
           <Transition name="texture-in-out">
@@ -29,7 +29,7 @@
         <div ref="pageRight" class="page page-right flex">
           <!-- <p class="absolute -bottom-6">page {{ pageNumber }}</p> -->
           <div v-if="lastPage === pageNumber" class="m-auto">
-            <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/common/plus.png" class="p-6"></RoundButton>
+            <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/plus.png" class="p-6"></RoundButton>
             <p class="font-bold mt-2">Ajouter une page</p>
           </div>
           <Transition name="texture-in-out-2">

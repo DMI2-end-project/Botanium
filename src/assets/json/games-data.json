@@ -201,7 +201,7 @@
         "teams": [
           {
             "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
-            "sprite": "soil-v2.png",
+            "sprite": "soil.png",
             "background": "amfine.png",
             "points": [
               70,
@@ -226,7 +226,7 @@
           },
           {
             "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
-            "sprite": "soil-v2.png",
+            "sprite": "soil.png",
             "background": "lubiana.png",
             "points": [
               70,
@@ -251,7 +251,7 @@
           },
           {
             "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
-            "sprite": "soil-v2.png",
+            "sprite": "soil.png",
             "background": "cosmic.png",
             "points": [
               80,
