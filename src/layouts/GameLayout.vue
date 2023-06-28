@@ -42,7 +42,7 @@ export default defineComponent({
       return gameData;
     },
     isBreadcrumb(): boolean {
-      return this.gameStore.currentStep !== GAME_STEP.PLAY && this.gameData.currentStep !== GAME_STEP.WAIT
+      return this.gameStore.currentStep !== GAME_STEP.PLAY && (this.gameStore.currentStep !== GAME_STEP.END || this.mainStore.role === ROLE.STUDENT)
     },
     ROLE() {
       return ROLE
@@ -95,7 +95,10 @@ export default defineComponent({
     closeModal() {
       this.mainStore.isModalOpen = false;
       this.isModalOpen = false
-    }
+    },
+    next() {
+      GameMasterManagerInstance.endGame()
+    },
   }
 });
 </script>
@@ -145,6 +148,9 @@ export default defineComponent({
       </ModalView>
     </div>
   </footer>
+  <button class="absolute z-80 top-[80px] right-[30px]" @click="next">
+      Do
+    </button>
   <!--div class="flex-1 flex flex-col w-full h-full min-h-screen max-h-screen gap-10">
     <header class="w-full mt-8 z-20">
       <Breadcrumb v-if="isBreadcrumb"/>
