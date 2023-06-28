@@ -37,11 +37,12 @@ const props = defineProps({
 </script>
 
 <template>
+  <!-- CardSlot -->
   <!-- OUTLINE DASHED - NO BACKGROUND -->
   <!-- outline-4 outline-offset-8 outline-dashed -->
   <div class="relative rounded-lg">
     <div
-        class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[111%] h-[105%] border border-dashed opacity-30 rounded-lg z-0"
+        class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[111%] h-[105%] border border-dashed opacity-30 z-0"
         :class="{'border-white ' : outline, 'border-transparent ' : !outline}"
         style="z-index: -1"/>
     <!-- INNER SHADOW - BACKGROUND COLOR -->
@@ -49,8 +50,9 @@ const props = defineProps({
     'bg-background shadow-inner' : background,
             'bg-beige' : !background,
     -->
-    <div class="w-full h-full flex flex-col justify-center items-center rounded-lg shadow-card-inner p-2"
+    <div class="w-full h-full flex flex-col justify-center items-center p-2"
          :class="{
+            'bg-background box' : background,
             'bg-red' : answerState === 'error',
             'bg-blue' : answerState === 'valid',
          }">
@@ -58,3 +60,9 @@ const props = defineProps({
     </div>
   </div>
 </template>
+
+<style>
+.box {
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+</style>

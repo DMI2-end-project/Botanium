@@ -53,17 +53,17 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
+import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
 import {GAME_STEP} from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
-import CardGame from "../../CardGame.vue";
-import {useMainStore} from "../../../../stores/mainStore";
-import RoundButton from "../../../common/RoundButton.vue";
 
-import Arrow from "../../../../assets/svg/ico-arrow.svg?component";
+import RoundButton from "../../../common/RoundButton.vue";
 import DragDropGrid from "../../DragDropGrid.vue";
+import CardGame from "../../CardGame.vue";
 import CardSlot from "../../CardSlot.vue";
 
+import Arrow from "../../../../assets/svg/ico-arrow.svg?component";
 
 export default defineComponent({
   name: "TeacherGameView",
@@ -82,7 +82,8 @@ export default defineComponent({
       return GAME_STEP
     },
     answers() {
-      return this.gameStore.data.gameSequences[this.gameStore.currentSequence].gamemaster.answers
+      let answers = this.gameStore.data.gameSequences[this.gameStore.currentSequence].gamemaster.answers
+      return answers;
     },
     playingTeams() {
       return this.gameStore.teams.filter((team: any) => team.isPlaying);
@@ -90,7 +91,7 @@ export default defineComponent({
   },
   methods: {
     next() {
-      GameMasterManagerInstance.endGame()
+      GameMasterManagerInstance.endGame();
     },
     cardState(index: number) {
       if (this.gameStore.currentStep === GAME_STEP.END) {
