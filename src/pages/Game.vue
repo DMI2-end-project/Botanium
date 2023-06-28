@@ -115,11 +115,11 @@ const closeModal = () => {
                  class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
       <TeacherGame
         v-else-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
-        class="flex flex-col justify-center h-full col-span-12 my-auto"/>
+        class="relative flex flex-col justify-center h-full col-span-12 my-auto"/>
       <StudentGame
         v-else-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
         :gameFacade="gameFacade"
-        class="flex-1 h-full col-span-12 my-auto"/>
+        class="relative flex-1 h-full col-span-12 my-auto"/>
       <Waiting
         v-else-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
         class="col-start-2 col-span-10 sm:col-start-3 sm:col-span-8 lg:col-start-4 lg:col-span-6"/>
