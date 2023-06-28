@@ -1,15 +1,15 @@
 <template>
-  <div class="w-full h-full px-10 relative flex flex-col justify-between">
+  <div ref="cursor" class="cursor w-full h-full px-10 relative flex flex-col justify-between">
     <div ref="canvasContainer" class="canvasContainer w-full relative mb-16" :class="(isError ? 'shake-animation' : '') + (onLoad ? ' opacity-100' : ' opacity-0')">
       <div class="absolute h-full aspect-[75/38] inset-0 m-auto">
-        <div class="polygon w-full absolute h-full blur-lg bg-black/40 bottom-0 left-0 right-0 mx-auto -z-10" />
+        <div ref="polygon" class="polygon w-full absolute h-full blur-lg bg-black opacity-40 bottom-0 left-0 right-0 mx-auto -z-10" />
       </div>
     </div>
     <div class="relative w-4/5 mx-auto">
-      <input ref="range" type="range" v-model="selectedValue.current" min="0" max="4" step="0.001" class="w-full" :class="isError ? 'error' : ''"/>
+      <input ref="range" type="range" v-model="selectedValue.current" min="0" max="4" step="0.001" class="w-full" :class="(isCorrect ? 'correct' : '') + (isError ? 'error' : '')"/>
       <Empty class="absolute -top-24 left-0 -ml-5 bg-green-light w-14 h-14 text-green rounded-full p-4"/>
       <img alt="" :src="'/game/images/00103/' + element + '.png'" class="absolute -top-24 right-0 -mr-5 bg-green-light w-14 h-14 text-green rounded-full p-2">
-      <span v-for="i in 5" v-bind="i" class="w-3 h-3 m-1 rounded-full absolute pointer-events-none transition" :style="`left: calc(${(i - 1) * 100 / 4}% - ${(i - 1) * 5}px);`" :class="isError ? 'bg-red' : 'bg-purple'" />
+      <span v-for="i in 5" v-bind="i" class="w-3 h-3 m-1 rounded-full absolute pointer-events-none transition" :style="`left: calc(${(i - 1) * 100 / 4}% - ${(i - 1) * 5}px);`" :class="(isCorrect ? ' bg-blue' : ' bg-purple') + (isError ? ' bg-red' : ' ')" />
     </div>
     <div class="absolute top-[45%] right-10">
       <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" @click="select" class="">
@@ -37,12 +37,21 @@ export default defineComponent({
   emits: ['select'],
   props: {
     element: String,
-    isError: Boolean
+    isError: Boolean,
+    isCorrect: Boolean,
   },
   computed: {
     COLOR() {
       return COLOR
     },
+  },
+  watch: {
+    isCorrect() {
+      (this.app.view as HTMLCanvasElement).style.transform = 'translateY(10px)';
+      (this.$refs.polygon as HTMLCanvasElement).style.transform = 'translateY(35%) rotateX(70deg) rotateY(352deg) rotateZ(21deg) scale(0.85)';
+      (this.$refs.polygon as HTMLCanvasElement).style.opacity = '0.8';
+      (this.$refs.cursor as HTMLElement).style.opacity = '0';
+    }
   },
   data() {
     return {
@@ -140,7 +149,6 @@ export default defineComponent({
   },
   beforeUnmount() {
     cancelAnimationFrame(this.raf);
-    this.app.ticker.remove(this.update);
     this.app.destroy(true);
     (this.$refs.range as HTMLElement).removeEventListener('pointerdown', this.click , false);
     (this.$refs.range as HTMLElement).removeEventListener('pointerup', this.unClick , false);
@@ -157,11 +165,16 @@ export default defineComponent({
 }
 
 .polygon {
+  transition: transform 1s ease-out, opacity 1s ease-out;
   transform: translateY(35%) rotateX(70deg) rotateY(352deg) rotateZ(21deg) scale(0.9);
 }
 
 .canvasContainer {
   transition: opacity 0.8s ease-out;
+}
+
+.cursor {
+  transition: opacity 0.2s ease-out 1s;
 }
 
 .shake-animation {
@@ -211,6 +224,10 @@ input[type="range"]::-webkit-slider-thumb {
   background-color: #FB6F4A !important;
 }
 
+.correct::-webkit-slider-thumb {
+  background-color: #2BD885 !important;
+}
+
 input[type="range"]::-webkit-slider-thumb:hover {
   cursor: grab;
 }
@@ -240,6 +257,10 @@ input[type="range"]::-moz-range-thumb {
 
 .error::-moz-range-thumb {
   background-color: #FB6F4A !important;
+}
+
+.correct::-moz-range-thumb {
+  background-color: #2BD885 !important;
 }
 
 input[type="range"]::-moz-range-thumb:hover {
