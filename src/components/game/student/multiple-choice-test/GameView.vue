@@ -17,7 +17,6 @@
         </CardGame>
       </div>
     </div>
-
   </div>
   <RoundButton @click="itemValidated" :color="COLOR.GREEN_LIGHT" class="col-span-2 mx-auto mt-4"
                :class="{'opacity-100 pointer-events-auto': currentIndex !== -1, 'opacity-30 pointer-events-none': currentIndex === -1}">

@@ -14,28 +14,16 @@
                 <img alt=""
                      :src="`/game/images/${mainStore.getFullGameId}/${answers[index].image}`"
                      class="w-full h-full object-contain object-center"/>
-              </template>
-            </CardGame>
-            <CardSlot class="!absolute top-0 left-0 w-full h-full aspect-[5/9]">
-              <span class="font-hand-written text-beige-dark text-2xl leading-none">{{ answers[index].label }}...</span>
-            </CardSlot>
-
-            <!--CardGame mode="vertical" :answer-state="'none'" :card-state="cardState(index)"
-                      class="max-h-[50vh]">
-              <template v-slot:recto>
-                <img v-if="answers[index].image" alt=""
-                     :src="`/game/images/${mainStore.getFullGameId}/${answers[index].image}`"
-                     class="object-contain object-center w-full h-full"/>
-              </template>
-              <template v-slot:verso>
-                <div
-                    class="w-full flex flex-col justify-center items-center bg-beige font-hand-written text-beige-dark text-2xl">
-                  {{ answers[index].label }}...
+                <div class="absolute left-4 bottom-2 flex flex-col gap-2">
+                  <p><b>La carotte</b></p>
+                  <p v-if="answers[index]" class="font-hand-written text-lg">{{ answers[index].name }}</p>
                 </div>
               </template>
-            </CardGame-->
+            </CardGame>
+            <CardSlot class="!absolute top-0 left-0 w-full h-full aspect-[5/9]" shadow>
+              <span class="font-hand-written text-beige-dark text-2xl leading-none">{{ answers[index].label }}...</span>
+            </CardSlot>
           </div>
-
           <div class="w-full bg-green text-beige rounded-md fill">
             <h3>{{ answers[index].molecule }}</h3>
           </div>
