@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-log-book w-screen h-screen bg-cover bg-center">
+  <div class="w-screen h-screen">
     <video ref="next" width="100" muted="true" autoplay>
         <source src="/log-book/next.webm" type="video/webm">
     </video>
