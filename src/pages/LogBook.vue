@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <Book v-if="isLoad" />
+  <div class="bg-log-book w-screen h-screen bg-cover bg-center">
+    <Transition name="fade">
+      <Book v-show="isLoad" />
+    </Transition>
   </div>
 </template>
 

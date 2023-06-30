@@ -22,12 +22,12 @@ const config: RouterOptions = {
       path: '/',
       redirect: (to) => {
         // TODO : not working error initClient main.ts
-        
+
         if (DatabaseManagerInstance.pb.authStore.isValid) {
           let roles = DatabaseManagerInstance.roles;
           let role = roles.find(item => item.id === DatabaseManagerInstance.pb.authStore.model?.role);
           console.log('role', role);
-          
+
           if (role) {
             switch (role.name) {
               case ROLE.TEACHER:
@@ -41,7 +41,7 @@ const config: RouterOptions = {
           } else {
             return {name: 'Login'}
           }
-          
+
         } else {
           return {name: 'Login'}
         }
@@ -135,17 +135,17 @@ const router = createRouter(config);
 router.beforeEach((to, from) => {
   const store = useMainStore();
   console.log(store.role, DatabaseManagerInstance.pb.authStore.model?.role);
-  
+
   // Need auth to acces pages, redirect the user to the login page
   if (!DatabaseManagerInstance.pb.authStore.isValid && to.name !== 'Login') {
     return {name: 'Login'}
   }
-  
+
   // TODO : not working, example : https://pinia.vuejs.org/core-concepts/outside-component-usage.html
   if (DatabaseManagerInstance.pb.authStore.isValid && to.name === 'Login') {
     let roles = DatabaseManagerInstance.roles;
     let role = roles.find(item => item.id === DatabaseManagerInstance.pb.authStore.model?.role);
-    
+
     if (role) {
       switch (role.name) {
         case ROLE.TEACHER:
@@ -156,9 +156,9 @@ router.beforeEach((to, from) => {
       }
     }
   }
-  
+
   if (DatabaseManagerInstance.pb.authStore.isValid) {
-  
+
   }
 });
 
