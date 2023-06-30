@@ -14,6 +14,7 @@ import CardGame from "../../CardGame.vue";
 import Check from "./../../../../assets/svg/ico-check.svg?component";
 import CardSlot from "../../CardSlot.vue";
 import DragDropGrid from "../../DragDropGrid.vue";
+import SvgIcon from "../../../common/SvgIcon.vue";
 
 gsap.registerPlugin(Draggable, Flip);
 
@@ -111,33 +112,38 @@ const itemValidated = () => {
 
 <template>
   <div
-      class="w-full h-full flex-1 grid grid-cols-12 items-center gap-8 text-center pt-4 px-8">
-    <div class="col-span-3 xl:col-span-2 xl:col-start-3 w-full">
+      class="w-full h-full flex-1 grid grid-cols-12 items-center gap-8 lg:gap-16 pt-4 px-8 container mx-auto">
+    <div class="col-span-3 w-full">
       <div class="relative">
-        <CardSlot class="relative col-span-3 w-full aspect-[5/9]" outline background/>
+        <CardSlot class="relative aspect-[5/9] bg-purple" outline background shadow>
+          <SvgIcon name="ico-carrot" class="w-2/3 grayscale brightness-50 opacity-10"/>
+        </CardSlot>
         <div id="container" class="absolute top-0 left-0 w-full h-full">
           <div ref="draggable" class="relative w-full h-full">
             <CardGame mode="vertical"
                       :answer-state="currentIndex === -1 ? 'none' : teamData.answers[currentIndex].status"
-                      class="h-full">
+                      class="h-full text-left">
               <template v-slot:recto>
                 <img v-if="teamData" alt=""
                      :src="`/game/images/${mainStore.getFullGameId}/${teamData.image}`"
-                     class="w-full h-full object-contain object-center"/>
+                     class="w-full h-full object-contain object-center mb-10"/>
+                <div class="absolute left-4 bottom-2 flex flex-col gap-2">
+                  <p><b>La carotte</b></p>
+                  <p v-if="teamData" class="font-hand-written text-lg">{{ teamData.name }}</p>
+                </div>
               </template>
             </CardGame>
           </div>
         </div>
       </div>
     </div>
-    <DragDropGrid class="relative w-full col-span-9 xl:col-span-6 pb-12">
+    <DragDropGrid class="relative w-full col-span-9 pb-12">
       <div v-if="teamData" v-for="(answer, index) in teamData.answers" :v-bind="index"
-           class="w-full flex flex-col justify-center items-center gap-6 z-10 max-w-[25vh] mx-auto">
+           class="w-full flex flex-col justify-center items-center text-center gap-6 z-10 max-w-[25vh] mx-auto">
         <div
             class="relative w-full rounded-lg overflow-hidden p-2 aspect-[5/9] max-h-[40vh] bg-beige rounded-md flex items-center justify-center"
             :data-is-valid="answer.isValid">
-          <CardSlot class="!absolute top-0 left-0 w-full h-full aspect-[5/9]"
-                    :answer-state="answer.status">
+          <CardSlot class="!absolute top-0 left-0 w-full h-full aspect-[5/9]" shadow :answer-state="answer.status">
             <span class="font-hand-written text-beige-dark text-2xl leading-none">{{ answer.label }}...</span>
           </CardSlot>
           <div ref="droppables" class="relative w-full h-full rounded-lg"/>

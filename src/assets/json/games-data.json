@@ -309,6 +309,7 @@
             "instruction": "Range ta carotte orange au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
             "clue": "Le carotène est un pigment orange",
             "image": "amfine.png",
+            "name": "Amfine",
             "answers": [
               {
                 "isValid": true,
@@ -340,6 +341,7 @@
             "instruction": "Range ta carotte jaune au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
             "clue": "La lutéine donne une couleur jaune",
             "image": "lubiana.png",
+            "name": "Lubiana",
             "answers": [
               {
                 "isValid": false,
@@ -371,6 +373,7 @@
             "instruction": "Range ta carotte violette au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
             "clue": "Les anthocyanes sont des colorants d'origine naturelle de couleur rouge ou bleue.",
             "image": "cosmic.png",
+            "name": "Cosmic",
             "answers": [
               {
                 "isValid": false,

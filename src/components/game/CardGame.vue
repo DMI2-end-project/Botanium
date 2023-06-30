@@ -35,7 +35,7 @@ const props = defineProps({
   <!-- OUTLINE ONLY FOR SELECTED - NO BACKGROUND -->
   <!-- outline outline-offset-8 -->
   <!-- class="h-auto p-2" -->
-  <div class="relative w-full h-full rounded-lg shrink-0 text-center">
+  <div class="relative w-full h-full rounded-lg shrink-0">
     <div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-[105%] h-[111%] border rounded-lg z-0"
          :class="{
          'border-green-light' : props.answerState === 'selected',
@@ -48,12 +48,12 @@ const props = defineProps({
            'bg-green-light border-transparent text-green': props.cardState === 'validated' || props.answerState === 'selected',
          }">
       <!-- BORDER -->
-      <div class="relative w-full h-full flex flex-col justify-center items-center gap-1.5 p-2 rounded-lg border"
+      <div class="relative w-full h-full flex flex-col justify-center gap-1.5 p-2 rounded-lg border"
            :class="{
              '': props.cardState !== 'validated',
              'border-transparent' : props.answerState === 'selected',
              'border-beige-medium' : props.answerState !== 'selected',
-             'bg-green-light border-green-medium text-green-medium': props.cardState === 'validated',
+             'bg-green-light border-green-medium text-green-medium items-center': props.cardState === 'validated',
            }">
         <slot name="verso" v-if="props.cardState === 'hide'" class=""/>
         <slot name="recto" v-if="props.cardState === 'show'" class=""/>
