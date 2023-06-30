@@ -49,7 +49,7 @@ export default defineComponent({
     this.mainStore.$subscribe((mutation, state) => {
       if (state.askForRedirection) {
         this.isModalOpen = true;
-        this.mainStore.isModalOpen = true;
+        this.mainStore.openModal()
       }
     });
   },
@@ -92,8 +92,8 @@ export default defineComponent({
       localStorage.setItem('join', 'false');
     },
     closeModal() {
-      this.isModalOpen = false;
-      this.mainStore.isModalOpen = false;
+      setTimeout(() => {this.isModalOpen = false}, 600)
+      this.mainStore.closeModal()
       this.mainStore.askForRedirection = false;
     }
   }

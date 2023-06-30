@@ -122,14 +122,14 @@ export default defineComponent({
     openSheet() {
       if (this.chapterStore.sheetUnlocked) {
         this.isModalOpen = true;
-        this.mainStore.isModalOpen = true;
+        this.mainStore.openModal()
       } else {
         this.router.push('/scan');
       }
     },
     closeModal() {
-      this.isModalOpen = false;
-      this.mainStore.isModalOpen = false;
+      setTimeout(() => {this.isModalOpen = false}, 600)
+      this.mainStore.closeModal()
     }
   }
 });

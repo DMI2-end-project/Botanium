@@ -32,7 +32,7 @@ const launchGame = (i: number) => {
         <h3>
           Organiser ma semaine
         </h3>
-        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
+        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS" :number="-1">
           <Organization/>
         </RoundButton>
       </div>
@@ -56,27 +56,27 @@ const launchGame = (i: number) => {
       <router-link :to="{ name: 'LogBook'}"
                    class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
         <h3>Carnet de bord</h3>
-        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
+        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS" :number="0">
           <Chevron class="rotate-180"/>
         </RoundButton>
       </router-link>
       <router-link :to="{ name: 'Chapters'}"
                    class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
         <h3>Consulter les chapitres </h3>
-        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
+        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS" :number="1">
           <Chevron class="rotate-180"/>
         </RoundButton>
       </router-link>
       <div class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
         <h3>Le guide du jardin</h3>
-        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
+        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS" :number="2">
           <Chevron class="rotate-180"/>
         </RoundButton>
       </div>
       <router-link :to="{ name: 'PhotoTaking'}"
                    class="flex justify-between items-center bg-beige text-green p-4 rounded-lg origin-left">
         <h3>Prendre des photos </h3>
-        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS">
+        <RoundButton :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.XS" :number="3">
           <Chevron class="rotate-180"/>
         </RoundButton>
       </router-link>

@@ -53,8 +53,8 @@ onBeforeMount(() => {
     <Particles />
 
     <div class="absolute bottom-0 left-0 right-0 mx-auto w-fit px-12 pt-4 pb-8 bg-beige-medium/80 border-4 border-beige border-b-0 rounded-t-[60px] flex justify-around min-w-[40%] items-center gap-4">
-      <div v-for="data in menuData" :v-bind="data.name" class="flex flex-col items-center">
-        <RoundButton :color="COLOR.BEIGE" @click="() => {router.push({name: data.url})}">
+      <div v-for="(data, index) in menuData" :v-bind="data.name" class="flex flex-col items-center">
+        <RoundButton :color="COLOR.BEIGE" @click="() => {router.push({name: data.url})}" :number="index">
           <component :is="data.icon"/>
         </RoundButton>
         <p class="bg-green text-beige min-w-full px-4 py-1 rounded-full text-sm text-center mt-3">{{ data.name }}</p>

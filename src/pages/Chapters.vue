@@ -117,7 +117,7 @@ const getChapterData = (c: any) => {
           <Filter class="text-beige-medium w-5"/>
           <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('autumn')"
                :class="seasons.includes('autumn') ? 'text-yellow' : 'text-green'">
-            <RoundButton :key="seasons.length" :size="SIZE.XS"
+            <RoundButton :key="seasons.length" :size="SIZE.XS" :number="-1"
                          :color="seasons.includes('autumn') ? COLOR.YELLOW : COLOR.GREEN">
               <Autumn/>
             </RoundButton>
@@ -125,7 +125,7 @@ const getChapterData = (c: any) => {
           </div>
           <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('winter')"
                :class="seasons.includes('winter') ? 'text-yellow':'text-green'">
-            <RoundButton :key="seasons.length" :size="SIZE.XS"
+            <RoundButton :key="seasons.length" :size="SIZE.XS" :number="-1"
                          :color="seasons.includes('winter') ? COLOR.YELLOW : COLOR.GREEN">
               <Winter/>
             </RoundButton>
@@ -133,7 +133,7 @@ const getChapterData = (c: any) => {
           </div>
           <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('spring')"
                :class="seasons.includes('spring') ? 'text-yellow':'text-green'">
-            <RoundButton :key="seasons.length" :size="SIZE.XS"
+            <RoundButton :key="seasons.length" :size="SIZE.XS" :number="-1"
                          :color="seasons.includes('spring') ? COLOR.YELLOW : COLOR.GREEN">
               <Spring/>
             </RoundButton>
@@ -141,7 +141,7 @@ const getChapterData = (c: any) => {
           </div>
           <div class="cursor-pointer flex items-center gap-2" @click="()=>setSeasons('summer')"
                :class="seasons.includes('summer') ? 'text-yellow':'text-green'">
-            <RoundButton :key="seasons.length" :size="SIZE.XS"
+            <RoundButton :key="seasons.length" :size="SIZE.XS" :number="-1"
                          :color="seasons.includes('summer') ? COLOR.YELLOW : COLOR.GREEN">
               <Summer/>
             </RoundButton>

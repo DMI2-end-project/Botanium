@@ -17,10 +17,10 @@
     <div class="content z-20">
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
         <div ref="pageLeft" class="page page-left flex">
-          <!-- <p class="absolute -bottom-6">page {{ pageNumber - 1 }}</p> -->
+          <p class="absolute -bottom-6">page {{ pageNumber - 1 }}</p>
           <div v-if="lastPage === pageNumber - 1" class="m-auto">
             <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/plus.png" class="p-6"></RoundButton>
-            <p class="font-bold mt-2">Ajouter une page</p>
+            <!-- <p class="font-bold mt-2">Ajouter une page</p> -->
           </div>
           <Transition name="texture-in-out">
             <PageContent v-show="pagesContent[pageNumber - 2]" :content="pagesContent[pageNumber - 2]" @onModify="onModify = $event" />
@@ -37,7 +37,7 @@
           </Transition>
         </div>
       </div>
-      <RoundButton class="open" ref="buttonOpen" @click="openTheBook"><Play /></RoundButton>
+      <RoundButton class="open" :class="disableOpen ? 'disable' : ''" ref="buttonOpen" @click="openTheBook"><Play /></RoundButton>
       <RoundButton v-if="(pageNumber < lastPage) && isBookOpen" class="next" ref="buttonNext" @click="nextPage" :size="SIZE.SM" :color="COLOR.GREEN_LIGHT"><Arrow class="rotate-180" /></RoundButton>
       <RoundButton v-if="(page > 2) && isBookOpen" class="previous" ref="buttonPrevious" @click="previousPage" :size="SIZE.SM" :color="COLOR.GREEN_LIGHT"><Arrow /></RoundButton>
       <AddPage v-if="onPageAdd" :page:="lastPage" @close="onCloseAddPage" />
@@ -54,7 +54,6 @@ import AddPage from './AddPage.vue';
 import {DatabaseManagerInstance} from "./../../common/DatabaseManager";
 import type { PageData } from './../../common/Interfaces'
 import RoundButton from './../common/RoundButton.vue'
-import { CreateComponentPublicInstance } from 'vue';
 import { COLOR, SIZE } from "./../../common/Constants";
 import Arrow from "./../../assets/svg/ico-chevron.svg?component";
 import Play from "./../../assets/svg/ico-play.svg?component";
@@ -82,7 +81,7 @@ export default defineComponent({
       nextVideo: undefined as HTMLVideoElement | undefined,
       previousVideo: undefined as HTMLVideoElement | undefined,
       shadow: undefined as HTMLElement | undefined,
-      buttonOpen: undefined as HTMLButtonElement | undefined,
+      disableOpen: false,
       pageLeft: undefined as HTMLElement | undefined,
       pageRight: undefined as HTMLElement | undefined,
     }
@@ -98,21 +97,12 @@ export default defineComponent({
       return SIZE
     },
   },
-  watch: {
-    // 'logBookStore.pages': {
-    //    handler() {
-    //     this.getPages()
-    //   },
-    //   deep: true
-    // }
-  },
   async mounted() {
     await this.getPages()
     this.openVideo = this.$refs.open as HTMLVideoElement;
     this.nextVideo = this.$refs.next as HTMLVideoElement;
     this.previousVideo = this.$refs.previous as HTMLVideoElement;
     this.shadow = this.$refs.shadow as HTMLElement;
-    this.buttonOpen = (this.$refs.buttonOpen as CreateComponentPublicInstance).$el as HTMLButtonElement;
     this.pageLeft = this.$refs.pageLeft as HTMLElement;
     this.pageRight = this.$refs.pageRight as HTMLElement;
     this.openVideo?.pause();
@@ -127,7 +117,7 @@ export default defineComponent({
       this.openVideo?.play();
       this.openVideo?.classList.add("is-open")
       this.shadow?.classList.add("is-open")
-      this.buttonOpen?.classList.add("disable");
+      this.disableOpen = true;
       this.isBookOpen = true;
       this.updateContentPage(2400, 0);
     },

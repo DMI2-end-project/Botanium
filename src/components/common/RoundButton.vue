@@ -1,9 +1,27 @@
 <template>
-  <div v-if="colorBg" :class=" (isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass"
-       class="RoundButtonBg p-8 rounded-full  ">
+  <Transition :name="'round-button-' + number">
+      <div v-if="colorBg && onMounted" :class=" (isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass"
+        class="RoundButtonBg p-8 rounded-full  ">
+      <button
+          class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
+          :class="`${containerClass}`">
+        <div
+            class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform"
+            :class="`${bgClass}`">
+          <div
+              class="RoundButton__border absolute w-full h-full rounded-full bg-transparent border scale-[0.85] group-hover:scale-100 transform"
+              :class="`${borderClass}`"/>
+        </div>
+        <div class="RoundButton__icon z-10" :class="`${textClass}`">
+          <slot/>
+        </div>
+      </button>
+      <slot name="animation"/>
+    </div>
     <button
-        class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
-        :class="`${containerClass}`">
+        v-else-if="onMounted"
+        class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0"
+        :class="`${containerClass}` + (isActive ? '' : ' opacity-50 pointer-events-none')">
       <div
           class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform"
           :class="`${bgClass}`">
@@ -11,30 +29,13 @@
             class="RoundButton__border absolute w-full h-full rounded-full bg-transparent border scale-[0.85] group-hover:scale-100 transform"
             :class="`${borderClass}`"/>
       </div>
+
       <div class="RoundButton__icon z-10" :class="`${textClass}`">
         <slot/>
       </div>
+      <slot name="animation"/>
     </button>
-    <slot name="animation"/>
-
-  </div>
-  <button
-      v-else
-      class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0"
-      :class="`${containerClass}` + (isActive ? '' : ' opacity-50 pointer-events-none')">
-    <div
-        class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform"
-        :class="`${bgClass}`">
-      <div
-          class="RoundButton__border absolute w-full h-full rounded-full bg-transparent border scale-[0.85] group-hover:scale-100 transform"
-          :class="`${borderClass}`"/>
-    </div>
-
-    <div class="RoundButton__icon z-10" :class="`${textClass}`">
-      <slot/>
-    </div>
-    <slot name="animation"/>
-  </button>
+  </Transition>
 </template>
 
 <script lang="ts">
@@ -59,6 +60,10 @@ export default defineComponent({
     isActive: {
       default: true,
       type: Boolean
+    },
+    number: {
+      default: 0,
+      type: Number
     }
   },
   data() {
@@ -68,9 +73,11 @@ export default defineComponent({
       bgClass: '',
       textClass: '',
       borderClass: '',
+      onMounted: false,
     }
   },
   mounted() {
+    setTimeout(() => {this.onMounted = true}, 10)
     switch (this.color) {
       case COLOR.BLUE:
         this.bgClass += ' bg-blue text-beige';
