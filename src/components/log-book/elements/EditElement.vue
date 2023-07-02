@@ -161,22 +161,24 @@ export default {
         }
       }
 
-      this.onWrite = false;
-      this.onDraw = false;
-      this.onModify = false;
-      this.onSignature = false;
-      this.logBookStore.isClosable = false
-      this.mainStore.isModalOpen = false;
+      this.mainStore.closeModal()
+      setTimeout(() => {
+        this.onWrite = false;
+        this.onDraw = false;
+        this.onModify = false;
+        this.onSignature = false;
+        this.logBookStore.isClosable = false
+      }, 600)
     },
     saveDraw(data:string) {
       this.onSignature = true
-      this.mainStore.isModalOpen = true;
+      this.mainStore.openModal()
 
       this.drawData.file = base64ToFile(data);
     },
     saveText() {
       this.onSignature = true
-      this.mainStore.isModalOpen = true;
+      this.mainStore.openModal()
     }
   },
 };

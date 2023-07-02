@@ -50,7 +50,7 @@ const getImage = () => {
               :class="cardState === 'done' ? 'text-blue' : 'text-green-medium'">{{ props.item? props.item.title : '' }}</span>
       </div>
       <RoundButton class="self-end ml-auto" :color="cardState === 'done' ? COLOR.BLUE : COLOR.GREEN_MEDIUM_BEIGE"
-                   :size="SIZE.XS">
+                   :size="SIZE.XS" :number="-1">
         <Eye class="w-10"/>
       </RoundButton>
     </div>

@@ -120,8 +120,8 @@ export default defineComponent({
       }
     },
     closeModal() {
-      this.isModalOpen = false;
-      this.mainStore.isModalOpen = false;
+      setTimeout(() => {this.isModalOpen = false}, 600)
+      this.mainStore.closeModal()
     }
   }
 });

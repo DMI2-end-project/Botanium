@@ -1,7 +1,7 @@
 <template>
   <div class="bg-log-book w-screen h-screen bg-cover bg-center">
     <Transition name="fade">
-      <Book v-show="isLoad" />
+      <Book v-if="isLoad" />
     </Transition>
   </div>
 </template>

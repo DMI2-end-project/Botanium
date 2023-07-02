@@ -51,8 +51,18 @@ export const useMainStore = defineStore('main', {
     },
   },
   actions: {
+    openModal() {
+      setTimeout(() => {
+        this.isModalOpen = true
+      }, 0);
+    },
+    closeModal() {
+      setTimeout(() => {
+        this.isModalOpen = false
+      }, 0);
+    },
     reset() {
-      this.isModalOpen = false;
+      setTimeout(() => {this.isModalOpen = false}, 600)
       this.askForRedirection = false;
       this.connected = false;
       this.roomId = undefined;

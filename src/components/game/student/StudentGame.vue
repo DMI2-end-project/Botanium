@@ -102,7 +102,7 @@ export default defineComponent({
       console.log('validated', this.gameStore.currentStep, this.gameStore.data.gameSequences.length, this.gameStore.currentStep < this.gameStore.data.gameSequences.length)
       if (this.gameStore.currentStep < this.gameStore.data.gameSequences.length) {
         this.isModalOpen = true;
-        this.mainStore.isModalOpen = true;
+        this.mainStore.openModal()
         //this.gameStore.currentSequence += 1;
         await this.TMInstance.nextSequence();
       } else {
@@ -114,11 +114,11 @@ export default defineComponent({
      */
     open() {
       this.isModalOpen = true;
-      this.mainStore.isModalOpen = true;
+      this.mainStore.openModal()
     },
     async close() {
-      this.isModalOpen = false;
-      this.mainStore.isModalOpen = false;
+      setTimeout(() => {this.isModalOpen = false}, 600)
+      this.mainStore.closeModal()
       this.gameStore.currentSequence += 1;
       await TeamManagerInstance.nextSequence();
     }

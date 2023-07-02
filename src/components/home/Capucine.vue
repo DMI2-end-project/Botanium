@@ -1,10 +1,8 @@
 <template>
-  <div class="flex justify-center items-center relative">
-
-    <div class="absolute aspect-square h-[160%] bg-purple rounded-full shadow-lg"></div>
-    <div class="absolute aspect-square h-[200%] bg-white/20 rounded-full"></div>
-    <div ref="canvasContainer" class="canvas w-full" :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" />
-    <!-- :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" -->
+  <div class="fixed inset-0 flex items-center justify-center">
+    <div class="absolute aspect-[1.77] min-w-[100vw] min-h-[100vh] flex items-center justify-center">
+      <div ref="canvasContainer" class="canvas w-full translate-y-[9vh] translate-x-[11%]" />
+    </div>
   </div>
 </template>
 
@@ -28,8 +26,8 @@ export default defineComponent({
       } as Colors,
       app: new PIXI.Application({
         autoStart: true,
-        width: 250,
-        height: 250,
+        width: 256,
+        height: 358,
         backgroundAlpha: 0
       }) as PIXI.Application,
       animation: {} as PIXI.AnimatedSprite,
@@ -41,25 +39,21 @@ export default defineComponent({
       type: String
     }
   },
-  mounted() {
-    this.loadSprite()
+  async mounted() {
+    await this.loadSprite()
+    this.animation.play()
   },
   methods: {
-    startAnimation() {
-      if (this.animation.isSprite) {
-        this.animation.gotoAndPlay(7)
-      }
-    },
     async loadSprite() {
       const app = this.app;
-      (app.view as HTMLCanvasElement).style.width = '25vh';
+      (app.view as HTMLCanvasElement).style.width = '12%';
       (app.view as HTMLCanvasElement).style.margin = 'auto';
       (this.$refs.canvasContainer as HTMLElement).appendChild(app.view as HTMLCanvasElement);
 
-      const textureData = await PIXI.Assets.load('/game/animations/00104/animation_hands.json');
+      const textureData = await PIXI.Assets.load('/home/animation/animation_capu.json');
       const animations = textureData.data.animations;
 
-      const animation = PIXI.AnimatedSprite.fromFrames(animations["hands_v"]);
+      const animation = PIXI.AnimatedSprite.fromFrames(animations["capu_01"]);
 
       animation.animationSpeed = 0.65;
       animation.width = app.view.width;
@@ -74,9 +68,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style scoped>
-.canvas {
-  transition: filter 0.15s ease-out;
-}
-</style>

@@ -87,7 +87,7 @@ export default defineComponent({
     opacity: 0;
   }
   50% {
-    opacity: 0.8;
+    opacity: 0.9;
   }
   100% {
     transform: translate(50px, 10px);

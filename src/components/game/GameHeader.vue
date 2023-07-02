@@ -11,7 +11,7 @@
 
     <div class="col-span-2">
       <RoundButton v-show="mainStore.role === ROLE.STUDENT && clue && clue !== ''" @click="openModal"
-                   class="relative mx-auto">
+                   class="relative mx-auto" :number="2">
         <Clue class="relative z-10"/>
         <template #animation>
           <div ref="clue" class="absolute bg-pink rounded-full w-full aspect-square top-0 left-0 -z-10"/>
@@ -117,12 +117,12 @@ export default defineComponent({
   },
   methods: {
     openModal() {
-      this.mainStore.isModalOpen = true;
+      this.mainStore.openModal()
       this.isModalOpen = true;
     },
     closeModal() {
-      this.mainStore.isModalOpen = false;
-      this.isModalOpen = false;
+      this.mainStore.closeModal()
+      setTimeout(() => {this.isModalOpen = false}, 600)
     },
     getNumberComponent(number: number) {
       // TODO : to improve for numbers > 9

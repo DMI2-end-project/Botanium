@@ -79,12 +79,12 @@ export default defineComponent({
   },
   methods: {
     openModal() {
-      this.mainStore.isModalOpen = true;
+      this.mainStore.openModal()
       this.isModalOpen = true
     },
     closeModal() {
-      this.mainStore.isModalOpen = false;
-      this.isModalOpen = false
+      this.mainStore.closeModal()
+      setTimeout(() => {this.isModalOpen = false}, 600)
     }
   }
 });

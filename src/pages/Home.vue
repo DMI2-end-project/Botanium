@@ -1,25 +1,15 @@
 <script setup lang="ts">
-import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import { useMainStore } from "../stores/mainStore";
 import {useRouter} from "vue-router";
-import {computed, defineAsyncComponent, onBeforeMount} from 'vue';
+import {defineAsyncComponent} from 'vue';
 
 import RoundButton from "../components/common/RoundButton.vue";
 import Particles from "../components/home/Particles.vue"
+import Dandelions from "../components/home/Dandelions.vue"
+import Capucine from "../components/home/Capucine.vue"
 
 import { COLOR } from "../common/Constants"
 
 import Photo from "./../assets/svg/ico-photo.svg?component";
-
-
-/*
-* TODO : Ecran d'accueil enfant
-* -
-*
-* */
-
-const pb = DatabaseManagerInstance.pb;
-const store = useMainStore();
 
 const router = useRouter()
 
@@ -29,32 +19,25 @@ const menuData = [
   { icon: defineAsyncComponent(() => import(`./../assets/svg/ico-chapters.svg`)), name: "Chapitres", url: '' },
   { icon: defineAsyncComponent(() => import(`./../assets/svg/ico-sheets.svg`)), name: "Carnet", url:'LogBook' },
 ]
-
-// const dynamicComponent = computed<any>((icon:string) => {
-//   return defineAsyncComponent(() => import(`../../assets/svg/${icon}.svg`));
-// });
-
-onBeforeMount(() => {
-//localStorage.removeItem('teamId')
-//localStorage.removeItem('teamName')
-})
 </script>
 
 <template>
   <div class="bg-home inset-0 bg-cover bg-center fixed overflow-hidden">
+    <Capucine />
     <img src="/home/plant-4.png" class="organic-5 absolute w-auto h-4/5 object-contain -bottom-[30%] -right-[2%] -scale-x-100">
     <img src="/home/plant-2.png" class="organic-4 absolute w-auto h-2/3 object-contain -top-[35%] -right-[10%]">
     <img src="/home/plant-3.png" class="organic-3 absolute w-1/3 h-full object-contain -top-[30%] -right-[15%]">
     <img src="/home/sun.png" class="sun absolute w-auto h-full object-contain -top-[0%] -left-[0%]">
     <div class="-scale-x-100 absolute w-1/3 h-auto object-contain -bottom-[5%] -right-[2%]">
-      <img src="/home/plant-1.png" class="organic-2   origin-bottom-right">
+      <img src="/home/plant-1.png" class="organic-2 origin-bottom-right">
     </div>
 
     <Particles />
+    <Dandelions />
 
     <div class="absolute bottom-0 left-0 right-0 mx-auto w-fit px-12 pt-4 pb-8 bg-beige-medium/80 border-4 border-beige border-b-0 rounded-t-[60px] flex justify-around min-w-[40%] items-center gap-4">
-      <div v-for="data in menuData" :v-bind="data.name" class="flex flex-col items-center">
-        <RoundButton :color="COLOR.BEIGE" @click="() => {router.push({name: data.url})}">
+      <div v-for="(data, index) in menuData" :v-bind="data.name" class="flex flex-col items-center">
+        <RoundButton :color="COLOR.BEIGE" @click="() => {router.push({name: data.url})}" :number="index">
           <component :is="data.icon"/>
         </RoundButton>
         <p class="bg-green text-beige min-w-full px-4 py-1 rounded-full text-sm text-center mt-3">{{ data.name }}</p>
@@ -72,20 +55,6 @@ onBeforeMount(() => {
         <Photo />
       </RoundButton>
     </div>
-
-    <!-- <h1>Ecran d'accueil enfant {{ pb.authStore.model?.firstname }}</h1>
-    {{ store.role }}
-
-    <div class="flex flex-col">
-      <router-link :to="{ name: 'PhotoTaking'}"
-                       class="bg-primary w-fit p-4 m-4 rounded-md">
-            Prendre des photos
-          </router-link>
-    <router-link :to="{ name: 'LogBook'}"
-                       class="bg-primary w-fit p-4 m-4 rounded-md">
-            Carnet de bord
-          </router-link>
-    </div> -->
 </div>
 </template>
 
@@ -111,9 +80,9 @@ onBeforeMount(() => {
 }
 @keyframes organic{
   0%{ transform: translate(0, 0) rotate(0deg); }
-  25%{ transform: translate(20px, 2px) rotate(1.2deg); }
-  50%{ transform: translate(5px, -3px) rotate(-0.3deg); }
-  75%{ transform: translate(10px, 5px) rotate(0.5deg); }
+  25%{ transform: translate(25px, 3px) rotate(1.3deg); }
+  50%{ transform: translate(5px, -4px) rotate(-0.4deg); }
+  75%{ transform: translate(15px, 6px) rotate(0.6deg); }
   100%{ transform: translate(0, 0) rotate(0deg); }
 }
 
