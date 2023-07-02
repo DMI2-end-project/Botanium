@@ -2,7 +2,7 @@
   <div>
     <button
         class="sticker-element w-full h-min bg-beige-medium/50 text-beige-dark rounded-full relative p-0 flex justify-center items-center outline outline-8 transition-all duration-400"
-        :class="(onModify ? 'outline-yellow' : 'outline-transparent')" @click="onModify = true">
+        :class="(onModify ? 'outline-yellow' : 'outline-transparent')" @click="modify">
       <!--img v-if="stickerData.idSticker >= 0" alt="" :src="getStickerUrl(stickerData.idSticker)" class="h-full w-full rounded-full object-contain absolute shadow-md"-->
       <SvgIcon v-if="stickerData.idSticker >= 0" source="stickers" :name="stickerData.idSticker"
                class="h-full w-full rounded-full object-contain absolute shadow-md"/>
@@ -45,14 +45,16 @@
 </template>
 
 <script lang="ts">
+import {useLogBookStore} from "../../../stores/logBookStore";
 import {DatabaseManagerInstance} from "./../../../common/DatabaseManager";
+import {COLOR, LOGBOOK_STEP} from "./../../../common/Constants";
 import type {StickerData} from './../../../common/Interfaces'
 import RoundButton from './../../common/RoundButton.vue';
-import {COLOR} from "./../../../common/Constants";
+import SvgIcon from "../../common/SvgIcon.vue";
+
 import Check from "./../../../assets/svg/ico-check.svg?component";
 import Cross from "./../../../assets/svg/ico-cross.svg?component";
 import Stickers from "./../../../assets/svg/ico-stickers.svg?component";
-import SvgIcon from "../../common/SvgIcon.vue";
 
 export default {
   name: "StickerElementComponent",
@@ -77,6 +79,7 @@ export default {
   emits: ['onModify'],
   data: () => {
     return {
+      logBookStore: useLogBookStore(),
       stickerData: {} as StickerData,
       stickerDataLast: {} as StickerData,
       onModify: false as boolean,
@@ -102,6 +105,10 @@ export default {
     this.stickerDataLast = Object.assign({}, this.stickerData)
   },
   methods: {
+    modify() {
+      this.onModify = true;
+      this.logBookStore.currentStep = LOGBOOK_STEP.SELECT_STICKER;
+    },
     getStickerUrl(idSticker: number): string {
       return '/log-book/stickers/' + idSticker + '.svg'
     },
@@ -120,6 +127,7 @@ export default {
       this.stickerDataLast = Object.assign({}, this.stickerData)
 
       this.onModify = false;
+      this.logBookStore.currentStep = LOGBOOK_STEP.SELECT_ACTION;
     },
     async close() {
       this.onModify = false

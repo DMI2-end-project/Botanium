@@ -60,6 +60,20 @@ export enum GAME_TYPE {
   CURSOR = 'cursor',
 }
 
+export enum LOGBOOK_STEP {
+  OPEN_BOOK,
+  SELECT_ACTION,
+  ADD_PAGE,
+  SELECT_PAGE,
+  WRITE_OR_DRAW,
+  ADD_PHOTO,
+  DRAW,
+  WRITE,
+  SELECT_STICKER,
+  SIGN_DRAW,
+  SIGN_WRITE,
+}
+
 /*  UI  */
 export enum COLOR {
   WHITE='white',
@@ -82,8 +96,4 @@ export enum SIZE {
   MD = 'md',
   LG = 'lg',
   XL = 'xl',
-}
-
-export enum SCAN {
-
 }

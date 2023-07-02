@@ -32,7 +32,7 @@ if (props.clickOutside) {
   <Teleport to="#modal">
     <Transition name="modal">
     <div v-show="mainStore.isModalOpen"
-         class="fixed top-0 left-0 w-screen h-screen bg-green bg-opacity-80 flex justify-center items-center z-50">
+         class="fixed top-0 left-0 w-screen h-screen bg-green bg-opacity-70 flex justify-center items-center z-50">
       <div v-if="props.close" class="absolute right-2 top-2">
         <RoundButton @click="() => emits('close')" :color="COLOR.RED" :size="SIZE.SM">
           <Cross/>

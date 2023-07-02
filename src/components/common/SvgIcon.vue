@@ -4,7 +4,7 @@ import {useMainStore} from "../../stores/mainStore";
 
 const props = defineProps({
   name: {
-    type: String || Number,
+    type: Number || String,
     required: true,
   },
   source: {
