@@ -2,7 +2,7 @@
   <div ref="cursor" class="cursor w-full h-full px-10 relative flex flex-col justify-between">
     <div ref="canvasContainer" class="canvasContainer w-full relative mb-16" :class="(isError ? 'shake-animation' : '') + (onLoad ? ' opacity-100' : ' opacity-0')">
       <div class="absolute h-full aspect-[75/38] inset-0 m-auto">
-        <div ref="polygon" class="polygon w-full absolute h-full bg-black opacity-40 bottom-0 left-0 right-0 mx-auto" />
+        <img src="/game/animations/00103/shadow.png" ref="shadow" class="w-full absolute -bottom-2 scale-[1.05] transition left-0 right-0 mx-auto -z-10" alt="">
       </div>
     </div>
     <div class="relative w-4/5 mx-auto">
@@ -48,8 +48,7 @@ export default defineComponent({
   watch: {
     isCorrect() {
       (this.app.view as HTMLCanvasElement).style.transform = 'translateY(10px)';
-      (this.$refs.polygon as HTMLCanvasElement).style.transform = 'translateY(35%) rotateX(70deg) rotateY(352deg) rotateZ(21deg) scale(0.85)';
-      (this.$refs.polygon as HTMLCanvasElement).style.opacity = '0.8';
+      (this.$refs.shadow as HTMLCanvasElement).style.transform = 'scale(1.01)';
       (this.$refs.cursor as HTMLElement).style.opacity = '0';
     }
   },
@@ -162,11 +161,6 @@ export default defineComponent({
   10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
   20%, 40%, 60%, 80% { transform: translateX(5px); }
   100% { transform: translateX(0); }
-}
-
-.polygon {
-  transition: transform 1s ease-out, opacity 1s ease-out;
-  transform: translateY(35%) rotateX(70deg) rotateY(352deg) rotateZ(21deg) scale(0.9);
 }
 
 .canvasContainer {
