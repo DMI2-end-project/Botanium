@@ -7,7 +7,7 @@
           <div
               class="relative w-full rounded-lg overflow-hidden aspect-[5/9] max-h-[40vh] bg-beige rounded-md flex items-center justify-center">
             <CardGame mode="vertical" :answer-state="'none'"
-                      :card-state="this.gameStore.currentStep === GAME_STEP.END ? 'show' : 'validated'"
+                      :card-state="gameStore.currentStep === GAME_STEP.END ? 'show' : 'validated'"
                       class="relative w-full h-full z-10"
                       :class="!playingTeams[index]?.isValidated ? 'opacity-0 pointer-events-none' : ''">
               <template v-slot:recto>

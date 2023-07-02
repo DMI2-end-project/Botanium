@@ -4,7 +4,7 @@
         class="sticker-element w-full h-min bg-beige-medium/50 text-beige-dark rounded-full relative p-0 flex justify-center items-center outline outline-8 transition-all duration-400"
         :class="(onModify ? 'outline-yellow' : 'outline-transparent')" @click="onModify = true">
       <!--img v-if="stickerData.idSticker >= 0" alt="" :src="getStickerUrl(stickerData.idSticker)" class="h-full w-full rounded-full object-contain absolute shadow-md"-->
-      <SvgIcon v-if="stickerData.idSticker >= 0" source="stickers" :name="stickerData.idSticker"
+      <SvgIcon v-if="stickerData.idSticker >= 0" source="stickers" :name="`${stickerData.idSticker}`"
                class="h-full w-full rounded-full object-contain absolute shadow-md"/>
       <p v-if="!(stickerData.idSticker >= 0)" class="absolute">
         <Stickers class="w-2/3 mx-auto" :class="onModify ? 'text-yellow' : ''"/>

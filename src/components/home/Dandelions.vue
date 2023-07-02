@@ -1,68 +1,71 @@
 <template>
   <div class="w-screen h-screen relative -translate-y-full">
-    <div class="dandelion-1 absolute mix-blend-soft-light opacity-80"><div><img src="/images/dandelion.png" class=""></div></div>
-    <div class="dandelion-2 absolute mix-blend-soft-light opacity-80"><div><img src="/images/dandelion.png" class=""></div></div>
-    <div class="dandelion-3 absolute mix-blend-soft-light opacity-80"><div><img src="/images/dandelion.png" class=""></div></div>
-    <div class="dandelion-4 absolute mix-blend-soft-light opacity-80"><div><img src="/images/dandelion.png" class=""></div></div>
+    <div class="dandelion-1 absolute mix-blend-soft-light opacity-80"><div><div><img src="/images/dandelion.png" class=""></div></div></div>
+    <div class="dandelion-2 absolute mix-blend-soft-light opacity-80"><div><div><img src="/images/dandelion.png" class=""></div></div></div>
+    <div class="dandelion-3 absolute mix-blend-soft-light opacity-80"><div><div><img src="/images/dandelion.png" class=""></div></div></div>
+    <div class="dandelion-4 absolute mix-blend-soft-light opacity-80"><div><div><img src="/images/dandelion.png" class=""></div></div></div>
   </div>
 </template>
 
 <style scoped>
 
+.dandelion-1 > div > div {
+  animation: rotate 10s ease infinite;
+  transform-origin: top;
+}
 .dandelion-1 {
-  animation: rotate1 100s ease infinite;
+  animation: move1 80s linear infinite;
 }
-.dandelion-1 div {
-  animation: move1 100s linear infinite;
+.dandelion-1 > div {
+  animation: translateImg 10s ease infinite;
 }
-.dandelion-1 img {
-  animation: rotateImg1 100s ease-in-out infinite;
+
+.dandelion-2 > div > div {
+  animation: rotate 7s ease infinite 30s;
+  transform-origin: top;
 }
 
 .dandelion-2 {
-  animation: rotate2 80s ease infinite 30s;
-}
-
-.dandelion-2 div {
   transform: translateX(-10vw);
-  animation: move2 80s linear infinite 30s;
+  animation: move2 60s linear infinite 30s;
 }
 
-.dandelion-2 img {
-  animation: rotateImg2 80s ease infinite 30s;
+.dandelion-2 > div {
+  animation: translateImg 7s ease infinite 30s;
+}
+
+.dandelion-3 > div > div {
+  animation: rotate 6s ease infinite 20s;
+  transform-origin: top;
 }
 
 .dandelion-3 {
-  animation: rotate2 60s ease infinite 20s;
-}
-
-.dandelion-3 div {
   transform: translateX(-10vw);
-  animation: move3 60s linear infinite 20s;
+  animation: move3 40s linear infinite 20s;
 }
 
-.dandelion-3 img {
-  animation: rotateImg2 60s ease infinite 20s;
+.dandelion-3 > div {
+  animation: translateImg 6s ease infinite 20s;
+}
+
+.dandelion-4 > div > div {
+  animation: rotate 5s ease infinite 0s;
+  transform-origin: top;
 }
 
 .dandelion-4 {
-  animation: rotate1 120s ease infinite 0s;
+  animation: move4 30s linear infinite 0s;
 }
 
-.dandelion-4 div {
-  transform: translateX(-10vw);
-  animation: move4 120s linear infinite 0s;
+.dandelion-4 > div {
+  animation: translateImg 5s ease infinite 0s;
 }
 
-.dandelion-4 img {
-  animation: rotateImg1 120s ease infinite 0s;
-}
-
-.dandelion-1 div:before, .dandelion-2 div:before, .dandelion-3 div:before, .dandelion-4 div:before {
+.dandelion-1 > div > div:before, .dandelion-2 > div > div:before, .dandelion-3 > div > div:before, .dandelion-4 > div > div:before {
   content: '';
   position: absolute;
   background: #FEFBE9;
-  opacity: 0.3;
+  opacity: 0.2;
   inset: 0;
   width: 100%;
   height: 100%;
@@ -73,145 +76,61 @@
 
 @keyframes move1 {
   0% {
-    transform: translateX(-10vw) translateY(10vh) scale(0.7);
+    transform: translateX(0vw) translateY(-10vh) scale(0.8);
   }
   100% {
-    transform: translateX(100vw) translateY(110vh) scale(0.7);
+    transform: translateX(30vw) translateY(110vh) scale(0.8);
   }
 }
 
 @keyframes move2 {
   0% {
-    transform: translateX(-30vw) translateY(-30vh) scale(0.5);
+    transform: translateX(30vw) translateY(-10vh) scale(0.6);
   }
   100% {
-    transform: translateX(110vw) translateY(50vh) scale(0.45);
+    transform: translateX(50vw) translateY(110vh) scale(0.6);
   }
 }
 
 @keyframes move3 {
   0% {
-    transform: translateX(-50vw) translateY(-10vh) scale(0.2);
+    transform: translateX(85vw) translateY(-10vh) scale(0.7);
   }
   100% {
-    transform: translateX(80vw) translateY(100vh) scale(0.3);
+    transform: translateX(105vw) translateY(110vh) scale(0.7);
   }
 }
 
 @keyframes move4 {
   0% {
-    transform: translateX(-5vw) translateY(10vh) scale(0.3);
+    transform: translateX(70vw) translateY(-10vh) scale(0.5);
   }
   100% {
-    transform: translateX(30vw) translateY(110vh) scale(0.45);
+    transform: translateX(90vw) translateY(110vh) scale(0.5);
   }
 }
 
-@keyframes rotate1 {
+@keyframes rotate {
   0% {
-    transform: rotate(2deg);
-  }
-  10% {
-    transform: rotate(10deg);
-  }
-  15% {
-    transform: rotate(25deg);
-  }
-  25% {
-    transform: rotate(12deg);
-  }
-  35% {
-    transform: rotate(-9deg);
-  }
-  55% {
-    transform: rotate(3deg);
-  }
-  70% {
-    transform: rotate(-2deg);
-  }
-  85% {
-    transform: rotate(4deg);
-  }
-  100% {
-    transform: rotate(-4deg);
-  }
-}
-
-@keyframes rotate2 {
-  0% {
-    transform: rotate(-2deg);
-  }
-  25% {
-    transform: rotate(30deg);
-  }
-  25% {
-    transform: rotate(20deg);
-  }
-  45% {
-    transform: rotate(-3deg);
-  }
-  60% {
-    transform: rotate(3deg);
-  }
-  75% {
-    transform: rotate(6deg);
-  }
-  90% {
-    transform: rotate(-2deg);
-  }
-  100% {
-    transform: rotate(-2deg);
-  }
-}
-
-@keyframes rotateImg1 {
-  0% {
-    transform: rotate(70deg);
-  }
-  10% {
-    transform: rotate(20deg);
-  }
-  35% {
-    transform: rotate(-20deg);
-  }
-  40% {
-    transform: rotate(35deg);
+    transform: rotate(50deg);
   }
   50% {
-    transform: rotate(25deg);
-  }
-  60% {
-    transform: rotate(-105deg);
-  }
-  70% {
-    transform: rotate(25deg);
+    transform: rotate(30deg);
   }
   100% {
-    transform: rotate(-206deg);
+    transform: rotate(50deg);
   }
 }
 
-@keyframes rotateImg2 {
+@keyframes translateImg {
   0% {
-    transform: rotate(-50deg);
+    transform: translateX(-15px);
   }
-  13% {
-    transform: rotate(0deg);
-  }
-  45% {
-    transform: rotate(-400deg);
-  }
-  60% {
-    transform: rotate(-300deg);
-  }
-  75% {
-    transform: rotate(-400deg);
-  }
-  90% {
-    transform: rotate(-300deg);
+  50% {
+    transform: translateX(15px);
   }
   100% {
-    transform: rotate(-600deg);
+    transform: translateX(-15px);
   }
 }
 </style>

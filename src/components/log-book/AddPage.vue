@@ -4,7 +4,7 @@
       <div class="flex justify-around gap-6 sm:gap-12 lg:gap-16">
         <button v-for="template in numberTemplate" :v-bind="template" @click="templateId = template" class="my-4 flex-1 border-0 p-0 overflow-hidden drop-shadow-lg outline outline-8 transition-all duration-400" :class="templateId === template ? 'outline-yellow' : 'outline-transparent'">
           <!--img alt="" :src="'/log-book/templates/' + template + '.svg'" class="w-full"-->
-          <SvgIcon source="templates" :name="template"/>
+          <SvgIcon source="templates" :name="`${template}`"/>
         </button>
       </div>
     </div>
