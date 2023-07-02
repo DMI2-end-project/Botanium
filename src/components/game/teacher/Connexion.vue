@@ -55,7 +55,6 @@ export default defineComponent({
     return {
       gameStore: useGameStore(),
       mainStore: useMainStore(),
-      isModalOpen: false,
       status: [
         {text: "non connecté", bgClass: "bg-red"},
         {text: "connecté", bgClass: "bg-green-medium"},
@@ -75,16 +74,6 @@ export default defineComponent({
     },
     SIZE() {
       return SIZE
-    }
-  },
-  methods: {
-    openModal() {
-      this.mainStore.openModal()
-      this.isModalOpen = true
-    },
-    closeModal() {
-      this.mainStore.closeModal()
-      setTimeout(() => {this.isModalOpen = false}, 600)
     }
   }
 });

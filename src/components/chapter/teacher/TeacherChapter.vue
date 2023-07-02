@@ -107,8 +107,8 @@ export default defineComponent({
             break;
           } else {
             if (this.mainStore.gameId < this.totalParts - 1) {
-              this.mainStore.gameId += 1;
-              this.GMInstance.launchGame(this.mainStore.gameId)
+              // this.mainStore.gameId += 1;
+              this.GMInstance.launchGame(this.mainStore.gameId + 1)
               break;
             } else {
               this.chapterStore.currentStep = CHAPTER_STEP.END;

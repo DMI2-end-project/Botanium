@@ -17,12 +17,12 @@
     <div class="content z-20">
       <div class="book-content" :class="onModify ? 'z-50' : 'z-10'">
         <div ref="pageLeft" class="page page-left flex">
-          <p class="absolute -bottom-6">page {{ pageNumber - 1 }}</p>
+          <!-- <p class="absolute -bottom-6">page {{ pageNumber - 1 }}</p> -->
           <div v-if="lastPage === pageNumber - 1" class="m-auto">
             <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/plus.png" class="p-6"></RoundButton>
-            <!-- <p class="font-bold mt-2">Ajouter une page</p> -->
+            <p class="font-bold mt-2">Ajouter une page</p>
           </div>
-          <Transition name="texture-in-out">
+          <Transition name="texture-book">
             <PageContent v-show="pagesContent[pageNumber - 2]" :content="pagesContent[pageNumber - 2]" @onModify="onModify = $event" />
           </Transition>
         </div>
@@ -32,7 +32,7 @@
             <RoundButton class="m-auto drop-shadow-lg" @click="addPage" :size="SIZE.LG" :color="COLOR.GREEN_MEDIUM"><img src="../../assets/images/plus.png" class="p-6"></RoundButton>
             <p class="font-bold mt-2">Ajouter une page</p>
           </div>
-          <Transition name="texture-in-out-2">
+          <Transition name="texture-book-2">
             <PageContent v-show="pagesContent[pageNumber - 1]" :content="pagesContent[pageNumber - 1]" @onModify="onModify = $event" />
           </Transition>
         </div>

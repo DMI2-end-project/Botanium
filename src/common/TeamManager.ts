@@ -28,7 +28,11 @@ class TeamManager {
       this._mainStore.chapterId = arg.chapterId;
       //this._gameStore.data = gameData;
 
-      await this._router.push('/chapitre/' + this._mainStore.getChapterId);
+      this._mainStore.isTransition = true;
+      setTimeout(async () => {
+        await this._router.push('/chapitre/' + this._mainStore.getChapterId);
+        this._mainStore.isTransition = false;
+      }, 700);
     });
 
     this._socket.on(EVENT.TEAM_STATUS, async (arg) => {
@@ -59,8 +63,11 @@ class TeamManager {
       this._chapterStore.currentParagraph = 0;
       this._mainStore.gameId = arg.gameId;
 
-      console.log('TeamManager EVENT.LAUNCH_GAME', this._mainStore.getFullGameId);
-      await this._router.push('/exercice/' + this._mainStore.getFullGameId);
+      this._mainStore.isTransition = true;
+      setTimeout(async () => {
+        await this._router.push('/exercice/' + this._mainStore.getFullGameId);
+        this._mainStore.isTransition = false;
+      }, 700);
     });
 
     this._socket.on(EVENT.START_GAME, async (arg) => {
@@ -82,12 +89,23 @@ class TeamManager {
     });
 
     this._socket.on(EVENT.BACK_CHAPTER, async () => {
-      await this._router.push('/chapitre/' + this._mainStore.getChapterId);
+      if (this._mainStore.role === ROLE.STUDENT) {
+        // this._gameStore.currentStep = GAME_STEP.IDLE;
+        this._mainStore.isTransition = true;
+        setTimeout(async() => {
+          await this._router.push('/chapitre/' + this._mainStore.getChapterId);
+          this._mainStore.isTransition = false;
+        }, 700);
+      }
     });
 
     this._socket.on(EVENT.END_CHAPTER, async () => {
       if (this._mainStore.role === ROLE.STUDENT) {
-        await this._router.push('/accueil');
+        this._mainStore.isTransition = true;
+        setTimeout(async () => {
+          await this._router.push('/accueil');
+          this._mainStore.isTransition = false;
+        }, 700);
       }
     });
 

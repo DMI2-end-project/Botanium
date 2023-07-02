@@ -10,6 +10,7 @@ export type StoreState = {
   isModalOpen: boolean,
   askForRedirection: boolean,
   connected: boolean,
+  isTransition: boolean,
   roomId: string | undefined,
   roleId: string | undefined,
   roles: Record[],
@@ -24,6 +25,7 @@ export const useMainStore = defineStore('main', {
   state: (): StoreState => ({
     isModalOpen: false,
     connected: false,
+    isTransition: false,
     askForRedirection: false,
     roomId: undefined,
     roleId: undefined,
@@ -63,6 +65,7 @@ export const useMainStore = defineStore('main', {
     },
     reset() {
       setTimeout(() => {this.isModalOpen = false}, 600)
+      this.isTransition = false;
       this.askForRedirection = false;
       this.connected = false;
       this.roomId = undefined;

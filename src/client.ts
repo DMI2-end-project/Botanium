@@ -80,11 +80,14 @@ export const initClient = (pinia: Pinia) => {
       chapterStore.tasksScanned = arg.tasksScanned;
     }
 
-    if (mainStore.role === ROLE.STUDENT) { // TODO : && localStorage.getItem('join') !== 'false'
-      if ((router.currentRoute.value.name !== 'Scan') && (arg.chapterStep !== CHAPTER_STEP.IDLE && router.currentRoute.value.name !== 'Chapter') || (arg.gameStep !== GAME_STEP.IDLE && router.currentRoute.value.name !== 'Game')) {
-        mainStore.askForRedirection = true
+    setTimeout(() => {
+      if (mainStore.role === ROLE.STUDENT) { // TODO : && localStorage.getItem('join') !== 'false'
+        if ((router.currentRoute.value.name !== 'Scan') && (arg.chapterStep !== CHAPTER_STEP.IDLE && router.currentRoute.value.name !== 'Chapter') || (arg.gameStep !== GAME_STEP.IDLE && router.currentRoute.value.name !== 'Game')) {
+          console.log('arg.chapterStep', arg.chapterStep, 'arg.gameStep', arg.gameStep, 'router.currentRoute.value.name', router.currentRoute.value.name)
+          mainStore.askForRedirection = true
+        }
       }
-    }
+    }, 800)
   });
 }
 

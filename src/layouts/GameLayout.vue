@@ -35,6 +35,17 @@ export default defineComponent({
       pb: DatabaseManagerInstance.pb,
       GMInstance: GameMasterManagerInstance,
       isModalOpen: false,
+      isTransitionEnd: false
+    }
+  },
+  watch: {
+    'mainStore.isTransition': {
+      handler(value) {
+        setTimeout(() => {
+          this.isTransitionEnd = !value
+        }, 200)
+      },
+      deep: true
     }
   },
   computed: {
@@ -55,7 +66,7 @@ export default defineComponent({
         return 'bg-texture-' + this.gameStore.data.color as string
       }
       return '';
-    }
+    },
   },
   created() {
     if (this.mainStore.getFullGameId) {
@@ -109,19 +120,19 @@ export default defineComponent({
        :class="backgroundColor"/>
   <div class="fixed inset-0 overflow-hidden">
     <Transition name="bgTransitionLeft1">
-      <div v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" class="absolute bottom-0 h-2/3 w-fit max-w-[40%] origin-bottom">
+      <div v-show="(gameStore.currentStep === 1 || gameStore.currentStep === 5) && isTransitionEnd" class="absolute bottom-0 h-2/3 w-fit max-w-[40%] origin-bottom">
         <img :src="getImage" alt=""
           class="-scale-x-100 h-full w-auto object-contain object-bottom">
       </div>
     </Transition>
     <Transition name="bgTransitionLeft2" v-if="mainStore.getFullGameId !== '00101' && mainStore.getFullGameId !== '00104'">
-      <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-[25%] left-[10%] h-1/2 w-auto object-contain origin-bottom">
+      <img v-show="(gameStore.currentStep === 1 || gameStore.currentStep === 5) && isTransitionEnd" :src="getImage" alt="" class="absolute -bottom-[25%] left-[10%] h-1/2 w-auto object-contain origin-bottom">
     </Transition>
     <Transition name="bgTransitionRight2">
-      <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-0 -right-[5%] h-5/6 max-w-[60%] w-auto object-contain origin-bottom object-bottom">
+      <img v-show="(gameStore.currentStep === 1 || gameStore.currentStep === 5) && isTransitionEnd" :src="getImage" alt="" class="absolute -bottom-0 -right-[5%] h-5/6 max-w-[60%] w-auto object-contain origin-bottom object-bottom">
     </Transition>
     <Transition name="bgTransitionRight1" v-if="mainStore.getFullGameId !== '00104'">
-      <img v-show="gameStore.currentStep === 1 || gameStore.currentStep === 5" :src="getImage" alt="" class="absolute -bottom-0 right-[10%] h-1/2 w-auto object-contain origin-bottom">
+      <img v-show="(gameStore.currentStep === 1 || gameStore.currentStep === 5) && isTransitionEnd" :src="getImage" alt="" class="absolute -bottom-0 right-[10%] h-1/2 w-auto object-contain origin-bottom">
     </Transition>
   </div>
 

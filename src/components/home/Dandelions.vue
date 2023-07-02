@@ -46,16 +46,16 @@
 }
 
 .dandelion-4 {
-  animation: rotate1 120s ease infinite 50s;
+  animation: rotate1 120s ease infinite 0s;
 }
 
 .dandelion-4 div {
   transform: translateX(-10vw);
-  animation: move4 120s linear infinite 50s;
+  animation: move4 120s linear infinite 0s;
 }
 
 .dandelion-4 img {
-  animation: rotateImg1 120s ease infinite 50s;
+  animation: rotateImg1 120s ease infinite 0s;
 }
 
 .dandelion-1 div:before, .dandelion-2 div:before, .dandelion-3 div:before, .dandelion-4 div:before {
@@ -73,7 +73,7 @@
 
 @keyframes move1 {
   0% {
-    transform: translateX(-15vw) translateY(10vh) scale(0.7);
+    transform: translateX(-10vw) translateY(10vh) scale(0.7);
   }
   100% {
     transform: translateX(100vw) translateY(110vh) scale(0.7);
@@ -100,7 +100,7 @@
 
 @keyframes move4 {
   0% {
-    transform: translateX(-10vw) translateY(10vh) scale(0.3);
+    transform: translateX(-5vw) translateY(10vh) scale(0.3);
   }
   100% {
     transform: translateX(30vw) translateY(110vh) scale(0.45);
@@ -111,8 +111,11 @@
   0% {
     transform: rotate(2deg);
   }
+  10% {
+    transform: rotate(10deg);
+  }
   15% {
-    transform: rotate(55deg);
+    transform: rotate(25deg);
   }
   25% {
     transform: rotate(12deg);

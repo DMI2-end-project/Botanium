@@ -55,7 +55,11 @@ class GameMasterManager {
       chapterId: this._mainStore.chapterId  // this._mainStore.getChapterId
     });
 
-    await this._router.push('/chapitre/' + leading(chapterId, 3));
+    this._mainStore.isTransition = true;
+    setTimeout(async () => {
+      await this._router.push('/chapitre/' + leading(chapterId, 3));
+      this._mainStore.isTransition = false;
+    }, 700);
   }
 
   public async startChapter() {
@@ -92,9 +96,14 @@ class GameMasterManager {
     this._mainStore.gameId = gameId;
     await this._socket.emit(EVENT.LAUNCH_GAME, {
       roomId: this._mainStore.roomId,
-      gameId: this._mainStore.gameId //mainStore.getFullGameId
+      gameId: this._mainStore.gameId
     });
-    await this._router.push('/exercice/' + this._mainStore.getFullGameId);
+
+    this._mainStore.isTransition = true;
+    setTimeout(async () => {
+      await this._router.push('/exercice/' + this._mainStore.getFullGameId);
+      this._mainStore.isTransition = false;
+    }, 700);
   }
 
   public async startGame() {
@@ -129,8 +138,12 @@ class GameMasterManager {
       gameId: this._mainStore.gameId,
       //currentSection: this._mainStore.gameId
     });
-    console.log("GameMasterManager BACK_CHAPTER router", this._mainStore.chapterId)
-    await this._router.push('/chapitre/' + this._mainStore.chapterId)
+    // this._gameStore.currentStep = GAME_STEP.IDLE;
+    this._mainStore.isTransition = true;
+    setTimeout(async () => {
+      await this._router.push('/chapitre/' + this._mainStore.chapterId)
+      this._mainStore.isTransition = false;
+    }, 700);
   }
 
   public async endChapter() {
@@ -140,7 +153,11 @@ class GameMasterManager {
     await this._socket.emit(EVENT.END_CHAPTER, {
       roomId: this._mainStore.roomId,
     })
-    await this._router.push('/chapitres');
+    this._mainStore.isTransition = true;
+    setTimeout(async () => {
+      await this._router.push('/chapitres');
+      this._mainStore.isTransition = false;
+    }, 700);
   }
 
   public async killRoom() {
