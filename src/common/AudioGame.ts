@@ -148,7 +148,7 @@ export default class AudioGame {
       return clapping
     }
 
-    if (this.sampleCount % 500 === 0) {
+    if (this.sampleCount % 250 === 0) {
       this.sampleCount /= 2
       this.accumulatedRMS /= 2
     }

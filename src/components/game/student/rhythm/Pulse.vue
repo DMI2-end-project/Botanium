@@ -1,7 +1,6 @@
 <template>
   <div class="flex justify-center items-center relative">
-
-    <div class="absolute aspect-square h-[200%] bg-white/20 rounded-full"></div>
+    <div class="absolute aspect-square h-[160%] bg-white/20 rounded-full" :style="`transform: scale(${Math.min(decibel /200 + 1, 1.7)})`"></div>
     <div class="absolute aspect-square h-[160%] bg-purple rounded-full shadow-lg"></div>
     <div ref="canvasContainer" class="canvas w-full" :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" />
     <!-- :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" -->
@@ -39,6 +38,10 @@ export default defineComponent({
     color: {
       default: 'purple', // purple red green
       type: String
+    },
+    decibel: {
+      default: 0,
+      type: Number
     }
   },
   mounted() {
