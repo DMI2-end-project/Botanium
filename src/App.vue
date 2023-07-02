@@ -119,7 +119,7 @@ export default defineComponent({
     </ModalView>
 
     <Transition name="texture-reverse">
-      <div v-show="mainStore.isTransition" class="w-screen h-screen min-w-[166vh] bg-cover fixed inset-0 z-[80]" :class="this.mainStore.getFullGameId === '00101' ? 'bg-texture-yellow' : 'bg-texture-green'" />
+      <div v-show="mainStore.isTransition" class="w-screen h-screen min-w-[166vh] bg-cover fixed inset-0 z-[80]" :class="mainStore.getFullGameId === '00101' ? 'bg-texture-yellow' : 'bg-texture-green'" />
     </Transition>
 
     <div class="preloadMask" />

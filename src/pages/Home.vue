@@ -28,12 +28,15 @@ const menuData = [
     <img src="/home/plant-2.png" class="organic-4 absolute w-auto h-2/3 object-contain -top-[35%] -right-[10%]">
     <img src="/home/plant-3.png" class="organic-3 absolute w-1/3 h-full object-contain -top-[30%] -right-[15%]">
     <img src="/home/sun.png" class="sun absolute w-auto h-full object-contain -top-[0%] -left-[0%]">
+
+    <Particles />
+    <Dandelions />
+
+
     <div class="-scale-x-100 absolute w-1/3 h-auto object-contain -bottom-[5%] -right-[2%]">
       <img src="/home/plant-1.png" class="organic-2 origin-bottom-right">
     </div>
 
-    <Particles />
-    <Dandelions />
 
     <div class="absolute bottom-0 left-0 right-0 mx-auto w-fit px-12 pt-4 pb-8 bg-beige-medium/80 border-4 border-beige border-b-0 rounded-t-[60px] flex justify-around min-w-[40%] items-center gap-4">
       <div v-for="(data, index) in menuData" :v-bind="data.name" class="flex flex-col items-center">
