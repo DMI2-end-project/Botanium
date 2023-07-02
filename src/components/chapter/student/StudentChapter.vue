@@ -19,32 +19,7 @@
       <Loading class="loading-animation w-8 aspect-square"/>
     </Info>
 
-    <Transition v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" name="bgTransitionLeft1">
-      <div class="absolute -top-[20%] -left-[40%] -scale-x-100 h-1/2 w-auto">
-        <img :src="'/images/illu-leaf-drop.png'" alt=""
-             class="w-full h-full object-contain origin-top-left">
-      </div>
-    </Transition>
-    <Transition v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" name="bgTransitionLeft2">
-      <div>
-        <div class="absolute -bottom-[30%] -left-[33%] h-2/3 w-1/2 object-contain origin-bottom">
-          <img :src="'/images/illu-carrot.png'" alt=""
-               class="w-full h-full object-contain ">
-        </div>
-        <div class="absolute -bottom-[15%] -left-[55%] h-2/3 w-1/2 object-contain origin-bottom rotate-[40deg]">
-          <img :src="'/images/illu-carrot.png'" alt=""
-               class="w-full h-full object-contain ">
-        </div>
-      </div>
-    </Transition>
-    <Transition v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" name="bgTransitionRight2">
-      <div
-          class="absolute -bottom-[37%] -right-[25%] h-5/6 max-w-[60%] w-auto object-contain origin-bottom object-bottom">
-        <img :src="'/images/illu-carrot.png'" alt=""
-        >
-      </div>
-    </Transition>
-
+    <AnimatedFoliage :show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION"/>
   </div>
 
 </template>
@@ -59,6 +34,7 @@ import Info from "../../common/Info.vue";
 import CircleButton from "../../common/CircleButton.vue";
 import RoundButton from "../../common/RoundButton.vue";
 import TeamSignboard from "../../common/TeamSignboard.vue";
+import AnimatedFoliage from "../../AnimatedFoliage.vue";
 
 import Camera from "../../../assets/svg/ico-camera.svg?component";
 import Loading from "../../../assets/svg/ico-loading.svg?component";
@@ -77,7 +53,7 @@ export default defineComponent({
       return SIZE
     }
   },
-  components: {Background, Camera, CircleButton, Info, Loading, RoundButton, TeamSignboard},
+  components: {AnimatedFoliage, Background, Camera, CircleButton, Info, Loading, RoundButton, TeamSignboard},
   emits: ['validated'],
   data() {
     return {

@@ -96,16 +96,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex-1 grid grid-cols-12 w-full h-full">
-    <div class="col-span-10 col-start-2 flex flex-col gap-4 lg:gap-10 my-auto">
-      <div class="relative w-full">
-        <div class="w-full aspect-[7/4]">
+  <div class="flex-1 grid grid-cols-12 w-full h-full max-h-screen overflow-hidden py-12">
+    <div
+        class="col-span-10 col-start-2 lg:col-span-8 lg:col-start-3 relative h-full flex flex-col overflow-hidden gap-4 lg:gap-10 justify-center h-full my-auto">
+      <div class="relative">
+        <div class="h-full aspect-video">
           <Camera ref="camera" @ready="() => emits('ready')" facing-mode="environment"/>
-          <div class="absolute aspect-[6/8] h-full left-1/2 -translate-x-1/2 scale-90 border-8 border-dashed rounded-xl"
-               :class="exp ? 'border-blue' : 'border-beige'"/>
+          <div
+              class="absolute top-0 aspect-[6/8] h-full left-1/2 -translate-x-1/2 scale-90 border-8 border-dashed rounded-xl"
+              :class="exp ? 'border-blue' : 'border-beige'"/>
         </div>
       </div>
-      <Info class="col-span-10 col-start-2 m-auto mt-0" text="Placez les badges un par un dans la zone centrale">
+      <Info class="mt-0 z-10" text="Placez les badges un par un dans la zone centrale">
         <Loading class="loading-animation w-8 aspect-square"/>
       </Info>
     </div>

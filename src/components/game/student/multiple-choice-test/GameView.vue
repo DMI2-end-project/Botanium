@@ -9,10 +9,12 @@
         <CardGame @click.native="() => itemSelected(index)"
                   mode="horizontal"
                   card-state="show" :answer-state="answer.status"
-                  class="w-full h-full">
+                  class="w-full h-full justify-center">
           <template v-slot:recto>
-            <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
-            <span class="text-md pointer-events-none">{{ answer.text }}</span>
+            <div class="flex flex-col justify-center items-center gap-1.5">
+              <SvgIcon :name="answer.icon" class="w-16 aspect-square pointer-events-none"/>
+              <span class="text-md pointer-events-none">{{ answer.text }}</span>
+            </div>
           </template>
         </CardGame>
       </div>
