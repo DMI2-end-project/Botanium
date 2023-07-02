@@ -1,6 +1,6 @@
 <template>
-  <div class="signboard bg-signboard w-fit px-12 py-6 shadow-lg flex justify-center" :class="isRotate ? 'transform rotate-2' : ''">
-    <h1 class="w-fit" :class="isRotate ? 'transform -rotate-2' : ''">{{ text }}</h1>
+  <div class="signboard bg-signboard w-fit p-6 shadow-lg flex justify-center" :class="isRotate ? 'transform rotate-2' : ''">
+    <h1 class="w-fit">{{ text }}</h1>
   </div>
 </template>
 

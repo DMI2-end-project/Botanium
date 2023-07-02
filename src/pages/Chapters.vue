@@ -9,7 +9,7 @@ import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {COLOR, SIZE} from "../common/Constants";
 import {leading} from "../common/Lib";
-import ChapterModalView from "../components/common/ChapterModalView.vue";
+import ChapterModalView from "../components/chapter/ChapterModalView.vue";
 import RoundButton from "../components/common/RoundButton.vue";
 import CardChapter from "../components/chapter/CardChapter.vue";
 

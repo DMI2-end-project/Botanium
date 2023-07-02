@@ -70,6 +70,6 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <video ref="videoRef" class="absolute w-full h-full top-0 left-0 object-cover object-center bg-purple/20"
+  <video ref="videoRef" class=" w-full h-full top-0 left-0 object-cover object-center bg-purple/20"
          autoplay muted playsinline/>
 </template>

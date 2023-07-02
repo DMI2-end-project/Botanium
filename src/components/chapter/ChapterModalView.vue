@@ -4,7 +4,7 @@ import {useMainStore} from "../../stores/mainStore";
 import {COLOR, SIZE} from "../../common/Constants";
 import {leading} from "../../common/Lib";
 import {GameMasterManagerInstance} from "../../common/GameMasterManager";
-import RoundButton from "../../components/common/RoundButton.vue";
+import RoundButton from "../common/RoundButton.vue";
 
 import Cross from "../../assets/svg/ico-cross.svg?component";
 import Play from "../../assets/svg/ico-play.svg?component";
@@ -57,18 +57,19 @@ const getImage = () => {
 
         <div class="flex flex-col sm:flex-row gap-8">
           <div class="w-full sm:w-2/5 shrink-0">
-            <div
-                class="bg-green-medium aspect-square w-full flex flex-col justify-end rounded-lg overflow-hidden shadow-md">
-              <img class="w-full flex-1 rounded-lg object-center object-cover"
-                   :src="getImage()"/>
-              <button
-                  class="hover:border-transparent cursor-pointer relative bg-green-medium text-beige flex items-center gap-5 p-5"
-                  @click="goTo">
-                <RoundButton :color="COLOR.YELLOW" :size="SIZE.XS">
+            <div @click="goTo"
+                 class="bg-green-medium aspect-square w-full flex flex-col rounded-lg overflow-hidden shadow-md cursor-pointer">
+              <div class="relative w-full flex-1 rounded-lg overflow-hidden">
+                <img class="w-full h-full object-center object-cover" :src="getImage()" alt=""/>
+                <RoundButton class="!absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/3"
+                             :color="COLOR.YELLOW" :size="SIZE.MD">
                   <Play/>
                 </RoundButton>
+              </div>
+              <div
+                  class="hover:border-transparent relative bg-green-medium text-beige font-bold flex justify-center items-center gap-5 p-5">
                 <span>Commencer la séance</span>
-              </button>
+              </div>
             </div>
           </div>
           <div class="flex flex-col divide-y divide-beige-dark">

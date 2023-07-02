@@ -9,6 +9,7 @@ import RoundButton from "../common/RoundButton.vue";
 
 import Arrow from "../../assets/svg/ico-arrow.svg?component";
 import Camera from "../../assets/svg/ico-photo.svg?component";
+import SignboardVue from "../common/Signboard.vue";
 
 const emits = defineEmits(['scan']);
 
@@ -17,8 +18,9 @@ const mainStore = useMainStore();
 const chapterStore = useChapterStore();
 </script>
 <template>
-  <div class="flex-1 w-full h-full grid grid-cols-12 gap-16 text-center pt-16 z-10">
-    <div class="col-span-8 col-start-3 grid grid-cols-8 gap-11 heading-3 bg-beige rounded-lg pb-11 pt-20 mt-auto">
+  <div class="flex-1 w-full h-full grid grid-cols-12 justify-around gap-4 lg:gap-10 text-center pt-16 z-10">
+    <div class="col-span-8 col-start-3 grid grid-cols-8 gap-11 heading-3 bg-beige rounded-lg pb-11 mt-auto">
+      <SignboardVue text="Il est temps de scanner les badges" :is-rotate="true" class="col-span-6 col-start-2 text-purple min-w-[25vw] -mt-20 lg:-mt-10" />
       <p class="col-span-6 col-start-2">
         Rassemblez tous les badges utilisés cette semaine et scannez les pour débloquer les connaissances nécessaires
         pour aider Capucine dans son aventure !
