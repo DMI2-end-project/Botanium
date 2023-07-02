@@ -38,12 +38,12 @@
 </template>
 
 <script lang="ts">
-import { DatabaseManagerInstance } from "./../../../common/DatabaseManager";
-import type { PhotoData } from './../../../common/Interfaces'
-import { useMainStore } from '../../../stores/mainStore';
-import { useLogBookStore } from '../../../stores/logBookStore';
+import {DatabaseManagerInstance} from "./../../../common/DatabaseManager";
+import type {PhotoData} from './../../../common/Interfaces'
+import {useMainStore} from '../../../stores/mainStore';
+import {useLogBookStore} from '../../../stores/logBookStore';
 import RoundButton from './../../common/RoundButton.vue';
-import { COLOR } from "./../../../common/Constants";
+import {COLOR, LOGBOOK_STEP} from "./../../../common/Constants";
 import Check from "./../../../assets/svg/ico-check.svg?component";
 import Cross from "./../../../assets/svg/ico-cross.svg?component";
 import Picture from "./../../../assets/svg/ico-picture.svg?component";
@@ -113,6 +113,7 @@ export default {
       return DatabaseManagerInstance.getImageUrl(data)
     },
     async modify() {
+      this.logBookStore.currentStep = LOGBOOK_STEP.ADD_PHOTO;
       this.onModify = true
       this.photos = []
       const photosFetch = this.logBookStore.photosNotUsed
@@ -178,6 +179,7 @@ export default {
 
       this.photoDataLast = this.photoData
       this.onModify = false
+      this.logBookStore.currentStep = LOGBOOK_STEP.SELECT_ACTION;
     },
     async close() {
       this.onModify = false

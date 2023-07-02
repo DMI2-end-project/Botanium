@@ -1,19 +1,23 @@
-import { defineStore } from "pinia";
-import { DatabaseManagerInstance } from "../common/DatabaseManager";
-import { DrawData, PageData, PhotoData } from "../common/Interfaces";
-import { getDefaultDrawData } from "../common/Lib";
+import {defineStore} from "pinia";
+import {DatabaseManagerInstance} from "../common/DatabaseManager";
+import {DrawData, PageData, PhotoData} from "../common/Interfaces";
+import {getDefaultDrawData} from "../common/Lib";
+import {LOGBOOK_STEP} from "../common/Constants";
 
 export type StoreState = {
+  currentStep: LOGBOOK_STEP,
+  
   pages: PageData[],
   photos: PhotoData[],
   draws: DrawData[],
-
+  
   isClosable: boolean,
   closeElements: boolean,
 };
 
 export const useLogBookStore = defineStore('logBook', {
   state: (): StoreState => ({
+    currentStep: LOGBOOK_STEP.OPEN_BOOK,
     pages: [],
     photos: [],
     draws: [],
@@ -30,7 +34,7 @@ export const useLogBookStore = defineStore('logBook', {
     }
   },
   actions: {
-    async fetchPages(roomId:string)  {
+    async fetchPages(roomId: string) {
       this.pages = await DatabaseManagerInstance.fetchPages(roomId);
     },
     async createPage(pageNumber: number, template: number, classroomId: string) {

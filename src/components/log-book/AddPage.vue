@@ -8,16 +8,19 @@
         </button>
       </div>
     </div>
-    <RoundButton :is-active="templateId !== -1" :color="COLOR.GREEN_MEDIUM_BEIGE" @click="validate" class="mx-auto mt-6 block"><Check /></RoundButton>
+    <RoundButton :is-active="templateId !== -1" :color="COLOR.GREEN_MEDIUM_BEIGE" @click="validate"
+                 class="mx-auto mt-6 block">
+      <Check/>
+    </RoundButton>
   </div>
 </template>
 
 <script lang="ts">
 import RoundButton from './../common/RoundButton.vue'
-import { COLOR } from "./../../common/Constants";
+import {COLOR, LOGBOOK_STEP} from "./../../common/Constants";
 import Check from "./../../assets/svg/ico-check.svg?component";
-import { useMainStore } from '../../stores/mainStore';
-import { useLogBookStore } from '../../stores/logBookStore';
+import {useMainStore} from '../../stores/mainStore';
+import {useLogBookStore} from '../../stores/logBookStore';
 import SvgIcon from "../common/SvgIcon.vue";
 
 export default {
@@ -56,11 +59,12 @@ export default {
     }
   },
   mounted() {
-    this.logBookStore.isClosable = true
+    this.logBookStore.isClosable = true;
   },
   methods: {
     validate() {
       this.$emit('close', this.templateId)
+      this.logBookStore.currentStep = LOGBOOK_STEP.SELECT_ACTION;
     }
   },
   unmounted() {
