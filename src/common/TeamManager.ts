@@ -3,7 +3,7 @@ import {useMainStore} from "../stores/mainStore";
 import {useChapterStore} from "../stores/chapterStore";
 import {useGameStore} from "../stores/gameStore";
 import {getSocket} from "./../client";
-import {EVENT, GAME_STEP, ROLE, AUDIO_EVENT} from "./Constants";
+import { EVENT, GAME_STEP, ROLE, AUDIO_EVENT, CHAPTER_STEP} from "./Constants";
 import gameData from "../assets/json/games-data.json";
 
 class TeamManager {
@@ -62,9 +62,9 @@ class TeamManager {
       await this._gameStore.reset();
       this._chapterStore.currentParagraph = 0;
       this._mainStore.gameId = arg.gameId;
-
       this._mainStore.isTransition = true;
       setTimeout(async () => {
+        this._chapterStore.currentStep = CHAPTER_STEP.IDLE;
         await this._router.push('/exercice/' + this._mainStore.getFullGameId);
         this._mainStore.isTransition = false;
       }, 700);
@@ -90,7 +90,7 @@ class TeamManager {
 
     this._socket.on(EVENT.BACK_CHAPTER, async () => {
       if (this._mainStore.role === ROLE.STUDENT) {
-        // this._gameStore.currentStep = GAME_STEP.IDLE;
+        this._gameStore.currentStep = GAME_STEP.IDLE;
         this._mainStore.isTransition = true;
         setTimeout(async() => {
           await this._router.push('/chapitre/' + this._mainStore.getChapterId);
@@ -103,6 +103,10 @@ class TeamManager {
       if (this._mainStore.role === ROLE.STUDENT) {
         this._mainStore.isTransition = true;
         setTimeout(async () => {
+          this._chapterStore.currentStep = CHAPTER_STEP.IDLE;
+          this._gameStore.currentStep = GAME_STEP.IDLE;
+          this._mainStore.chapterId = 0;
+          this._mainStore.gameId = 0;
           await this._router.push('/accueil');
           this._mainStore.isTransition = false;
         }, 700);
@@ -111,6 +115,10 @@ class TeamManager {
 
     this._socket.on('killRoom', async () => {
       if (this._mainStore.role === ROLE.STUDENT) {
+        this._chapterStore.currentStep = CHAPTER_STEP.IDLE;
+        this._gameStore.currentStep = GAME_STEP.IDLE;
+        this._mainStore.chapterId = 0;
+        this._mainStore.gameId = 0;
         await this._router.push('/accueil');
       }
     });

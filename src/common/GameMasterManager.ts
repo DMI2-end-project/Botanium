@@ -4,7 +4,7 @@ import {useGameStore} from "../stores/gameStore";
 import {useChapterStore} from "../stores/chapterStore";
 import {getSocket} from "./../client";
 import {leading} from "../common/Lib";
-import {CHAPTER_STATUS, EVENT, GAME_STEP, AUDIO_EVENT} from "./Constants";
+import {CHAPTER_STATUS, EVENT, GAME_STEP, AUDIO_EVENT, CHAPTER_STEP} from "./Constants";
 import {DatabaseManagerInstance} from "./DatabaseManager";
 
 class GameMasterManager {
@@ -101,6 +101,7 @@ class GameMasterManager {
 
     this._mainStore.isTransition = true;
     setTimeout(async () => {
+      this._chapterStore.currentStep = CHAPTER_STEP.IDLE;
       await this._router.push('/exercice/' + this._mainStore.getFullGameId);
       this._mainStore.isTransition = false;
     }, 700);
@@ -138,7 +139,7 @@ class GameMasterManager {
       gameId: this._mainStore.gameId,
       //currentSection: this._mainStore.gameId
     });
-    // this._gameStore.currentStep = GAME_STEP.IDLE;
+    this._gameStore.currentStep = GAME_STEP.IDLE;
     this._mainStore.isTransition = true;
     setTimeout(async () => {
       await this._router.push('/chapitre/' + this._mainStore.chapterId)
@@ -153,6 +154,11 @@ class GameMasterManager {
     await this._socket.emit(EVENT.END_CHAPTER, {
       roomId: this._mainStore.roomId,
     })
+    this._chapterStore.currentStep = CHAPTER_STEP.IDLE;
+    this._gameStore.currentStep = GAME_STEP.IDLE;
+    this._mainStore.chapterId = 0;
+    this._mainStore.gameId = 0;
+
     this._mainStore.isTransition = true;
     setTimeout(async () => {
       await this._router.push('/chapitres');
@@ -164,6 +170,10 @@ class GameMasterManager {
     await this._socket.emit('killRoom', {
       roomId: this._mainStore.roomId,
     });
+    this._chapterStore.currentStep = CHAPTER_STEP.IDLE;
+    this._gameStore.currentStep = GAME_STEP.IDLE;
+    this._mainStore.chapterId = 0;
+    this._mainStore.gameId = 0;
     await this._router.push({name: 'Dashboard'});
   }
 }

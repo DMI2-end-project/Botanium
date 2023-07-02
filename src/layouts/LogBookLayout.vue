@@ -3,7 +3,6 @@
     <RoundButton v-if="!logBookStore.isClosable" :color="COLOR.YELLOW" @click="router.push({name: mainStore.role === ROLE.STUDENT ? 'Home' : 'Dashboard'})"><Home /></RoundButton>
     <RoundButton v-if="logBookStore.isClosable" :color="COLOR.RED" @click="closeElements"><Cross /></RoundButton>
     <Info text="Ajoute une page au carnet de bord pour commencer !"><Speaker /></Info>
-    <button @click="disconnect" class="block">Déconnexion</button>
   </header>
   <main class="w-screen h-screen bg-cover bg-texture-green">
 
@@ -40,10 +39,7 @@ export default defineComponent({
     return {
       mainStore: useMainStore(),
       logBookStore: useLogBookStore(),
-      gameStore: useGameStore(),
       router: useRouter(),
-      socket: getSocket(),
-      pb: DatabaseManagerInstance.pb
     }
   },
   computed: {
@@ -57,15 +53,6 @@ export default defineComponent({
   methods: {
     DatabaseManagerInstance() {
       return DatabaseManagerInstance
-    },
-    disconnect() {
-      this.socket.disconnect();
-      this.pb.authStore.clear();
-      this.mainStore.reset();
-      this.gameStore.reset();
-      this.router.push({
-        name: 'Login'
-      });
     },
     closeElements() {
       this.logBookStore.closeElements = true
