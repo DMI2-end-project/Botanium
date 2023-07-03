@@ -19,7 +19,7 @@
       <Loading class="loading-animation w-8 aspect-square"/>
     </Info>
 
-    <AnimatedFoliage :show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION"/>
+    <AnimatedFoliage v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" :show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION"/>
   </div>
 
 </template>

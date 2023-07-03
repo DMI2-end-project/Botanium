@@ -2,14 +2,20 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
+  props: {
+    show: {
+      default: false,
+      type: Boolean,
+    }
+  },
   data() {
     return {
-      show: false,
+      isShow: false,
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.show = true
+      this.isShow = true
     })
   },
 });
@@ -17,23 +23,23 @@ export default defineComponent({
 
 <template>
   <Transition name="bgTransitionLeft1">
-    <div v-if="show" class="absolute w-auto h-1/2 top-[-10%] -left-[10%] origin-bottom">
+    <div v-if="isShow && show" class="absolute w-auto h-1/2 top-[-25%] -left-[20%] origin-bottom">
       <img :src="'/images/illu-leaf-drop.png'" alt="" class="w-full h-full object-contain origin-top-left translate-x-full -scale-x-100">
     </div>
   </Transition>
   <Transition name="bgTransitionLeft2">
-    <div v-if="show" class="absolute w-auto h-full left-[-45vh] bottom-[-50vh]">
+    <div v-if="isShow && show" class="absolute w-auto h-[70vh] left-[-25vh] bottom-[-30vh]">
       <img :src="'/images/illu-carrot.png'" alt="" class="w-full h-full object-contain origin-bottom rotate-[-10deg]"/>
     </div>
   </Transition>
   <Transition name="bgTransitionLeft3">
-    <div v-if="show" class="absolute w-auto h-full left-[-80vh] bottom-[-55vh]">
+    <div v-if="isShow && show" class="absolute w-auto h-[70vh] left-[-58vh] bottom-[-35vh]">
       <img :src="'/images/illu-carrot.png'" alt="" class="w-full h-full object-contain origin-bottom rotate-[15deg]">
     </div>
   </Transition>
   <Transition name="bgTransitionRight2">
     <div
-      v-if="show"
+      v-if="isShow && show"
         class="absolute max-w-[65vw] max-h-[100vh] h-auto -right-[25%] -bottom-[40%]">
       <img :src="'/images/illu-carrot.png'" alt="" class="object-contain origin-bottom">
     </div>
