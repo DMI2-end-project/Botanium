@@ -50,9 +50,11 @@ export default defineComponent({
   },
   methods: {
     killRoom() {
+      this.closeModal()
       this.GMInstance?.killRoom();
     },
     next() {
+      this.closeModal()
       GameMasterManagerInstance.endGame()
     },
     closeModal() {
