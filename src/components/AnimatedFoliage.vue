@@ -1,31 +1,40 @@
-<script setup lang="ts">
-const props = defineProps({
-  show: {
-    type: Boolean,
-    default: false
-  }
-})
+<script lang="ts">
+import {defineComponent} from 'vue'
+
+export default defineComponent({
+  data() {
+    return {
+      show: false,
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.show = true
+    })
+  },
+});
 </script>
 
 <template>
-  <Transition v-if="props.show" name="bgTransitionLeft1">
-    <div class="absolute w-auto h-1/2 translate-x-[-55%] translate-y-[-30%] -scale-x-100">
-      <img :src="'/images/illu-leaf-drop.png'" alt="" class="w-full h-full object-contain origin-top-left">
+  <Transition name="bgTransitionLeft1">
+    <div v-if="show" class="absolute w-auto h-1/2 top-[-10%] -left-[10%] origin-bottom">
+      <img :src="'/images/illu-leaf-drop.png'" alt="" class="w-full h-full object-contain origin-top-left translate-x-full -scale-x-100">
     </div>
   </Transition>
-  <Transition v-if="props.show" name="bgTransitionLeft2">
-    <div>
-      <div class="absolute w-auto h-full left-0 bottom-0 translate-x-[-70%] translate-y-[60%]">
-        <img :src="'/images/illu-carrot.png'" alt="" class="w-full h-full object-contain origin-bottom"/>
-      </div>
-      <div class="absolute w-auto h-full left-0 bottom-0 translate-x-[-80%] translate-y-[50%] rotate-[35deg]">
-        <img :src="'/images/illu-carrot.png'" alt="" class="w-full h-full object-contain origin-bottom">
-      </div>
+  <Transition name="bgTransitionLeft2">
+    <div v-if="show" class="absolute w-auto h-full left-[-45vh] bottom-[-50vh]">
+      <img :src="'/images/illu-carrot.png'" alt="" class="w-full h-full object-contain origin-bottom rotate-[-10deg]"/>
     </div>
   </Transition>
-  <Transition v-if="props.show" name="bgTransitionRight2">
+  <Transition name="bgTransitionLeft3">
+    <div v-if="show" class="absolute w-auto h-full left-[-80vh] bottom-[-55vh]">
+      <img :src="'/images/illu-carrot.png'" alt="" class="w-full h-full object-contain origin-bottom rotate-[15deg]">
+    </div>
+  </Transition>
+  <Transition name="bgTransitionRight2">
     <div
-        class="absolute max-w-2/3 h-auto right-0 bottom-0 translate-x-[35%] translate-y-[55%]">
+      v-if="show"
+        class="absolute max-w-[65vw] max-h-[100vh] h-auto -right-[25%] -bottom-[40%]">
       <img :src="'/images/illu-carrot.png'" alt="" class="object-contain origin-bottom">
     </div>
   </Transition>
@@ -73,7 +82,9 @@ const props = defineProps({
 .bgTransitionLeft1-enter-from,
 .bgTransitionLeft1-leave-to,
 .bgTransitionLeft2-enter-from,
-.bgTransitionLeft2-leave-to {
+.bgTransitionLeft2-leave-to,
+.bgTransitionLeft3-enter-from,
+.bgTransitionLeft3-leave-to {
   transform: scaleX(1.2) translate(-200px, 30px) rotate(-50deg);
   opacity: 0;
 }
@@ -81,7 +92,9 @@ const props = defineProps({
 .bgTransitionRight1-enter-from,
 .bgTransitionRight1-leave-to,
 .bgTransitionRight2-enter-from,
-.bgTransitionRight2-leave-to {
+.bgTransitionRight2-leave-to,
+.bgTransitionRight3-enter-from,
+.bgTransitionRight3-leave-to {
   transform: scaleX(1.2) translate(200px, 30px) rotate(50deg);
   opacity: 0;
 }
@@ -98,6 +111,12 @@ const props = defineProps({
   opacity 0.2s ease-out 0.2s;
 }
 
+.bgTransitionLeft3-enter-active,
+.bgTransitionRight3-enter-active {
+  transition: transform 1.2s cubic-bezier(0.445, 1.375, 0.305, 1.000) 0.4s,
+  opacity 0.2s ease-out 0.4s;
+}
+
 .bgTransitionLeft1-leave-active,
 .bgTransitionRight1-leave-active {
   transition: transform 0.9s cubic-bezier(0.36, 0, 0.66, -0.56) 0.2s,
@@ -108,6 +127,12 @@ const props = defineProps({
 .bgTransitionRight2-leave-active {
   transition: transform 0.9s cubic-bezier(0.36, 0, 0.66, -0.56),
   opacity 0.2s ease-in 0.7s;
+}
+
+.bgTransitionLeft3-leave-active,
+.bgTransitionRight3-leave-active {
+  transition: transform 0.9s cubic-bezier(0.36, 0, 0.66, -0.56) 0.4s,
+  opacity 0.2s ease-in 1.1s;
 }
 
 </style>
