@@ -66,6 +66,7 @@ import Cross from "./../../../assets/svg/ico-cross.svg?component";
 import Stickers from "./../../../assets/svg/ico-stickers.svg?component";
 import Flower from "./../../../assets/svg/ico-flower.svg?component";
 import Underline from "./../../../assets/svg/underline.svg?component";
+import {AudioManagerInstance} from "../../../common/AudioManager";
 
 export default {
   name: "StickerElementComponent",
