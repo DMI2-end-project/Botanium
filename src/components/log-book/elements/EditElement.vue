@@ -32,7 +32,7 @@
         </button>
       </div>
       <div v-if="onWrite" class="edit-corner w-full h-full p-6 flex flex-col items-end">
-        <textarea v-model="textData.content" autofocus
+        <textarea v-model="textData.content" autofocus @input="onWriting"
                   class="w-full h-full resize-none text-xl p-12 font-bold bg-transparent border-none outline-none">
         </textarea>
         <RoundButton @click="saveText" class="mt-10 min-h-[80px]" :color="COLOR.GREEN_MEDIUM_BEIGE">
@@ -64,13 +64,14 @@ import {useLogBookStore} from "./../../../stores/logBookStore";
 import Draw from "./../Draw.vue"
 import type {DrawData, TextData} from './../../../common/Interfaces'
 import {base64ToFile} from './../../../common/Lib';
-import {COLOR, LOGBOOK_STEP} from './../../../common/Constants';
+import {AUDIO, COLOR, LOGBOOK_STEP} from './../../../common/Constants';
 import RoundButton from "./../../common/RoundButton.vue"
 import ModalView from "./../../common/ModalView.vue";
 import WriteIcon from "./../../../assets/svg/ico-write.svg?component"
 import DrawIcon from "./../../../assets/svg/ico-draw.svg?component"
 import CheckIcon from "./../../../assets/svg/ico-check.svg?component"
 import PenIcon from "./../../../assets/svg/ico-pen.svg?component"
+import {AudioManagerInstance} from "../../../common/AudioManager";
 
 export default {
   name: "EditElementComponent",
@@ -156,6 +157,14 @@ export default {
     this.textData.page = this.drawData.page = this.pageId;
   },
   methods: {
+    onWriting() {
+      console.log('onChange');
+
+      const randomIndex = Math.random() < 0.5 ? 0 : 1;
+      const randomConstant = randomIndex === 0 ? AUDIO.WRITING1 : AUDIO.WRITING2;
+
+      AudioManagerInstance.play(randomConstant);
+    },
     modify() {
       this.onModify = true
       this.logBookStore.isClosable = true
@@ -186,13 +195,15 @@ export default {
 
       this.mainStore.closeModal();
       this.logBookStore.currentStep = LOGBOOK_STEP.SELECT_ACTION;
+      AudioManagerInstance.play(AUDIO.POP);
+
       setTimeout(() => {
         this.onWrite = false;
         this.onDraw = false;
         this.onModify = false;
         this.onSignature = false;
         this.logBookStore.isClosable = false
-      }, 600)
+      }, 600);
     },
     saveDraw(data: string) {
       this.onSignature = true

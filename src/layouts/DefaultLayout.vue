@@ -30,8 +30,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-beige-medium min-h-screen flex flex-col">
-    <header class="w-full flex items-center z-20">
+  <div class="bg-texture-beige min-h-screen flex flex-col">
+    <header class=" w-full flex items-center z-20">
       <RoundButton v-if="show" :color="COLOR.YELLOW" class="!absolute top-6 left-8"
                    @click="router.push({name: mainStore.role === ROLE.STUDENT ? 'Home' : 'Dashboard'})">
         <Home/>

@@ -2,7 +2,9 @@
   <div class="fixed z-30 w-screen h-screen bg-green/75 flex flex-col justify-center items-center">
     <div class="bg-beige-medium py-8 px-12 w-3/4 mt-20 rounded-lg">
       <div class="flex justify-around gap-6 sm:gap-12 lg:gap-16">
-        <button v-for="template in numberTemplate" :v-bind="template" @click="templateId = template" class="my-4 flex-1 border-0 p-0 overflow-hidden drop-shadow-lg outline outline-8 transition-all duration-400" :class="templateId === template ? 'outline-yellow' : 'outline-transparent'">
+        <button v-for="template in numberTemplate" :v-bind="template" @click="templateId = template"
+                class="my-4 flex-1 border-0 p-0 overflow-hidden drop-shadow-lg outline outline-8 transition-all duration-400"
+                :class="templateId === template ? 'outline-yellow' : 'outline-transparent'">
           <!--img alt="" :src="'/log-book/templates/' + template + '.svg'" class="w-full"-->
           <SvgIcon source="templates" :name="`${template}`"/>
         </button>
@@ -17,11 +19,12 @@
 
 <script lang="ts">
 import RoundButton from './../common/RoundButton.vue'
-import {COLOR, LOGBOOK_STEP} from "./../../common/Constants";
+import {AUDIO, COLOR, LOGBOOK_STEP} from "./../../common/Constants";
 import Check from "./../../assets/svg/ico-check.svg?component";
 import {useMainStore} from '../../stores/mainStore';
 import {useLogBookStore} from '../../stores/logBookStore';
 import SvgIcon from "../common/SvgIcon.vue";
+import {AudioManagerInstance} from "../../common/AudioManager";
 
 export default {
   name: "AddPageComponent",
@@ -65,6 +68,7 @@ export default {
     validate() {
       this.$emit('close', this.templateId)
       this.logBookStore.currentStep = LOGBOOK_STEP.SELECT_ACTION;
+      setTimeout(() => AudioManagerInstance.play(AUDIO.WOOSH, 1, 0.7), 350);
     }
   },
   unmounted() {

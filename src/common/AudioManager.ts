@@ -13,8 +13,8 @@ class AudioManager {
     this.addNew('/audio/trash-V1.mp3', AUDIO.TRASH);
     this.addNew('/audio/flip-page-V1.mp3', AUDIO.FLIP);
     this.addNew('/audio/drawing-V1.mp3', AUDIO.DRAWING);
-    this.addNew('/audio/', AUDIO.WRITING1);
-    this.addNew('/audio/', AUDIO.WRITING2);
+    this.addNew('/audio/writing-1-V1.mp3', AUDIO.WRITING1);
+    this.addNew('/audio/writing-2-V1.mp3', AUDIO.WRITING2);
     this.addNew('/audio/wrong-answer-V1.mp3', AUDIO.WRONG_ANSWER_GROUP_TABLET);
     this.addNew('/audio/good-answer-group-tablet-V1.mp3', AUDIO.GOOD_ANSWER_GROUP_TABLET);
     this.addNew('/audio/good-answer-group-V1.mp3', AUDIO.GOOD_ANSWER_GROUP);
@@ -32,21 +32,16 @@ class AudioManager {
     this._audios.push({audio, name});
   }
   
-  play(name: AUDIO, volume: number = 1) {
+  play(name: AUDIO, volume: number = 0.3, playbackRate =1) {
     let item = this._audios.find(item => item.name === name)
     item.audio.currentTime = 0;
     item.audio.volume = volume;
+    item.audio.playbackRate = playbackRate;
     item.audio.play();
-    while (item.audio.volume < volume) {
-      item.audio.volume += 0.1;
-    }
   }
   
   pause(name: AUDIO) {
     let item = this._audios.find(item => item.name === name)
-    while (item.audio.volume > 0.1) {
-      item.audio.volume -= 0.1;
-    }
     item.audio.pause();
     item.audio.currentTime = 0;
   }

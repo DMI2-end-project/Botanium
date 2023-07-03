@@ -66,9 +66,10 @@ import PageContent from './PageContent.vue';
 import AddPage from './AddPage.vue';
 import type {PageData} from './../../common/Interfaces'
 import RoundButton from './../common/RoundButton.vue'
-import {COLOR, LOGBOOK_STEP, SIZE} from "./../../common/Constants";
+import {AUDIO, COLOR, LOGBOOK_STEP, SIZE} from "./../../common/Constants";
 import Arrow from "./../../assets/svg/ico-chevron.svg?component";
 import Play from "./../../assets/svg/ico-play.svg?component";
+import {AudioManagerInstance} from "../../common/AudioManager";
 
 export default defineComponent({
   name: "BookComponent",
@@ -138,6 +139,7 @@ export default defineComponent({
     },
     nextPage() {
       this.nextVideo?.play();
+      setTimeout(() => AudioManagerInstance.play(AUDIO.FLIP, 1), 300);
       this.nextVideo?.classList.add("first");
       this.previousVideo?.classList.remove("first");
       this.openVideo?.classList.remove("first");
@@ -145,6 +147,7 @@ export default defineComponent({
     },
     previousPage() {
       this.previousVideo?.play();
+      setTimeout(() => AudioManagerInstance.play(AUDIO.FLIP, 1), 300);
       this.previousVideo?.classList.add("first");
       this.nextVideo?.classList.remove("first");
       this.openVideo?.classList.remove("first");

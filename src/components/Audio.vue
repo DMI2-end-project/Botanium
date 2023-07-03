@@ -14,6 +14,7 @@ const props = defineProps({
 });
 
 const audio = new Audio(props.audioPath);
+audio.volume = 0.6;
 //audio.volume = // entre 0 et 1
 const isPlaying = ref(false);
 

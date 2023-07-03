@@ -1,11 +1,13 @@
 <template>
   <div>
     <button
-        class="sticker-element w-full h-min bg-beige-medium/50 text-beige-dark rounded-full relative p-0 flex justify-center items-center outline outline-8 transition-all duration-400"
-        :class="(onModify ? 'outline-yellow' : 'outline-transparent')" @click="modify">
-      <!--img v-if="stickerData.idSticker >= 0" alt="" :src="getStickerUrl(stickerData.idSticker)" class="h-full w-full rounded-full object-contain absolute shadow-md"-->
-      <SvgIcon v-if="stickerData.idSticker >= 0" source="stickers" :name="`${stickerData.idSticker}`"
-               class="h-full w-full rounded-full object-contain absolute shadow-md"/>
+        class="sticker-element w-full h-min bg-beige-medium transition-opacity text-beige-dark rounded-full relative p-0 flex justify-center items-center outline outline-8 transition-all duration-400"
+        :class="`${onModify ? 'outline-yellow' : 'outline-transparent'} ${stickerData.idSticker >= 0 ? 'bg-opacity-0' : 'bg-opacity-50'}`"
+        @click="modify">
+      <img v-if="stickerData.idSticker >= 0" alt="" :src="getStickerUrl(stickerData.idSticker)"
+           class="h-full w-full rounded-full object-contain absolute"><!--  shadow-md -->
+      <!--SvgIcon v-if="stickerData.idSticker >= 0" source="stickers" :name="`${stickerData.idSticker}`"
+               class="h-full w-full rounded-full object-contain absolute shadow-md"/-->
       <p v-if="!(stickerData.idSticker >= 0)" class="absolute">
         <Stickers class="w-2/3 mx-auto" :class="onModify ? 'text-yellow' : ''"/>
       </p>
@@ -30,7 +32,8 @@
               <p>Les autocollants du jardin</p>
               <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
                 <div v-for="index in numberStickers" :v-bind="index" class="w-32 h-32 flex justify-center items-center">
-                  <button @click="changeSticker(index)" class="p-0 overflow-hidden rounded-full shadow-md"
+                  <button @click="changeSticker(index)"
+                          class="!bg-beige-medium p-2 overflow-hidden rounded-full shadow-md"
                           :class="stickerData.idSticker === index ? 'outline outline-8 outline-yellow' : ''">
                     <img alt="" :src="getStickerUrl(index)" class="object-contain w-full h-full pointer-events-none">
                   </button>
@@ -47,7 +50,7 @@
 <script lang="ts">
 import {useLogBookStore} from "../../../stores/logBookStore";
 import {DatabaseManagerInstance} from "./../../../common/DatabaseManager";
-import {COLOR, LOGBOOK_STEP} from "./../../../common/Constants";
+import {AUDIO, COLOR, LOGBOOK_STEP} from "./../../../common/Constants";
 import type {StickerData} from './../../../common/Interfaces'
 import RoundButton from './../../common/RoundButton.vue';
 import SvgIcon from "../../common/SvgIcon.vue";
@@ -55,12 +58,16 @@ import SvgIcon from "../../common/SvgIcon.vue";
 import Check from "./../../../assets/svg/ico-check.svg?component";
 import Cross from "./../../../assets/svg/ico-cross.svg?component";
 import Stickers from "./../../../assets/svg/ico-stickers.svg?component";
+import {AudioManagerInstance} from "../../../common/AudioManager";
 
 export default {
   name: "StickerElementComponent",
   components: {
     SvgIcon,
-    RoundButton, Check, Cross, Stickers
+    RoundButton,
+    Check,
+    Cross,
+    Stickers
   },
   props: {
     pageId: {
@@ -85,7 +92,7 @@ export default {
       onModify: false as boolean,
       stickers: [] as Array<StickerData>,
       stickerSelected: {} as StickerData,
-      numberStickers: 3 as number
+      numberStickers: 12 as number
     }
   },
   computed: {
@@ -110,7 +117,7 @@ export default {
       this.logBookStore.currentStep = LOGBOOK_STEP.SELECT_STICKER;
     },
     getStickerUrl(idSticker: number): string {
-      return '/log-book/stickers/' + idSticker + '.svg'
+      return '/images/stickers/' + idSticker + '.png'
     },
     changeSticker(index: number) {
       if (this.stickerData.idSticker === index) {
@@ -118,6 +125,7 @@ export default {
         return
       }
       this.stickerData.idSticker = index;
+      AudioManagerInstance.play(AUDIO.POP);
     },
     async saveData() {
       if (this.stickerDataLast.id) {

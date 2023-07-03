@@ -8,6 +8,7 @@
       <Cross/>
     </RoundButton>
     <Info class="z-10" :key="logBookStore.currentStep" :audio-path="getAudio()" :text="getInstruction()"/>
+    <RoundButton class="opacity-0 pointer-events-none"/>
   </header>
   <main class="w-screen h-screen bg-cover bg-texture-green">
 

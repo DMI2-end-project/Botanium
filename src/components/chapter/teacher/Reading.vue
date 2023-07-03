@@ -59,7 +59,7 @@ chapterStore.$subscribe((_, state) => {
   <Transition name="slide">
     <div v-if="chapterStore.currentStep === CHAPTER_STEP.STORY" v-show="texts.length <= 1"
          class="absolute m-6 md:w-2/3 w-3/4 bottom-0 right-0 bg-beige rounded-lg flex items-center gap-6 p-6 mt-auto">
-      <p class="w-full h-full flex flex-col justify-center text-green font-bold"
+      <p class="w-full h-full flex flex-col justify-center text-green font-bold lg:text-[1.375rem]"
          v-html="texts[0]"/>
       <RoundButton :color="COLOR.PINK" @click="$emit('next')">
         <Arrow class="rotate-180"/>

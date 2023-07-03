@@ -43,12 +43,13 @@ import type {PhotoData} from './../../../common/Interfaces'
 import {useMainStore} from '../../../stores/mainStore';
 import {useLogBookStore} from '../../../stores/logBookStore';
 import RoundButton from './../../common/RoundButton.vue';
-import {COLOR, LOGBOOK_STEP} from "./../../../common/Constants";
+import {AUDIO, COLOR, LOGBOOK_STEP} from "./../../../common/Constants";
 import Check from "./../../../assets/svg/ico-check.svg?component";
 import Cross from "./../../../assets/svg/ico-cross.svg?component";
 import Picture from "./../../../assets/svg/ico-picture.svg?component";
 import Flower from "./../../../assets/svg/ico-flower.svg?component";
 import Underline from "./../../../assets/svg/underline.svg?component";
+import {AudioManagerInstance} from "../../../common/AudioManager";
 
 interface SubArray {
   [key: string]: any;
@@ -131,6 +132,7 @@ export default {
         return
       }
       this.photoData = photo
+      AudioManagerInstance.play(AUDIO.POP);
       this.updateRotate()
       this.updateColor()
     },
