@@ -1,6 +1,6 @@
 <template>
   <Pulse ref="pulse" :color="feedbackMessage.number === 0 || feedbackMessage.number === 1 ? 'green' : (feedbackMessage.number === 2 || feedbackMessage.number === 3 ? 'red' : 'purple')" :decibel="decibel" />
-  <div ref="feedback" class="feedback relatif text-purple uppercase text-2xl font-sans font-black"></div>
+  <div ref="feedback" class="feedback relatif text-white uppercase text-2xl font-sans font-black"></div>
   <!-- <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p> -->
   <!-- <div class="fixed top-[200px] left-[50px]">
     <p class="w-[200px]">gain : {{ gain }}</p>
@@ -152,8 +152,22 @@ export default defineComponent({
       div.style.alignItems = 'center'
       img.style.width = '60px'
       img.style.height = '60px'
-      div.style.top = 'calc(' + (Math.random() * 20 + 40) + '%)'
-      div.style.left = 'calc(' + (Math.random() * 20 + 40) + '%)'
+
+      const randomAngle = Math.random() * 2 * Math.PI;
+
+      // Coordonnées du centre du cercle
+      const centerX = 0; // Coordonnée X du centre du cercle
+      const centerY = 0; // Coordonnée Y du centre du cercle
+
+      // Rayon du cercle
+      const radius = 130; // Remplacez cette valeur par le rayon réel de votre cercle
+
+      // Calculer les coordonnées sur le cercle
+      const pointX = centerX + radius * Math.cos(randomAngle) + (Math.random() - 0.5) * 60;
+      const pointY = centerY + radius * Math.sin(randomAngle) + (Math.random() - 0.5) * 60;
+
+      div.style.top = 'calc(' + pointX + 'px + 50%)'
+      div.style.left = 'calc(' + pointY + 'px + 50%)'
       div.style.transform = 'scale(0) translate(-50%, -50%)'
       div.style.transformOrigin = 'top left'
       // div.style.opacity = '0'
@@ -181,9 +195,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style scoped>
-.feedback {
-  -webkit-text-stroke: 1px #fff;
-}
-</style>
