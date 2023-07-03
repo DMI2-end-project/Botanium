@@ -48,7 +48,7 @@ export default class Room {
       isTaken: false,
     },
     {
-      name: "Les arrosoirs",
+      name: "Les tomates",
       isTaken: false,
     },
     {

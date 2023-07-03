@@ -5,7 +5,7 @@
     "colorBreadcrumb": "yellow",
     "introduction": {
       "title": "Les bienfaits des carottes",
-      "text": "Retrouvez tous ensemble les bienfaits de la carotte et communiquez les à Capucine !"
+      "text": "Retrouvez tous ensemble les bienfaits de la carotte et communiquez-les à Capucine !"
     },
     "gameSequences": [
       {
@@ -180,7 +180,7 @@
           }
         ],
         "congratulation": {
-          "text": "Grâce à vous Capucine connait les bienfaits des carottes !"
+          "text": "Grâce à vous Capucine connaît les bienfaits des carottes !"
         }
       }
     ]
@@ -200,7 +200,7 @@
         "microNeeded": false,
         "teams": [
           {
-            "instruction": "Papi lapin vient de récolter cette carotte de son jardin : Il faut la nettoyer ! Au boulot !",
+            "instruction": "Papi lapin vient de récolter cette carotte de son jardin : il faut la nettoyer ! Au boulot !",
             "sprite": "soil.png",
             "background": "amfine.png",
             "points": [
@@ -403,7 +403,7 @@
           }
         ],
         "congratulation": {
-          "text": "Grâce à vous Capucine connait les différents types des carottes !"
+          "text": "Grâce à vous Capucine connaît les différents types des carottes !"
         }
       }
     ]
@@ -439,7 +439,7 @@
           {
             "instruction": "Dose la bonne quantité de cailloux dans la terre pour faire pousser de belles carottes",
             "element": "rock",
-            "clue": "Si il y a trop de cailloux dans la terre elle ne pourra pas se développer comme il faut.",
+            "clue": "Si il y a trop de cailloux dans la terre, elle ne pourra pas se développer comme il faut.",
             "congratulation": {
               "title": "Bravo !",
               "text": "La carotte a besoin d’un sol léger et sableux, avec peu de cailloux pour pousser.",

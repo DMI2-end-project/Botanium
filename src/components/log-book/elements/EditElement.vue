@@ -46,10 +46,10 @@
   </div>
   <ModalView class="z-20" v-if="onSignature" :close="false" :click-outside="false">
     <div class="relative my-2 flex flex-col items-center">
-      <h3 v-if="onWrite" class="mt-8">Note le ou les prénoms des élèves qui ont vécu ce souvenir au jardin</h3>
-      <h3 v-if="onDraw" class="mt-8">Ecris ton prénom pour signer ton dessin</h3>
-      <input type="text" v-model="signature" class="mt-6 px-6 py-4 rounded-lg min-w-[400px]"
-             placeholder="Ecris ici le ou les prénoms ">
+      <h3 v-if="onWrite" class="mt-8">Qui a écrit ce souvenir ?</h3>
+      <h3 v-if="onDraw" class="mt-8">Qui a réalisé ce dessin ?</h3>
+      <input type="text" v-model="signature" class="mt-6 px-6 py-4 rounded-lg min-w-[400px] outline-green-medium"
+             placeholder="Écris ton prénom">
       <RoundButton :isActive="signature != ''" @click="saveData" :color="COLOR.GREEN_MEDIUM_BEIGE" class="mt-12">
         <CheckIcon/>
       </RoundButton>

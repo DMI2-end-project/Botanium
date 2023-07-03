@@ -55,7 +55,7 @@ export default defineComponent({
 
       const animation = PIXI.AnimatedSprite.fromFrames(animations["capu_01"]);
 
-      animation.animationSpeed = 0.65;
+      animation.animationSpeed = 0.5;
       animation.width = app.view.width;
       animation.height = app.view.height;
       animation.anchor.set(0.5);
