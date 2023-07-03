@@ -10,8 +10,24 @@
           <img class="mt-auto" src="/chapter/book.png" alt=""/>
           <div
               class="absolute w-[55%] h-[80%] bottom-[2%] lg:bottom-[8%] right-[12%] -rotate-[3.52deg] flex flex-col items-center justify-center text-center">
-            <img class="w-[50%] sm:w-[65%] lg:w-[80%]"
-                 :src="`/chapter/${mainStore.getChapterId}/first-page-chapter-${mainStore.getChapterId}.png`" alt=""/>
+            <!-- <img class="w-[50%] sm:w-[65%] lg:w-[80%]"
+                 :src="`/chapter/${mainStore.getChapterId}/first-page-chapter-${mainStore.getChapterId}.png`" alt=""/> -->
+            <div class="w-[50%] sm:w-[65%] lg:w-[70%] xl:w-[80%] aspect-square relative">
+              <Transition name="scale-speed">
+                <img v-show="show" class="absolute w-[80%] object-contain inset-0 m-auto" src="/chapter/001/first-page/circle.svg" alt="" >
+              </Transition>
+              <div class="mask absolute w-[100%] inset-0 m-auto w-full h-full">
+                <Transition name="appear1">
+                  <img v-show="show" class="absolute w-[70%] inset-0 bottom-[10%] left-[-6%] m-auto h-full object-contain origin-bottom" src="/chapter/001/first-page/feuille.png" alt=""/>
+                </Transition>
+                <Transition name="appear2">
+                  <img v-show="show" class="absolute w-[50%] inset-0 left-[20%] bottom-[-10%] m-auto h-full object-contain origin-bottom" src="/chapter/001/first-page/pinpin.png" alt=""/>
+                </Transition>
+                <Transition name="appear3">
+                  <img v-show="show" class="absolute w-[30%] inset-0 left-[-10%] bottom-[-60%] m-auto object-contain origin-bottom" src="/chapter/001/first-page/capu.png" alt=""/>
+                </Transition>
+              </div>
+            </div>
             <h2 class="font-bold text-green-medium">Chapitre {{ mainStore.chapterId }}</h2>
             <h1 class="font-hand-written text-sm sm:text-md lg:text-xl text-green leading-snug mt-2 lg:mt-6">
               {{ chapterStore.data ? chapterStore.data.title : '' }}</h1>
@@ -73,7 +89,8 @@ export default defineComponent({
       chapterStore: useChapterStore(),
       GMInstance: GameMasterManagerInstance,
       router: useRouter(),
-      isModalOpen: false
+      isModalOpen: false,
+      show: false
     }
   },
   computed: {
@@ -92,6 +109,11 @@ export default defineComponent({
     totalTexts() {
       return this.chapterStore.data?.sections[this.mainStore.gameId].length;
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.show = true
+    }, 300)
   },
   methods: {
     next() {
@@ -134,3 +156,48 @@ export default defineComponent({
   }
 });
 </script>
+
+
+<style scoped>
+.mask {
+  -webkit-mask-image: url('/chapter/001/first-page/mask.svg');
+  mask-image: url('/chapter/001/first-page/mask.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: top;
+  mask-position: top;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.appear1-enter-from {
+    opacity: 0;
+    transform: scale(0.6) translateY(10%) rotate(25deg);
+}
+
+.appear1-enter-active, .appear2-enter-active, .appear3-enter-active{
+    transition: opacity 0.1s ease-out, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.appear1-enter-active {
+  transition-delay: 0.2s;
+}
+
+.appear2-enter-from {
+    opacity: 0;
+    transform: scale(0.8) translate(20%, 20%) rotate(-15deg);
+}
+
+.appear2-enter-active {
+  transition-delay: 0.3s;
+}
+
+.appear3-enter-from {
+    opacity: 0;
+    transform: scale(0.8) translate(-20%, 20%) rotate(15deg);
+}
+
+.appear3-enter-active {
+  transition-delay: 0.5s;
+}
+</style>

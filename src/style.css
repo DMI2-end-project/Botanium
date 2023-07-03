@@ -349,6 +349,20 @@ button:focus-visible {
     transition: opacity 0.5s ease-out, transform 0.7s cubic-bezier(0.36, 0, 0.66, -0.56);
 }
 
+.scale-speed-enter-from,
+.scale-speed-leave-to {
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+.scale-speed-enter-active {
+    transition: opacity 0.2s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scale-speed-leave-active {
+    transition: opacity 0.2s ease-out, transform 0.4s cubic-bezier(0.36, 0, 0.66, -0.56);
+}
+
 .round-button-0-enter-from,
 .round-button-0-leave-to,
 .round-button-1-enter-from,
