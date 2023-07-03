@@ -2,16 +2,21 @@
 import {computed} from "vue";
 import {useGameStore} from "../../stores/gameStore";
 import {useMainStore} from "../../stores/mainStore";
-import {COLOR, SIZE, ROLE} from "../../common/Constants";
+import {AUDIO, COLOR, ROLE, SIZE} from "../../common/Constants";
 import {GameMasterManagerInstance} from "../../common/GameMasterManager"
 import RoundButton from "../common/RoundButton.vue";
 import RoundItemVue from "../common/RoundItem.vue";
 
 import Trophy from "./../../assets/svg/ico-trophy.svg?component";
 import Arrow from "./../../assets/svg/ico-arrow.svg?component";
+import {AudioManagerInstance} from "../../common/AudioManager";
 
 const mainStore = useMainStore();
 const gameStore = useGameStore();
+
+if (mainStore.role === ROLE.TEACHER) {
+  AudioManagerInstance.play(AUDIO.VICTORY);
+}
 
 const currentSection = computed<any>(() => {
   return gameStore.data?.gameSequences[gameStore.currentSequence];

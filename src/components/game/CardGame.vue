@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import Check from '../../assets/svg/ico-check-transparency.svg?component';
 import Deco from '../../assets/svg/card-corner.svg?component';
+import {watch} from "vue";
+import {AudioManagerInstance} from "../../common/AudioManager";
+import {AUDIO} from "../../common/Constants";
 
 const props = defineProps({
   mode: {
@@ -28,6 +31,16 @@ const props = defineProps({
     }
   },
 });
+
+watch(() => props.answerState, async (newAnswer, _) => {
+  if (newAnswer === 'error') {
+    AudioManagerInstance.play(AUDIO.WRONG_ANSWER_GROUP_TABLET);
+  }
+
+  if(newAnswer === 'valid') {
+    AudioManagerInstance.play(AUDIO.GOOD_ANSWER_GROUP_TABLET);
+  }
+})
 
 </script>
 

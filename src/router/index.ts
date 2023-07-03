@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory, RouterOptions} from "vue-router";
 import {useMainStore} from "../stores/mainStore";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {ROLE} from "../common/Constants";
+import {AUDIO, ROLE} from "../common/Constants";
 
 import Login from "../pages/Login.vue";
 import Home from "../pages/Home.vue";
@@ -13,6 +13,7 @@ import Chapters from "../pages/Chapters.vue";
 import PhotoTaking from "../pages/PhotoTaking.vue";
 import Scan from "../pages/Scan.vue";
 import Dev from "../pages/Dev.vue";
+import {AudioManagerInstance} from "../common/AudioManager";
 
 const config: RouterOptions = {
   history: createWebHistory(),
@@ -22,12 +23,12 @@ const config: RouterOptions = {
       path: '/',
       redirect: (to) => {
         // TODO : not working error initClient main.ts
-
+        
         if (DatabaseManagerInstance.pb.authStore.isValid) {
           let roles = DatabaseManagerInstance.roles;
           let role = roles.find(item => item.id === DatabaseManagerInstance.pb.authStore.model?.role);
           console.log('role', role);
-
+          
           if (role) {
             switch (role.name) {
               case ROLE.TEACHER:
@@ -41,7 +42,7 @@ const config: RouterOptions = {
           } else {
             return {name: 'Login'}
           }
-
+          
         } else {
           return {name: 'Login'}
         }
@@ -135,17 +136,17 @@ const router = createRouter(config);
 router.beforeEach((to, from) => {
   const store = useMainStore();
   console.log(store.role, DatabaseManagerInstance.pb.authStore.model?.role);
-
+  
   // Need auth to acces pages, redirect the user to the login page
   if (!DatabaseManagerInstance.pb.authStore.isValid && to.name !== 'Login') {
     return {name: 'Login'}
   }
-
+  
   // TODO : not working, example : https://pinia.vuejs.org/core-concepts/outside-component-usage.html
   if (DatabaseManagerInstance.pb.authStore.isValid && to.name === 'Login') {
     let roles = DatabaseManagerInstance.roles;
     let role = roles.find(item => item.id === DatabaseManagerInstance.pb.authStore.model?.role);
-
+    
     if (role) {
       switch (role.name) {
         case ROLE.TEACHER:
@@ -156,9 +157,20 @@ router.beforeEach((to, from) => {
       }
     }
   }
-
-  if (DatabaseManagerInstance.pb.authStore.isValid) {
-
+  
+  const play = () => {
+    console.log('play');
+    //AudioManagerInstance.play(AUDIO.BACKGROUND, 0.2);
+  }
+  
+  // TODO : SIMULATE CLICK BY USER
+  if (to.name !== 'Game' && to.name !== 'Chapter') {
+    console.log('Out Chapter')
+    document.addEventListener('click', play);
+  } else {
+    console.log('In Chapter');
+    document.removeEventListener('click', play);
+    AudioManagerInstance.pause(AUDIO.BACKGROUND);
   }
 });
 

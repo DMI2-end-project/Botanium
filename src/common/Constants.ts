@@ -76,7 +76,7 @@ export enum LOGBOOK_STEP {
 
 /*  UI  */
 export enum COLOR {
-  WHITE='white',
+  WHITE = 'white',
   PINK = 'pink',
   GREEN = 'green',
   YELLOW = 'yellow',
@@ -96,4 +96,22 @@ export enum SIZE {
   MD = 'md',
   LG = 'lg',
   XL = 'xl',
+}
+
+export enum AUDIO {
+  BACKGROUND,
+  CONNECTION,
+  BUTTON,
+  WOOSH,
+  POP,
+  TRASH,
+  FLIP,
+  DRAWING,
+  WRITING1,
+  WRITING2,
+  WRONG_ANSWER_GROUP_TABLET,
+  GOOD_ANSWER_GROUP_TABLET,
+  GOOD_ANSWER_GROUP,
+  GOOD_ANSWER_CLASS,
+  VICTORY
 }

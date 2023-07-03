@@ -1,7 +1,9 @@
 <template>
   <Transition :name="'round-button-' + number">
-      <div v-if="colorBg && onMounted" :class=" (isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass"
-        class="RoundButtonBg p-8 rounded-full  ">
+    <div v-if="colorBg && onMounted"
+         @click="AudioManagerInstance().play(AUDIO.BUTTON)"
+         :class=" (isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass"
+         class="RoundButtonBg p-8 rounded-full  ">
       <button
           class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0 "
           :class="`${containerClass}`">
@@ -18,10 +20,10 @@
       </button>
       <slot name="animation"/>
     </div>
-    <button
-        v-else-if="onMounted"
-        class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0"
-        :class="`${containerClass}` + (isActive ? '' : ' opacity-50 pointer-events-none')">
+    <button v-else-if="onMounted"
+            @click="AudioManagerInstance().play(AUDIO.BUTTON)"
+            class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0"
+            :class="`${containerClass}` + (isActive ? '' : ' opacity-50 pointer-events-none')">
       <div
           class="RoundButton__bg absolute w-full h-full rounded-full group-hover:scale-75 transform"
           :class="`${bgClass}`">
@@ -40,10 +42,21 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue'
-import {COLOR, SIZE} from "../../common/Constants";
+import {AUDIO, COLOR, SIZE} from "../../common/Constants";
+import {AudioManagerInstance} from "../../common/AudioManager";
 
 export default defineComponent({
   name: 'RoundButton',
+  computed: {
+    AUDIO() {
+      return AUDIO
+    }
+  },
+  methods: {
+    AudioManagerInstance() {
+      return AudioManagerInstance
+    }
+  },
   props: {
     color: {
       default: COLOR.PINK,
@@ -77,7 +90,9 @@ export default defineComponent({
     }
   },
   mounted() {
-    setTimeout(() => {this.onMounted = true}, 10)
+    setTimeout(() => {
+      this.onMounted = true
+    }, 10)
     switch (this.color) {
       case COLOR.BLUE:
         this.bgClass += ' bg-blue text-beige';
