@@ -48,7 +48,7 @@ export default defineComponent({
     updateScore(score: number) {
       this.score = score;
       if (this.score > 80) {
-        this.next()
+        setTimeout(() => { this.next() }, 1400)
       }
     }
     },

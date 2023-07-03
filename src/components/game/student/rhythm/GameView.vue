@@ -1,6 +1,6 @@
 <template>
   <Pulse ref="pulse" :color="feedbackMessage.number === 0 || feedbackMessage.number === 1 ? 'green' : (feedbackMessage.number === 2 || feedbackMessage.number === 3 ? 'red' : 'purple')" :decibel="decibel" />
-  <div ref="feedback" class="feedback relatif text-white uppercase text-2xl font-sans font-black"></div>
+  <div v-if="!endGame" ref="feedback" class="feedback relatif text-white uppercase text-2xl font-sans font-black"></div>
   <!-- <p>deltaTimeWithServer : {{ deltaTimeWithServer }}</p> -->
   <!-- <div class="fixed top-[200px] left-[50px]">
     <p class="w-[200px]">gain : {{ gain }}</p>
@@ -54,9 +54,11 @@ export default defineComponent({
       lastClap: 0 as number,
       decibel: 0 as number,
       gain: 1 as number,
+      endGame: false
     };
   },
   async mounted() {
+    this.socket.on(AUDIO_EVENT.CLAP_SCORE, this.updateScore);
     if (!this.gameFacade.audio) {
       this.gameFacade.microIsNeeded()
     }
@@ -73,6 +75,12 @@ export default defineComponent({
         return team?.hasMicro
       } else {
         return false
+      }
+    },
+    updateScore(score: number) {
+      if (score >= 80) {
+        this.endGame = true;
+        (this.$refs.pulse as typeof Pulse).stopAnimation()
       }
     },
     async stop() {
