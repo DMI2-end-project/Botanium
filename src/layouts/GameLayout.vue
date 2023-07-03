@@ -107,9 +107,6 @@ export default defineComponent({
       this.mainStore.closeModal()
       setTimeout(() => {this.isModalOpen = false}, 600)
     },
-    next() {
-      GameMasterManagerInstance.endGame()
-    },
   }
 });
 </script>
@@ -159,9 +156,6 @@ export default defineComponent({
       </ModalView>
     </div>
   </footer>
-  <button v-if="mainStore.role === ROLE.TEACHER" class="absolute z-80 top-[80px] right-[30px]" @click="next">
-      Do
-    </button>
   <!--div class="flex-1 flex flex-col w-full h-full min-h-screen max-h-screen gap-10">
     <header class="w-full mt-8 z-20">
       <Breadcrumb v-if="isBreadcrumb"/>

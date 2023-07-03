@@ -22,11 +22,11 @@ const chapterStore = useChapterStore();
     <div class="col-span-8 col-start-3 grid grid-cols-8 gap-11 heading-3 bg-beige rounded-lg pb-11 mt-auto">
       <SignboardVue text="Il est temps de scanner les badges" :is-rotate="true" class="col-span-6 col-start-2 text-purple min-w-[25vw] -mt-20 lg:-mt-10" />
       <p class="col-span-6 col-start-2">
-        Rassemblez tous les badges utilisés cette semaine et scannez les pour débloquer les connaissances nécessaires
-        pour aider Capucine dans son aventure !
+        Rassemblez tous les badges utilisés cette semaine. Il faut les scanner pour débloquer les connaissances nécessaires
+        et ainsi aider Capucine dans son aventure !
       </p>
       <div class="col-span-8 flex flex-col gap-3 justify-center items-center text-blue px-10">
-        <p>Badges scannées {{ chapterStore.tasksScanned }} / {{ chapterStore.nbrTasks }}</p>
+        <p>Badges scannés {{ chapterStore.tasksScanned }} / {{ chapterStore.nbrTasks }}</p>
         <div class="w-full rounded-full bg-green h-7 p-1.5 overflow-hidden">
           <span class="block w-full h-full bg-blue rounded-full origin-left transition-transform"
                 :style="{transform: 'scaleX('+ (chapterStore.tasksScanned) / (chapterStore.nbrTasks) +')'}"/>

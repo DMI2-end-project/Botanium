@@ -145,7 +145,7 @@ const getChapterData = (c: any) => {
                          :color="seasons.includes('summer') ? COLOR.YELLOW : COLOR.GREEN">
               <Summer/>
             </RoundButton>
-            Ete
+            Été
           </div>
         </div>
       </div>

@@ -27,7 +27,13 @@
 
           <div class="bg-beige p-8 h-full" :class="isPageLeft ? '' : 'scroll-left'">
             <div class="overflow-y-scroll h-full">
-              <p>Les autocollants du jardin</p>
+               <h3 class="mx-8 text-left mt-12 flex" :class="isPageLeft ? '' : 'flex-row-reverse'">
+                <Flower class="text-purple w-10 block mr-4" />
+                <span>
+                  Les autocollants du jardin
+                  <Underline />
+                </span>
+              </h3>
               <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
                 <div v-for="index in numberStickers" :v-bind="index" class="w-32 h-32 flex justify-center items-center">
                   <button @click="changeSticker(index)" class="p-0 overflow-hidden rounded-full shadow-md"
@@ -55,12 +61,14 @@ import SvgIcon from "../../common/SvgIcon.vue";
 import Check from "./../../../assets/svg/ico-check.svg?component";
 import Cross from "./../../../assets/svg/ico-cross.svg?component";
 import Stickers from "./../../../assets/svg/ico-stickers.svg?component";
+import Flower from "./../../../assets/svg/ico-flower.svg?component";
+import Underline from "./../../../assets/svg/underline.svg?component";
 
 export default {
   name: "StickerElementComponent",
   components: {
     SvgIcon,
-    RoundButton, Check, Cross, Stickers
+    RoundButton, Check, Cross, Stickers, Flower, Underline
   },
   props: {
     pageId: {
