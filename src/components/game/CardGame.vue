@@ -59,6 +59,7 @@ watch(() => props.answerState, async (newAnswer, _) => {
          :class="{
            'bg-beige border-transparent': props.answerState !== 'selected',
            'bg-green-light border-transparent text-green': props.cardState === 'validated' || props.answerState === 'selected',
+           'shake-animation-card' : answerState === 'error'
          }">
       <!-- BORDER -->
       <div class="relative w-full h-full flex flex-col justify-center gap-1.5 p-2 rounded-lg border"

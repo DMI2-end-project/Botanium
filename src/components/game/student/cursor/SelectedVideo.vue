@@ -156,26 +156,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@keyframes shake {
-  0% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
-  100% { transform: translateX(0); }
-}
-
 .canvasContainer {
   transition: opacity 0.8s ease-out;
 }
 
 .cursor {
   transition: opacity 0.2s ease-out 1s;
-}
-
-.shake-animation {
-  animation-name: shake;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: 3;
 }
 
 /*********** Baseline, reset styles ***********/
