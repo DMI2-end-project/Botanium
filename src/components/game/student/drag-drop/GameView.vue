@@ -96,7 +96,7 @@ const itemValidated = () => {
     if (teamData.value.answers[currentIndex.value].status === 'valid') {
       setTimeout(() => {
         emit('validated');
-      }, 500);
+      }, 1200);
     }
   }
 

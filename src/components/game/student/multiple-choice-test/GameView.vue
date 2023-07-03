@@ -38,7 +38,7 @@ import {defineComponent} from 'vue'
 import {useGameStore} from "../../../../stores/gameStore";
 import {useMainStore} from "../../../../stores/mainStore";
 import {shuffle} from "../../../../common/Lib";
-import {COLOR} from "../../../../common/Constants";
+import {AUDIO, COLOR} from "../../../../common/Constants";
 
 import CardSlot from "../../CardSlot.vue";
 import CardGame from "../../CardGame.vue";
@@ -48,6 +48,7 @@ import RoundButton from "../../../common/RoundButton.vue";
 
 import Check from "../../../../assets/svg/ico-check.svg?component";
 import Replay from "../../../../assets/svg/ico-replay.svg?component";
+import {AudioManagerInstance} from '../../../../common/AudioManager';
 
 export default defineComponent({
   name: 'StudentGameView',
@@ -112,10 +113,11 @@ export default defineComponent({
     itemValidated() {
       if (this.currentIndex !== -1 && this.answers) {
         this.answers[this.currentIndex].status = this.answers[this.currentIndex].isValid ? 'valid' : 'error';
+
         if (this.answers[this.currentIndex].status === 'valid') {
           setTimeout(() => {
             this.$emit('validated');
-          }, 500);
+          }, 1200);
         }
       }
     },
