@@ -318,6 +318,7 @@ io.on('connection', (socket) => {
 
     rooms.map(room => {
       if (room.id === arg.roomId) {
+        room.reset()
         room._teams = [];
       }
     });

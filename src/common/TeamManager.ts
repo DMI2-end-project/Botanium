@@ -115,6 +115,7 @@ class TeamManager {
 
     this._socket.on('killRoom', async () => {
       if (this._mainStore.role === ROLE.STUDENT) {
+        console.log("TeamManager TEAM_KILL_ROOM");
         this._chapterStore.currentStep = CHAPTER_STEP.IDLE;
         this._gameStore.currentStep = GAME_STEP.IDLE;
         this._mainStore.chapterId = 0;
