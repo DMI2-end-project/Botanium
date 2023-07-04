@@ -7,7 +7,7 @@
     <div class="grid grid-cols-2 gap-4 h-3/5">
       <div class="w-full relative">
         <EditElement :pageId="pageContent.id" :slotNumber="0" classProperty="h-5/6" @onModify="$emit('onModify', $event)" />
-        <StickerElement :pageId="pageContent.id" :slotNumber="0" class="w-1/2 absolute left-4 bottom-0" :isPageLeft="pageContent.pageNumber % 2 === 1" @onModify="$emit('onModify', $event)" />
+        <StickerElement :pageId="pageContent.id" :slotNumber="1" class="w-1/2 absolute left-4 bottom-0" :isPageLeft="pageContent.pageNumber % 2 === 1" @onModify="$emit('onModify', $event)" />
       </div>
       <EditElement :pageId="pageContent.id" :slotNumber="1" classProperty="h-5/6 mt-auto" @onModify="$emit('onModify', $event)" />
     </div>
