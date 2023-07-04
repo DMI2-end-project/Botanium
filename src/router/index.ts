@@ -158,19 +158,26 @@ router.beforeEach((to, from) => {
     }
   }
   
-  const play = () => {
-    //AudioManagerInstance.play(AUDIO.BACKGROUND, 0.2);
+  const play = (audio: AUDIO) => {
+    AudioManagerInstance.play(audio, 0.1);
+    console.log('play')
+    document.removeEventListener('click', () => play(audio));
   }
+  console.log('router beforeEach')
   
   // TODO : SIMULATE CLICK BY USER
-  if (to.name !== 'Game' && to.name !== 'Chapter') {
-    console.log('Out Chapter')
-    document.addEventListener('click', play);
-  } else {
-    console.log('In Chapter');
-    document.removeEventListener('click', play);
-    AudioManagerInstance.pause(AUDIO.BACKGROUND);
-  }
+  //if (to.name === 'Chapter') {
+  //  AudioManagerInstance.pause(AUDIO.BACKGROUND_MUSIC);
+  //  document.addEventListener('click', () => play(AUDIO.BACKGROUND_SOUND), {once: true});
+  //  // AudioManagerInstance.play(AUDIO.BACKGROUND_SOUND, 0.1);
+  //} else if (to.name !== 'Game') {
+  //  AudioManagerInstance.pause(AUDIO.BACKGROUND_SOUND);
+  //  document.addEventListener('click', () => play(AUDIO.BACKGROUND_MUSIC), {once: true});
+  //  //AudioManagerInstance.play(AUDIO.BACKGROUND_MUSIC, 0.1);
+  //} else {
+  //  AudioManagerInstance.pause(AUDIO.BACKGROUND_SOUND);
+  //  AudioManagerInstance.pause(AUDIO.BACKGROUND_MUSIC);
+  //}
 });
 
 export default router;

@@ -31,16 +31,11 @@ const data: ChaptersData = chaptersData;
 chapterStore.data = data[key];
 
 onBeforeMount(async () => {
-  AudioManagerInstance.play(AUDIO.BACKGROUND_SOUND, 0.3);
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,
     roomId: mainStore.roomId
   });
-});
-
-onBeforeUnmount(() => {
-  //AudioManagerInstance.pause(AUDIO.BACKGROUND_SOUND);
 });
 
 </script>
