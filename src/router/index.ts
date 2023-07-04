@@ -159,7 +159,6 @@ router.beforeEach((to, from) => {
   }
   
   const play = () => {
-    console.log('play');
     //AudioManagerInstance.play(AUDIO.BACKGROUND, 0.2);
   }
   

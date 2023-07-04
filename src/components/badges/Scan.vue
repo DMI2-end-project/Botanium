@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, onUnmounted, ref, watch} from "vue";
+import {onMounted, onUnmounted, ref} from "vue";
 import * as tmImage from '@teachablemachine/image';
 import {useMainStore} from "../../stores/mainStore";
 import {useChapterStore} from "../../stores/chapterStore";
@@ -9,6 +9,8 @@ import Camera from "../Camera.vue";
 import Info from "../common/Info.vue";
 
 import Loading from "../../assets/svg/ico-loading.svg?component";
+import {AudioManagerInstance} from "../../common/AudioManager";
+import {AUDIO} from "../../common/Constants";
 
 const modelURL = '/tm-models/model.json';
 const metadataURL = '/tm-models/metadata.json';
@@ -47,6 +49,7 @@ const predict = async (videoRef: HTMLVideoElement) => {
             stop();
             taskScanned();
             emits('scanned', predict.className);
+            AudioManagerInstance.play(AUDIO.CONNECTION);
           }, 3000);
         }
       } else if (predict.probability > .8 && predict.className === 'none') {

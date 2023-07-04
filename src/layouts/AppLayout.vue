@@ -4,7 +4,7 @@ import {computed, defineComponent} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import {useMainStore} from "../stores/mainStore";
 import {GameMasterManagerInstance} from "../common/GameMasterManager";
-import { ROLE, COLOR, SIZE } from "../common/Constants";
+import {ROLE, COLOR, SIZE} from "../common/Constants";
 import RoundButton from "../components/common/RoundButton.vue";
 import ModalView from "../components/common/ModalView.vue";
 import Option from "../assets/svg/ico-option.svg?component";
@@ -49,6 +49,11 @@ export default defineComponent({
     };
   },
   methods: {
+    launchGame(i: number) {
+      GameMasterManagerInstance.launchChapter(1, '');
+      GameMasterManagerInstance.launchGame(i);
+      this.closeModal();
+    },
     killRoom() {
       this.closeModal()
       this.GMInstance?.killRoom();
@@ -58,7 +63,9 @@ export default defineComponent({
       GameMasterManagerInstance.endGame()
     },
     closeModal() {
-      setTimeout(() => {this.isModalOpen = false}, 600)
+      setTimeout(() => {
+        this.isModalOpen = false
+      }, 600)
       this.mainStore.closeModal()
       this.mainStore.askForRedirection = false;
     },
@@ -71,19 +78,26 @@ export default defineComponent({
 </script>
 
 <template>
-  <RoundButton v-if="router.currentRoute.name !== 'Chapter'" @click="openModal" :color="COLOR.YELLOW" :size="SIZE.SM" class="!fixed bottom-6 right-8 z-50">
-    <Option />
+  <RoundButton v-if="router.currentRoute.name !== 'Chapter'" @click="openModal" :color="COLOR.YELLOW" :size="SIZE.SM"
+               class="!fixed bottom-6 right-8 z-50">
+    <Option/>
   </RoundButton>
   <component :is="layout">
     <slot/>
   </component>
   <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true">
     <h1>Paramètres</h1>
-    <div class="flex justify-center items-center gap-6">
-      <div class="top-6 right-8 flex items-center gap-4">
+    <div class="flex flex-col justify-center items-center gap-6">
+      <div class="flex flex-wrap items-center gap-4">
         <button v-if="mainStore.role === ROLE.TEACHER" @click="killRoom">Kill</button>
-          <button v-if="mainStore.role === ROLE.TEACHER && router.currentRoute.name === 'Game'" class="top-[80px] right-[30px]" @click="next">
+        <button v-if="mainStore.role === ROLE.TEACHER && router.currentRoute.name === 'Game'"
+                class="top-[80px] right-[30px]" @click="next">
           Do
+        </button>
+      </div>
+      <div class="flex flex-wrap items-center gap-4">
+        <button v-for="i in 4" :v-bind="i" class="inline-block bg-primary p-4 rounded-lg" @click="launchGame(i)">
+          Exercice {{ i }}
         </button>
       </div>
     </div>

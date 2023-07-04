@@ -46,6 +46,15 @@ export default defineComponent({
   },
   mounted() {
     switch (this.color) {
+      case COLOR.BLUE:
+        if (this.colorReverse) {
+          this.containerClass += ' text-beige bg-blue hover:bg-beige hover:text-blue';
+          this.circleClass += ' border-beige group-hover:border-blue';
+        } else {
+          this.containerClass += ' text-blue bg-beige hover:bg-blue hover:text-beige';
+          this.circleClass += ' border-blue group-hover:border-beige';
+        }
+        break;
       case COLOR.GREEN_MEDIUM_BEIGE:
         if (this.colorReverse) {
           this.containerClass += ' text-beige bg-green-medium hover:bg-beige hover:text-green-medium';

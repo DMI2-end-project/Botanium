@@ -33,6 +33,7 @@ class AudioManager {
   }
   
   play(name: AUDIO, volume: number = 0.3, playbackRate =1) {
+    console.log('play', name)
     let item = this._audios.find(item => item.name === name)
     item.audio.currentTime = 0;
     item.audio.volume = volume;

@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import {onBeforeMount, onBeforeUnmount, onMounted, onUnmounted, ref} from "vue";
+import type {Ref} from 'vue';
+import {onBeforeMount, onBeforeUnmount, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {getSocket} from "../client";
 import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {TeamManagerInstance} from '../common/TeamManager';
+import {AudioManagerInstance} from "../common/AudioManager";
 import GameFacade from "../common/GameFacade";
-import {ROLE, GAME_STEP} from "../common/Constants";
+import {AUDIO, GAME_STEP, ROLE} from "../common/Constants";
 import {useGameStore} from "../stores/gameStore";
 import {useMainStore} from "../stores/mainStore";
-import type {Ref} from 'vue';
 
 import StudentGame from "../components/game/student/StudentGame.vue";
 import TeacherGame from "../components/game/teacher/TeacherGame.vue";
@@ -25,7 +26,7 @@ const gameStore = useGameStore();
 const socket = getSocket();
 const router = useRouter();
 const route = useRoute();
-let gameFacade:GameFacade
+let gameFacade:GameFacade;
 
 const setSequence = () => {
   let currentSequence = gameStore.data.gameSequences[gameStore.currentSequence];
@@ -54,7 +55,11 @@ const setNeeded = () => {
 gameStore.$subscribe((_, state) => {
   if (state.data) {
     setSequence();
-    setNeeded()
+    setNeeded();
+  }
+
+  if(state.currentStep === GAME_STEP.END) {
+    AudioManagerInstance.play(AUDIO.GOOD_ANSWER_CLASS);
   }
 });
 
@@ -67,42 +72,40 @@ onBeforeMount(async () => {
   });
   if (gameStore.data) {
     setSequence();
-    setNeeded()
+    setNeeded();
   }
 });
 
 onBeforeUnmount(() => {
   if (gameFacade) {
-    gameFacade.kill()
+    gameFacade.kill();
   }
 })
 
 let isModalOpen: Ref<Boolean> = ref(false);
 
 const getMicro = async () => {
-  console.log('getMicro')
   if (!gameFacade.audio) return
   const hasMicro = await gameFacade.audio.getMicrophone();
-  console.log('hasMicro', hasMicro)
   if (hasMicro) {
-    isModalOpen.value = false
-    mainStore.isModalOpen = false
+    isModalOpen.value = false;
+    mainStore.isModalOpen = false;
     await TeamManagerInstance.microReady(true);
   } else {
-    isModalOpen.value = true
-    mainStore.isModalOpen = true
+    isModalOpen.value = true;
+    mainStore.isModalOpen = true;
   }
 }
 
 const readyWithoutMicro = () => {
-  isModalOpen.value = false
-  mainStore.isModalOpen = false
+  isModalOpen.value = false;
+  mainStore.isModalOpen = false;
   TeamManagerInstance.microReady(false);
 }
 
 const closeModal = () => {
-  isModalOpen.value = false
-  mainStore.isModalOpen = false
+  isModalOpen.value = false;
+  mainStore.isModalOpen = false;
 }
 
 </script>

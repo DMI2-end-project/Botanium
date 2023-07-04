@@ -32,15 +32,22 @@ const props = defineProps({
   },
 });
 
+watch(() => props.cardState, async (newState, _) => {
+  if (newState === 'validated') {
+    AudioManagerInstance.play(AUDIO.GOOD_ANSWER_GROUP)
+  }
+});
+
 watch(() => props.answerState, async (newAnswer, _) => {
   if (newAnswer === 'error') {
     AudioManagerInstance.play(AUDIO.WRONG_ANSWER_GROUP_TABLET);
   }
 
-  if(newAnswer === 'valid') {
+  if (newAnswer === 'valid') {
+    console.log('valid')
     AudioManagerInstance.play(AUDIO.GOOD_ANSWER_GROUP_TABLET);
   }
-})
+});
 
 </script>
 

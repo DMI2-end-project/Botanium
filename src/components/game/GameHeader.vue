@@ -106,7 +106,6 @@ export default defineComponent({
       let index = this.gameStore.teamId ? this.gameStore.teamId : 0
       if (this.gameStore.data && this.gameStore.currentSequence !== null && this.gameStore.data?.gameSequences[this.gameStore.currentSequence].teams) {
         this.timeoutID = setTimeout(() => {
-          console.log('play pulse');
           if (this.$refs.clue) {
             (this.$refs.clue as HTMLDivElement).classList.add('animate-ping');
           }

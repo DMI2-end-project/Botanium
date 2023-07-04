@@ -1,24 +1,14 @@
 <script setup lang="ts">
-import {useMainStore} from "../stores/mainStore";
-import {DatabaseManagerInstance} from "../common/DatabaseManager";
-import {GameMasterManagerInstance} from "../common/GameMasterManager";
 import {COLOR, SIZE} from "../common/Constants";
+import {DatabaseManagerInstance} from "../common/DatabaseManager";
 import AnimatedFoliage from "../components/AnimatedFoliage.vue";
 import RoundButton from "../components/common/RoundButton.vue";
 
 import Chevron from "../assets/svg/ico-chevron.svg?component";
 import Organization from "../assets/svg/ico-organization.svg?component";
-
-const store = useMainStore();
-
-const launchGame = (i: number) => {
-  GameMasterManagerInstance.launchChapter(1, '')
-  GameMasterManagerInstance.launchGame(i)
-}
-
 </script>
 <template>
-  <AnimatedFoliage :show="true" class="overflow-hidden z-0"/>
+  <AnimatedFoliage :show="true"/>
   <div class="relative w-full h-full grid grid-cols-12 items-start gap-4 px-8 pb-10 lg:pb-16 pt-4 lg:pt-6">
     <div class="w-full col-span-12 flex flex-col sm:flex-row justify-between items-center">
       <img class="w-20 sm:w-32" src="/images/logo-simple.png" alt="Logo Les Petites Pousses">
@@ -80,11 +70,6 @@ const launchGame = (i: number) => {
           <Chevron class="rotate-180"/>
         </RoundButton>
       </router-link>
-      <div class=" bg-beige rounded-md flex flex-col gap-6 p-6">
-        <button v-for="i in 4" :v-bind="i" class="inline-block bg-primary p-4 rounded-lg" @click="launchGame(i)">
-          Exercice {{ i }}
-        </button>
-      </div>
     </div>
   </div>
 </template>

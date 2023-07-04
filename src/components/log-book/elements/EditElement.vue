@@ -1,11 +1,11 @@
 <template>
-  <button @click="modify" class="edit-element w-full p-0 text-beige-dark outline outline-8 transition-all duration-400"
+  <button @click="modify" class="edit-element p-0 text-beige-dark outline outline-8 transition-all duration-400"
           ref="container"
           :class="classProperty + ' ' + (textData.id || drawData.id ? 'bg-transparent' : 'bg-beige-medium/50') + ' ' + (onModify ? 'outline-yellow' : 'outline-transparent')">
     <PenIcon v-if="!textData.id && !drawData.id" class="w-1/3 mx-auto object-contain"
              :class="onModify ? 'text-yellow' : ''"/>
     <div v-if="textData.id" class="flex flex-col justify-between h-full bg-green-light p-4 drop-shadow-lg">
-      <p class="text-sm text-left text-green font-semibold line-clamp-4">{{ textData.content }}</p>
+      <p class="text-sm text-left text-green font-semibold break-words line-clamp-4">{{ textData.content }}</p>
       <p class="text-right mt-4 font-hand-written text-xs text-green">{{ textData.signature }}</p>
     </div>
     <div v-if="drawData.id" class="flex flex-col justify-between h-full relative">

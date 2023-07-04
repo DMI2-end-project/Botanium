@@ -22,10 +22,11 @@
 
     <div
         v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION || chapterStore.currentStep === CHAPTER_STEP.END"
-        class="col-span-4 lg:col-span-3 lg:col-start flex flex-col justify-around items-center">
+        class="mt-28 col-span-4 lg:col-span-3 lg:col-start flex flex-col gap-4 sm:gap-8 items-center">
       <div class="flex flex-col items-center">
         <Connexion v-if="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" class="pb-20" :status-needed="false"/>
-        <div class="bg-beige rounded-full p-4" :class="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION ? '-translate-y-1/2' :''">
+        <div class="bg-beige rounded-full p-4"
+             :class="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION ? '-translate-y-1/2' :''">
           <RoundButton :color="COLOR.PINK" @click="next">
             <Arrow class="rotate-180"/>
           </RoundButton>
@@ -33,13 +34,16 @@
       </div>
       <CircleButton v-show="chapterStore.currentStep === CHAPTER_STEP.INTRODUCTION" @click="openSheet"
                     :text="chapterStore.sheetUnlocked ? 'Ouvrir la fiche' : 'Débloquer la fiche'"
-                    :color="COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.SM" :colorReverse="true">
+                    :color="chapterStore.sheetUnlocked ? COLOR.BLUE : COLOR.GREEN_MEDIUM_BEIGE" :size="SIZE.MD"
+                    :colorReverse="true">
         <Sheet/>
       </CircleButton>
     </div>
   </div>
-  <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true">
-    <h1>Fiche connaissance !</h1>
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true" :padding="false" size="big">
+    <div class="w-full h-full">
+      <img class="w-full" src="/chapter/001/knowledge-sheet-001.jpg" alt="Fiche connaissance"/>
+    </div>
   </ModalView>
 </template>
 
@@ -128,7 +132,9 @@ export default defineComponent({
       }
     },
     closeModal() {
-      setTimeout(() => {this.isModalOpen = false}, 600)
+      setTimeout(() => {
+        this.isModalOpen = false
+      }, 600)
       this.mainStore.closeModal()
     }
   }

@@ -20,7 +20,7 @@ const chapterStore = useChapterStore();
 <template>
   <div class="flex-1 w-full h-full grid grid-cols-12 justify-around gap-4 lg:gap-10 text-center pt-16 z-10">
     <div class="col-span-8 col-start-3 grid grid-cols-8 gap-11 heading-3 bg-beige rounded-lg pb-11 mt-auto">
-      <SignboardVue text="Il est temps de scanner les badges" :is-rotate="true" class="col-span-6 col-start-2 text-purple min-w-[25vw] -mt-20 lg:-mt-10" />
+      <SignboardVue text="Il est temps de scanner les badges" :is-rotate="true" class="mx-auto col-span-6 col-start-2 text-purple min-w-[25vw] -mt-20 lg:-mt-10" />
       <p class="col-span-6 col-start-2">
         Rassemblez tous les badges utilisés cette semaine. Il faut les scanner pour débloquer les connaissances nécessaires
         et ainsi aider Capucine dans son aventure !
