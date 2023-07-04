@@ -10,8 +10,6 @@
           <img class="mt-auto" src="/chapter/book.png" alt=""/>
           <div
               class="absolute w-[55%] h-[80%] bottom-[2%] lg:bottom-[8%] right-[12%] -rotate-[3.52deg] flex flex-col items-center justify-center text-center">
-            <!-- <img class="w-[50%] sm:w-[65%] lg:w-[80%]"
-                 :src="`/chapter/${mainStore.getChapterId}/first-page-chapter-${mainStore.getChapterId}.png`" alt=""/> -->
             <div class="w-[50%] sm:w-[65%] lg:w-[70%] xl:w-[80%] aspect-square relative">
               <Transition name="scale-speed">
                 <img v-show="show" class="absolute w-[80%] object-contain inset-0 m-auto" src="/chapter/001/first-page/circle.svg" alt="" >
