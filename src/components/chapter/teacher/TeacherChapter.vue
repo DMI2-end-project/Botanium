@@ -56,7 +56,7 @@
       </CircleButton>
     </div>
   </div>
-  <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true" :padding="false" size="big">
+  <ModalView v-if="isModalOpen" @close="closeModal" :close="true" :click-outside="true" :padding="false" full>
     <div class="w-full h-full">
       <img class="w-full" src="/chapter/001/knowledge-sheet-001.jpg" alt="Fiche connaissance"/>
     </div>

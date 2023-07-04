@@ -26,7 +26,7 @@ const gameStore = useGameStore();
 const socket = getSocket();
 const router = useRouter();
 const route = useRoute();
-let gameFacade:GameFacade;
+let gameFacade: GameFacade;
 
 const setSequence = () => {
   let currentSequence = gameStore.data.gameSequences[gameStore.currentSequence];
@@ -58,7 +58,7 @@ gameStore.$subscribe((_, state) => {
     setNeeded();
   }
 
-  if(state.currentStep === GAME_STEP.END) {
+  if (state.currentStep === GAME_STEP.END && mainStore.role === ROLE.TEACHER) {
     AudioManagerInstance.play(AUDIO.GOOD_ANSWER_GROUP);
   }
 });
@@ -115,19 +115,19 @@ const closeModal = () => {
        class="grid grid-cols-12 my-auto pb-12">
     <Transition name="slide" mode="out-in">
       <Instruction v-if="gameStore.currentStep === GAME_STEP.INSTRUCTION" @get-microphone="getMicro"
-                 class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
+                   class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
       <TeacherGame
-        v-else-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
-        class="relative flex flex-col justify-center h-full col-span-12 my-auto"/>
+          v-else-if="mainStore.role === ROLE.TEACHER && (gameStore.currentStep === GAME_STEP.PLAY || gameStore.currentStep === GAME_STEP.END)"
+          class="relative flex flex-col justify-center h-full col-span-12 my-auto"/>
       <StudentGame
-        v-else-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
-        :gameFacade="gameFacade"
-        class="relative flex-1 h-full col-span-12 my-auto"/>
+          v-else-if="mainStore.role === ROLE.STUDENT && gameStore.currentStep == GAME_STEP.PLAY"
+          :gameFacade="gameFacade"
+          class="relative flex-1 h-full col-span-12 my-auto"/>
       <Waiting
-        v-else-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
-        class="col-start-2 col-span-10 sm:col-start-3 sm:col-span-8 lg:col-start-4 lg:col-span-6"/>
+          v-else-if="mainStore.role === ROLE.STUDENT && (gameStore.currentStep === GAME_STEP.WAIT || gameStore.currentStep === GAME_STEP.END)"
+          class="col-start-2 col-span-10 sm:col-start-3 sm:col-span-8 lg:col-start-4 lg:col-span-6"/>
       <Congratulation v-else-if="gameStore.currentStep === GAME_STEP.CONGRATS"
-                    class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
+                      class="col-start-2 col-span-10 lg:col-start-3 lg:col-span-8"/>
     </Transition>
   </div>
   <ModalView v-if="isModalOpen" @close="closeModal" :close="false" :click-outside="true">

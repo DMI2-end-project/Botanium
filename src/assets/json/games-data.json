@@ -22,8 +22,7 @@
             },
             {
               "icon": "ico-sun",
-              "text": "La carotte prépare ta peau au soleil",
-              "status": "none"
+               "status": "none"
             },
             {
               "icon": "ico-health",
@@ -145,7 +144,7 @@
           },
           {
             "instruction": "Choisis la bonne réponse à la question : quel bienfait possède la carotte ?",
-            "clue": "En mangeant des carottes, tu as moins de chances de tomber malade.",
+            "clue": "En mangeant des carottes, tu as moins de chance de tomber malade.",
             "congratulation": {
               "title": "Bravo !",
               "text": "",
@@ -371,7 +370,7 @@
           },
           {
             "instruction": "Range ta carotte violette au bon endroit : Lis bien les informations dans les cases préparées par papi lapin",
-            "clue": "Les anthocyanes sont des colorants d'origine naturelle de couleur rouge ou bleue.",
+            "clue": "Les anthocyanes sont de couleur rouge ou bleue.",
             "image": "cosmic.png",
             "name": "Cosmic",
             "answers": [
@@ -439,7 +438,7 @@
           {
             "instruction": "Dose la bonne quantité de cailloux dans la terre pour faire pousser de belles carottes",
             "element": "rock",
-            "clue": "Si il y a trop de cailloux dans la terre, elle ne pourra pas se développer comme il faut.",
+            "clue": "Si il y a trop de cailloux dans la terre, la carotte ne pourra pas se développer comme il faut.",
             "congratulation": {
               "title": "Bravo !",
               "text": "La carotte a besoin d’un sol léger et sableux, avec peu de cailloux pour pousser.",
@@ -450,7 +449,7 @@
           },
           {
             "instruction": "Dose la bonne quantité de soleil pour faire pousser de belles carottes",
-            "clue": "La carotte a besoin de beaucoup de soleil pour bien pousser.",
+            "clue": "Les carottes ont besoin d'être placées mi-ombre mi-soleil pour bien pousser.",
             "element": "sun",
             "congratulation": {
               "title": "Bravo !",
@@ -461,8 +460,8 @@
             "answers": 2
           },
           {
-            "instruction": "Dose la bonne hauteur de terre pour faire pousser de belles carottes",
-            "clue": "Il faut une profondeur suffisante pour que les carottes puissent se développer",
+            "instruction": "Dose la bonne hauteur de terre pour faire pousser de belles carottes.",
+            "clue": "Il faut une profondeur suffisante pour que les carottes puissent se développer.",
             "element": "height",
             "congratulation": {
               "title": "Bravo !",
