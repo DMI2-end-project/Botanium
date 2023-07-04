@@ -5,11 +5,12 @@
      - Loader Teacher
 */
 
-import {onBeforeMount} from "vue";
+import {onBeforeMount, onBeforeUnmount} from "vue";
 import {getSocket} from "../client";
 import {useMainStore} from "../stores/mainStore";
 import {useChapterStore} from "../stores/chapterStore";
-import {ROLE} from "../common/Constants";
+import {AudioManagerInstance} from "../common/AudioManager";
+import {AUDIO, ROLE} from "../common/Constants";
 
 import chaptersData from "../assets/json/chapters-data.json";
 
@@ -30,12 +31,18 @@ const data: ChaptersData = chaptersData;
 chapterStore.data = data[key];
 
 onBeforeMount(async () => {
+  AudioManagerInstance.play(AUDIO.BACKGROUND_SOUND, 0.3);
   await socket.connect();
   await socket.emit('join', {
     role: mainStore.role,
     roomId: mainStore.roomId
   });
-})
+});
+
+onBeforeUnmount(() => {
+  //AudioManagerInstance.pause(AUDIO.BACKGROUND_SOUND);
+});
+
 </script>
 
 <template>

@@ -59,7 +59,7 @@ gameStore.$subscribe((_, state) => {
   }
 
   if(state.currentStep === GAME_STEP.END) {
-    AudioManagerInstance.play(AUDIO.GOOD_ANSWER_CLASS);
+    AudioManagerInstance.play(AUDIO.GOOD_ANSWER_GROUP);
   }
 });
 

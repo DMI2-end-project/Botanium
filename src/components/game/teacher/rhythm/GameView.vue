@@ -10,8 +10,9 @@ import {defineComponent} from 'vue';
 import {getSocket} from "../../../../client";
 import {useMainStore} from "../../../../stores/mainStore";
 import {useGameStore} from "../../../../stores/gameStore";
-import {EVENT, GAME_STEP, AUDIO_EVENT} from "../../../../common/Constants";
+import {GAME_STEP, AUDIO_EVENT, AUDIO} from "../../../../common/Constants";
 import {GameMasterManagerInstance} from "../../../../common/GameMasterManager";
+import {AudioManagerInstance} from "../../../../common/AudioManager";
 import Gauge from './Gauge.vue';
 
 export default defineComponent({
@@ -43,11 +44,12 @@ export default defineComponent({
     },
     methods: {
     next() {
-        GameMasterManagerInstance.endGame()
+        GameMasterManagerInstance.endGame();
     },
     updateScore(score: number) {
       this.score = score;
       if (this.score > 80) {
+        AudioManagerInstance.play(AUDIO.VICTORY);
         setTimeout(() => { this.next() }, 1400)
       }
     }

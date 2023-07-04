@@ -1,7 +1,7 @@
 <template>
   <Transition :name="'round-button-' + number">
     <div v-if="colorBg && onMounted"
-         @click="AudioManagerInstance().play(AUDIO.BUTTON)"
+         @click="AudioManagerInstance().play(AUDIO.BUTTON, 0.3)"
          :class=" (isActive ? '' : ' opacity-50 pointer-events-none ') + containerBgClass"
          class="RoundButtonBg p-8 rounded-full  ">
       <button
@@ -21,7 +21,7 @@
       <slot name="animation"/>
     </div>
     <button v-else-if="onMounted"
-            @click="AudioManagerInstance().play(AUDIO.BUTTON)"
+            @click="AudioManagerInstance().play(AUDIO.BUTTON, 0.3)"
             class="RoundButton group relative aspect-square rounded-full flex items-center justify-center m-0 p-0 bg-transparent border-0"
             :class="`${containerClass}` + (isActive ? '' : ' opacity-50 pointer-events-none')">
       <div

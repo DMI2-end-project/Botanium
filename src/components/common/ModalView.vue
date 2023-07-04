@@ -42,8 +42,8 @@ if (props.clickOutside) {
         </RoundButton>
       </div>
       <div ref="container"
-          class="modal-content aspect-[5/3] container overflow-y-auto mx-auto bg-beige flex flex-col items-center text-center gap-6 rounded-md px-14"
-          :class="`${padding ? ' justify-center py-11' : ''} ${full ? 'w-full h-full' : ' max-w-[600px]'}`">
+          class="modal-content aspect-[5/3] container mx-auto bg-beige flex flex-col items-center text-center gap-6 rounded-md px-14"
+          :class="`${padding ? ' justify-center py-11' : ''} ${full ? 'w-full h-full overflow-y-auto' : ' max-w-[600px]'}`">
         <slot/>
       </div>
     </div>

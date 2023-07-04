@@ -1,14 +1,14 @@
 <template>
   <div>
     <button
-        class="sticker-element w-full h-min bg-beige-medium transition-opacity text-beige-dark rounded-full relative p-0 flex justify-center items-center outline outline-8 transition-all duration-400"
-        :class="`${onModify ? 'outline-yellow' : 'outline-transparent'} ${stickerData.idSticker >= 0 ? 'bg-opacity-0' : 'bg-opacity-50'}`"
+        class="relative sticker-element w-full h-min text-beige-dark rounded-full overflow-hidden p-2 flex justify-center items-center outline outline-8 transition-all duration-400 shadow-md"
+        :class="`${onModify ? 'outline-yellow' : 'outline-transparent'} ${stickerData.idSticker >= 0 ? 'bg-white' : 'bg-beige-medium/50'}`"
         @click="modify">
       <img v-if="stickerData.idSticker >= 0" alt="" :src="getStickerUrl(stickerData.idSticker)"
-           class="h-full w-full rounded-full object-contain absolute"><!--  shadow-md -->
+           class="h-full w-full object-contain "><!--  -->
       <!--SvgIcon v-if="stickerData.idSticker >= 0" source="stickers" :name="`${stickerData.idSticker}`"
                class="h-full w-full rounded-full object-contain absolute shadow-md"/-->
-      <p v-if="!(stickerData.idSticker >= 0)" class="absolute">
+      <p v-if="!(stickerData.idSticker >= 0)" class="">
         <Stickers class="w-2/3 mx-auto" :class="onModify ? 'text-yellow' : ''"/>
       </p>
     </button>
@@ -28,18 +28,18 @@
 
 
           <div class="bg-beige p-8 h-full" :class="isPageLeft ? '' : 'scroll-left'">
-            <div class="overflow-y-scroll h-full">
-               <h3 class="mx-8 text-left mt-12 flex" :class="isPageLeft ? '' : 'flex-row-reverse'">
+            <div class="relative overflow-y-scroll h-full">
+               <h3 class="mx-8 text-left mt-6 flex" :class="isPageLeft ? '' : 'flex-row-reverse'">
                 <Flower class="text-purple w-10 block mr-4" />
                 <span>
                   Les autocollants du jardin
                   <Underline />
                 </span>
               </h3>
-              <div class="grid grid-cols-3 gap-8 mt-10 mx-8">
+              <div class="grid grid-cols-3 gap-8 m-8">
                 <div v-for="index in numberStickers" :v-bind="index" class="w-32 h-32 flex justify-center items-center">
                   <button @click="changeSticker(index)"
-                          class="!bg-beige-medium p-2 overflow-hidden rounded-full shadow-md"
+                          class="!bg-white p-2 overflow-hidden rounded-full shadow-md"
                           :class="stickerData.idSticker === index ? 'outline outline-8 outline-yellow' : ''">
                     <img alt="" :src="getStickerUrl(index)" class="object-contain w-full h-full pointer-events-none">
                   </button>

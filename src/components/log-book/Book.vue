@@ -127,6 +127,7 @@ export default defineComponent({
       this.lastPage = this.page = this.pagesContent.length + 1
     },
     openTheBook() {
+      setTimeout(() => AudioManagerInstance.play(AUDIO.MULTI_FLIP), 350);
       this.openVideo?.play();
       this.openVideo?.classList.add("is-open")
       this.shadow?.classList.add("is-open")

@@ -40,7 +40,7 @@ watch(() => props.cardState, async (newState, _) => {
 
 watch(() => props.answerState, async (newAnswer, _) => {
   if (newAnswer === 'error') {
-    AudioManagerInstance.play(AUDIO.WRONG_ANSWER_GROUP_TABLET);
+    AudioManagerInstance.play(AUDIO.WRONG_ANSWER_GROUP_TABLET, 0.2);
   }
 
   if (newAnswer === 'valid') {
