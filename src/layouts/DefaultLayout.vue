@@ -38,7 +38,7 @@ export default defineComponent({
       </RoundButton>
       <slot name="header"></slot>
     </header>
-    <main class="flex-1 flex flex-col w-full h-full">
+    <main class="flex-1 flex flex-col w-full h-full relative overflow-hidden">
       <slot></slot>
     </main>
   </div>

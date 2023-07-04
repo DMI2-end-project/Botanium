@@ -3,8 +3,9 @@
 import {computed, defineComponent} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import {useMainStore} from "../stores/mainStore";
+import {useChapterStore} from "../stores/chapterStore";
 import {GameMasterManagerInstance} from "../common/GameMasterManager";
-import {ROLE, COLOR, SIZE} from "../common/Constants";
+import {ROLE, COLOR, SIZE, CHAPTER_STEP} from "../common/Constants";
 import RoundButton from "../components/common/RoundButton.vue";
 import ModalView from "../components/common/ModalView.vue";
 import Option from "../assets/svg/ico-option.svg?component";
@@ -16,6 +17,7 @@ export default defineComponent({
     return {
       router: useRouter(),
       mainStore: useMainStore(),
+      chapterStore: useChapterStore(),
       GMInstance: GameMasterManagerInstance,
       isModalOpen: false,
     }
@@ -29,6 +31,9 @@ export default defineComponent({
     },
     SIZE() {
       return SIZE
+    },
+    CHAPTER_STEP() {
+      return CHAPTER_STEP
     },
   },
   setup() {
@@ -78,9 +83,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <RoundButton v-if="router.currentRoute.name !== 'Chapter'" @click="openModal" :color="COLOR.YELLOW" :size="SIZE.SM"
-               class="!fixed bottom-6 right-8 z-50">
-    <Option/>
+  <RoundButton v-if="chapterStore.currentStep !== CHAPTER_STEP.STORY" @click="openModal" :color="COLOR.YELLOW" :size="SIZE.SM" class="!fixed bottom-6 right-8 z-50">
+    <Option />
   </RoundButton>
   <component :is="layout">
     <slot/>

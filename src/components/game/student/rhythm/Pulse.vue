@@ -1,14 +1,16 @@
 <template>
-  <div class="flex justify-center items-center relative">
+  <Transition name="scale">
+  <div v-show="animationISRuning" class="flex justify-center items-center relative">
     <div class="absolute aspect-square h-[160%] bg-white/20 rounded-full" :style="`transform: scale(${Math.min(decibel /200 + 1, 1.7)})`"></div>
     <div class="absolute aspect-square h-[160%] bg-purple rounded-full shadow-lg"></div>
     <div ref="canvasContainer" class="canvas w-full" :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" />
     <!-- :style="'filter: hue-rotate( ' + colors[color] + 'deg)'" -->
   </div>
+  </Transition>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, nextTick } from 'vue';
 import * as PIXI from "pixi.js";
 
 interface Colors {
@@ -32,6 +34,7 @@ export default defineComponent({
         backgroundAlpha: 0
       }) as PIXI.Application,
       animation: {} as PIXI.AnimatedSprite,
+      animationISRuning: false,
     };
   },
   props: {
@@ -46,11 +49,19 @@ export default defineComponent({
   },
   mounted() {
     this.loadSprite()
+    this.$nextTick(() => {
+      this.animationISRuning = true
+    })
   },
   methods: {
     startAnimation() {
-      if (this.animation.isSprite) {
+      if (this.animation.isSprite && this.animationISRuning) {
         this.animation.gotoAndPlay(7)
+      }
+    },
+    stopAnimation() {
+      if (this.animation.isSprite) {
+        this.animationISRuning = false
       }
     },
     async loadSprite() {
