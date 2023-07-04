@@ -50,7 +50,7 @@ const predict = async (videoRef: HTMLVideoElement) => {
             taskScanned();
             emits('scanned', predict.className);
             AudioManagerInstance.play(AUDIO.CONNECTION);
-          }, 3000);
+          }, 1500);
         }
       } else if (predict.probability > .8 && predict.className === 'none') {
         exp.value = '';

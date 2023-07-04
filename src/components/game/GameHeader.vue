@@ -146,7 +146,7 @@ export default defineComponent({
       if (newClue) {
         this.timeoutID = setTimeout(() => {
           (this.$refs.clue as HTMLDivElement).classList.add('animate-ping');
-        }, 60000);
+        }, 10000);
       } else {
         clearTimeout(this.timeoutID);
       }

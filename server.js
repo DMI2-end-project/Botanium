@@ -15,8 +15,7 @@ const app = express();
 const http = createServer({key, cert}, app);
 const io = new Server(http, {
   cors: {
-    //origins: [`http://localhost:${port}`]
-    origins: [`http://localhost:${port}`],
+    origins: [`http://localhost:${port}`]
   },
 });
 const audioGame = new AudioGame();
