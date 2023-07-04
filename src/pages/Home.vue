@@ -17,7 +17,7 @@ const menuData = [
   { icon: defineAsyncComponent(() => import(`./../assets/svg/ico-assignments.svg`)), name: "Missions", url: '' },
   { icon: defineAsyncComponent(() => import(`./../assets/svg/ico-book.svg`)), name: "Fiches", url: '' },
   { icon: defineAsyncComponent(() => import(`./../assets/svg/ico-chapters.svg`)), name: "Chapitres", url: '' },
-  { icon: defineAsyncComponent(() => import(`./../assets/svg/ico-sheets.svg`)), name: "Carnet", url:'LogBook' },
+  { icon: defineAsyncComponent(() => import(`./../assets/svg/ico-sheets.svg`)), name: "Carnet", url:'' },
 ]
 </script>
 

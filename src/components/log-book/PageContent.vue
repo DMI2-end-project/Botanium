@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import Template1 from "./templates/templateOne.vue"
+import Template1 from "./templates/TemplateOne.vue"
 import Template2 from "./templates/TemplateTwo.vue"
 import Template3 from "./templates/TemplateThree.vue"
 
